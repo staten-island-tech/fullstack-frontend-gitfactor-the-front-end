@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <img src="" alt="">
+    <img src="../assets/stick.png" alt="" class="stick">
   </div>
 </template>
 
@@ -22,5 +22,12 @@ export default {
     width: 50rem;
     height: 30rem;
     border: .3rem solid;
+    overflow: hidden;
+  }
+
+  .stick {
+    width: 15%;
+    position: relative;
+    top: 40%;
   }
 </style>
