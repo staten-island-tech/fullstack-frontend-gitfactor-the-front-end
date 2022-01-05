@@ -1,14 +1,17 @@
 <template>
   <div class="home">
-    <img src="../assets/stick.png" alt="" class="stick">
+    <MoveTest class="player"/>
   </div>
 </template>
 
 <script>
 
+import MoveTest from "@/components/MoveTest.vue";
+
 export default {
   name: "Home",
   components: {
+    MoveTest
   },
   data() {
 
@@ -18,16 +21,17 @@ export default {
 
 <style scoped>
   .home {
+    position: relative;
     display: inline-block;
-    width: 50rem;
-    height: 30rem;
+    width: 70rem;
+    height: 40rem;
     border: .3rem solid;
     overflow: hidden;
   }
 
-  .stick {
-    width: 15%;
+.player {
     position: relative;
     top: 40%;
-  }
+}
+
 </style>
