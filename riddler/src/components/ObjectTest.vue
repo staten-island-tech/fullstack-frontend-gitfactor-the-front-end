@@ -1,11 +1,11 @@
 <template>
   <div class="user">(^ . ^)</div>
   <img class="object" src="../assets/mushroom.png">
-  <button @click="moveAvatar(5)">Avator to 5</button>
-  <button @click="moveAvatar(10)">Avator to 10</button>
-  <button @click="moveAvatar(20)">Avator to 20</button>
-  <button @click="moveAvatar(30)">Avator to 30</button>
-  <button @click="moveAvatar(40)">Avator to 40</button>
+  <button @click="moveAvatar(10)">Avatar to 10</button>
+  <button @click="moveAvatar(15)">Avatar to 15</button>
+  <button @click="moveAvatar(20)">Avatar to 20</button>
+  <button @click="moveAvatar(25)">Avatar to 25</button>
+  <button @click="moveAvatar(30)">Avatar to 30</button>
 
   <h1>{{ offset }}</h1>
 </template>
@@ -23,7 +23,7 @@ export default {
     },
     methods: {
         moveAvatar(margin) {
-            document.querySelector(".user").style.marginLeft = `${margin}rem`;
+            document.querySelector(".user").style.marginLeft = `${margin}%`;
             this.objectInteract();
         },
         objectInteract() {
@@ -33,10 +33,12 @@ export default {
             const objectMidpoint = Math.abs(objectLocation.left + objectLocation.width) / 2;
             const offset = userMidpoint - objectMidpoint;
             this.offset = Math.abs(offset);
-            if (this.offset <= 30) {
-                document.querySelector(".object").style.border = ".2rem solid yellow";
+            if (this.offset <= 50) {
+                document.querySelector(".object").style.border = ".5rem solid #ffe600";
+                document.querySelector(".object").style.filter = "sepia(100%)";
             } else {
-                document.querySelector(".object").style.border = ".2rem solid transparent";
+                document.querySelector(".object").style.border = ".5rem solid transparent";
+                document.querySelector(".object").style.filter = "none";
             }
         }
     }
@@ -56,10 +58,9 @@ export default {
     img {
         position: absolute;
         bottom: 0;
-        left: 20rem;
+        left: 25%;
         height: 7rem;
         width: 7rem;
-        border-radius: 2rem;
-        border: .2rem solid transparent;
+        border-radius: 3rem;
     }
 </style>
