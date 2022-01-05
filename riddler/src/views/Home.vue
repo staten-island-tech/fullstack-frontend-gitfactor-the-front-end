@@ -20,8 +20,8 @@ export default {
   .home {
     position: relative;
     display: inline-block;
-    width: 50rem;
-    height: 30rem;
+    width: 80rem;
+    height: 48rem;
     border: .3rem solid;
   }
 </style>

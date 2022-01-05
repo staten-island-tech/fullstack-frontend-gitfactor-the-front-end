@@ -49,8 +49,8 @@ export default {
     .user {
         position: absolute;
         bottom: 0;
-        width: 5rem;
-        height: 7rem;
+        width: 8rem;
+        height: 11.2rem;
         margin-left: 0;
         z-index: 1;
         background-color: rgb(238, 216, 183);
@@ -59,8 +59,8 @@ export default {
         position: absolute;
         bottom: 0;
         left: 25%;
-        height: 7rem;
-        width: 7rem;
+        height: 11.2rem;
+        width: 11.2rem;
         border-radius: 3rem;
     }
 </style>
