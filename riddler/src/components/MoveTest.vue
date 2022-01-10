@@ -1,11 +1,15 @@
 <template>
-  <div>
+  <easel-canvas>
     <div class="avatar">
-      <img v-bind:src="test" alt="" class="stickAvatar">
       <img src="../assets/stick.png" alt="" class="stick" id="stickAvatar">
+      <easel-bitmap image="/assets/stick.png"
+      :x="0"
+      :y="0"
+      :align="['left','top']">
       <input class="tempInput" v-on:keyup.left="leftMove();" v-on:keyup.right="rightMove();">
     </div>
-  </div>
+
+  </easel-canvas>
 </template>
 
 <script>
@@ -16,7 +20,13 @@ export default {
       pos: `80%`,
     }
   },
+  created() {
+    this.createRPG()
+  },
   methods: {
+    createRPG: function() {
+
+    },
     leftMove: function() {
       console.log("left");
       const avatar = document.getElementById("stickAvatar");

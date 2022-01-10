@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "vue-easeljs": "^0.1.14"
+  }
+}
