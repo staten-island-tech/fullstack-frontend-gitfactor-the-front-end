@@ -8,6 +8,7 @@
   <button @click="moveAvatar(30)">Avatar to 30</button>
 
   <h1>{{ offset }}</h1>
+  <!-- <input v-on:keypress.q="puzzleTest"> -->
 </template>
 
 <script>
@@ -40,7 +41,11 @@ export default {
                 document.querySelector(".object").style.border = ".5rem solid transparent";
                 document.querySelector(".object").style.filter = "none";
             }
-        }
+        },
+        puzzleTest() {
+            console.log('enter-clicked');
+
+        },
     }
 }
 </script>
