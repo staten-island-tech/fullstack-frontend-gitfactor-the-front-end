@@ -1,17 +1,20 @@
 <template>
   <div class="home">
-    <ObjectTest />
+    <!-- <ObjectTest /> -->
+    <TextBox />
   </div>
 </template>
 
 <script>
 
-import ObjectTest from "@/components/ObjectTest.vue";
+// import ObjectTest from "@/components/ObjectTest.vue";
+import TextBox from "../components/TextBox.vue";
 
 export default {
   name: "Home",
   components: {
-    ObjectTest
+    // ObjectTest
+    TextBox,
   },
 };
 </script>
