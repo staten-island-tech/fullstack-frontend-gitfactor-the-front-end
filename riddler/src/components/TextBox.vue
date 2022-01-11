@@ -2,7 +2,7 @@
   <div>
     <div class="textbox">
       <p class="textbox-title">Count Dracula</p>
-<p class="textbox-test">Mwaha! Welcome to my castle~</p>
+<p class="textbox-test">{{textArray[0].text}}</p>
     </div>
   </div>
 </template>
@@ -10,6 +10,24 @@
 <script>
 export default {
 name: "TextBox",
+data() {
+  return {
+textArray: [
+  {
+    text: "Mwahaha welcome to my castle~",
+    characterID: 1, 
+  }, 
+  {
+     text: "I didn't come here by choice...what is this?",
+    characterID: 0, 
+  },
+  {
+     text: "This...huh. I don't actually know what this is either! I just said that cause I thought it was spooky :D",
+    characterID: 1, 
+  }
+]
+  }
+}
 }
 </script>
 
@@ -28,9 +46,9 @@ padding-top: 1rem;
   color: white;
   font-size: 2rem;
   text-align: left;
+  margin-top: 0.5rem;
 }
 .textbox-title{
   font-size: 2.5rem;
-  padding-top: 0.5rem;
 }
 </style>
