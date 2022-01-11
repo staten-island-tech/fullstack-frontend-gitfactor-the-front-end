@@ -1,5 +1,10 @@
 <template>
-  <div class="user">(^ . ^)</div>
+
+<div class="container-test"
+ tabindex="-1"
+ v-on:keyup.enter="puzzleTest"
+ >
+   <div class="user">(^ . ^)</div>
   <img class="object" src="../assets/mushroom.png">
   <button @click="moveAvatar(10)">Avatar to 10</button>
   <button @click="moveAvatar(15)">Avatar to 15</button>
@@ -8,7 +13,9 @@
   <button @click="moveAvatar(30)">Avatar to 30</button>
 
   <h1>{{ offset }}</h1>
-  <!-- <input v-on:keypress.q="puzzleTest"> -->
+  <!-- <input v-on:keyup.enter="puzzleTest"> -->
+</div>
+  
 </template>
 
 <script>
@@ -43,7 +50,12 @@ export default {
             }
         },
         puzzleTest() {
-            console.log('enter-clicked');
+             if (this.offset <= 50){
+                console.log('object detected');
+             }
+             else{
+                 console.log('nuts. ur not close enough');
+             }
 
         },
     }
@@ -67,5 +79,11 @@ export default {
         height: 11.2rem;
         width: 11.2rem;
         border-radius: 3rem;
+    }
+    .container-test{
+        width: 100vw;
+        height: 100vh;
+        top:0%;
+        
     }
 </style>
