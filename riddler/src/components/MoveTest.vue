@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="avatar" :style="cssProps">
+    <div class="avatar" :style="cssProps" v-on:keyup.left="leftMove();" v-on:keyup.right="rightMove();" tabindex="-1">
       <img v-bind:src="test" alt="" class="stickAvatar">
       <img src="../assets/stick.png" alt="" class="stick" id="stickAvatar" >
-      <input class="tempInput" v-on:keyup.left="leftMove();" v-on:keyup.right="rightMove();">
+      <input class="tempInput" >
     </div>
   </div>
 </template>
@@ -42,11 +42,18 @@ export default {
 </script>
 
 <style>
+
+.avatar {
+  width:100%;
+  height: 100%;;
+}
+
  .stick {
     width: 15%;
     display: flex;
     position:relative;
     left: var(--leftVar);
+    transition: all .35s;
 
   }
 
