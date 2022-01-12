@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="txtbx">
     <div class="textbox">
       <p class="textbox-title">Count Dracula</p>
 <p class="textbox-test">{{textArray[0].text}}</p>
@@ -25,7 +25,11 @@ textArray: [
      text: "This...huh. I don't actually know what this is either! I just said that cause I thought it was spooky :D",
     characterID: 1, 
   }
-]
+], 
+txtbx: true,
+txtbxShowFunction(){
+
+}
   }
 }
 }
