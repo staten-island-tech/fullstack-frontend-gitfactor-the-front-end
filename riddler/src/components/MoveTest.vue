@@ -1,7 +1,10 @@
 <template>
   <div>
-    <img v-bind:src="test" alt="" class="stick" />
-    <img src="../assets/stick.png" alt="" class="stick" />
+    <div class="avatar">
+      <img v-bind:src="test" alt="" class="stickAvatar">
+      <img src="../assets/stick.png" alt="" class="stick" id="stickAvatar">
+      <input class="tempInput" v-on:keyup.left="leftMove();" v-on:keyup.right="rightMove();">
+    </div>
   </div>
 </template>
 
@@ -16,8 +19,21 @@ export default {
       },
       test: "../assets/stick.png",
     }
-  }
-
+  },
+  methods: {
+    leftMove: function() {
+      console.log("left");
+      const avatar = document.getElementById("stickAvatar");
+      this.pos = "20%"
+      avatar.style.left = this.pos;
+    },
+    rightMove: function() {
+      console.log("right")
+      const avatar = document.getElementById("stickAvatar");
+      this.pos = "80%"
+      avatar.style.left = this.pos;
+    }
+  },
 
 }
 </script>
