@@ -1,6 +1,7 @@
 <template>
-  <div v-if="txtbx">
-    <div class="textbox">
+  <div >
+    <button v-on:click="txtbxShow" class="textbox-button">Enter</button>
+    <div v-if="txtbx" class="textbox">
       <p class="textbox-title">Count Dracula</p>
 <p class="textbox-test">{{textArray[0].text}}</p>
     </div>
@@ -26,16 +27,28 @@ textArray: [
     characterID: 1, 
   }
 ], 
-txtbx: true,
-txtbxShowFunction(){
+ txtbx: false,
+// txtbxShowFunction(){
 
-}
+// }
+txtbxShow(){
+this.txtbx = true;
+// console.log(document.querySelector("textbox-text").innerHTML); returns null
+},
   }
 }
 }
 </script>
 
 <style>
+.textbox-button{
+  font-size: 3rem;
+  background-color: black;
+  color: red;
+  position: absolute;
+  top: 40%;
+  left: 40%;
+}
 .textbox{
   border: red 1rem solid;
   background-color: black;
