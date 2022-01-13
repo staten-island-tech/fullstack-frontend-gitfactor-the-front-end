@@ -1,9 +1,7 @@
 <template>
-  <div>
-    <div class="avatar" :style="cssProps" v-on:keyup.left="leftMove();" v-on:keyup.right="rightMove();" tabindex="-1">
-      <img v-bind:src="test" alt="" class="stickAvatar">
-      <img src="../assets/stick.png" alt="" class="stick" id="stickAvatar" >
-      <input class="tempInput" >
+  <div class="avatar" :style="cssProps" v-on:keydown.left="leftMove();" v-on:keydown.right="rightMove();" v-on:keyup.left="resetMove();" v-on:keyup.right="resetMove();" tabindex="-1">
+    <div>
+      <img :src="require(`@/assets/${playerAvatar}`)" alt="" class="stick" id="stickAvatar" >
     </div>
   </div>
 </template>
@@ -13,10 +11,11 @@ export default {
   data() {
     return {
       player: {
-          idle: "../assets/stick.png",
-          left: "../assets/stick_l.png",
-          right: "../assets/stick_r.png",
+          idle: "stick.png",
+          left: "stick_l.png",
+          right: "stick_r.png",
       },
+      playerAvatar: "stick.png",
       leftValue: "80",
     }
   },
@@ -30,11 +29,25 @@ export default {
   methods: {
     leftMove: function() {
       console.log("left");
-      this.leftValue -= 10;
+      setTimeout(() => {
+        this.leftValue -= 2;
+        this.playerAvatar = this.player.left;
+      }, 250);
+
     },
     rightMove: function() {
-      console.log("right")
-      this.leftValue += 10;
+      console.log("right");
+      setTimeout(() => {
+        this.leftValue += 2;
+        this.playerAvatar = this.player.right;
+      }, 250);
+    },
+    resetMove: function() {
+      setTimeout(() => {
+      console.log("reset");
+      this.playerAvatar = this.player.idle;
+      }, 350);
+
     }
   },
 
@@ -53,7 +66,7 @@ export default {
     display: flex;
     position:relative;
     left: var(--leftVar);
-    transition: all .35s;
+
 
   }
 
