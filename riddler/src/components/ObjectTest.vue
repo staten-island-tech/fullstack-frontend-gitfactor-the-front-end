@@ -20,6 +20,8 @@
 
 <script>
 export default {
+    
+
     name: "ObjectTest",
     data() {
         return {
@@ -52,6 +54,7 @@ export default {
         puzzleTest() {
              if (this.offset <= 50){
                 console.log('object detected');
+
              }
              else{
                  console.log('nuts. ur not close enough');
@@ -84,6 +87,8 @@ export default {
         width: 100vw;
         height: 100vh;
         top:0%;
-        
+    }
+    button{
+        font-size: 1.5rem;
     }
 </style>
