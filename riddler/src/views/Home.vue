@@ -1,17 +1,21 @@
 <template>
   <div class="home">
     <ObjectTest />
+    <PuzzlePopup/>
+  
   </div>
 </template>
 
 <script>
 
 import ObjectTest from "@/components/ObjectTest.vue";
+import PuzzlePopup from '@/components/PuzzlePopup.vue';
 
 export default {
   name: "Home",
   components: {
-    ObjectTest
+    ObjectTest,
+    PuzzlePopup
   },
 };
 </script>
