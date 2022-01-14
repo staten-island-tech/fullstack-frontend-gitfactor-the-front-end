@@ -1,10 +1,7 @@
 <template>
   <div class="avatar">(^ . ^)</div>
-  <button @click="moveAvatar(10)" v-on:keyup.enter="onEnter">Avatar to 10</button>
-  <button @click="moveAvatar(30)" v-on:keyup.enter="onEnter">Avatar to 30</button>
-  <button @click="moveAvatar(50)" v-on:keyup.enter="onEnter">Avatar to 50</button>
-  <button @click="moveAvatar(70)" v-on:keyup.enter="onEnter">Avatar to 70</button>
-  <button @click="moveAvatar(90)" v-on:keyup.enter="onEnter">Avatar to 90</button>
+  <button @click="moveAvatar(5)" v-on:keyup.enter="onEnter">Move avatar forward</button>
+  <button @click="moveAvatar(-5)" v-on:keyup.enter="onEnter">Move avatar backward</button>
 
   <h1>{{ offset }}</h1>
   <h1>{{ currentItem }}</h1>
@@ -17,8 +14,8 @@ export default {
     name: "ItemTest",
     data() {
         return {
-            // offset: null,
-            avatarLocation: null,
+            offset: null,
+            avatarLocation: 0,
             currentItem: null,
             gameItems: [
                 {
@@ -48,22 +45,21 @@ export default {
     methods: {
         itemInteract() {
             this.gameItems.forEach(item => {
-                const offset = Math.abs(item.position - this.avatarLocation);
-                if (offset <= 8) {
-                    // this.offset = offset;
+                const offset = item.position - this.avatarLocation;
+                if (Math.abs(offset) <= 8 || (offset >= -13 && offset < 8)) {
+                    this.offset = offset;
                     item.isInteractable = true;
                     this.currentItem = item;
                     item.filter = "sepia(100%)";
                 } else {
-                    // this.offset = "no item detected";
                     item.isInteractable = false;
                     item.filter = null;
                 }
             });
         },
         moveAvatar(distance) {
-            document.querySelector(".avatar").style.left = `${distance}%`;
-            this.avatarLocation = distance;
+            this.avatarLocation += distance;
+            document.querySelector(".avatar").style.left = `${this.avatarLocation}%`;
             this.currentItem = null;
             this.itemInteract();
         },
@@ -94,8 +90,8 @@ export default {
         position: absolute;
         bottom: 0;
         /* left: 25%; this is represented in the item.position property*/
-        height: 8rem;
-        width: 8rem;
+        height: 11.2rem;
+        width: 11.2rem;
         border-radius: 3rem;
     }
 </style>
