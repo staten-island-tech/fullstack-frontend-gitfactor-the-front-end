@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <img src="@/assets/ground.png" class="ground" alt="">
     <MoveTest class="player"/>
   </div>
 </template>
@@ -32,6 +33,13 @@ export default {
 .player {
     position: relative;
     top: 40%;
+}
+.ground {
+  z-index: 2;
+  position: absolute;
+  left: 0%;
+  bottom: 0%;
+  height: 15%;
 }
 
 </style>

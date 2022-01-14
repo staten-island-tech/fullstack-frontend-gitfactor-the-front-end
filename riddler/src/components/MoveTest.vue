@@ -17,7 +17,7 @@ export default {
           right: "walk-right.gif",
       },
       playerAvatar: "idle-left.gif",
-      leftValue: "80",
+      leftValue: 50,
     }
   },
   computed: {
@@ -31,7 +31,9 @@ export default {
     leftMove: function() {
       console.log("left");
       setTimeout(() => {
+      if (this.leftValue > 0) {
         this.leftValue -= 1.5;
+      };        
         this.playerAvatar = this.player.left;
       }, 250);
 
@@ -39,7 +41,9 @@ export default {
     rightMove: function() {
       console.log("right");
       setTimeout(() => {
+      if (this.leftValue <= 85) {
         this.leftValue += 1.5;
+      };  
         this.playerAvatar = this.player.right;
       }, 250);
     },
