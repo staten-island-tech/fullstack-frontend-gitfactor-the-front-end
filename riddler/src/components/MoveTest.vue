@@ -1,7 +1,7 @@
 <template>
-  <div class="avatar" :style="cssProps" v-on:keydown.left="leftMove();" v-on:keydown.right="rightMove();" v-on:keyup.left="resetMove();" v-on:keyup.right="resetMove();" tabindex="-1">
+  <div class="avatar" :style="cssProps" v-on:keydown.left="leftMove();" v-on:keydown.right="rightMove();" v-on:keyup.left="resetLeft();" v-on:keyup.right="resetRight();" tabindex="-1">
     <div>
-      <img :src="require(`@/assets/${playerAvatar}`)" alt="" class="stick" id="stickAvatar" >
+      <img :src="require(`@/assets/sprites/${playerAvatar}`)" alt="" class="stick" id="stickAvatar" >
     </div>
   </div>
 </template>
@@ -11,11 +11,12 @@ export default {
   data() {
     return {
       player: {
-          idle: "stick.png",
-          left: "stick_l.png",
-          right: "stick_r.png",
+          idleLeft: "idle-left.gif",
+          idleRight: "idle-right.gif",
+          left: "walk-left.gif",
+          right: "walk-right.gif",
       },
-      playerAvatar: "stick.png",
+      playerAvatar: "idle-left.gif",
       leftValue: "80",
     }
   },
@@ -30,7 +31,7 @@ export default {
     leftMove: function() {
       console.log("left");
       setTimeout(() => {
-        this.leftValue -= 2;
+        this.leftValue -= 1.5;
         this.playerAvatar = this.player.left;
       }, 250);
 
@@ -38,15 +39,22 @@ export default {
     rightMove: function() {
       console.log("right");
       setTimeout(() => {
-        this.leftValue += 2;
+        this.leftValue += 1.5;
         this.playerAvatar = this.player.right;
       }, 250);
     },
-    resetMove: function() {
+    resetLeft: function() {
       setTimeout(() => {
       console.log("reset");
-      this.playerAvatar = this.player.idle;
-      }, 350);
+      this.playerAvatar = this.player.idleLeft;
+      }, 250);
+
+    },
+      resetRight: function() {
+      setTimeout(() => {
+      console.log("reset");
+      this.playerAvatar = this.player.idleRight;
+      }, 250);
 
     }
   },
