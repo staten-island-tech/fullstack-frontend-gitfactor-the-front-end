@@ -3,6 +3,7 @@
     <ObjectTest />
     <PuzzlePopup/>
   
+    <ItemTest />
   </div>
 </template>
 
@@ -10,12 +11,14 @@
 
 import ObjectTest from "@/components/ObjectTest.vue";
 import PuzzlePopup from '@/components/PuzzlePopup.vue';
+import ItemTest from "@/components/ItemTest.vue";
 
 export default {
   name: "Home",
   components: {
     ObjectTest,
     PuzzlePopup
+    ItemTest
   },
 };
 </script>
