@@ -1,5 +1,6 @@
 <template>
-<div class="popup-container">
+<div class="popup-container"
+v-show="puzzleVisibility">
     <h1>puzzle question?</h1>
     <input type="text" class="puzzle-answer">
     <button v-on:click="puzzleButtonClick"
@@ -7,6 +8,30 @@
 </div>
     
 </template>
+
+
+
+<script>
+export default {
+    name: "PuzzlePopup",
+    data() {
+        return{
+    puzzleInput:"not working yet",
+    puzzleVisibility: true, 
+        }
+        
+
+    },
+    methods:
+    {
+        puzzleButtonClick(){
+            //console.log(this.puzzleInput);
+            this.puzzleVisibility = false;
+        },
+
+    },
+}
+</script>
 
 <style scoped>
 .popup-container{
@@ -18,26 +43,3 @@
     display:none;
 }
 </style>
-
-<script>
-export default {
-    name: "PuzzlePopup",
-    data() {
-        return{
-puzzleInput:"not working yet",
-        }
-        
-
-    },
-    method:
-    {
-        puzzleButtonClick(){
-            //console.log(this.puzzleInput);
-            console.log('sup');
-        },
-
-    },
-
-
-}
-</script>

@@ -1,19 +1,30 @@
 <template>
-  <div class="avatar">(^ . ^)</div>
-  <button @click="moveAvatar(10)" v-on:keyup.enter="onEnter">Avatar to 10</button>
-  <button @click="moveAvatar(30)" v-on:keyup.enter="onEnter">Avatar to 30</button>
-  <button @click="moveAvatar(50)" v-on:keyup.enter="onEnter">Avatar to 50</button>
-  <button @click="moveAvatar(70)" v-on:keyup.enter="onEnter">Avatar to 70</button>
-  <button @click="moveAvatar(90)" v-on:keyup.enter="onEnter">Avatar to 90</button>
+<div class="page-container"
+tabindex="-1"
+v-on:keyup.enter="onEnter">
+<PuzzlePopup/>
+ <div class="avatar">(^ . ^)</div>
+  <button @click="moveAvatar(10)" >Avatar to 10</button>
+  <button @click="moveAvatar(30)" >Avatar to 30</button>
+  <button @click="moveAvatar(50)" >Avatar to 50</button>
+  <button @click="moveAvatar(70)" >Avatar to 70</button>
+  <button @click="moveAvatar(90)" >Avatar to 90</button>
 
   <h1>{{ offset }}</h1>
   <h1>{{ currentItem }}</h1>
 
   <img v-for="item in gameItems" :src="item.img" :style="{ left: item.margin, filter: item.filter }" :alt="item" :key="item.key">
+   
+</div>
+
 </template>
 
+
+
 <script>
+import PuzzlePopup from "@/components/PuzzlePopup.vue";
 export default {
+
     name: "ItemTest",
     data() {
         return {
@@ -70,6 +81,7 @@ export default {
         onEnter() {
             if (this.currentItem) {
                 alert(this.currentItem.prompt);
+                this.puzzleVisibility = true;
             }
         }
     }
@@ -77,6 +89,10 @@ export default {
 </script>
 
 <style scoped>
+.page-container{
+    width: 60vw;
+    height: 70vh;
+}
     h1 {
         font-size: 2rem;
     }
