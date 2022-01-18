@@ -2,20 +2,23 @@
   <div class="home">
     <img src="@/assets/ground.png" class="ground" alt="">
     <MoveTest class="player"/>
+    <ItemTest />
   </div>
 </template>
 
 <script>
 
 import MoveTest from "@/components/MoveTest.vue";
+import ItemTest from "@/components/ItemTest.vue";
 
 export default {
   name: "Home",
   components: {
-    MoveTest
+    MoveTest, ItemTest
   },
   data() {
 
+    
   },
 };
 </script>
@@ -24,8 +27,8 @@ export default {
   .home {
     position: relative;
     display: inline-block;
-    width: 70rem;
-    height: 40rem;
+    width: 80rem;
+    height: 48rem;
     border: .3rem solid;
     overflow: hidden;
   }
