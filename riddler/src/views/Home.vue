@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <img src="@/assets/ground.png" class="ground" alt="">
     <MoveTest class="player"/>
     <ItemTest />
   </div>

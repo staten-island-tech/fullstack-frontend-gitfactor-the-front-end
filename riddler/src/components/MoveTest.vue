@@ -36,6 +36,7 @@ export default {
       };        
         this.playerAvatar = this.player.left;
       }, 250);
+      
 
     },
     rightMove: function() {

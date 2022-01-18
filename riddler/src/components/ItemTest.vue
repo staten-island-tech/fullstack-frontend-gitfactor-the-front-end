@@ -1,5 +1,4 @@
 <template>
-  <div class="avatar">(^ . ^)</div>
   <button @click="moveAvatar(5)" v-on:keyup.enter="onEnter">Move avatar forward</button>
   <button @click="moveAvatar(-5)" v-on:keyup.enter="onEnter">Move avatar backward</button>
 
