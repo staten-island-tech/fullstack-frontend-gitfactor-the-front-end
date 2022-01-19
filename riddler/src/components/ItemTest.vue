@@ -2,7 +2,7 @@
 <div class="page-container"
 tabindex="-1"
 v-on:keyup.enter="onEnter">
-<PuzzlePopup/>
+<!-- <PuzzlePopup/> -->
  <div class="avatar">(^ . ^)</div>
   <button @click="moveAvatar(10)" >Avatar to 10</button>
   <button @click="moveAvatar(30)" >Avatar to 30</button>
@@ -22,7 +22,7 @@ v-on:keyup.enter="onEnter">
 
 
 <script>
-import PuzzlePopup from "@/components/PuzzlePopup.vue";
+/* import PuzzlePopup from "@/components/PuzzlePopup.vue"; */
 export default {
 
     name: "ItemTest",
