@@ -1,6 +1,6 @@
 <template>
 <div class="popup-container"
-v-show="puzzleVisibility">
+v-show ='puzzleVisibility'>
     <h1>puzzle question?</h1>
     <input type="text" class="puzzle-answer">
     <button v-on:click="puzzleButtonClick"
@@ -8,30 +8,6 @@ v-show="puzzleVisibility">
 </div>
     
 </template>
-
-
-
-<script>
-export default {
-    name: "PuzzlePopup",
-    data() {
-        return{
-    puzzleInput:"not working yet",
-    puzzleVisibility: true, 
-        }
-        
-
-    },
-    methods:
-    {
-        puzzleButtonClick(){
-            //console.log(this.puzzleInput);
-            this.puzzleVisibility = false;
-        },
-
-    },
-}
-</script>
 
 <style scoped>
 .popup-container{
@@ -43,3 +19,33 @@ export default {
     display:none;
 }
 </style>
+
+<script>
+export default {
+    name: "PuzzlePopup",
+
+    props: {
+    puzzleVisibility: Boolean, 
+
+    },
+    data() {
+        return{
+    puzzleInput:"not working yet",
+
+        }
+        
+
+    },
+    methods:
+    {
+        puzzleButtonClick(){
+            //console.log(this.puzzleInput);
+            console.log('sup');
+            this.$emit('changePopupVisibility', false)
+        },
+
+    },
+
+
+}
+</script>

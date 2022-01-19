@@ -1,8 +1,9 @@
 <template>
-<div class="page-container"
-tabindex="-1"
+<div class="page-container" tabindex="-1"
 v-on:keyup.enter="onEnter">
-<!-- <PuzzlePopup/> -->
+
+<PuzzlePopup :puzzleVisibility= "enteredOnObject"></PuzzlePopup>
+<PuzzlePopup @changePopupVisibility = "turnOff($event)"></PuzzlePopup>
  <div class="avatar">(^ . ^)</div>
   <button @click="moveAvatar(10)" >Avatar to 10</button>
   <button @click="moveAvatar(30)" >Avatar to 30</button>
@@ -14,21 +15,20 @@ v-on:keyup.enter="onEnter">
   <h1>{{ currentItem }}</h1>
 
   <img v-for="item in gameItems" :src="item.img" :style="{ left: item.margin, filter: item.filter }" :alt="item" :key="item.key">
-   
-</div>
-
+  </div>
 </template>
 
-
-
 <script>
-/* import PuzzlePopup from "@/components/PuzzlePopup.vue"; */
+ import PuzzlePopup from "@/components/PuzzlePopup.vue"; 
 export default {
-
     name: "ItemTest",
+    components: {
+        PuzzlePopup,
+    },
     data() {
         return {
             // offset: null,
+            enteredOnObject: false,
             avatarLocation: null,
             currentItem: null,
             gameItems: [
@@ -80,19 +80,22 @@ export default {
         },
         onEnter() {
             if (this.currentItem) {
-                alert(this.currentItem.prompt);
-                this.puzzleVisibility = true;
+                console.log('nice you are on target');
+                this.enteredOnObject = true;
             }
-        }
+            else{
+                console.log('u suck');
+                this.enteredOnObject = false;
+            }
+        }, 
+        turnOff(enteredOnObject) {
+            this.enteredOnObject = enteredOnObject;
+        },
     }
 }
 </script>
 
 <style scoped>
-.page-container{
-    width: 60vw;
-    height: 70vh;
-}
     h1 {
         font-size: 2rem;
     }
@@ -113,5 +116,9 @@ export default {
         height: 8rem;
         width: 8rem;
         border-radius: 3rem;
+    }
+    .page-container{
+        width: 100vw;
+        height: 100vh;
     }
 </style>
