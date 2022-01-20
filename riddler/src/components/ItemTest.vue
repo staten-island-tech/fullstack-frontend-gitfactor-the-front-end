@@ -4,6 +4,8 @@ v-on:keyup.enter="onEnter">
 
 <PuzzlePopup :puzzleVisibility= "enteredOnObject"></PuzzlePopup>
 <PuzzlePopup @changePopupVisibility = "turnOff($event)"></PuzzlePopup>
+<!-- https://stackoverflow.com/questions/64605807/vuejs-3-emit-event-from-child-to-parent-component-->
+
  <div class="avatar">(^ . ^)</div>
   <button @click="moveAvatar(10)" >Avatar to 10</button>
   <button @click="moveAvatar(30)" >Avatar to 30</button>

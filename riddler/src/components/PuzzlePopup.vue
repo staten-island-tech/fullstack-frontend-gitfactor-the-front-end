@@ -23,6 +23,7 @@ v-show ='puzzleVisibility'>
 <script>
 export default {
     name: "PuzzlePopup",
+    emits: ["changePopupVisibility"],
 
     props: {
     puzzleVisibility: Boolean, 
@@ -41,7 +42,7 @@ export default {
         puzzleButtonClick(){
             //console.log(this.puzzleInput);
             console.log('sup');
-            this.$emit('changePopupVisibility', false)
+            this.$emit("changePopupVisibility", "test")
         },
 
     },
