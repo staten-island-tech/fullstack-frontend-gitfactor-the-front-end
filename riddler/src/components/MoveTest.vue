@@ -29,9 +29,9 @@ export default {
           id: "0",
           position: 10,
           margin: "10%",
-          img: require("../assets/mushroom.png"),
+          img: require("../assets/riddl.png"),
           isInteractable: false,
-          prompt: "An amazing mushroom house",
+          prompt: "the riddler",
           filter: null,
           // isStorable
         }, 
@@ -40,9 +40,9 @@ export default {
           id: "0",
           position: 70,
           margin: "70%",
-          img: require("../assets/mushroom.png"),
+          img: require("../assets/prt.png"),
           isInteractable: false,
-          prompt: "Another amazing mushroom house",
+          prompt: "the vampire she tells you not to worry about",
           filter: null,
         }, 
       ],
@@ -100,7 +100,7 @@ export default {
                     this.offset = offset;
                     item.isInteractable = true;
                     this.currentItem = item;
-                    item.filter = "sepia(100%)";
+                    item.filter = "sepia(55%)";
                 } else {
                     item.isInteractable = false;
                     item.filter = null;
@@ -121,7 +121,7 @@ export default {
 <style scoped>
 
  .stick {
-    width: 15%;
+    width: 17.5%;
     display: flex;
     position:relative;
     left: var(--leftVar);
@@ -139,9 +139,9 @@ h1 {
 
     img {
         position: absolute;
-        bottom: 10%;
+        bottom: 0%;
         /* left: 25%; this is represented in the item.position property*/
-        width: 11.2rem;
+        width: 20%;
         border-radius: 3rem;
     }
 </style>
