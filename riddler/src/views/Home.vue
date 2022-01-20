@@ -1,23 +1,17 @@
 <template>
   <div class="home">
     <MoveTest class="player"/>
-    <ItemTest />
   </div>
 </template>
 
 <script>
 
 import MoveTest from "@/components/MoveTest.vue";
-import ItemTest from "@/components/ItemTest.vue";
 
 export default {
   name: "Home",
   components: {
-    MoveTest, ItemTest
-  },
-  data() {
-
-    
+    MoveTest
   },
 };
 </script>
