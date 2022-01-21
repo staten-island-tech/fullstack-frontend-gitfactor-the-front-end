@@ -1,9 +1,10 @@
 <template>
 <div class="popup-container"
 v-show ='puzzleVisibility'>
+<button v-on:click="closePuzzleClick">x</button>
     <h1>puzzle question?</h1>
     <input type="text" class="puzzle-answer">
-    <button v-on:click="puzzleButtonClick"
+    <button v-on:click="$emit('click', $event)"
     class="puzzle-submit-button" >enter</button>
 </div>
     
@@ -23,26 +24,23 @@ v-show ='puzzleVisibility'>
 <script>
 export default {
     name: "PuzzlePopup",
-    emits: ["changePopupVisibility"],
+    emits: ["click"],
 
     props: {
     puzzleVisibility: Boolean, 
 
     },
+
     data() {
         return{
     puzzleInput:"not working yet",
-
         }
-        
-
-    },
+        },
     methods:
     {
-        puzzleButtonClick(){
-            //console.log(this.puzzleInput);
-            console.log('sup');
-            this.$emit("changePopupVisibility", "test")
+     closePuzzleClick(){
+            console.log('trying to close');
+
         },
 
     },

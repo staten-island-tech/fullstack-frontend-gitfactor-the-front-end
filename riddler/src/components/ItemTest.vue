@@ -3,7 +3,7 @@
 v-on:keyup.enter="onEnter">
 
 <PuzzlePopup :puzzleVisibility= "enteredOnObject"></PuzzlePopup>
-<PuzzlePopup @changePopupVisibility = "turnOff($event)"></PuzzlePopup>
+<PuzzlePopup v-on:click="turnOff"></PuzzlePopup>
 <!-- https://stackoverflow.com/questions/64605807/vuejs-3-emit-event-from-child-to-parent-component-->
 
  <div class="avatar">(^ . ^)</div>
@@ -90,8 +90,11 @@ export default {
                 this.enteredOnObject = false;
             }
         }, 
-        turnOff(enteredOnObject) {
-            this.enteredOnObject = enteredOnObject;
+        turnOff() {
+            const test1 =  this.enteredOnObject;
+            this.enteredOnObject = false;
+            console.log(test1);
+             console.log('sup');
         },
     }
 }
