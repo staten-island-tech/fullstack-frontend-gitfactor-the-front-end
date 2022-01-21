@@ -1,6 +1,6 @@
 <template>
 <div>
-  <div class="player" :style="cssProps" v-on:keydown.left="leftMove();" v-on:keydown.right="rightMove();" v-on:keyup.left="resetLeft();" v-on:keyup.right="resetRight();" v-on:keyup.z="onEnter();" tabindex="-1">    
+  <div class="player" :style="cssProps" v-on:keydown.left="leftMove();" v-on:keydown.right="rightMove();" v-on:keyup.left="resetLeft();" v-on:keyup.right="resetRight();" v-on:keydown.z="onEnter();" tabindex="-1">    
     <img :src="require(`@/assets/sprites/${playerAvatar}`)" alt="" class="stick" >
   </div>
 
