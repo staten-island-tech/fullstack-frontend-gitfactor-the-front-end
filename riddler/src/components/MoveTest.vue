@@ -1,7 +1,7 @@
 <template>
-<div>
-  <div class="player" :style="cssProps" v-on:keydown.left="leftMove();" v-on:keydown.right="rightMove();" v-on:keyup.left="resetLeft();" v-on:keyup.right="resetRight();" v-on:keydown.z="onEnter();" tabindex="-1">    
-    <img :src="require(`@/assets/sprites/${playerAvatar}`)" alt="" class="stick" >
+<div class="gameContainer" v-on:keydown.left="leftMove();" v-on:keydown.right="rightMove();" v-on:keyup.left="resetLeft();" v-on:keyup.right="resetRight();" v-on:keydown.z="onEnter();">
+  <div class="player" :style="cssProps"  tabindex="-1">    
+    <img :src="require(`@/assets/sprites/${playerAvatar}`)" alt="" class="playerAvatar" >
   </div>
 
   <img v-for="item in gameItems" :src="item.img" :style="{ left: item.margin, filter: item.filter }" :alt="item" :key="item.key">
@@ -73,6 +73,7 @@ export default {
         this.leftValue += 1.5;
       };  
         this.playerAvatar = this.player.right;
+        console.log(this.offset);
         this.itemInteract();
       }, 250);
       
@@ -120,12 +121,16 @@ export default {
 
 <style scoped>
 
- .stick {
+.player {
+  width: 100%;
+  height: 100%;
+}
+
+ .playerAvatar {
     width: 17.5%;
     display: flex;
-    position:relative;
+    position: absolute;
     left: var(--leftVar);
-    z-index: -1;
   }
 
   .hide {
