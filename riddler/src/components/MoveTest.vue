@@ -1,5 +1,5 @@
 <template>
-<div class="gameContainer" v-on:keydown.left="leftMove();" v-on:keydown.right="rightMove();" v-on:keyup.left="resetLeft();" v-on:keyup.right="resetRight();" v-on:keydown.z="onEnter();">
+<div class="gameContainer" v-on:keydown.right="rightMove();" v-on:keyup.left="resetLeft();" v-on:keyup.right="resetRight();" v-on:keydown.z="onEnter();">
   <div class="player" :style="cssProps"  tabindex="-1">    
     <img :src="require(`@/assets/sprites/${playerAvatar}`)" alt="" class="playerAvatar" >
   </div>
@@ -48,6 +48,9 @@ export default {
       ],
     }
   },
+  created() {
+    this.moveListen()
+  },
   computed: {
     cssProps() { 
       return {
@@ -56,16 +59,20 @@ export default {
     }
   },
   methods: {
-    leftMove: function() {
-      setTimeout(() => {
-      if (this.leftValue > 0) {
-        this.leftValue -= 1.5;
-      };        
+    moveListen: function() {
+      console.log("AAAAAAAAAAAAAAAAA");
+      window.addEventListener('keydown', (e) => {
+        if (e.key == 'ArrowLeft') {
+          setTimeout(() => {
+            if (this.leftValue > 0) {
+           this.leftValue -= 1.5;
+             };        
         this.playerAvatar = this.player.left;
-        console.log(this.offset);
         this.itemInteract();
       }, 250);     
-
+          
+        }
+      })
     },
     rightMove: function() {
       setTimeout(() => {
@@ -73,14 +80,12 @@ export default {
         this.leftValue += 1.5;
       };  
         this.playerAvatar = this.player.right;
-        console.log(this.offset);
         this.itemInteract();
       }, 250);
       
     },
     resetLeft: function() {
       setTimeout(() => {
-      console.log("reset");
       this.playerAvatar = this.player.idleLeft;
       }, 250);
       this.itemInteract();
@@ -88,7 +93,6 @@ export default {
     },
       resetRight: function() {
       setTimeout(() => {
-      console.log("reset");
       this.playerAvatar = this.player.idleRight;
       }, 250);
       this.itemInteract();
