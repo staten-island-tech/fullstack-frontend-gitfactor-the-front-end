@@ -1,10 +1,11 @@
 <template>
+
 <div class="page-container" tabindex="-1"
 v-on:keyup.enter="onEnter">
 
-<PuzzlePopup v-on:turn-off="turnOff"
+<PuzzlePopup v-on:turn-off="turnOff" v-on:lose-heart="loseHeart"
 :puzzleVisibility= "enteredOnObject"></PuzzlePopup>
-
+<h1 class="hearts-counter">hearts: {{hearts }}</h1>
 <!-- https://stackoverflow.com/questions/64605807/vuejs-3-emit-event-from-child-to-parent-component-->
 
  <div class="avatar">(^ . ^)</div>
@@ -19,6 +20,7 @@ v-on:keyup.enter="onEnter">
 
   <img v-for="item in gameItems" :src="item.img" :style="{ left: item.margin, filter: item.filter }" :alt="item" :key="item.key">
   </div>
+  
 </template>
 
 <script>
@@ -34,6 +36,7 @@ export default {
             enteredOnObject: false,
             avatarLocation: null,
             currentItem: null,
+               hearts: 3,
             gameItems: [
                 {
                     name: "mushroom",
@@ -93,6 +96,12 @@ export default {
         }, 
         turnOff() { 
             this.enteredOnObject = false;
+        },
+        loseHeart(){
+            const heartsRemaining = this.hearts - 1;
+           this.hearts = heartsRemaining;
+            console.log(heartsRemaining);
+
         },
     }
 }

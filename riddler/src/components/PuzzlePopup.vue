@@ -3,8 +3,11 @@
 v-show ='puzzleVisibility'>
 <button v-on:click="closePuzzleClick">x</button>
     <h1>puzzle question?</h1>
-    <input type="text" class="puzzle-answer">
+    <input type="text" class="puzzle-answer"
+    v-model="puzzleAnswer">
     <button v-on:click="checkAnswerClick" class="puzzle-submit-button" >enter</button>
+    
+    
 </div>
     
 </template>
@@ -23,7 +26,7 @@ v-show ='puzzleVisibility'>
 <script>
 export default {
     name: "PuzzlePopup",
-    emits: ["turn-off"],
+    emits: ["turn-off", "lose-heart"],
 
     props: {
     puzzleVisibility: Boolean, 
@@ -33,6 +36,8 @@ export default {
     data() {
         return{
     puzzleInput:"not working yet",
+    puzzleAnswer: "" ,
+ 
         }
         },
     methods:
@@ -43,7 +48,16 @@ export default {
 
         },
         checkAnswerClick(){
-            console.log('this is to check the answer')
+            if(this.puzzleAnswer === "nika sucks"){
+                console.log('correct!');
+                this.$emit('turn-off'); 
+
+            }
+            else{
+                console.log('taking away 1 heart');
+                this.$emit('lose-heart');
+
+            }
         },
 
     },
