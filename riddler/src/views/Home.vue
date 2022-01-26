@@ -1,21 +1,22 @@
 <template>
   <div class="home">
-<!--     <PuzzlePopup/> -->
-  
+ 
     <ItemTest />
+    <MoveTest class="player"/>
   </div>
 </template>
 
 <script>
 
-/* 
-import PuzzlePopup from '@/components/PuzzlePopup.vue'; */
+
 import ItemTest from "@/components/ItemTest.vue";
+import MoveTest from "@/components/MoveTest.vue";
 
 export default {
   name: "Home",
   components: {
     ItemTest,
+    MoveTest,
   },
 };
 </script>
@@ -28,4 +29,17 @@ export default {
     height: 48rem;
     border: .3rem solid;
   }
+
+.player {
+    position: relative;
+    top: 0%;
+}
+.ground {
+  z-index: 2;
+  position: absolute;
+  left: 0%;
+  bottom: 0%;
+  height: 15%;
+}
+
 </style>
