@@ -69,11 +69,6 @@ export default {
           this.playerAvatar = this.player.left;
           this.itemInteract();
           }, 250);      
-        }
-        if (e.key === 'z') {
-          console.log(e.key);
-          return false;
-
         };
       })
     },
