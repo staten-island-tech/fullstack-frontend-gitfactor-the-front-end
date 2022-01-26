@@ -1,6 +1,12 @@
 <template>
 <div class="popup-container"
-v-show ='puzzleVisibility'>
+tabindex="-1"
+v-show ='puzzleVisibility'
+
+v-on:keyup.esc="closePuzzleClick"
+v-on:keyup.enter="checkAnswerClick"
+
+>
 <button v-on:click="closePuzzleClick">x</button>
     <h1>puzzle question?</h1>
     <input type="text" class="puzzle-answer"
