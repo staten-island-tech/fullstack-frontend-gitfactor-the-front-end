@@ -25,7 +25,7 @@ export default {
       currentItem: null,
       gameItems: [
         {
-          name: "mushroom",
+          name: "riddler",
           id: "0",
           position: 10,
           margin: "10%",
@@ -36,7 +36,7 @@ export default {
           // isStorable
         }, 
         {
-          name: "mushroom",
+          name: "avatar",
           id: "0",
           position: 70,
           margin: "70%",
@@ -60,18 +60,21 @@ export default {
   },
   methods: {
     moveListen: function() {
-      console.log("AAAAAAAAAAAAAAAAA");
       window.addEventListener('keydown', (e) => {
-        if (e.key == 'ArrowLeft') {
+        if (e.key === 'ArrowLeft') {
           setTimeout(() => {
             if (this.leftValue > 0) {
            this.leftValue -= 1.5;
              };        
-        this.playerAvatar = this.player.left;
-        this.itemInteract();
-      }, 250);     
-          
+          this.playerAvatar = this.player.left;
+          this.itemInteract();
+          }, 250);      
         }
+        if (e.key === 'z') {
+          console.log(e.key);
+          return false;
+
+        };
       })
     },
     rightMove: function() {
@@ -99,6 +102,7 @@ export default {
 
     },
     itemInteract() {
+            this.currentItem = null;
             this.gameItems.forEach(item => {
                 const offset = item.position - this.leftValue;
                 if (Math.abs(offset) <= 10 || (offset >= -10 && offset < 10)) {
@@ -109,13 +113,13 @@ export default {
                 } else {
                     item.isInteractable = false;
                     item.filter = null;
-                }
+                };
+
             });
         },
         onEnter() {
             if (this.currentItem) {              
               console.log(this.currentItem.prompt);
-                
             }
         },
   },

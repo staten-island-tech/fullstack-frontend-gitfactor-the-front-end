@@ -24,7 +24,6 @@ export default {
     height: 48rem;
     border: .3rem solid;
     overflow: hidden;
-    background-color: rgb(34, 13, 129);
   }
 
 .player {
