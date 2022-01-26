@@ -70,11 +70,6 @@ export default {
           this.itemInteract();
           }, 250);      
         }
-        if (e.key === 'z') {
-          console.log(e.key);
-          return false;
-
-        };
       })
     },
     rightMove: function() {
