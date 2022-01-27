@@ -6,6 +6,7 @@
 
   <img v-for="item in gameItems" :src="item.img" :style="{ left: item.margin, filter: item.filter }" :alt="item" :key="item.key">
   </div>
+  
 </template>
 
 <script>
