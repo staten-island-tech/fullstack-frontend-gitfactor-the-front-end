@@ -30,16 +30,14 @@ textArray: [
  txtbx: false,
 txtbxShow(){
 this.txtbx = true;
-if(this.txtbx === true){
- const dialogue = document.querySelector(".textbox-test").innerHTML;
+const dialogue = document.querySelector(".textbox-test").innerHTML;
  console.log(dialogue)
  var btn = document.querySelector(".textbox-button");
-  let count = 0;
-  btn.onclick = function () {
-            count++;
-              console.log(count); //when it's in here, this returns 1 (repeatedly), when it's outside it returns 0
-        }
-}
+ btn.addEventListener("click", function() {
+  let counter = 0;
+counter += 1;
+  console.log(counter);
+});
 },
   }
 }
