@@ -3,7 +3,7 @@
     <button v-on:click="txtbxShow" class="textbox-button">Enter</button>
     <div v-if="txtbx" class="textbox">
       <p class="textbox-title">Count Dracula</p>
-<p class="textbox-test">hi</p>
+<p class="textbox-test">{{textArray[0].text}}</p>
     </div>
   </div>
 </template>
@@ -28,15 +28,17 @@ textArray: [
   }
 ], 
  txtbx: false,
-// txtbxShowFunction(){
-
-// }
 txtbxShow(){
 this.txtbx = true;
-// console.log(document.querySelector("textbox-test").innerHTML); returns null
 if(this.txtbx === true){
-const dialogue = document.querySelector(".textbox-test").textContent;
-console.log(dialogue)
+ const dialogue = document.querySelector(".textbox-test").innerHTML;
+ console.log(dialogue)
+ var btn = document.querySelector(".textbox-button");
+  let count = 0;
+  btn.onclick = function () {
+            count++;
+              console.log(count); //when it's in here, this returns 1 (repeatedly), when it's outside it returns 0
+        }
 }
 },
   }
