@@ -2,7 +2,8 @@
   <div >
     <button v-on:click="txtbxShow" class="textbox-button">Z</button>
     <div v-if="txtbx" class="textbox">
-      <p class="textbox-title">Count Dracula</p>
+      <p class="textbox-title">{{}}</p> 
+      <!-- will also have to make the above character label an object property rather than a static heading, I have TWO different characters speaking here -->
 <p class="textbox-test">{{ textArray[0].text }}</p>
     </div>
   </div>
@@ -18,16 +19,19 @@ textArray: [
     text: "Mwahaha welcome to my castle~",
     characterID: 1, 
     order: 1,
+    name: "Count Dracula"
   }, 
   {
      text: "I didn't come here by choice...what is this?",
     characterID: 0, 
     order: 2,
+    name: "???"
   },
   {
      text: "This...huh. I don't actually know what this is either! I just said that cause I thought it was spooky :D",
     characterID: 1, 
     order: 3, 
+    name: "Count Dracula"
   }
 ], 
  txtbx: false,
@@ -38,16 +42,25 @@ methods: {
   txtbxShow(){
 this.txtbx = true;
 this.count +=1;
-// console.log(this.count);
+const charLabel = document.querySelector(".textbox-title")
+console.log(charLabel);
 const textOutput = document.querySelector(".textbox-test");
 console.log(textOutput.innerHTML);
-// if(this.count === this.textArray.order){
-//   textOutput.innerHTML = this.textArray[2].text;
-// }
 this.textArray.forEach(object => {
+  const num = this.count -1;
   if(this.count === object.order){
-    console.log("hi")
+    textOutput.innerHTML = this.textArray[num].text;
+    console.log(object.characterID) //characterID only shows up correctly here, will have to write below in here I think
+     if(object.characterID === 0){
+    //some style/make default styling for each or smthn?? some property?? bind??? we'll see/PROBABLY V-BIND A CLASS
   }
+  if(object.characterId === 1){
+    //some style
+  }
+  } 
+  // if(this.count != object.order ) { 
+  //   this.txtbx = false;
+  // } this WILL NOT work
 });
 }
 }
