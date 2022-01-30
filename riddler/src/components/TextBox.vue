@@ -1,9 +1,8 @@
 <template>
   <div >
     <button v-on:click="txtbxShow" class="textbox-button">Z</button>
-    <div v-if="txtbx" class="textbox">
-      <p class="textbox-title">{{}}</p> 
-      <!-- will also have to make the above character label an object property rather than a static heading, I have TWO different characters speaking here -->
+    <div v-show="txtbx" class="textbox">
+      <p class="textbox-title">{{ textArray[0].name }}</p> 
 <p class="textbox-test">{{ textArray[0].text }}</p>
     </div>
   </div>
@@ -23,13 +22,13 @@ textArray: [
   }, 
   {
      text: "I didn't come here by choice...what is this?",
-    characterID: 0, 
+    characterID: 2, 
     order: 2,
     name: "???"
   },
   {
      text: "This...huh. I don't actually know what this is either! I just said that cause I thought it was spooky :D",
-    characterID: 1, 
+    characterID: 3, 
     order: 3, 
     name: "Count Dracula"
   }
@@ -50,11 +49,15 @@ this.textArray.forEach(object => {
   const num = this.count -1;
   if(this.count === object.order){
     textOutput.innerHTML = this.textArray[num].text;
-    console.log(object.characterID) //characterID only shows up correctly here, will have to write below in here I think
+    console.log(object.characterID)
+    charLabel.innerHTML = this.textArray[num].name;
      if(object.characterID === 0){
+       console.log("test");
+      //  charLabel.innerHTML = "Count Dracula"
     //some style/make default styling for each or smthn?? some property?? bind??? we'll see/PROBABLY V-BIND A CLASS
   }
   if(object.characterId === 1){
+    // charLabel.innerHTML = "???"
     //some style
   }
   } 
@@ -77,7 +80,8 @@ this.textArray.forEach(object => {
   left: 40%;
   border-radius: 50%;
   border:#DECEFF solid 0.3rem ;
-  padding: 2rem;
+ height: 7.5rem;
+ width: 7.5rem;
 }
 .textbox{
   border: red 1rem solid;
