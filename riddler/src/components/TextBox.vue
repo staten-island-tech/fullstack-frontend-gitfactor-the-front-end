@@ -1,10 +1,10 @@
 <template>
-  <div >
-    <button v-on:click="txtbxShow" class="textbox-button">Z</button>
-    <div v-show="txtbx" class="textbox">
-      <p class="textbox-title">{{ textArray[0].name }}</p> 
-<p class="textbox-test">{{ textArray[0].text }}</p>
-    </div>
+  <div>
+<button v-on:click="txtbxShow" class="textbox-button">Z</button>
+<div v-bind:class="{ AC: mainAnt }" v-show="txtbx" class="textbox">
+      <p class="textbox-title"></p> 
+      <p class="textbox-test"></p>
+</div>
   </div>
 </template>
 
@@ -22,19 +22,20 @@ textArray: [
   }, 
   {
      text: "I didn't come here by choice...what is this?",
-    characterID: 2, 
+    characterID: 0, 
     order: 2,
     name: "???"
   },
   {
      text: "This...huh. I don't actually know what this is either! I just said that cause I thought it was spooky :D",
-    characterID: 3, 
+    characterID: 1, 
     order: 3, 
     name: "Count Dracula"
   }
 ], 
  txtbx: false,
  count: 0,
+ mainAnt: false,
   }
 }, 
 methods: {
@@ -42,29 +43,20 @@ methods: {
 this.txtbx = true;
 this.count +=1;
 const charLabel = document.querySelector(".textbox-title")
-console.log(charLabel);
 const textOutput = document.querySelector(".textbox-test");
-console.log(textOutput.innerHTML);
-this.textArray.forEach(object => {
-  const num = this.count -1;
-  if(this.count === object.order){
+const num = this.count -1;
+if(this.count <= this.textArray.length){
     textOutput.innerHTML = this.textArray[num].text;
-    console.log(object.characterID)
     charLabel.innerHTML = this.textArray[num].name;
-     if(object.characterID === 0){
-       console.log("test");
-      //  charLabel.innerHTML = "Count Dracula"
-    //some style/make default styling for each or smthn?? some property?? bind??? we'll see/PROBABLY V-BIND A CLASS
+   if(this.textArray[num].characterID === 1){
+       this.mainAnt = true;
+   } else if(this.textArray[num].characterID === 0){
+       this.mainAnt = false;
+    }
+  }else{
+    this.txtbx = false;
+    this.count = 0;
   }
-  if(object.characterId === 1){
-    // charLabel.innerHTML = "???"
-    //some style
-  }
-  } 
-  // if(this.count != object.order ) { 
-  //   this.txtbx = false;
-  // } this WILL NOT work
-});
 }
 }
 }
@@ -84,7 +76,7 @@ this.textArray.forEach(object => {
  width: 7.5rem;
 }
 .textbox{
-  border: red 1rem solid;
+  border: purple 1rem solid;
   background-color: black;
   width: 100%;
   height: 20rem;
@@ -101,5 +93,8 @@ padding-top: 1rem;
 }
 .textbox-title{
   font-size: 2.5rem;
+}
+.AC{
+  border: green 1rem solid;
 }
 </style>
