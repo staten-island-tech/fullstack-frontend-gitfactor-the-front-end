@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-on:keyup.z="txtbxShow();">
 <button v-on:click="txtbxShow" class="textbox-button">Z</button>
 <div v-bind:class="{ AC: mainAnt }" v-show="txtbx" class="textbox">
       <p class="textbox-title"></p> 
@@ -36,6 +36,8 @@ textArray: [
  txtbx: false,
  count: 0,
  mainAnt: false,
+ i: 0,
+ speed: 50,
   }
 }, 
 methods: {
@@ -53,11 +55,16 @@ if(this.count <= this.textArray.length){
    } else if(this.textArray[num].characterID === 0){
        this.mainAnt = false;
     }
+  //    if (this.i < textOutput.innerHTML.length) {
+  //   textOutput.innerHTML += textOutput.innerHTML.charAt(this.i);
+  //   this.i++;
+  //   setTimeout(this.speed);
+  // }
   }else{
     this.txtbx = false;
     this.count = 0;
   }
-}
+},
 }
 }
 </script>
