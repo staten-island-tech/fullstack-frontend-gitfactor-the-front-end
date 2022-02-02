@@ -1,5 +1,5 @@
 <template>
-  <div v-on:keyup.z="txtbxShow();">
+  <div v-on:keypress.z="txtbxShow();">
 <button v-on:click="txtbxShow();" class="textbox-button">Z</button>
 <div v-bind:class="{ AC: mainAnt }" v-show="txtbx" class="textbox">
       <p class="textbox-title"></p> 
@@ -42,7 +42,7 @@ methods: {
   txtbxShow(){
 this.txtbx = true;
 this.count +=1;
-const charLabel = document.querySelector(".textbox-title")
+const charLabel = document.querySelector(".textbox-title");
 const textOutput = document.querySelector(".textbox-test");
 const num = this.count -1;
 if(this.count <= this.textArray.length){
