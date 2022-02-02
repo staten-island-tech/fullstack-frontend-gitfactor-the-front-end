@@ -45,7 +45,7 @@ export default {
   },
   mounted() {
     this.loadCanvas();
-    this.moveListen();
+    this.moveListen()
 
   },
   computed: {
@@ -58,6 +58,15 @@ export default {
       const avatar = document.getElementById("playerAvatar");
       ctx.transform(.4, 0, 0, .4, 0, 0);
       ctx.drawImage(avatar, 0, 225);
+      
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+          console.log("hi");
+          setTimeout(() => {
+            ctx.translate(-20,-20);
+          }, 250);      
+        }
+      });
     },
      moveListen: function() {
       window.addEventListener('keydown', (e) => {
@@ -69,17 +78,25 @@ export default {
           this.playerAvatar = this.player.left;
           this.itemInteract();
           }, 250);      
-      window.addEventListener('keyup', (e) => {
-        if (e.key === 'ArrowLeft') {
-          setTimeout(() => {
-         this.playerAvatar = this.player.idleLeft;
-          }, 250);
-         this.itemInteract();
-
-        ;      
         }
       })
-    },      
+    },
+    rightMove: function() {
+      setTimeout(() => {
+      if (this.leftValue <= 85) {
+        this.leftValue += 1.5;
+      };  
+        this.playerAvatar = this.player.right;
+        this.itemInteract();
+      }, 250);
+      
+    },
+    resetLeft: function() {
+      setTimeout(() => {
+      this.playerAvatar = this.player.idleLeft;
+      }, 250);
+      this.itemInteract();
+
     },
       resetRight: function() {
       setTimeout(() => {
