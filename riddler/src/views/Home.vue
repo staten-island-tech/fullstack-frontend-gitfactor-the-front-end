@@ -1,7 +1,6 @@
 <template>
   <div class="home">
  
-    <ItemTest />
     <MoveTest class="player"/>
   </div>
 </template>
@@ -9,13 +8,12 @@
 <script>
 
 
-import ItemTest from "@/components/ItemTest.vue";
-import MoveTest from "@/components/MoveTest.vue";
+ import MoveTest from "@/components/MoveTest.vue";
 
 export default {
   name: "Home",
   components: {
-    ItemTest,
+   
     MoveTest,
   },
 };

@@ -5,14 +5,24 @@
   </div>
 
   <img v-for="item in gameItems" :src="item.img" :style="{ left: item.margin, filter: item.filter }" :alt="item" :key="item.key">
+
+  <PuzzlePopup v-on:turn-off="turnOff" v-on:lose-heart="loseHeart"
+:puzzleVisibility= "enteredOnObject"></PuzzlePopup>
+<h1 class="hearts-counter">hearts: {{hearts }}</h1>
   </div>
+  
 </template>
 
 <script>
+ import PuzzlePopup from "@/components/PuzzlePopup.vue"; 
 export default {
   name:"MoveTest",
+  components:{
+    PuzzlePopup,
+  },
   data() {
     return {
+       
       player: {
           idleLeft: "idle-left.gif",
           idleRight: "idle-right.gif",
@@ -23,6 +33,8 @@ export default {
       leftValue: 50,
       offset: null,
       currentItem: null,
+      hearts:3, 
+      enteredOnObject: false,
       gameItems: [
         {
           name: "riddler",
@@ -113,9 +125,23 @@ export default {
             });
         },
         onEnter() {
-            if (this.currentItem) {              
-              console.log(this.currentItem.prompt);
+              if (this.currentItem) {
+                console.log('nice you are on target');
+                this.enteredOnObject = true;
             }
+            else{
+                console.log('u suck');
+                this.enteredOnObject = false;
+            }
+        },
+         turnOff() { 
+            this.enteredOnObject = false;
+        },
+        loseHeart(){
+            const heartsRemaining = this.hearts - 1;
+           this.hearts = heartsRemaining;
+            console.log(heartsRemaining);
+
         },
   },
 

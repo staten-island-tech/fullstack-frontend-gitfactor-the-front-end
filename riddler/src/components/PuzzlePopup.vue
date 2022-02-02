@@ -30,6 +30,7 @@ v-on:keyup.enter="checkAnswerClick"
 </style>
 
 <script>
+
 export default {
     name: "PuzzlePopup",
     emits: ["turn-off", "lose-heart"],
@@ -50,18 +51,21 @@ export default {
     {
      closePuzzleClick(){
             console.log('trying to close');
-            this.$emit('turn-off');            
+            this.$emit('turn-off'); 
+            this.puzzleAnswer = null;           
 
         },
         checkAnswerClick(){
             if(this.puzzleAnswer === "nika sucks"){
                 console.log('correct!');
                 this.$emit('turn-off'); 
+                this.puzzleAnswer = null;  
 
             }
             else{
                 console.log('taking away 1 heart');
                 this.$emit('lose-heart');
+                this.puzzleAnswer = null;  
 
             }
         },
