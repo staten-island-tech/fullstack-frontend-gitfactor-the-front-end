@@ -1,9 +1,9 @@
 <template>
   <div v-on:keyup.z="txtbxShow();">
-<button v-on:click="txtbxShow" class="textbox-button">Z</button>
+<button v-on:click="txtbxShow();" class="textbox-button">Z</button>
 <div v-bind:class="{ AC: mainAnt }" v-show="txtbx" class="textbox">
       <p class="textbox-title"></p> 
-      <p class="textbox-test"></p>
+      <p class="textbox-test typing-class"></p>
 </div>
   </div>
 </template>
@@ -13,6 +13,9 @@ export default {
 name: "TextBox",
 data() {
   return {
+txtbx: false,
+count: 0,
+mainAnt: false,
 textArray: [
   {
     text: "Mwahaha welcome to my castle~",
@@ -33,12 +36,7 @@ textArray: [
     name: "Count Dracula"
   }
 ], 
- txtbx: false,
- count: 0,
- mainAnt: false,
- i: 0,
- speed: 50,
-  }
+}
 }, 
 methods: {
   txtbxShow(){
@@ -55,11 +53,6 @@ if(this.count <= this.textArray.length){
    } else if(this.textArray[num].characterID === 0){
        this.mainAnt = false;
     }
-  //    if (this.i < textOutput.innerHTML.length) {
-  //   textOutput.innerHTML += textOutput.innerHTML.charAt(this.i);
-  //   this.i++;
-  //   setTimeout(this.speed);
-  // }
   }else{
     this.txtbx = false;
     this.count = 0;
@@ -101,6 +94,17 @@ padding-top: 1rem;
 .textbox-title{
   font-size: 2.5rem;
 }
+/* .typing-class{
+  width: 0;
+  overflow: hidden;
+   white-space: nowrap; 
+  animation: 
+    typing 1.75s steps(40, end) forwards;
+}
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+} */
 .AC{
   border: green 1rem solid;
 }
