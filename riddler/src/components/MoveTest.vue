@@ -1,5 +1,5 @@
 <template>
-<div class="gameContainer" v-on:keydown.right="rightMove();" v-on:keyup.left="resetLeft();" v-on:keyup.right="resetRight();" v-on:keydown.z="onEnter();">
+<div class="gameContainer" v-on:keydown.right="rightMove();" v-on:keydown.left="leftMove();" v-on:keyup.left="resetLeft();" v-on:keyup.right="resetRight();" v-on:keydown.z="onEnter();">
   <div class="player" :style="cssProps"  tabindex="-1">    
     <img :src="require(`@/assets/sprites/${playerAvatar}`)" alt="" class="playerAvatar" >
   </div>
@@ -62,17 +62,19 @@ export default {
   methods: {
     moveListen: function() {
       window.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft') {
-          setTimeout(() => {
-            if (this.leftValue > 0) {
-           this.leftValue -= 1.5;
-             };        
-          this.playerAvatar = this.player.left;
-          this.itemInteract();
-          }, 250);      
-        }
+        console.log(e.key);
       })
-    },
+    },    
+    leftMove: function() {
+      setTimeout(() => {
+      if (this.leftValue > 0) {
+        this.leftValue -= 1.5;
+      };  
+        this.playerAvatar = this.player.left;
+        this.itemInteract();
+      }, 250);
+      },
+
     rightMove: function() {
       setTimeout(() => {
       if (this.leftValue <= 85) {
