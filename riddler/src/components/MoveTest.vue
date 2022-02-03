@@ -1,5 +1,5 @@
 <template>
-<div class="gameContainer" v-on:keydown.right="rightMove();" v-on:keydown.left="leftMove();" v-on:keyup.left="resetLeft();" v-on:keyup.right="resetRight();" v-on:keydown.z="onEnter();">
+<div class="gameContainer" v-on:keydown.right="rightMove();" v-on:keydown.left="leftMove();" v-on:keyup="reset();" v-on:keydown.z="onEnter();">
   <div class="player" :style="cssProps"  tabindex="-1">    
     <img :src="require(`@/assets/sprites/${playerAvatar}`)" alt="" class="playerAvatar" >
   </div>
@@ -15,8 +15,7 @@ export default {
   data() {
     return {
       player: {
-          idleLeft: "idle-left.gif",
-          idleRight: "idle-right.gif",
+          idle: "idle-left.gif",
           left: "walk-left.gif",
           right: "walk-right.gif",
       },
@@ -50,7 +49,7 @@ export default {
     }
   },
   created() {
-    this.moveListen()
+
   },
   computed: {
     cssProps() { 
@@ -59,13 +58,9 @@ export default {
       }
     }
   },
-  methods: {
-    moveListen: function() {
-      window.addEventListener('keydown', (e) => {
-        console.log(e.key);
-      })
-    },    
+  methods: {  
     leftMove: function() {
+      this.player.idle = "idle-left.gif";
       setTimeout(() => {
       if (this.leftValue > 0) {
         this.leftValue -= 1.5;
@@ -76,6 +71,7 @@ export default {
       },
 
     rightMove: function() {
+      this.player.idle = "idle-right.gif";
       setTimeout(() => {
       if (this.leftValue <= 85) {
         this.leftValue += 1.5;
@@ -85,16 +81,9 @@ export default {
       }, 250);
       
     },
-    resetLeft: function() {
+    reset: function() {
       setTimeout(() => {
-      this.playerAvatar = this.player.idleLeft;
-      }, 250);
-      this.itemInteract();
-
-    },
-      resetRight: function() {
-      setTimeout(() => {
-      this.playerAvatar = this.player.idleRight;
+      this.playerAvatar = this.player.idle;
       }, 250);
       this.itemInteract();
 
