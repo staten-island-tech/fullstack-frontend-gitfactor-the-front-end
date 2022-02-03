@@ -1,14 +1,15 @@
 <template>
 <div class="gameContainer" v-on:keydown.right="rightMove();" v-on:keyup.left="resetLeft();" v-on:keyup.right="resetRight();" v-on:keydown.z="onEnter();">
-  <div class="player" :style="cssProps"  tabindex="-1">    
+  <div class="player" :style="cssProps"  tabindex="-1" ref="playerMove">    
     <img :src="require(`@/assets/sprites/${playerAvatar}`)" alt="" class="playerAvatar" >
   </div>
 
   <img v-for="item in gameItems" :src="item.img" :style="{ left: item.margin, filter: item.filter }" :alt="item" :key="item.key">
 
-  <PuzzlePopup v-on:turn-off="turnOff" v-on:lose-heart="loseHeart"
+  <PuzzlePopup ref="puzzlePopup" v-on:turn-off="turnOff" v-on:lose-heart="loseHeart"
 :puzzleVisibility= "enteredOnObject"></PuzzlePopup>
 <h1 class="hearts-counter">hearts: {{hearts }}</h1>
+<h1 class="score-counter">score:{{score}}</h1>
   </div>
   
 </template>
@@ -34,6 +35,7 @@ export default {
       offset: null,
       currentItem: null,
       hearts:3, 
+      score: 0,
       enteredOnObject: false,
       gameItems: [
         {
@@ -62,6 +64,12 @@ export default {
   },
   created() {
     this.moveListen()
+   
+
+  },
+  mounted() {
+    this.testPageLoad();
+
   },
   computed: {
     cssProps() { 
@@ -108,6 +116,10 @@ export default {
       this.itemInteract();
 
     },
+    testPageLoad(){
+      this.$refs.playerMove.focus();
+
+    },
     itemInteract() {
             this.currentItem = null;
             this.gameItems.forEach(item => {
@@ -128,6 +140,7 @@ export default {
               if (this.currentItem) {
                 console.log('nice you are on target');
                 this.enteredOnObject = true;
+                 this.$refs.puzzlePopup.$el.focus();
             }
             else{
                 console.log('u suck');
@@ -136,6 +149,8 @@ export default {
         },
          turnOff() { 
             this.enteredOnObject = false;
+            const currentScore = this.score + 100;
+            this.score = currentScore;
         },
         loseHeart(){
             const heartsRemaining = this.hearts - 1;
