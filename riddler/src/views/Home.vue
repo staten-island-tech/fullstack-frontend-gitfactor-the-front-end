@@ -1,17 +1,20 @@
 <template>
   <div class="home">
     <MoveTest class="player"/>
+    <TextBox />
   </div>
 </template>
 
 <script>
 
 import MoveTest from "@/components/MoveTest.vue";
+import TextBox from "../components/TextBox.vue";
 
 export default {
   name: "Home",
   components: {
-    MoveTest
+    MoveTest,
+    TextBox
   },
 };
 </script>
