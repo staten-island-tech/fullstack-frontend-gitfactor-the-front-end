@@ -1,7 +1,7 @@
 <template>
-<div class="gameContainer" @keydown.right="rightMove();" @keydown.left="leftMove();" @keyup="reset();" @keydown.z="onEnter();">
+<div class="game-container" @keydown.right="rightMove()" @keydown.left="leftMove()" @keyup="reset()" @keydown.z="onEnter()">
   <div class="player" :style="cssProps" tabindex="-1">    
-    <img :src="require(`@/assets/sprites/${playerAvatar}`)" alt="" class="playerAvatar" >
+    <img :src="require(`@/assets/sprites/${playerAvatar}`)" class="player-avatar" >
   </div>
 
   <img v-for="item in gameItems" :src="item.img" :style="{ left: item.margin, filter: item.filter }" :alt="item" :key="item.key">
@@ -9,7 +9,7 @@
           <p class="textbox-title"></p> 
           <p class="textbox-test typing-class"></p>
   </div>
-      <button @click="txtbxShow();" class="textbox-button">Z</button>
+      <button @click="onEnter()" class="textbox-button">Z</button>
 </div>      
 </template>
 
@@ -27,6 +27,17 @@ export default {
       leftValue: 50,
       currentItem: null,
       gameItems: [
+        {
+          name: "Mushroom",
+          id: "0",
+          position: 40,
+          margin: "40%",
+          img: require("../assets/mushroom.png"),
+          isInteractable: false,
+          filter: null,
+          itemType: "object", 
+          prompt: "An amazing mushroom house!!"
+        },
         {
           name: "Riddler",
           id: "0",
@@ -134,26 +145,26 @@ export default {
       });
     },
     onEnter() {
-      if (this.currentItem.itemType === "item") {              
+      if (this.currentItem.itemType === "object") {              
         alert(this.currentItem.prompt);
       } else if (this.currentItem.itemType === "character") {              
         this.txtbxShow();
       }
     },
     txtbxShow() {
-      this.txtbx = true;
-      this.textCount +=1;
-      const charLabel = document.querySelector(".textbox-title");
-      const textOutput = document.querySelector(".textbox-test");
-      const num = this.textCount - 1;
-      if (this.textCount <= this.currentItem.dialogue.length) {
+      if (this.textCount < this.currentItem.dialogue.length) {
+        this.txtbx = true;
+        this.textCount +=1;
+        const charLabel = document.querySelector(".textbox-title");
+        const textOutput = document.querySelector(".textbox-test");
+        const num = this.textCount - 1;
         textOutput.innerHTML = this.currentItem.dialogue[num].text;
         charLabel.innerHTML = this.currentItem.dialogue[num].name;
-        if (this.currentItem.dialogue[num].isAntagonist) {
-          this.mainAnt = true;
-        } else {
-          this.mainAnt = false;
-        }
+          if (this.currentItem.dialogue[num].isAntagonist) {
+            this.mainAnt = true;
+          } else {
+            this.mainAnt = false;
+          }
       } else {
         this.txtbx = false;
         this.textCount = 0;
@@ -164,7 +175,7 @@ export default {
 </script>
 
 <style scoped>
-.gameContainer {
+.game-container {
   width: 100%;
   height: 100%;
 }
@@ -173,7 +184,7 @@ export default {
   height: 100%;
 }
 
- .playerAvatar {
+ .player-avatar {
     width: 17.5%;
     display: flex;
     position: absolute;
