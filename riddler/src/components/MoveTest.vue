@@ -3,11 +3,13 @@
   <div class="player" :style="cssProps"  tabindex="-1" ref="playerMove">    
     <img :src="require(`@/assets/sprites/${playerAvatar}`)" alt="" class="playerAvatar" >
   </div>
+  <button class="resume-button" v-on:click="enablePlayerMovement" >resume</button>
+  <button class="testingPuzzleClick" v-on:click="testingPopup">test</button>
 
   <img v-for="item in gameItems" :src="item.img" :style="{ left: item.margin, filter: item.filter }" :alt="item" :key="item.key">
 
-  <PuzzlePopup ref="puzzlePopup" v-on:turn-off="turnOff" v-on:lose-heart="loseHeart"
-:puzzleVisibility= "enteredOnObject"></PuzzlePopup>
+  <PuzzlePopup ref="puzzlePopupBox" v-on:turn-off="turnOff" v-on:lose-heart="loseHeart"
+:puzzleVisibility= "enteredOnObject" :puzzleAnswer="testPuzzleAnswer" ></PuzzlePopup>
 <h1 class="hearts-counter">hearts: {{hearts }}</h1>
 <h1 class="score-counter">score:{{score}}</h1>
   </div>
@@ -37,6 +39,7 @@ export default {
       hearts:3, 
       score: 0,
       enteredOnObject: false,
+      testPuzzleAnswer: "nika sucks", //tested puzzle answer value (working as a prop)
       gameItems: [
         {
           name: "riddler",
@@ -68,7 +71,7 @@ export default {
 
   },
   mounted() {
-    this.testPageLoad();
+    this.enablePlayerMovement();
 
   },
   computed: {
@@ -116,10 +119,13 @@ export default {
       this.itemInteract();
 
     },
-    testPageLoad(){
+    enablePlayerMovement(){
       this.$refs.playerMove.focus();
-
+     
     },
+     testingPopup(){
+         this.$refs.puzzlePopupBox.$el.focus();
+      },
     itemInteract() {
             this.currentItem = null;
             this.gameItems.forEach(item => {
@@ -139,18 +145,18 @@ export default {
         onEnter() {
               if (this.currentItem) {
                 console.log('nice you are on target');
-                this.enteredOnObject = true;
-                 this.$refs.puzzlePopup.$el.focus();
+                this.enteredOnObject = true;   
             }
             else{
                 console.log('u suck');
                 this.enteredOnObject = false;
-            }
+            };
         },
          turnOff() { 
             this.enteredOnObject = false;
             const currentScore = this.score + 100;
             this.score = currentScore;
+            this.enablePlayerMovement();
         },
         loseHeart(){
             const heartsRemaining = this.hearts - 1;

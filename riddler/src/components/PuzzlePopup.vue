@@ -10,7 +10,7 @@ v-on:keyup.enter="checkAnswerClick"
 <button v-on:click="closePuzzleClick">x</button>
     <h1>puzzle question?</h1>
     <input type="text" class="puzzle-answer"
-    v-model="puzzleAnswer">
+    v-model="puzzleInput">
     <button v-on:click="checkAnswerClick" class="puzzle-submit-button" >enter</button>
     
     
@@ -37,13 +37,14 @@ export default {
 
     props: {
     puzzleVisibility: Boolean, 
+    puzzleAnswer: String,
 
     },
 
     data() {
         return{
-    puzzleInput:"not working yet",
-    puzzleAnswer: "" ,
+    puzzleInput: "" ,
+    
  
         }
         },
@@ -52,20 +53,22 @@ export default {
      closePuzzleClick(){
             console.log('trying to close');
             this.$emit('turn-off'); 
-            this.puzzleAnswer = null;           
+            this.puzzleInput = null; 
+                    
 
         },
         checkAnswerClick(){
-            if(this.puzzleAnswer === "nika sucks"){
+            if(this.puzzleInput === this.puzzleAnswer){
                 console.log('correct!');
                 this.$emit('turn-off'); 
-                this.puzzleAnswer = null;  
+                this.puzzleInput = null;  
+                
 
             }
             else{
                 console.log('taking away 1 heart');
                 this.$emit('lose-heart');
-                this.puzzleAnswer = null;  
+                this.puzzleInput = null;  
 
             }
         },
