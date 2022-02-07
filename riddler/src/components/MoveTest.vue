@@ -1,21 +1,20 @@
 <template>
-<div class="game-container" @keydown.right="rightMove()" @keydown.left="leftMove()" @keyup="reset()" @keydown.z="onEnter()">
-  <div class="player" :style="cssProps" tabindex="-1">    
-    <img :src="require(`@/assets/sprites/${playerAvatar}`)" class="player-avatar" >
-  </div>
-
-  <img v-for="item in gameItems" :src="item.img" :style="{ left: item.margin, filter: item.filter }" :alt="item" :key="item.key">
-  <div :class="{ AC: mainAnt }" v-show="txtbx" class="textbox">
-          <p class="textbox-title"></p> 
-          <p class="textbox-test typing-class"></p>
-  </div>
-      <button @click="onEnter()" class="textbox-button">Z</button>
-</div>      
+  <div class="game-container" @keydown.right="rightMove()" @keydown.left="leftMove()" @keyup="reset()" @keydown.z="onEnter()">
+    <div class="player" :style="cssProps" tabindex="-1">    
+      <img :src="require(`@/assets/sprites/${playerAvatar}`)" class="player-avatar" >
+    </div>
+    <img v-for="item in gameItems" :src="item.img" :style="{ left: item.margin, filter: item.filter }" :alt="item" :key="item.key">
+    <div :class="{ AC: mainAnt }" v-show="txtbx" class="textbox">
+            <p class="textbox-title"></p> 
+            <p class="textbox-test typing-class"></p>
+    </div>
+        <button @click="onEnter()" class="textbox-button">Z</button>
+  </div>      
 </template>
 
 <script>
 export default {
-  name:"MoveTest",
+  name: "MoveTest",
   data() {
     return {
       player: {
@@ -36,7 +35,7 @@ export default {
           isInteractable: false,
           filter: null,
           itemType: "object", 
-          prompt: "An amazing mushroom house!!"
+          prompt: "Do you want to pick up this amazing mushroom house?"
         },
         {
           name: "Riddler",
@@ -101,7 +100,7 @@ export default {
       return {
         '--leftVar': (this.leftValue) + "%",
       }
-    }
+    },
   },
   methods: {  
     leftMove: function() {
@@ -146,7 +145,9 @@ export default {
     },
     onEnter() {
       if (this.currentItem.itemType === "object") {              
-        alert(this.currentItem.prompt);
+        if (confirm(this.currentItem.prompt)) {
+        this.$store.state.inventory.push(this.currentItem);
+        }
       } else if (this.currentItem.itemType === "character") {              
         this.txtbxShow();
       }
@@ -175,9 +176,13 @@ export default {
 </script>
 
 <style scoped>
+
 .game-container {
-  width: 100%;
-  height: 100%;
+  position: relative;
+  width: 60vw;
+  height: 45vw;
+  border: .3rem solid;
+  overflow: hidden;
 }
 .player {
   width: 100%;
