@@ -82,7 +82,7 @@ export default {
     }
   },
   methods: {
-    moveListen: function() {
+   /*  moveListen: function() {
       window.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowLeft') {
           setTimeout(() => {
@@ -94,15 +94,21 @@ export default {
           }, 250);      
         };
       })
-    },
-    rightMove: function() {
-      setTimeout(() => {
+    }, */
+    rightMove: function(e) {
+      if(this.currentItem && e.key === "ArrowRight") {
+        e.preventDefault(); // i broke the site
+      }
+      else {
+ setTimeout(() => {
       if (this.leftValue <= 85) {
         this.leftValue += 1.5;
       };  
         this.playerAvatar = this.player.right;
         this.itemInteract();
       }, 250);
+      }
+     
       
     },
     resetLeft: function() {
@@ -145,7 +151,12 @@ export default {
         onEnter() {
               if (this.currentItem) {
                 console.log('nice you are on target');
-                this.enteredOnObject = true;   
+                this.enteredOnObject = true;  
+               setTimeout(() => {   this.testingPopup();  }, 10);
+               
+
+                
+                
             }
             else{
                 console.log('u suck');
@@ -158,12 +169,19 @@ export default {
             this.score = currentScore;
             this.enablePlayerMovement();
         },
-        loseHeart(){
+        loseHeart() {
             const heartsRemaining = this.hearts - 1;
            this.hearts = heartsRemaining;
             console.log(heartsRemaining);
 
         },
+        disableMovement(key) {
+        
+          if(key.key === "ArrowRight" || key.key === "ArrowLeft") {
+            console.log("test");
+          }
+
+        }
   },
 
 }
