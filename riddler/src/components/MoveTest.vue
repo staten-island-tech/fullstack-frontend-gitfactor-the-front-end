@@ -144,12 +144,13 @@ export default {
       });
     },
     onEnter() {
-      if (this.currentItem.itemType === "object") {              
-        if (confirm(this.currentItem.prompt)) {
-        this.$store.state.inventory.push(this.currentItem);
+      if (this.currentItem) {
+        if (this.currentItem.itemType === "object") {     
+          //show popup, see if user wants to pick up item         
+          this.$store.state.inventory.push(this.currentItem);
+        } else if (this.currentItem.itemType === "character") {              
+          this.txtbxShow();
         }
-      } else if (this.currentItem.itemType === "character") {              
-        this.txtbxShow();
       }
     },
     txtbxShow() {

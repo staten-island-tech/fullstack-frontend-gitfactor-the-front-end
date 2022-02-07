@@ -1,6 +1,6 @@
 <template>
     <section class="inventory">
-        <img v-for="item in $store.state.inventory" :src="item.img" :alt="item.name">
+        <img @click="itemDetails(item)" v-for="item in $store.state.inventory" :src="item.img" :alt="item.name">
     </section>
 </template>
 
@@ -11,6 +11,11 @@ export default {
         inventory() {
             return this.$store.state.inventory;
         },
+    },
+    methods: {
+        itemDetails(item) {
+            alert(`This item is a ${item.name}.`);
+        }
     }
 }
 </script>
