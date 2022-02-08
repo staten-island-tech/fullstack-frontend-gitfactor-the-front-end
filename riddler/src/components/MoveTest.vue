@@ -96,7 +96,7 @@ export default {
       })
     }, 
     rightMove: function(e) {
-      if(this.currentItem && e.key === "ArrowRight") {
+      if(this.enteredOnObject && e.key === "ArrowRight") {
         e.preventDefault(); // i broke the site
       }
       else {
