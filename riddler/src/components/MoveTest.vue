@@ -82,7 +82,7 @@ export default {
     }
   },
   methods: {
-   /*  moveListen: function() {
+     moveListen: function() {
       window.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowLeft') {
           setTimeout(() => {
@@ -94,7 +94,7 @@ export default {
           }, 250);      
         };
       })
-    }, */
+    }, 
     rightMove: function(e) {
       if(this.currentItem && e.key === "ArrowRight") {
         e.preventDefault(); // i broke the site
