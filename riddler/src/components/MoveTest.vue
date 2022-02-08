@@ -71,8 +71,8 @@ export default {
     cssProps() { 
       return {
         '--leftVar': (this.leftValue) + "%",
-      }
-    }
+      };
+    },
   },
   methods: {  
     leftMove: function() {
@@ -95,7 +95,7 @@ export default {
         this.playerAvatar = this.player.right;
         this.itemInteract();
       }, 250);
-      }
+      },
      
       
     },
@@ -134,10 +134,7 @@ export default {
                 console.log('nice you are on target');
                 this.enteredOnObject = true;  
                setTimeout(() => {   this.testingPopup();  }, 10);
-               
-
-                
-                
+ 
             }
             else{
                 console.log('u suck');
@@ -161,11 +158,14 @@ export default {
           if(key.key === "ArrowRight" || key.key === "ArrowLeft") {
             console.log("test");
           }
+          else{
+
+          };
 
         }
-  },
+  };
 
-}
+
 </script>
 
 <style scoped>
