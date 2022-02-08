@@ -3,7 +3,7 @@
     <div class="player" :style="cssProps" tabindex="-1">    
       <img :src="require(`@/assets/sprites/${playerAvatar}`)" class="player-avatar" >
     </div>
-    <img v-for="item in gameItems" :src="item.img" :style="{ left: item.margin, filter: item.filter }" :alt="item" :key="item.key">
+    <img v-for="item in gameItems" :src="item.img" :style="{ left: item.margin, filter: item.filter }" :alt="item" :key="item.id">
     <div :class="{ AC: mainAnt }" v-show="txtbx" class="textbox">
             <p class="textbox-title"></p> 
             <p class="textbox-test typing-class"></p>
