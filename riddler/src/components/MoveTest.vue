@@ -1,10 +1,9 @@
 <template>
-<div class="gameContainer" v-on:keydown.right="rightMove();" v-on:keyup.left="resetLeft();" v-on:keyup.right="resetRight();" v-on:keydown.z="onEnter();">
-  <div class="player" :style="cssProps"  tabindex="-1" ref="playerMove">    
+    <div class="gameContainer" v-on:keydown.right="rightMove();" v-on:keydown.left="leftMove();" v-on:keyup="reset();" v-on:keydown.z="onEnter();">
+  <div class="player" :style="cssProps"  tabindex="-1" ref="playerMove">  
     <img :src="require(`@/assets/sprites/${playerAvatar}`)" alt="" class="playerAvatar" >
   </div>
-  <button class="resume-button" v-on:click="enablePlayerMovement" >resume</button>
-  <button class="testingPuzzleClick" v-on:click="testingPopup">test</button>
+  
 
   <img v-for="item in gameItems" :src="item.img" :style="{ left: item.margin, filter: item.filter }" :alt="item" :key="item.key">
 
@@ -87,15 +86,15 @@ export default {
         if (e.key === 'ArrowLeft') {
           setTimeout(() => {
             if (this.leftValue > 0) {
-           this.leftValue -= 1.5;
+           this.leftValue -= 0;
              };        
-          this.playerAvatar = this.player.left;
           this.itemInteract();
           }, 250);      
         };
       })
     }, 
     rightMove: function(e) {
+      this.player.idle = "idle-right.gif";
       if(this.enteredOnObject && e.key === "ArrowRight") {
         e.preventDefault(); // i broke the site
       }
@@ -108,23 +107,29 @@ export default {
         this.itemInteract();
       }, 250);
       }
-     
       
     },
-    resetLeft: function() {
+    leftMove: function(e) {
+      this.player.idle = "idle-left.gif";
+      if(this.enteredOnObject && e.key === "ArrowLeft"){
+         e.preventDefault(); // i broke the site
+      }
+      else {
       setTimeout(() => {
-      this.playerAvatar = this.player.idleLeft;
-      }, 250);
-      this.itemInteract();
-
-    },
-      resetRight: function() {
+            if (this.leftValue > 0) {
+              this.leftValue -= 1.5;
+            };  
+              this.playerAvatar = this.player.left;
+              this.itemInteract();
+            }, 250);
+      }      
+      },
+          reset: function() {
       setTimeout(() => {
       this.playerAvatar = this.player.idleRight;
+      this.playerAvatar = this.player.idle;
       }, 250);
-      this.itemInteract();
-
-    },
+      },
     enablePlayerMovement(){
       this.$refs.playerMove.focus();
      
@@ -165,8 +170,8 @@ export default {
         },
          turnOff() { 
             this.enteredOnObject = false;
-            const currentScore = this.score + 100;
-            this.score = currentScore;
+            //const currentScore = this.score + 100;
+            //this.score = currentScore;
             this.enablePlayerMovement();
         },
         loseHeart() {
