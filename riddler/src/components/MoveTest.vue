@@ -1,6 +1,6 @@
 <template>
-<div class="gameContainer" v-on:keydown.right="rightMove();" v-on:keydown.left="leftMove();" v-on:keyup="reset();" v-on:keydown.z="onEnter();">
-  <div class="player" :style="cssProps"  tabindex="-1">    
+<div class="gameContainer" v-on:keydown.right="rightMove();" v-on:keyup.left="resetLeft();" v-on:keyup.right="resetRight();" v-on:keydown.z="onEnter();">
+  <div class="player" :style="cssProps"  tabindex="-1" ref="playerMove">    
     <img :src="require(`@/assets/sprites/${playerAvatar}`)" alt="" class="playerAvatar" >
   </div>
   <button class="resume-button" v-on:click="enablePlayerMovement" >resume</button>
@@ -27,7 +27,8 @@ export default {
     return {
        
       player: {
-          idle: "idle-left.gif",
+          idleLeft: "idle-left.gif",
+          idleRight: "idle-right.gif",
           left: "walk-left.gif",
           right: "walk-right.gif",
       },
@@ -65,6 +66,12 @@ export default {
     }
   },
   created() {
+    this.moveListen()
+   
+
+  },
+  mounted() {
+    this.enablePlayerMovement();
 
   },
   computed: {
@@ -74,21 +81,26 @@ export default {
       };
     },
   },
-  methods: {  
-    leftMove: function() {
-      this.player.idle = "idle-left.gif";
-      setTimeout(() => {
-      if (this.leftValue > 0) {
-        this.leftValue -= 1.5;
-      };  
-        this.playerAvatar = this.player.left;
-        this.itemInteract();
-      }, 250);
-      },
-
-    rightMove: function() {
-      this.player.idle = "idle-right.gif";
-      setTimeout(() => {
+  methods: {
+     moveListen: function() {
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+          setTimeout(() => {
+            if (this.leftValue > 0) {
+           this.leftValue -= 1.5;
+             };        
+          this.playerAvatar = this.player.left;
+          this.itemInteract();
+          }, 250);      
+        };
+      })
+    }, 
+    rightMove: function(e) {
+      if(this.enteredOnObject && e.key === "ArrowRight") {
+        e.preventDefault(); // i broke the site
+      }
+      else {
+ setTimeout(() => {
       if (this.leftValue <= 85) {
         this.leftValue += 1.5;
       };  
@@ -99,9 +111,16 @@ export default {
      
       
     },
-    reset: function() {
+    resetLeft: function() {
       setTimeout(() => {
-      this.playerAvatar = this.player.idle;
+      this.playerAvatar = this.player.idleLeft;
+      }, 250);
+      this.itemInteract();
+
+    },
+      resetRight: function() {
+      setTimeout(() => {
+      this.playerAvatar = this.player.idleRight;
       }, 250);
       this.itemInteract();
 
