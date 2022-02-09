@@ -38,7 +38,7 @@ export default {
       hearts:3, 
       score: 0,
       enteredOnObject: false,
-      testPuzzleAnswer: "nika sucks", //tested puzzle answer value (working as a prop)
+      testPuzzleAnswer: "yes", //tested puzzle answer value (working as a prop)
       gameItems: [
         {
           name: "riddler",
