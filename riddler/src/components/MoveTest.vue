@@ -6,6 +6,8 @@
 
   <img v-for="item in gameItems" :src="item.img" :style="{ left: item.margin, filter: item.filter }" :alt="item" :key="item.key">
   <div :class="{ AC: mainAnt }" v-show="txtbx" class="textbox">
+         <img :src="require(`@/assets/sprites/${player.dialogueSprite}`)" class="player-avatar-dialogue" >
+         <img :src="require(`@/assets/sprites/${npcDialogueSprite}`)" class="npc-avatar-dialogue" >
           <p class="textbox-title"></p> 
           <p class="textbox-test typing-class"></p>
   </div>
@@ -22,8 +24,10 @@ export default {
           idle: "idle-left.gif",
           left: "walk-left.gif",
           right: "walk-right.gif",
+          dialogueSprite: "sprite_dialogue_player.png"
       },
       playerAvatar: "idle-left.gif",
+      npcDialogueSprite: "sprite_dialogue_riddl.png",
       leftValue: 50,
       currentItem: null,
       gameItems: [
@@ -47,6 +51,7 @@ export default {
           isInteractable: false,
           filter: null,
           itemType: "character", //could also be puzzle, object, etc.
+          dialogueSprite: "sprite_dialogue_riddl.png",
           dialogue: [
             {
               text: "Mwahaha welcome to my tower~",
@@ -178,8 +183,12 @@ export default {
 .game-container {
   width: 100%;
   height: 100%;
+  background-image: url("../assets/environment/lv1/bg_lv_1.png");
+  background-size: 300%;
+  background-repeat: no-repeat;
 }
 .player {
+  z-index: -2;
   width: 100%;
   height: 100%;
 }
@@ -189,6 +198,20 @@ export default {
     display: flex;
     position: absolute;
     left: var(--leftVar);
+  }
+
+  .player-avatar-dialogue {
+    z-index: -1;
+    width: 70%;
+    right: -20%;
+    bottom: -350%;
+  }
+
+  .npc-avatar-dialogue {
+    z-index: -1;
+    width: 70%;
+    left: -17%;
+    bottom: -350%;
   }
 
   .hide {
@@ -208,17 +231,17 @@ export default {
  width: 7.5rem;
 }
 .textbox{
-  border: purple 1rem solid;
-  background-color: black;
+  border: rgb(166, 11, 187) 1rem solid;
+  background-color: rgb(14, 11, 43);
   width: 100%;
-  height: 20rem;
+  min-height: 15rem;
 position: absolute;
 bottom: 0;
 padding: 2rem;
 padding-top: 1rem;
 }
 .textbox-test, .textbox-title{
-  color: white;
+  color: rgb(244, 235, 255);
   font-size: 2rem;
   text-align: left;
   margin-top: 0.5rem;
@@ -227,7 +250,7 @@ padding-top: 1rem;
   font-size: 2.5rem;
 }
 .AC{
-  border: green 1rem solid;
+  border: rgb(55, 11, 218) 1rem solid;
 }
 
 h1 {
@@ -235,6 +258,7 @@ h1 {
 }
 
 img {
+    z-index: -2;
     position: absolute;
     bottom: 0%;
     /* left: 25%; this is represented in the item.position property*/
