@@ -3,7 +3,7 @@
     <div class="player" :style="cssProps" tabindex="-1">    
       <img :src="require(`@/assets/sprites/${playerAvatar}`)" class="player-avatar" >
     </div>
-    <img v-for="item in gameItems" :src="item.img" :style="{ left: item.margin, filter: item.filter }" :alt="item" :key="item.id">
+    <img v-for="item in gameItems" :src="item.img" :style="{ left: item.margin, filter: item.filter, display: item.display }" :alt="item" :key="item.id">
     <div :class="{ AC: mainAnt }" v-show="txtbx" class="textbox">
             <p class="textbox-title"></p> 
             <p class="textbox-test typing-class"></p>
@@ -28,18 +28,18 @@ export default {
       gameItems: [
         {
           name: "Mushroom",
-          id: "0",
+          id: 0,
           position: 40,
           margin: "40%",
           img: require("../assets/mushroom.png"),
           isInteractable: false,
           filter: null,
           itemType: "object", 
-          prompt: "Do you want to pick up this amazing mushroom house?"
+          prompt: "Do you want to pick up this amazing mushroom house?",
         },
         {
           name: "Riddler",
-          id: "0",
+          id: 1,
           position: 10,
           margin: "10%",
           img: require("../assets/riddl.png"),
@@ -65,7 +65,7 @@ export default {
         }, 
         {
           name: "Protagonist",
-          id: "0",
+          id: 2,
           position: 70,
           margin: "70%",
           img: require("../assets/prt.png"),
@@ -145,7 +145,8 @@ export default {
     },
     onEnter() {
       if (this.currentItem) {
-        if (this.currentItem.itemType === "object") {     
+        if (this.currentItem.itemType === "object") {   
+          this.gameItems.splice(this.currentItem.id, 1);
           //show popup, see if user wants to pick up item         
           this.$store.state.inventory.push(this.currentItem);
         } else if (this.currentItem.itemType === "character") {              

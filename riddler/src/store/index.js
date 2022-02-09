@@ -7,9 +7,8 @@ export default createStore({
     lifeCount: 5,
     //level in propgress
     //what section 
-    //user leftValue
-    //user inventory
     //puzzles completed?
+    //items left in level
 
   },
   mutations: {
