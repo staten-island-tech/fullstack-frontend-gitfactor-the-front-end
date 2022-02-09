@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <MoveTest class="player"/>
+    <MoveTest />
   </div>
 </template>
 
@@ -11,7 +11,7 @@ import MoveTest from "@/components/MoveTest.vue";
 export default {
   name: "Home",
   components: {
-    MoveTest
+    MoveTest,
   },
 };
 </script>
