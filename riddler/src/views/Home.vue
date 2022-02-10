@@ -1,27 +1,18 @@
 <template>
   <div class="home">
-    <ObjectTest />
+    <img alt="Vue logo" src="../assets/logo.png" />
+    <HelloWorld msg="Welcome to Your Vue.js App" />
   </div>
 </template>
 
 <script>
-
-import ObjectTest from "@/components/ObjectTest.vue";
+// @ is an alias to /src
+import HelloWorld from "@/components/HelloWorld.vue";
 
 export default {
   name: "Home",
   components: {
-    ObjectTest
+    HelloWorld,
   },
 };
 </script>
-
-<style scoped>
-  .home {
-    position: relative;
-    display: inline-block;
-    width: 80rem;
-    height: 48rem;
-    border: .3rem solid;
-  }
-</style>
