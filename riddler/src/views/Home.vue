@@ -1,6 +1,7 @@
 <template>
   <div class="home">
-    <MoveTest />
+    <MoveTest class="game" />
+    <div class="solid" >a</div>
   </div>
 </template>
 
@@ -30,12 +31,15 @@ export default {
     position: relative;
     top: 0%;
 }
-.ground {
-  z-index: 2;
-  position: absolute;
-  left: 0%;
-  bottom: 0%;
-  height: 15%;
+
+.game {
+  display: flex;
+}
+
+.solid {
+  width: 100%;
+  height: 100%;
+background-color: rgb(28, 18, 175);
 }
 
 </style>

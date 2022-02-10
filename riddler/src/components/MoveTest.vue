@@ -1,5 +1,6 @@
 <template>
 <div class="game-container" @keydown.right="rightMove()" @keydown.left="leftMove()" @keyup="reset()" @keydown.z="onEnter()">
+  <img :src="require(`@/assets/environment/lv1/${currentLocation}`)" class="bg-img" >
   <div class="player" :style="cssProps" tabindex="-1">    
     <img :src="require(`@/assets/sprites/${playerAvatar}`)" class="player-avatar" >
   </div>
@@ -30,6 +31,7 @@ export default {
       npcDialogueSprite: "sprite_dialogue_riddl.png",
       leftValue: 50,
       currentItem: null,
+      currentLocation: "bg_1_a.png",
       gameItems: [
         {
           name: "Mushroom",
@@ -183,9 +185,6 @@ export default {
 .game-container {
   width: 100%;
   height: 100%;
-  background-image: url("../assets/environment/lv1/bg_lv_1.png");
-  background-size: 300%;
-  background-repeat: no-repeat;
 }
 .player {
   z-index: -2;
@@ -197,18 +196,17 @@ export default {
     width: 17.5%;
     display: flex;
     position: absolute;
+    bottom: 10%;
     left: var(--leftVar);
   }
 
   .player-avatar-dialogue {
-    z-index: -1;
     width: 70%;
     right: -20%;
     bottom: -350%;
   }
 
   .npc-avatar-dialogue {
-    z-index: -1;
     width: 70%;
     left: -17%;
     bottom: -350%;
@@ -253,6 +251,14 @@ padding-top: 1rem;
   border: rgb(55, 11, 218) 1rem solid;
 }
 
+.bg-img {
+  width: 130%;
+  z-index: -5;
+  position: absolute;
+  bottom: 5%;
+  left: -20%;
+}
+
 h1 {
   font-size: 2rem;
 }
@@ -260,7 +266,7 @@ h1 {
 img {
     z-index: -2;
     position: absolute;
-    bottom: 0%;
+    bottom: 10%;
     /* left: 25%; this is represented in the item.position property*/
     width: 20%;
     border-radius: 3rem;
