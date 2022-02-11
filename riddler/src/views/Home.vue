@@ -28,10 +28,9 @@ export default {
 
 <style scoped>
   .home {
-    position: relative;
+    
     display: inline-block;
-    width: 80rem;
-    height: 48rem;
+
     border: .3rem solid;
     display: flex;
   }
