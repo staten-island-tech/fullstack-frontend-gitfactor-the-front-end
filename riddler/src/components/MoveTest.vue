@@ -8,7 +8,8 @@
   <img v-for="item in gameItems" :src="item.img" :style="{ left: item.margin, filter: item.filter }" :alt="item" :key="item.key">
   <div :class="{ AC: mainAnt }" v-show="txtbx" class="textbox">
          <img :src="require(`@/assets/sprites/${player.dialogueSprite}`)" class="player-avatar-dialogue" >
-         <img :src="require(`@/assets/sprites/${npcDialogueSprite}`)" class="npc-avatar-dialogue" >
+         <img :src="require(`@/assets/sprites/${npcDialogueSprite}`)" class="npc-avatar-dialogue hide" id=
+         "npc-dialogue-sprite">
           <p class="textbox-title"></p> 
           <p class="textbox-test typing-class"></p>
   </div>
@@ -31,7 +32,7 @@ export default {
       npcDialogueSprite: "sprite_dialogue_riddl.png",
       leftValue: 50,
       currentItem: null,
-      currentLocation: "bg_1_a.png",
+      currentLocation: "bg_1_c.png",
       gameItems: [
         {
           name: "Mushroom",
@@ -79,7 +80,8 @@ export default {
           img: require("../assets/prt.png"),
           isInteractable: false,
           filter: null,
-          itemType: "character", 
+          itemType: "character",
+          dialogueSprite: "sprite_dialogue_player.png", 
           dialogue: [
             {
               text: "What? Am I talking to myself",
@@ -171,7 +173,9 @@ export default {
             this.mainAnt = true;
           } else {
             this.mainAnt = false;
-          }
+          };
+         const npcSprite = document.getElementById("npc-dialogue-sprite");
+          npcSprite.classList.remove("hide");
       } else {
         this.txtbx = false;
         this.textCount = 0;
@@ -185,9 +189,10 @@ export default {
 .game-container {
   width: 100%;
   height: 100%;
+
 }
 .player {
-  z-index: -2;
+  
   width: 100%;
   height: 100%;
 }
@@ -221,7 +226,7 @@ export default {
   background-color: #766696;
   color: #DECEFF;
   position: absolute;
-  top: 30%;
+  bottom: 10%;
   left: 40%;
   border-radius: 50%;
   border:#DECEFF solid 0.3rem ;
