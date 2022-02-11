@@ -212,7 +212,7 @@ export default {
             };
         },
         
-/*            onEnter() {
+/*    onEnter() {
       if (this.currentItem) {
         if (this.currentItem.itemType === "object") {   
           this.gameItems.splice(this.currentItem.id, 1);
@@ -271,14 +271,14 @@ export default {
 
 .game-container {
   position: relative;
-  width: 60vw;
+  width: 80vw;
   height: 45vw;
   border: .3rem solid;
   overflow: hidden;
 }
 .player {
-  width: 100%;
-  height: 100%;
+  width: inherit;
+  height: inherit;
 }
 
  .player-avatar {
