@@ -40,6 +40,7 @@ export default {
       enteredOnObject: false,
       testPuzzleAnswer: "yes", //tested puzzle answer value (working as a prop)
       gameItems: [
+   
         {
           name: "Mushroom",
           id: 0,
@@ -103,6 +104,30 @@ export default {
             }
         ],
         }, 
+             {
+          name: "Puzzle 1",
+          id: 3, 
+          position: 0,
+         // img: require("../assets/door.png"),
+          isInteractable: false,
+          filter: null, 
+          itemType: "puzzle",
+          puzzleType: 1,
+          prompt: "puzzle 1?",
+          puzzleAnswer: "the answer",
+        },
+        {
+            name: "Puzzle 2",
+          id: 4, 
+          position: 100,
+         // img: require("../assets/chest.jpg"),
+          isInteractable: false,
+          filter: null, 
+          itemType: "puzzle",
+          puzzleType: 2,
+          prompt: "puzzle 2?",
+          puzzleAnswer: "the answer 2",
+        },
       ],
       txtbx: false,
       textCount: 0,
