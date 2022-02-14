@@ -8,7 +8,7 @@
   <img v-for="item in gameItems" :src="item.img" :style="{ left: item.margin, filter: item.filter }" :alt="item" :key="item.key">
   <div :class="{ AC: mainAnt }" v-show="txtbx" class="textbox">
          <img :src="require(`@/assets/sprites/${player.dialogueSprite}`)" class="player-avatar-dialogue" >
-         <img :src="require(`@/assets/sprites/${npcDialogueSprite}`)" class="npc-avatar-dialogue hide" id=
+         <img :src="require(`@/assets/sprites/${npcDialogueSprite}`)" class="npc-avatar-dialogue" id=
          "npc-dialogue-sprite">
           <p class="textbox-title"></p> 
           <p class="textbox-test typing-class"></p>
@@ -31,6 +31,21 @@ export default {
       playerAvatar: "idle-left.gif",
       npcDialogueSprite: "sprite_dialogue_riddl.png",
       leftValue: 50,
+      playerLocation: [
+        {level: 1,
+            img: [
+              {id: 1,
+              img: "bg_1_a.png"
+              },
+              {id: 2,
+              img: "bg_1_b.png"
+              },
+              {id: 3,
+              img: "bg_1_c.png"
+              },
+            ],
+        },
+      ],
       currentItem: null,
       currentLocation: "bg_1_c.png",
       gameItems: [
@@ -122,6 +137,8 @@ export default {
         this.playerAvatar = this.player.left;
         this.itemInteract();
       }, 250);
+      console.log(this.playerLocation[this.currentLocation - 1]);
+
     },
     rightMove: function() {
       this.player.idle = "idle-right.gif";
@@ -132,6 +149,7 @@ export default {
         this.playerAvatar = this.player.right;
         this.itemInteract();
       }, 250); 
+      console.log(this.currentLocation);
     },
     reset: function() {
       setTimeout(() => {
@@ -174,8 +192,7 @@ export default {
           } else {
             this.mainAnt = false;
           };
-         const npcSprite = document.getElementById("npc-dialogue-sprite");
-          npcSprite.classList.remove("hide");
+          this.npcDialogueSprite = this.currentItem.dialogueSprite;
       } else {
         this.txtbx = false;
         this.textCount = 0;
