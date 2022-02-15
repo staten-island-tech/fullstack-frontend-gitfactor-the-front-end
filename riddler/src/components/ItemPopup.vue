@@ -5,7 +5,7 @@
     <p>
       <slot name="item-text"></slot>
     </p>
-    <button @click="$store.state.push(item)">
+    <button @click="$store.state..inventory.push(item)">
       Add to inventory
     </button>
   </div>
