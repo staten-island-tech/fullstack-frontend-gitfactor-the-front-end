@@ -1,25 +1,36 @@
 <template>
-<div class="game-container" @keydown.right="rightMove()" @keydown.left="leftMove()" @keyup="reset()" @keydown.z="onEnter()">
-  <img :src="require(`@/assets/environment/lv1/${currentLocation}`)" class="bg-img" >
-  <div class="player" :style="cssProps" tabindex="-1">    
-    <img :src="require(`@/assets/sprites/${playerAvatar}`)" class="player-avatar" >
-  </div>
+  <div class="game-container" @keydown.right="rightMove()" @keydown.left="leftMove()" @keyup="reset()" @keydown.z="onEnter()">
+    <img :src="require(`@/assets/environment/lv1/${currentLocation}`)" class="bg-img" >
+    <div class="player" :style="cssProps" tabindex="-1">    
+      <img :src="require(`@/assets/sprites/${playerAvatar}`)" class="player-avatar" >
+    </div>
 
-  <img v-for="item in gameItems" :src="item.img" :style="{ left: item.margin, filter: item.filter }" :alt="item" :key="item.key">
-  <div :class="{ AC: mainAnt }" v-show="txtbx" class="textbox">
-         <img :src="require(`@/assets/sprites/${player.dialogueSprite}`)" class="player-avatar-dialogue" >
-         <img :src="require(`@/assets/sprites/${npcDialogueSprite}`)" class="npc-avatar-dialogue hide" id=
-         "npc-dialogue-sprite">
-          <p class="textbox-title"></p> 
-          <p class="textbox-test typing-class"></p>
-  </div>
-      <button @click="onEnter()" class="textbox-button">Z</button>
-</div>      
+    <img v-for="item in gameItems" :src="item.img" :style="{ left: item.margin, filter: item.filter }" :alt="item" :key="item.key">
+    <div :class="{ AC: mainAnt }" v-show="txtbx" class="textbox">
+          <img :src="require(`@/assets/sprites/${player.dialogueSprite}`)" class="player-avatar-dialogue" >
+          <img :src="require(`@/assets/sprites/${npcDialogueSprite}`)" class="npc-avatar-dialogue hide" id=
+          "npc-dialogue-sprite">
+            <p class="textbox-title"></p> 
+            <p class="textbox-test typing-class"></p>
+    </div>
+    <item-popup v-if="itemPopup" @closePopup="closeItemPopup()" :item="currentItem">
+      <template v-slot:item-img>
+        <img class="itempopup-img" :src="currentItem.img" :alt="currentItem.name"/>
+      </template>
+      <template v-slot:item-text>
+        {{ currentItem.prompt }}
+      </template>
+    </item-popup>
+    <button @click="onEnter()" class="textbox-button">Z</button>
+  </div>      
 </template>
 
 <script>
+import ItemPopup from './ItemPopup.vue';
+
 export default {
-  name:"MoveTest",
+  name: "MoveTest",
+  components: { ItemPopup },
   data() {
     return {
       player: {
@@ -100,6 +111,7 @@ export default {
         ],
         }, 
       ],
+      itemPopup: false,
       txtbx: false,
       textCount: 0,
       mainAnt: false,
@@ -155,7 +167,7 @@ export default {
     },
     onEnter() {
       if (this.currentItem.itemType === "object") {              
-        alert(this.currentItem.prompt);
+        this.itemPopup = true;
       } else if (this.currentItem.itemType === "character") {              
         this.txtbxShow();
       }
@@ -181,6 +193,9 @@ export default {
         this.textCount = 0;
       }
     },
+    closeItemPopup() {
+      this.itemPopup = false;
+    }
   },
 }
 </script>
@@ -275,5 +290,9 @@ img {
     /* left: 25%; this is represented in the item.position property*/
     width: 20%;
     border-radius: 3rem;
+}
+.item-popup img {
+  position: unset;
+  margin-bottom: 5rem;
 }
 </style>
