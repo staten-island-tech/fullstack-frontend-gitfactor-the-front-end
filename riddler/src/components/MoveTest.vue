@@ -1,6 +1,6 @@
 <template>
 <div class="game-container" @keydown.right="rightMove()" @keydown.left="leftMove()" @keyup="reset()" @keydown.z="onEnter()">
-  <img :src="require(`@/assets/environment/lv1/${currentLocation}`)" class="bg-img" >
+  <img :src="require(`@/assets/environment/lv1/${currentLocation.img}`)" class="bg-img" >
   <div class="player" :style="cssProps" tabindex="-1">    
     <img :src="require(`@/assets/sprites/${playerAvatar}`)" class="player-avatar" >
   </div>
@@ -31,9 +31,10 @@ export default {
       playerAvatar: "idle-left.gif",
       npcDialogueSprite: "sprite_dialogue_riddl.png",
       leftValue: 50,
+      levelId: 1,
       playerLocation: [
-        {level: 1,
-            img: [
+        {
+            level: [
               {id: 1,
               img: "bg_1_a.png"
               },
@@ -47,7 +48,9 @@ export default {
         },
       ],
       currentItem: null,
-      currentLocation: "bg_1_c.png",
+      currentLocation: {
+        section: 3,
+        img: "bg_1_c.png",},
       gameItems: [
         {
           name: "Mushroom",
@@ -133,11 +136,16 @@ export default {
       setTimeout(() => {
       if (this.leftValue > 0) {
         this.leftValue -= 1.5;
+      } else {
+        if (this.currentLocation.section > 1){
+          this.currentLocation.section = this.currentLocation.section - 1;
+          this.leftValue = 84;
+          this.sectionChange();};
       };  
         this.playerAvatar = this.player.left;
         this.itemInteract();
       }, 250);
-      console.log(this.playerLocation[this.currentLocation - 1]);
+
 
     },
     rightMove: function() {
@@ -145,17 +153,25 @@ export default {
       setTimeout(() => {
       if (this.leftValue <= 85) {
         this.leftValue += 1.5;
-      };  
+      } else {
+        if (this.currentLocation.section < 3){
+          this.currentLocation.section = this.currentLocation.section + 1;
+          this.leftValue = 1;
+          this.sectionChange();};
+      };  ;  
         this.playerAvatar = this.player.right;
         this.itemInteract();
       }, 250); 
-      console.log(this.currentLocation);
     },
     reset: function() {
       setTimeout(() => {
       this.playerAvatar = this.player.idle;
       }, 250);
       this.itemInteract();
+    },
+    sectionChange() {
+       console.log(this.currentLocation);
+       this.currentLocation.img = this.playerLocation[this.levelId - 1].level[this.currentLocation.section - 1].img;
     },
     itemInteract() {
       this.currentItem = null;
