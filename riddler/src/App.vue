@@ -1,13 +1,14 @@
 <script setup>
-import { useAuth0, AuthState } from "./utils/useAuth0";
+import { useAuth0, AuthState } from "/utils/useAuth0.js";
 const { login, logout, initAuth } = useAuth0(AuthState);
 
+login();
+logout();
 initAuth();
 </script>
 
 <template>
   <div v-if="!AuthState.loading">
-    <img alt="Vue logo" src="./assets/logo.png" />
     <div v-if="!AuthState.isAuthenticated">
       <button @click="login()" class="btn btn-primary">Login</button>
     </div>

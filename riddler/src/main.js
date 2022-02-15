@@ -4,7 +4,8 @@ import router from "./router";
 import store from "./store/store";
 
 import authConfig from "../auth_config.json";
-import { setupAuth } from "./auth/auth0-plugin";
+// import { setupAuth } from "./auth/auth0-plugin";
+// import { setupAuth } from "./";
 
 let app = createApp(App).use(store).use(router);
 

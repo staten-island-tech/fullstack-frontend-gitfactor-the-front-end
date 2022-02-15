@@ -2,10 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/views/Home";
 import About from "@/views/About";
 
-import Callback from "@/views/Callback";
-import ErrorPage from "@/views/Error";
-
-import { routeGuard } from "";
+// import { routeGuard } from "";
 
 const routes = [
   {
@@ -17,17 +14,7 @@ const routes = [
     path: "/about",
     name: "About",
     component: About,
-    beforeEnter: routeGuard,
-  },
-  {
-    path: "/callback",
-    name: "Callback",
-    component: Callback,
-  },
-  {
-    path: "/error",
-    name: "Error",
-    component: ErrorPage,
+    // beforeEnter: routeGuard,
   },
 ];
 
