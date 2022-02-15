@@ -10,9 +10,9 @@
     </div>
         <button @click="onEnter()" class="textbox-button">Z</button>
         <PuzzlePopup ref="puzzlePopupBox" v-on:turn-off="turnOff" v-on:lose-heart="loseHeart"
-        :puzzleVisibility= "enteredOnObject" :puzzleAnswer="testPuzzleAnswer" ></PuzzlePopup>
-        <h1 class="hearts-counter">hearts: {{hearts }}</h1>
-        <h1 class="score-counter">score:{{score}}</h1>
+        :puzzleVisibility= "enteredOnObject" :puzzleAnswer="testPuzzleAnswer"
+        :puzzlePrompt ="testPuzzlePrompt"></PuzzlePopup>
+
   </div>      
 </template>
 
@@ -39,6 +39,7 @@ export default {
       score: 0,
       enteredOnObject: false,
       testPuzzleAnswer: "yes", //tested puzzle answer value (working as a prop)
+      testPuzzlePrompt: null,
       gameItems: [
    
         {
@@ -108,25 +109,27 @@ export default {
           name: "Puzzle 1",
           id: 3, 
           position: 0,
-         // img: require("../assets/door.png"),
+          margin:"0%",
+          img: require("../assets/door.png"),
           isInteractable: false,
           filter: null, 
           itemType: "puzzle",
           puzzleType: 1,
           prompt: "puzzle 1?",
-          puzzleAnswer: "the answer",
+          puzzleAnswer: "1",
         },
         {
             name: "Puzzle 2",
           id: 4, 
-          position: 100,
-         // img: require("../assets/chest.jpg"),
+          position: 85,
+          margin: "85%",
+          img: require("../assets/chest.jpg"),
           isInteractable: false,
           filter: null, 
           itemType: "puzzle",
           puzzleType: 2,
           prompt: "puzzle 2?",
-          puzzleAnswer: "the answer 2",
+          puzzleAnswer: "2",
         },
       ],
       txtbx: false,
@@ -223,21 +226,8 @@ export default {
         };
       });
     },
-        onEnter() {
-              if (this.currentItem) {
-                
-                this.enteredOnObject = true;  
-               setTimeout(() => {   this.testingPopup();  
-               }, 10);    
-                
-            }
-            else{
-                console.log('u suck');
-                this.enteredOnObject = false;
-            };
-        },
-        
-/*    onEnter() {
+             
+   onEnter() {
       if (this.currentItem) {
         if (this.currentItem.itemType === "object") {   
           this.gameItems.splice(this.currentItem.id, 1);
@@ -245,9 +235,24 @@ export default {
           this.$store.state.inventory.push(this.currentItem);
         } else if (this.currentItem.itemType === "character") {              
           this.txtbxShow();
+           
+        }
+        else if (this.currentItem.itemType === "puzzle") {        
+          this.enteredOnObject = true;
+          this.testPuzzleAnswer = this.currentItem.puzzleAnswer;
+          this.testPuzzlePrompt = this.currentItem.prompt;
+          setTimeout(() => {   this.testingPopup();  
+               }, 10);
+          if(this.currentItem.puzzleType === 1){
+            console.log('this is type 1');
+          }
+          else if(this.currentItem.puzzleType === 2){
+            console.log('this is type 2');
+          }
+
         }
       }
-    } */
+    }, 
          turnOff() { 
             this.enteredOnObject = false;
             //const currentScore = this.score + 100;
@@ -258,6 +263,7 @@ export default {
             const heartsRemaining = this.hearts - 1;
            this.hearts = heartsRemaining;
             console.log(heartsRemaining);
+            //$store.commit('decrementLives'); trying to kill the character
 
         },
         disableMovement(key) {

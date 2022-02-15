@@ -8,7 +8,7 @@ v-on:keyup.enter="checkAnswerClick"
 
 >
 <button v-on:click="closePuzzleClick" class="close-puzzle-button">x</button>
-    <h1 class="puzzleQuestionLine">puzzle question?</h1>
+    <h1 class="puzzleQuestionLine">{{puzzlePrompt}}</h1>
     <input type="text" class="puzzle-answer"
     v-model="puzzleInput">
     <button v-on:click="checkAnswerClick" class="puzzle-submit-button" >enter</button>
@@ -56,6 +56,7 @@ export default {
 
     props: {
     puzzleVisibility: Boolean, 
+    puzzlePrompt: String,
     puzzleAnswer: String,
 
     },
