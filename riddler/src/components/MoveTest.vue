@@ -47,18 +47,18 @@ export default {
       gameItems: [
         {
           name: "Mushroom",
-          id: "0",
+          id: 0,
           position: 40,
           margin: "40%",
           img: require("../assets/mushroom.png"),
           isInteractable: false,
           filter: null,
           itemType: "object", 
-          prompt: "An amazing mushroom house!!"
+          prompt: "Do you want to pick up this amazing mushroom house?",
         },
         {
           name: "Riddler",
-          id: "0",
+          id: 1,
           position: 10,
           margin: "10%",
           img: require("../assets/riddl.png"),
@@ -85,7 +85,7 @@ export default {
         }, 
         {
           name: "Protagonist",
-          id: "0",
+          id: 2,
           position: 70,
           margin: "70%",
           img: require("../assets/prt.png"),
@@ -122,7 +122,7 @@ export default {
       return {
         '--leftVar': (this.leftValue) + "%",
       }
-    }
+    },
   },
   methods: {  
     leftMove: function() {
@@ -171,6 +171,14 @@ export default {
       } else if (this.currentItem.itemType === "character") {              
         this.txtbxShow();
       }
+        //     if (this.currentItem) {
+        // if (this.currentItem.itemType === "object") {   
+        //   this.gameItems.splice(this.currentItem.id, 1);
+        //   //show popup, see if user wants to pick up item         
+        //   this.$store.state.inventory.push(this.currentItem);
+        // } else if (this.currentItem.itemType === "character") {              
+        //   this.txtbxShow();
+        // }
     },
     txtbxShow() {
       if (this.textCount < this.currentItem.dialogue.length) {
@@ -201,10 +209,13 @@ export default {
 </script>
 
 <style scoped>
-.game-container {
-  width: 100%;
-  height: 100%;
 
+.game-container {
+  position: relative;
+  width: 60vw;
+  height: 45vw;
+  border: .3rem solid;
+  overflow: hidden;
 }
 .player {
   
