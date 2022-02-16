@@ -12,6 +12,13 @@ v-on:keyup.enter="checkAnswerClick"
     <input type="text" class="puzzle-answer"
     v-model="puzzleInput">
     <button v-on:click="checkAnswerClick" class="puzzle-submit-button" >enter</button>
+    <div class="keypad-button-div">
+        <button class="puzzle-button">1</button>
+        <button class="puzzle-button">2</button>
+        <button class="puzzle-button">3</button>
+        <button class="puzzle-button">4</button>
+<!-- https://codesandbox.io/s/l2ovzz34m7?file=/src/main.js i need to create a keypad thing -->
+    </div>
     
     
 </div>

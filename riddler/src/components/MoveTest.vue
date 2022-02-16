@@ -249,6 +249,9 @@ export default {
           else if(this.currentItem.puzzleType === 2){
             console.log('this is type 2');
           }
+          else if(this.currentItem.puzzleType === 3){
+            console.log('this is type 3');
+          }
 
         }
       }
@@ -263,8 +266,7 @@ export default {
             const heartsRemaining = this.hearts - 1;
            this.hearts = heartsRemaining;
             console.log(heartsRemaining);
-            //$store.commit('decrementLives'); trying to kill the character
-
+            this.$store.commit('decrementLives');
         },
         disableMovement(key) {
         
