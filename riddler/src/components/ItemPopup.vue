@@ -1,11 +1,11 @@
 <template>
   <div class="item-popup">
-    <button @click="$emit('closePopup')">X</button>
+    <button @click="$emit('closePopup')" class="close-btn">X</button>
     <slot name="item-img"></slot>
     <p>
       <slot name="item-text"></slot>
     </p>
-    <button @click="$store.state..inventory.push(item)">
+    <button @click="$emit('itemAdded')" class="add-btn">
       Add to inventory
     </button>
   </div>
@@ -30,12 +30,23 @@ export default {
     border-radius: 1.5rem;
     background-color: #a791d4;
     z-index: 1;
+    overflow: scroll;
   }
-  /* .item-popup button {
+  .item-popup button {
+    background-color: #fff;
+    font-size: 2rem;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 1.5rem;
+  }
+  .item-popup .close-btn {
     position: absolute;
     top: 2rem;
     right: 2rem;
-  } */
+  }
+  .item-popup .add-btn {
+    margin-top: 5rem;
+  }
   .item-popup p {
     color: #000;
     font-size: 2rem;

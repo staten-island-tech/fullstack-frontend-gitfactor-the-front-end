@@ -13,7 +13,8 @@
             <p class="textbox-title"></p> 
             <p class="textbox-test typing-class"></p>
     </div>
-    <item-popup v-if="itemPopup" @closePopup="closeItemPopup()" :item="currentItem">
+
+    <item-popup @itemAdded="addToInventory()" v-if="itemPopup" @closePopup="closeItemPopup()" :item="currentItem">
       <template v-slot:item-img>
         <img class="itempopup-img" :src="currentItem.img" :alt="currentItem.name"/>
       </template>
@@ -155,7 +156,7 @@ export default {
       this.currentItem = null;
       this.gameItems.forEach(item => {
         const offset = item.position - this.leftValue;
-        if (Math.abs(offset) <= 10 || (offset >= -10 && offset < 10)) {
+        if (Math.abs(offset) <= 10 || (offset >= -10 && offset < 10)) { //checks distance from left and right of the item
             item.isInteractable = true;
             this.currentItem = item;
             item.filter = "sepia(55%)";
@@ -171,14 +172,14 @@ export default {
       } else if (this.currentItem.itemType === "character") {              
         this.txtbxShow();
       }
-        //     if (this.currentItem) {
-        // if (this.currentItem.itemType === "object") {   
-        //   this.gameItems.splice(this.currentItem.id, 1);
-        //   //show popup, see if user wants to pick up item         
-        //   this.$store.state.inventory.push(this.currentItem);
-        // } else if (this.currentItem.itemType === "character") {              
-        //   this.txtbxShow();
-        // }
+    },
+    addToInventory() {
+      this.gameItems.splice(this.currentItem.id, 1);
+      this.$store.state.inventory.push(this.currentItem);
+      this.closeItemPopup();
+    },
+    closeItemPopup() {
+      this.itemPopup = false;
     },
     txtbxShow() {
       if (this.textCount < this.currentItem.dialogue.length) {
@@ -201,9 +202,6 @@ export default {
         this.textCount = 0;
       }
     },
-    closeItemPopup() {
-      this.itemPopup = false;
-    }
   },
 }
 </script>

@@ -1,8 +1,8 @@
 <template>
   <div class="home">
+    <HeartBar />
     <MoveTest class="game" />
     <div class="solid" >a</div>
-    <HeartBar />
     <Inventory />
   </div>
   <button @click="$store.commit('incrementLives')">Add life</button>
@@ -28,6 +28,7 @@ export default {
 <style scoped>
   .home {
     display: flex;
+    /* flex-direction: column; */
   }
   button {
     font-size: 3rem;
