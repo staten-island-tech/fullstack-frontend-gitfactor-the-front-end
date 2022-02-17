@@ -129,7 +129,7 @@ export default {
           itemType: "puzzle",
           puzzleType: 2,
           prompt: "puzzle 2?",
-          puzzleAnswer: "2",
+          puzzleAnswer: "1234",
         },
       ],
       txtbx: false,

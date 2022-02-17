@@ -65,6 +65,7 @@ export default {
     puzzleVisibility: Boolean, 
     puzzlePrompt: String,
     puzzleAnswer: String,
+    
 
     },
 
