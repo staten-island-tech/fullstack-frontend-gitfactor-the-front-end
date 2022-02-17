@@ -5,7 +5,7 @@
     <img :src="require(`@/assets/sprites/${playerAvatar}`)" class="player-avatar" >
   </div>
 
-  <img v-for="item in gameItems" :src="item.img" :style="{ left: item.margin, filter: item.filter }" :alt="item" :key="item.key">
+  <img v-for="item in gameItems" :src="item.img" :style="{ left: item.margin, filter: item.filter }" :alt="item" :key="item.key" :id="item.section" class="item hide">
   <div :class="{ AC: mainAnt }" v-show="txtbx" class="textbox">
          <img :src="require(`@/assets/sprites/${player.dialogueSprite}`)" class="player-avatar-dialogue" >
          <img :src="require(`@/assets/sprites/${npcDialogueSprite}`)" class="npc-avatar-dialogue" id=
@@ -56,6 +56,7 @@ export default {
           name: "Mushroom",
           id: "0",
           position: 40,
+          section: 2,
           margin: "40%",
           img: require("../assets/mushroom.png"),
           isInteractable: false,
@@ -67,6 +68,7 @@ export default {
           name: "Riddler",
           id: "0",
           position: 10,
+          section: 1,
           margin: "10%",
           img: require("../assets/riddl.png"),
           isInteractable: false,
@@ -94,6 +96,7 @@ export default {
           name: "Protagonist",
           id: "0",
           position: 70,
+          section: 3,
           margin: "70%",
           img: require("../assets/prt.png"),
           isInteractable: false,
@@ -172,6 +175,21 @@ export default {
     sectionChange() {
        console.log(this.currentLocation);
        this.currentLocation.img = this.playerLocation[this.levelId - 1].level[this.currentLocation.section - 1].img;
+       this.unhideItem();
+    },
+    unhideItem() {
+      const overworldItems = document.getElementsByClassName("item");
+      for (let item of overworldItems) {
+        if (this.currentLocation.section == item.id) {
+        console.log(item);
+        item.classList.remove("hide");
+          
+        } else {
+          item.classList.add("hide");
+        }
+
+      }
+      
     },
     itemInteract() {
       this.currentItem = null;
