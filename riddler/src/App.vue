@@ -19,8 +19,7 @@
 import { useAuth0, AuthState } from "/utils/useAuth0.js";
 const { login, logout, initAuth } = useAuth0(AuthState);
 
-// login();
-// logout();
+
 initAuth();
 </script>
 
