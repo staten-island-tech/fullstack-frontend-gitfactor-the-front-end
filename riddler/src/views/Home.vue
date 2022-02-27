@@ -5,6 +5,8 @@
     <div class="solid" >a</div>
     <Inventory />
   </div>
+  <button @click="getData()">Log in</button>
+  <button @click="$store.replaceState({lifeCount: 0, inventory: null})">Log out</button>
   <button @click="$store.commit('incrementLives')">Add life</button>
   <button @click="$store.commit('decrementLives')">Die</button>
 </template>
@@ -22,15 +24,15 @@ export default {
     Inventory,
     HeartBar
   },
-  created() {
-    this.getData();
-  },
+  // created() {
+  //   this.getData();
+  // },
   methods: {
     async getData() {
       try {
         const response = await fetch("http://localhost:3000/");
         const data = await response.json();
-        console.log(data);
+        this.$store.commit('updateState', data);
       } catch (error) {
         console.log(error);
       } 

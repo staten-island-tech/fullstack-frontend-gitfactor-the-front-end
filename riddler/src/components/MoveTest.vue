@@ -5,7 +5,7 @@
       <img :src="require(`@/assets/sprites/${playerAvatar}`)" class="player-avatar" >
     </div>
 
-    <img v-for="item in gameItems" :src="item.img" :style="{ left: item.margin, filter: item.filter }" :alt="item" :key="item.key">
+    <img v-for="item in gameItems" :src="require(`@/assets/${item.img}`)" :style="{ left: item.margin, filter: item.filter }" :alt="item" :key="item.key">
     <div :class="{ AC: mainAnt }" v-show="txtbx" class="textbox">
           <img :src="require(`@/assets/sprites/${player.dialogueSprite}`)" class="player-avatar-dialogue" >
           <img :src="require(`@/assets/sprites/${npcDialogueSprite}`)" class="npc-avatar-dialogue hide" id=
@@ -16,7 +16,7 @@
 
     <item-popup @itemAdded="addToInventory()" v-if="itemPopup" @closePopup="closeItemPopup()" :item="currentItem">
       <template v-slot:item-img>
-        <img class="itempopup-img" :src="currentItem.img" :alt="currentItem.name"/>
+        <img class="itempopup-img" :src="require(`@/assets/${currentItem.img}`)" :alt="currentItem.name"/>
       </template>
       <template v-slot:item-text>
         {{ currentItem.prompt }}
@@ -51,7 +51,7 @@ export default {
           id: 0,
           position: 40,
           margin: "40%",
-          img: require("../assets/mushroom.png"),
+          img: "mushroom.png",
           isInteractable: false,
           filter: null,
           itemType: "object", 
@@ -62,7 +62,7 @@ export default {
           id: 1,
           position: 10,
           margin: "10%",
-          img: require("../assets/riddl.png"),
+          img: "riddl.png",
           isInteractable: false,
           filter: null,
           itemType: "character", //could also be puzzle, object, etc.
@@ -89,7 +89,7 @@ export default {
           id: 2,
           position: 70,
           margin: "70%",
-          img: require("../assets/prt.png"),
+          img: "prt.png",
           isInteractable: false,
           filter: null,
           itemType: "character",
