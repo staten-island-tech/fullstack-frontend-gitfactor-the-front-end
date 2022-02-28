@@ -12,11 +12,9 @@ v-on:keyup.enter="checkAnswerClick"
     <input type="text" class="puzzle-answer"
     v-model="puzzleInput">
     <button v-on:click="checkAnswerClick" class="puzzle-submit-button" >enter</button>
-    <div class="keypad-button-div">
-        <button class="puzzle-button">1</button>
-        <button class="puzzle-button">2</button>
-        <button class="puzzle-button">3</button>
-        <button class="puzzle-button">4</button>
+    <div class="keypad-button-div" v-for="value in buttonValues" :key="value.id">
+       <button @click="puzzle2ButtonClick" class="puzzle-button" >{{value.value}}</button> 
+       
 <!-- https://codesandbox.io/s/l2ovzz34m7?file=/src/main.js i need to create a keypad thing -->
     </div>
     
@@ -71,7 +69,15 @@ export default {
 
     data() {
         return{
-    puzzleInput: "" ,    
+    puzzleInput: "" , 
+    
+    buttonValues: [
+        {value: "blue"},
+        {value: "red"},
+        {value: "green"},
+        {value: "yellow"},
+    ],
+
  
         }
         },
@@ -98,6 +104,10 @@ export default {
                 this.puzzleInput = null;  
 
             }
+        },
+        puzzle2ButtonClick(){
+            console.log('button clicked');
+
         },
 
     },
