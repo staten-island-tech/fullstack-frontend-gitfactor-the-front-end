@@ -1,6 +1,7 @@
 <template>
   <div
     class="game-container"
+    id="game-viewport"
     @keydown.right="rightMove()"
     @keydown.left="leftMove()"
     @keyup="reset()"
@@ -203,6 +204,8 @@ export default {
           this.currentLocation.section - 1
         ].img;
       this.unhideItem();
+      const viewport = document.getElementById("game-viewport");
+      console.log(viewport);
     },
     unhideItem() {
       const overworldItems = document.getElementsByClassName("item");
@@ -261,6 +264,9 @@ export default {
 </script>
 
 <style scoped>
+.purple {
+  background: #6c18bb;
+}
 .game-container {
   width: 100%;
   height: 100%;
