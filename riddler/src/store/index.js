@@ -2,13 +2,11 @@ import { createStore } from "vuex";
 
 export default createStore({
   state: {
-    // leftValue: 50,
-    // inventory: [],
-    // lifeCount: 5,
-    // //level in propgress
-    // //what section 
-    // //puzzles completed?
-    // //items left in level
+    level: null,
+    section: null,
+    leftValue: null,
+    lifeCount: null,
+    inventory: [],
 
   },
   mutations: {

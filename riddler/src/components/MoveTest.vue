@@ -216,56 +216,50 @@ export default {
   overflow: hidden;
 }
 .player {
-  
   width: 100%;
   height: 100%;
 }
-
- .player-avatar {
-    width: 17.5%;
-    display: flex;
-    position: absolute;
-    bottom: 10%;
-    left: var(--leftVar);
-  }
-
-  .player-avatar-dialogue {
-    width: 70%;
-    right: -20%;
-    bottom: -350%;
-  }
-
-  .npc-avatar-dialogue {
-    width: 70%;
-    left: -17%;
-    bottom: -350%;
-  }
-
-  .hide {
-    display: none;
-  }
+.player-avatar {
+  width: 17.5%;
+  display: flex;
+  position: absolute;
+  bottom: 10%;
+  left: var(--leftVar);
+}
+.player-avatar-dialogue {
+  width: 70%;
+  right: -20%;
+  bottom: -350%;
+}
+.npc-avatar-dialogue {
+  width: 70%;
+  left: -17%;
+  bottom: -350%;
+}
+.hide {
+  display: none;
+}
 
 .textbox-button{
   font-size: 4rem;
   background-color: #766696;
   color: #DECEFF;
   position: absolute;
-  bottom: 10%;
-  left: 40%;
+  left: 0;
   border-radius: 50%;
-  border:#DECEFF solid 0.3rem ;
- height: 7.5rem;
- width: 7.5rem;
+  border: #DECEFF solid 0.3rem ;
+  height: 7.5rem;
+  width: 7.5rem;
 }
 .textbox{
   border: rgb(166, 11, 187) 1rem solid;
   background-color: rgb(14, 11, 43);
   width: 100%;
   min-height: 15rem;
-position: absolute;
-bottom: 0;
-padding: 2rem;
-padding-top: 1rem;
+  position: absolute;
+  bottom: 0;
+  padding: 2rem;
+  padding-top: 1rem;
 }
 .textbox-test, .textbox-title{
   color: rgb(244, 235, 255);

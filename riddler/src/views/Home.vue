@@ -24,9 +24,6 @@ export default {
     Inventory,
     HeartBar
   },
-  // created() {
-  //   this.getData();
-  // },
   methods: {
     async getData() {
       try {
