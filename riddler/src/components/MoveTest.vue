@@ -1,32 +1,61 @@
 <template>
-<div class="game-container" @keydown.right="rightMove()" @keydown.left="leftMove()" @keyup="reset()" @keydown.z="onEnter()">
-  <img :src="require(`@/assets/environment/lv1/${currentLocation.img}`)" class="bg-img" >
-  <div class="player" :style="cssProps" tabindex="-1">    
-    <img :src="require(`@/assets/sprites/${playerAvatar}`)" class="player-avatar" >
-  </div>
+  <div
+    class="game-container"
+    @keydown.right="rightMove()"
+    @keydown.left="leftMove()"
+    @keyup="reset()"
+    @keydown.z="onEnter()"
+  >
+    <img
+      :src="require(`@/assets/environment/lv1/${currentLocation.img}`)"
+      class="bg-img"
+    />
+    <div class="player" :style="cssProps" tabindex="-1">
+      <img
+        :src="require(`@/assets/sprites/${playerAvatar}`)"
+        class="player-avatar"
+      />
+    </div>
 
-  <img v-for="item in gameItems" :src="item.img" :style="{ left: item.margin, filter: item.filter }" :alt="item" :key="item.key" :id="item.section" class="item hide">
-  <div :class="{ AC: mainAnt }" v-show="txtbx" class="textbox">
-         <img :src="require(`@/assets/sprites/${player.dialogueSprite}`)" class="player-avatar-dialogue" >
-         <img :src="require(`@/assets/sprites/${npcDialogueSprite}`)" class="npc-avatar-dialogue" id=
-         "npc-dialogue-sprite">
-          <p class="textbox-title"></p> 
-          <p class="textbox-test typing-class"></p>
+    <img
+      v-for="item in gameItems"
+      :src="item.img"
+      :style="{ left: item.margin, filter: item.filter }"
+      :alt="item"
+      :key="item.key"
+      :id="item.section"
+      class="item hide"
+    />
+    <div :class="{ AC: mainAnt }" v-show="txtbx" class="textbox">
+      <img
+        :src="require(`@/assets/sprites/${player.dialogueSprite}`)"
+        class="player-avatar-dialogue"
+      />
+      <img
+        :src="require(`@/assets/sprites/${npcDialogueSprite}`)"
+        class="npc-avatar-dialogue"
+        id="npc-dialogue-sprite"
+      />
+      <p class="textbox-title"></p>
+      <p class="textbox-test typing-class"></p>
+    </div>
+    <button @click="onEnter()" class="textbox-button">Z</button>
   </div>
-      <button @click="onEnter()" class="textbox-button">Z</button>
-</div>      
 </template>
 
 <script>
 export default {
-  name:"MoveTest",
+  name: "MoveTest",
+  created() {
+    this.sectionChange();
+  },
   data() {
     return {
       player: {
-          idle: "idle-left.gif",
-          left: "walk-left.gif",
-          right: "walk-right.gif",
-          dialogueSprite: "sprite_dialogue_player.png"
+        idle: "idle-left.gif",
+        left: "walk-left.gif",
+        right: "walk-right.gif",
+        dialogueSprite: "sprite_dialogue_player.png",
       },
       playerAvatar: "idle-left.gif",
       npcDialogueSprite: "sprite_dialogue_riddl.png",
@@ -34,23 +63,18 @@ export default {
       levelId: 1,
       playerLocation: [
         {
-            level: [
-              {id: 1,
-              img: "bg_1_a.png"
-              },
-              {id: 2,
-              img: "bg_1_b.png"
-              },
-              {id: 3,
-              img: "bg_1_c.png"
-              },
-            ],
+          level: [
+            { id: 1, img: "bg_1_a.png" },
+            { id: 2, img: "bg_1_b.png" },
+            { id: 3, img: "bg_1_c.png" },
+          ],
         },
       ],
       currentItem: null,
       currentLocation: {
-        section: 3,
-        img: "bg_1_c.png",},
+        section: 1,
+        img: null,
+      },
       gameItems: [
         {
           name: "Mushroom",
@@ -61,8 +85,8 @@ export default {
           img: require("../assets/mushroom.png"),
           isInteractable: false,
           filter: null,
-          itemType: "object", 
-          prompt: "An amazing mushroom house!!"
+          itemType: "object",
+          prompt: "An amazing mushroom house!!",
         },
         {
           name: "Riddler",
@@ -80,18 +104,18 @@ export default {
               text: "Mwahaha welcome to my tower~",
               name: "???",
               isAntagonist: true,
-            }, 
+            },
             {
               text: "I didn't come here by choice...what is this?",
-              name: "Me"
+              name: "Me",
             },
             {
               text: "This...huh. I don't actually know what this is either! I just said that cause I thought it was spooky :D",
               name: "???",
               isAntagonist: true,
-            }
-        ],
-        }, 
+            },
+          ],
+        },
         {
           name: "Protagonist",
           id: "0",
@@ -102,208 +126,207 @@ export default {
           isInteractable: false,
           filter: null,
           itemType: "character",
-          dialogueSprite: "sprite_dialogue_player.png", 
+          dialogueSprite: "sprite_dialogue_player.png",
           dialogue: [
             {
               text: "What? Am I talking to myself",
               name: "Me?",
               isAntagonist: true,
-            }, 
+            },
             {
               text: "Wat",
-              name: "Me"
+              name: "Me",
             },
             {
               text: "This...huh. I don't actually know what this is either! I just said that cause I thought it was spooky :D",
               name: "Me?",
               isAntagonist: true,
-            }
-        ],
-        }, 
+            },
+          ],
+        },
       ],
       txtbx: false,
       textCount: 0,
       mainAnt: false,
-    }
+    };
   },
   computed: {
-    cssProps() { 
+    cssProps() {
       return {
-        '--leftVar': (this.leftValue) + "%",
-      }
-    }
+        "--leftVar": this.leftValue + "%",
+      };
+    },
   },
-  methods: {  
-    leftMove: function() {
+  methods: {
+    leftMove: function () {
       this.player.idle = "idle-left.gif";
       setTimeout(() => {
-      if (this.leftValue > 0) {
-        this.leftValue -= 1.5;
-      } else {
-        if (this.currentLocation.section > 1){
-          this.currentLocation.section = this.currentLocation.section - 1;
-          this.leftValue = 84;
-          this.sectionChange();};
-      };  
+        if (this.leftValue > 0) {
+          this.leftValue -= 1.5;
+        } else {
+          if (this.currentLocation.section > 1) {
+            this.currentLocation.section = this.currentLocation.section - 1;
+            this.leftValue = 84;
+            this.sectionChange();
+          }
+        }
         this.playerAvatar = this.player.left;
         this.itemInteract();
       }, 250);
-
-
     },
-    rightMove: function() {
+    rightMove: function () {
       this.player.idle = "idle-right.gif";
       setTimeout(() => {
-      if (this.leftValue <= 85) {
-        this.leftValue += 1.5;
-      } else {
-        if (this.currentLocation.section < 3){
-          this.currentLocation.section = this.currentLocation.section + 1;
-          this.leftValue = 1;
-          this.sectionChange();};
-      };  ;  
+        if (this.leftValue <= 85) {
+          this.leftValue += 1.5;
+        } else {
+          if (this.currentLocation.section < 3) {
+            this.currentLocation.section = this.currentLocation.section + 1;
+            this.leftValue = 1;
+            this.sectionChange();
+          }
+        }
         this.playerAvatar = this.player.right;
         this.itemInteract();
-      }, 250); 
+      }, 250);
     },
-    reset: function() {
+    reset: function () {
       setTimeout(() => {
-      this.playerAvatar = this.player.idle;
+        this.playerAvatar = this.player.idle;
       }, 250);
       this.itemInteract();
     },
     sectionChange() {
-       console.log(this.currentLocation);
-       this.currentLocation.img = this.playerLocation[this.levelId - 1].level[this.currentLocation.section - 1].img;
-       this.unhideItem();
+      console.log(this.currentLocation);
+      this.currentLocation.img =
+        this.playerLocation[this.levelId - 1].level[
+          this.currentLocation.section - 1
+        ].img;
+      this.unhideItem();
     },
     unhideItem() {
       const overworldItems = document.getElementsByClassName("item");
       for (let item of overworldItems) {
         if (this.currentLocation.section == item.id) {
-        console.log(item);
-        item.classList.remove("hide");
-          
+          console.log(item);
+          item.classList.remove("hide");
         } else {
           item.classList.add("hide");
         }
-
       }
-      
     },
     itemInteract() {
       this.currentItem = null;
-      this.gameItems.forEach(item => {
+      this.gameItems.forEach((item) => {
         const offset = item.position - this.leftValue;
         if (Math.abs(offset) <= 10 || (offset >= -10 && offset < 10)) {
-            item.isInteractable = true;
-            this.currentItem = item;
-            item.filter = "sepia(55%)";
+          item.isInteractable = true;
+          this.currentItem = item;
+          item.filter = "sepia(55%)";
         } else {
-            item.isInteractable = false;
-            item.filter = null;
-        };
+          item.isInteractable = false;
+          item.filter = null;
+        }
       });
     },
     onEnter() {
-      if (this.currentItem.itemType === "object") {              
+      if (this.currentItem.itemType === "object") {
         alert(this.currentItem.prompt);
-      } else if (this.currentItem.itemType === "character") {              
+      } else if (this.currentItem.itemType === "character") {
         this.txtbxShow();
       }
     },
     txtbxShow() {
       if (this.textCount < this.currentItem.dialogue.length) {
         this.txtbx = true;
-        this.textCount +=1;
+        this.textCount += 1;
         const charLabel = document.querySelector(".textbox-title");
         const textOutput = document.querySelector(".textbox-test");
         const num = this.textCount - 1;
         textOutput.innerHTML = this.currentItem.dialogue[num].text;
         charLabel.innerHTML = this.currentItem.dialogue[num].name;
-          if (this.currentItem.dialogue[num].isAntagonist) {
-            this.mainAnt = true;
-          } else {
-            this.mainAnt = false;
-          };
-          this.npcDialogueSprite = this.currentItem.dialogueSprite;
+        if (this.currentItem.dialogue[num].isAntagonist) {
+          this.mainAnt = true;
+        } else {
+          this.mainAnt = false;
+        }
+        this.npcDialogueSprite = this.currentItem.dialogueSprite;
       } else {
         this.txtbx = false;
         this.textCount = 0;
       }
     },
   },
-}
+};
 </script>
 
 <style scoped>
 .game-container {
   width: 100%;
   height: 100%;
-
 }
 .player {
-  
   width: 100%;
   height: 100%;
 }
 
- .player-avatar {
-    width: 17.5%;
-    display: flex;
-    position: absolute;
-    bottom: 10%;
-    left: var(--leftVar);
-  }
+.player-avatar {
+  width: 17.5%;
+  display: flex;
+  position: absolute;
+  bottom: 10%;
+  left: var(--leftVar);
+}
 
-  .player-avatar-dialogue {
-    width: 70%;
-    right: -20%;
-    bottom: -350%;
-  }
+.player-avatar-dialogue {
+  width: 70%;
+  right: -20%;
+  bottom: -350%;
+}
 
-  .npc-avatar-dialogue {
-    width: 70%;
-    left: -17%;
-    bottom: -350%;
-  }
+.npc-avatar-dialogue {
+  width: 70%;
+  left: -17%;
+  bottom: -350%;
+}
 
-  .hide {
-    display: none;
-  }
+.hide {
+  display: none;
+}
 
-.textbox-button{
+.textbox-button {
   font-size: 4rem;
   background-color: #766696;
-  color: #DECEFF;
+  color: #deceff;
   position: absolute;
   bottom: 10%;
   left: 40%;
   border-radius: 50%;
-  border:#DECEFF solid 0.3rem ;
- height: 7.5rem;
- width: 7.5rem;
+  border: #deceff solid 0.3rem;
+  height: 7.5rem;
+  width: 7.5rem;
 }
-.textbox{
+.textbox {
   border: rgb(166, 11, 187) 1rem solid;
   background-color: rgb(14, 11, 43);
   width: 100%;
   min-height: 15rem;
-position: absolute;
-bottom: 0;
-padding: 2rem;
-padding-top: 1rem;
+  position: absolute;
+  bottom: 0;
+  padding: 2rem;
+  padding-top: 1rem;
 }
-.textbox-test, .textbox-title{
+.textbox-test,
+.textbox-title {
   color: rgb(244, 235, 255);
   font-size: 2rem;
   text-align: left;
   margin-top: 0.5rem;
 }
-.textbox-title{
+.textbox-title {
   font-size: 2.5rem;
 }
-.AC{
+.AC {
   border: rgb(55, 11, 218) 1rem solid;
 }
 
@@ -320,11 +343,11 @@ h1 {
 }
 
 img {
-    z-index: -2;
-    position: absolute;
-    bottom: 10%;
-    /* left: 25%; this is represented in the item.position property*/
-    width: 20%;
-    border-radius: 3rem;
+  z-index: -2;
+  position: absolute;
+  bottom: 10%;
+  /* left: 25%; this is represented in the item.position property*/
+  width: 20%;
+  border-radius: 3rem;
 }
 </style>
