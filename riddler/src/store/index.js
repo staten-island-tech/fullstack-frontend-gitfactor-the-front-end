@@ -19,6 +19,7 @@ export default createStore({
     updateState(state, newState) {
       state.lifeCount = newState[0].lifeCount;
       state.inventory = newState[0].inventory;
+      
       console.log(state);
     },
   },
