@@ -1,6 +1,6 @@
 <template>
   <div
-    class="game-container"
+    class="game-container purple"
     id="game-viewport"
     @keydown.right="rightMove()"
     @keydown.left="leftMove()"
@@ -44,7 +44,7 @@
   </div>
 </template>
 
-<script>
+<script >
 export default {
   name: "MoveTest",
   created() {
@@ -204,8 +204,12 @@ export default {
           this.currentLocation.section - 1
         ].img;
       this.unhideItem();
+      // gsap.to("game-viewport", {});
+    },
+    sectionChangeAnim() {
       const viewport = document.getElementById("game-viewport");
-      console.log(viewport);
+      viewport.classList.add("purple");
+      setTimeout(() => {viewport.classList.remove("purple");},250);
     },
     unhideItem() {
       const overworldItems = document.getElementsByClassName("item");
@@ -265,11 +269,11 @@ export default {
 
 <style scoped>
 .purple {
-  background: #6c18bb;
 }
 .game-container {
   width: 100%;
   height: 100%;
+  transition: all 200;
 }
 .player {
   width: 100%;
