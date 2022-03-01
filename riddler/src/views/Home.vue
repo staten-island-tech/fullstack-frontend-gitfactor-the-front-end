@@ -1,5 +1,5 @@
 <template
-  <div>
+    <div>
     <div class="home">
       <HeartBar />
       <MoveTest class="game" />
@@ -10,7 +10,7 @@
     <button @click="$store.replaceState({lifeCount: 0, inventory: null})">Log out</button>
     <button @click="$store.commit('incrementLives')">Add life</button>
     <button @click="$store.commit('decrementLives')">Die</button>
-  </div>
+    </div>
 </template>
 
 <script>
