@@ -13,9 +13,8 @@ v-on:keyup.enter="checkAnswerClick"
     v-model="puzzleInput">
     <button v-on:click="checkAnswerClick" class="puzzle-submit-button" >enter</button>
     <div class="keypad-button-div" v-for="value in buttonValues" :key="value.id">
-       <button @click="puzzle2ButtonClick" class="puzzle-button" >{{value.value}}</button> 
+       <button @click="puzzle2ButtonClick(value.value)" class="puzzle-button" >{{value.value}}</button> 
        
-<!-- https://codesandbox.io/s/l2ovzz34m7?file=/src/main.js i need to create a keypad thing -->
     </div>
     
     
@@ -70,23 +69,28 @@ export default {
     data() {
         return{
     puzzleInput: "" , 
+    isDisabled: false,
     
     buttonValues: [
-        {value: "blue"},
-        {value: "red"},
-        {value: "green"},
-        {value: "yellow"},
+        {value: "1", id: 1},
+        {value: "2", id: 2},
+        {value: "3", id: 3},
+        {value: "4", id:4},
     ],
 
  
         }
         },
+    mounted() {
+        this.checkPuzzle();
+
+    },
     methods:
     {
      closePuzzleClick(){
             console.log('trying to close');
             this.$emit('turn-off'); 
-            this.puzzleInput = null; 
+            this.puzzleInput = ""; 
                     
 
         },
@@ -94,20 +98,26 @@ export default {
             if(this.puzzleInput === this.puzzleAnswer){
                 console.log('correct!');
                 this.$emit('turn-off'); 
-                this.puzzleInput = null;  
+                this.puzzleInput = "";  
                 
 
             }
             else{
                 console.log('taking away 1 heart');
                 this.$emit('lose-heart');
-                this.puzzleInput = null;  
+                this.puzzleInput = "";  
 
             }
         },
-        puzzle2ButtonClick(){
-            console.log('button clicked');
-
+        puzzle2ButtonClick(value){
+            const testValue = this.puzzleInput + value ;
+            this.puzzleInput = testValue;
+            console.log(testValue);
+        },
+        checkPuzzle(){
+            if(this.puzzleVisibility === true) {
+                console.log('time to check puzzle type');
+            }
         },
 
     },
