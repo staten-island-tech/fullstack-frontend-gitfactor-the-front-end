@@ -8,11 +8,6 @@
     @keydown.z="onEnter()"
   >
 
-      <img
-        :src="require(`@/assets/sprites/${playerAvatar}`)"
-        class="gsap-test" id="gsappy"
-      />
-
     <img
       :src="require(`@/assets/environment/lv1/${currentLocation.img}`)"
       class="bg-img"
@@ -175,6 +170,7 @@ export default {
           this.leftValue -= 1.5;
         } else {
           if (this.currentLocation.section > 1) {
+            this.sectionChangeAnim();
             this.currentLocation.section = this.currentLocation.section - 1;
             this.leftValue = 84;
             this.sectionChange();
@@ -184,12 +180,6 @@ export default {
         this.itemInteract();
       }, 250);
      
-     var gsapTest = gsap.to(".gsap-test", {
-       delay: 0.5, 
-       backgroundColor: "red",
-       ease: "power2.inOut"});
-     console.log (gsapTest);
-
     },
     rightMove: function () {
       this.player.idle = "idle-right.gif";
@@ -198,6 +188,7 @@ export default {
           this.leftValue += 1.5;
         } else {
           if (this.currentLocation.section < 3) {
+            this.sectionChangeAnim();
             this.currentLocation.section = this.currentLocation.section + 1;
             this.leftValue = 1;
             this.sectionChange();
@@ -220,11 +211,19 @@ export default {
           this.currentLocation.section - 1
         ].img;
       this.unhideItem();
+
     },
     sectionChangeAnim() {
-      const viewport = document.getElementById("game-viewport");
-      viewport.classList.add("purple");
-      setTimeout(() => {viewport.classList.remove("purple");},250);
+      var gsapTest = gsap.to(".game-container", {
+       backgroundColor: "rgba(164, 21, 227, 1)",});
+      console.log(gsapTest);
+
+      var gsapTes = gsap.to(".game-container", {
+       delay: 0.5, 
+       backgroundColor: "rgba(164, 21, 227, 0)",
+       ease: "power2.inOut"});
+      console.log(gsapTes);
+
     },
     unhideItem() {
       const overworldItems = document.getElementsByClassName("item");
@@ -283,8 +282,6 @@ export default {
 </script>
 
 <style scoped>
-.purple {
-}
 .game-container {
   width: 100%;
   height: 100%;
