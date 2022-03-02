@@ -1,12 +1,18 @@
 <template>
   <div
-    class="game-container purple"
+    class="game-container"
     id="game-viewport"
     @keydown.right="rightMove()"
     @keydown.left="leftMove()"
     @keyup="reset()"
     @keydown.z="onEnter()"
   >
+
+      <img
+        :src="require(`@/assets/sprites/${playerAvatar}`)"
+        class="gsap-test" id="gsappy"
+      />
+
     <img
       :src="require(`@/assets/environment/lv1/${currentLocation.img}`)"
       class="bg-img"
@@ -45,6 +51,9 @@
 </template>
 
 <script >
+import { gsap } from "gsap";
+gsap.config;
+
 export default {
   name: "MoveTest",
   created() {
@@ -174,6 +183,13 @@ export default {
         this.playerAvatar = this.player.left;
         this.itemInteract();
       }, 250);
+     
+     var gsapTest = gsap.to(".gsap-test", {
+       delay: 0.5, 
+       backgroundColor: "red",
+       ease: "power2.inOut"});
+     console.log (gsapTest);
+
     },
     rightMove: function () {
       this.player.idle = "idle-right.gif";
@@ -204,7 +220,6 @@ export default {
           this.currentLocation.section - 1
         ].img;
       this.unhideItem();
-      // gsap.to("game-viewport", {});
     },
     sectionChangeAnim() {
       const viewport = document.getElementById("game-viewport");
