@@ -1,15 +1,16 @@
-<template
+<template>
     <div>
-    <div class="home">
+     <div class="home">
       <HeartBar />
       <MoveTest class="game" />
       <div class="solid" >a</div>
       <Inventory />
-    </div>
-    <button @click="getData()">Log in</button>
-    <button @click="$store.replaceState({lifeCount: 0, inventory: null})">Log out</button>
-    <button @click="$store.commit('incrementLives')">Add life</button>
-    <button @click="$store.commit('decrementLives')">Die</button>
+     </div>
+      <button @click="getData()">Log In</button>
+      <button @click="updateData()">Log Out</button>
+      <button @click="$store.replaceState({lifeCount: 0, inventory: null})">Log out</button>
+      <button @click="$store.commit('incrementLives')">Add life</button>
+      <button @click="$store.commit('decrementLives')">Die</button>
     </div>
 </template>
 
@@ -35,7 +36,16 @@ export default {
       } catch (error) {
         console.log(error);
       } 
-    }
+    },
+   /*  async updateData() {
+      try {
+        const response = await fetch("http://localhost:3000/logout")
+        const data = await response.json();
+
+      } catch (error) {
+        console.log(error);
+      }
+    } */
   }
 };
 </script>
