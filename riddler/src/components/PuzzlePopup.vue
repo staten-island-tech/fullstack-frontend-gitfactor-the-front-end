@@ -1,7 +1,7 @@
 <template>
 <div class="popup-container"
 tabindex="-1"
-v-show ='puzzleVisibility'
+v-if ='puzzleVisibility'
 
 v-on:keyup.esc="closePuzzleClick"
 v-on:keyup.enter="checkAnswerClick"
@@ -10,9 +10,9 @@ v-on:keyup.enter="checkAnswerClick"
 <button v-on:click="closePuzzleClick" class="close-puzzle-button">x</button>
     <h1 class="puzzleQuestionLine">{{puzzlePrompt}}</h1>
     <input type="text" class="puzzle-answer"
-    v-model="puzzleInput">
+    v-model="puzzleInput" :maxlength="puzzleInputMaxLength">
     <button v-on:click="checkAnswerClick" class="puzzle-submit-button" >enter</button>
-    <div class="keypad-button-div" v-for="value in buttonValues" :key="value.id">
+    <div class="keypad-button-div" v-for="value in buttonValues" :key="value.id" v-show= "puzzleButtonVisibility">
        <button @click="puzzle2ButtonClick(value.value)" class="puzzle-button" >{{value.value}}</button> 
        
     </div>
@@ -62,14 +62,15 @@ export default {
     puzzleVisibility: Boolean, 
     puzzlePrompt: String,
     puzzleAnswer: String,
-    
-
+    puzzleType: Number,
     },
 
     data() {
         return{
     puzzleInput: "" , 
     isDisabled: false,
+    puzzleInputMaxLength: 20,
+    puzzleButtonVisibility: false,
     
     buttonValues: [
         {value: "1", id: 1},
@@ -81,10 +82,14 @@ export default {
  
         }
         },
-    mounted() {
+   /*      setup(){
+            console.log('setup')
+        },
+     onMounted() {
         this.checkPuzzle();
+        console.log('hi');
 
-    },
+    },  */
     methods:
     {
      closePuzzleClick(){
@@ -114,10 +119,19 @@ export default {
             this.puzzleInput = testValue;
             console.log(testValue);
         },
-        checkPuzzle(){
+        checkPuzzle(){            
             if(this.puzzleVisibility === true) {
                 console.log('time to check puzzle type');
+                if(this.puzzleType === 1){
+                    console.log('puzzle 1');
+                }
+                else if(this.puzzleType === 2) {
+                    console.log('puzzle 2');
+                    this.puzzleButtonVisibility = true;
+                    this.puzzleInputMaxLength = 4;
+                }
             }
+        
         },
 
     },

@@ -10,8 +10,9 @@
     </div>
         <button @click="onEnter()" class="textbox-button">Z</button>
         <PuzzlePopup ref="puzzlePopupBox" v-on:turn-off="turnOff" v-on:lose-heart="loseHeart"
-        :puzzleVisibility= "enteredOnObject" :puzzleAnswer="testPuzzleAnswer"
-        :puzzlePrompt ="testPuzzlePrompt"></PuzzlePopup>
+        :puzzleVisibility= "enteredOnObject" :puzzleAnswer="emittedPuzzleAnswer"
+        :puzzlePrompt ="emittedPuzzlePrompt"
+        :puzzleType ="emittedPuzzleType"></PuzzlePopup>
 
   </div>      
 </template>
@@ -38,8 +39,9 @@ export default {
       hearts:3, 
       score: 0,
       enteredOnObject: false,
-      testPuzzleAnswer: "yes", //tested puzzle answer value (working as a prop)
-      testPuzzlePrompt: null,
+      emittedPuzzleAnswer: "", 
+      emittedPuzzlePrompt: "",
+      emittedPuzzleType: null,
       gameItems: [
    
         {
@@ -239,18 +241,22 @@ export default {
         }
         else if (this.currentItem.itemType === "puzzle") {        
           this.enteredOnObject = true;
-          this.testPuzzleAnswer = this.currentItem.puzzleAnswer;
-          this.testPuzzlePrompt = this.currentItem.prompt;
+          this.emittedPuzzleAnswer = this.currentItem.puzzleAnswer;
+          this.emittedPuzzlePrompt = this.currentItem.prompt;
+          this.emittedPuzzleType = this.currentItem.puzzleType;
           setTimeout(() => {   this.testingPopup();  
                }, 10);
           if(this.currentItem.puzzleType === 1){
             console.log('this is type 1');
+            
           }
           else if(this.currentItem.puzzleType === 2){
             console.log('this is type 2');
+           
           }
           else if(this.currentItem.puzzleType === 3){
             console.log('this is type 3');
+            
           }
 
         }
