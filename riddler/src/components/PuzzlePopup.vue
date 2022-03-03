@@ -69,7 +69,7 @@ export default {
         return{
     puzzleInput: "" , 
     isDisabled: false,
-    puzzleInputMaxLength: 20,
+    puzzleInputMaxLength: 10,
     puzzleButtonVisibility: false,
     
     buttonValues: [
@@ -82,14 +82,10 @@ export default {
  
         }
         },
-   /*      setup(){
-            console.log('setup')
+        updated() {
+            this.checkPuzzle();
         },
-     onMounted() {
-        this.checkPuzzle();
-        console.log('hi');
 
-    },  */
     methods:
     {
      closePuzzleClick(){
@@ -118,17 +114,21 @@ export default {
             const testValue = this.puzzleInput + value ;
             this.puzzleInput = testValue;
             console.log(testValue);
-        },
+            //https://stackoverflow.com/questions/56034027/how-to-limit-digit-number-in-vue-input 
+            //use this to fix
+            },
         checkPuzzle(){            
             if(this.puzzleVisibility === true) {
                 console.log('time to check puzzle type');
                 if(this.puzzleType === 1){
                     console.log('puzzle 1');
+                    this.puzzleButtonVisibility = false;
                 }
                 else if(this.puzzleType === 2) {
                     console.log('puzzle 2');
                     this.puzzleButtonVisibility = true;
                     this.puzzleInputMaxLength = 4;
+                    console.log(this.puzzleInputMaxLength);
                 }
             }
         

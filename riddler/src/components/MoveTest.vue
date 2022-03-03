@@ -10,7 +10,8 @@
     </div>
         <button @click="onEnter()" class="textbox-button">Z</button>
         <PuzzlePopup ref="puzzlePopupBox" v-on:turn-off="turnOff" v-on:lose-heart="loseHeart"
-        :puzzleVisibility= "enteredOnObject" :puzzleAnswer="emittedPuzzleAnswer"
+        :puzzleAnswer="emittedPuzzleAnswer"
+        :puzzleVisibility="enteredOnObject" 
         :puzzlePrompt ="emittedPuzzlePrompt"
         :puzzleType ="emittedPuzzleType"></PuzzlePopup>
 
@@ -274,15 +275,7 @@ export default {
             console.log(heartsRemaining);
             this.$store.commit('decrementLives');
         },
-        disableMovement(key) {
-        
-          if(key.key === "ArrowRight" || key.key === "ArrowLeft") {
-            console.log("test");
-          }
-
-        },
-
-
+       
     txtbxShow() {
       if (this.textCount < this.currentItem.dialogue.length) {
         this.txtbx = true;
