@@ -1,8 +1,12 @@
 <template>
-  <div class="home">
-    <MoveTest class="game" />
-    <div class="solid" >a</div>
-  </div>
+<div>
+    <div class="home">
+      <MoveTest/>
+      <div class="solid" ></div>
+    </div>
+    <div class="pagebg"></div>
+</div>
+
 </template>
 
 <script>
@@ -43,6 +47,14 @@ export default {
   width: 100%;
   height: 100%;
 background-color: rgb(13, 7, 82);
+}
+.pagebg {
+  position: absolute;
+  z-index: -10;
+  top: 0%;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(31, 18, 39);
 }
 
 </style>

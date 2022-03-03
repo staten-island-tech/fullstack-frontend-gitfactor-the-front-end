@@ -54,6 +54,9 @@ export default {
   created() {
     this.sectionChange();
   },
+  mounted() {
+    this.unhideItem();
+  },
   data() {
     return {
       player: {
@@ -78,7 +81,7 @@ export default {
       currentItem: null,
       currentLocation: {
         section: 1,
-        img: null,
+        img: "bg_1_a.png",
       },
       gameItems: [
         {
@@ -170,10 +173,12 @@ export default {
           this.leftValue -= 1.5;
         } else {
           if (this.currentLocation.section > 1) {
+            this.sectionChange();
             this.sectionChangeAnim();
             this.currentLocation.section = this.currentLocation.section - 1;
-            this.leftValue = 84;
-            this.sectionChange();
+            setTimeout(() => {
+             this.leftValue = 84;
+            }, 25);
           }
         }
         this.playerAvatar = this.player.left;
@@ -188,10 +193,14 @@ export default {
           this.leftValue += 1.5;
         } else {
           if (this.currentLocation.section < 3) {
+            this.leftValue = 84;
+            this.sectionChange();
             this.sectionChangeAnim();
             this.currentLocation.section = this.currentLocation.section + 1;
-            this.leftValue = 1;
-            this.sectionChange();
+            setTimeout(() => {
+             this.leftValue = 1;
+            }, 250);
+                        
           }
         }
         this.playerAvatar = this.player.right;
@@ -205,21 +214,24 @@ export default {
       this.itemInteract();
     },
     sectionChange() {
+      setTimeout(() => {
       console.log(this.currentLocation);
       this.currentLocation.img =
         this.playerLocation[this.levelId - 1].level[
           this.currentLocation.section - 1
         ].img;
       this.unhideItem();
+      }, 400);
+
 
     },
     sectionChangeAnim() {
       var gsapTest = gsap.to(".game-container", {
-       backgroundColor: "rgba(164, 21, 227, 1)",});
+       backgroundColor: "rgba(16, 1, 22, 1)",});
       console.log(gsapTest);
 
-      var gsapTes = gsap.to(".game-container", {
-       delay: 0.5, 
+            var gsapTes = gsap.to(".game-container", {
+       delay: .5, 
        backgroundColor: "rgba(164, 21, 227, 0)",
        ease: "power2.inOut"});
       console.log(gsapTes);
@@ -229,7 +241,6 @@ export default {
       const overworldItems = document.getElementsByClassName("item");
       for (let item of overworldItems) {
         if (this.currentLocation.section == item.id) {
-          console.log(item);
           item.classList.remove("hide");
         } else {
           item.classList.add("hide");
