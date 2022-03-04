@@ -236,6 +236,11 @@ export default {
         ].img;
       this.unhideItem();
       }, 300);
+            var gsapTes = gsap.to(".game-container", {
+       delay: .2, 
+       backgroundColor: "rgba(16, 1, 22, 0)",
+       ease: "power2.inOut"});
+      console.log(gsapTes);
 
 
     },
@@ -244,12 +249,6 @@ export default {
        backgroundColor: "rgba(16, 1, 22, 1)",
        duration:0.25});
       console.log(gsapTest);
-
-            var gsapTes = gsap.to(".game-container", {
-       delay: .7, 
-       backgroundColor: "rgba(16, 1, 22, 0)",
-       ease: "power2.inOut"});
-      console.log(gsapTes);
 
     },
     unhideItem() {
