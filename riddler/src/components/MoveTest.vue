@@ -118,8 +118,8 @@ export default {
           filter: null, 
           itemType: "puzzle",
           puzzleType: 1,
-          prompt: "puzzle 1?",
-          puzzleAnswer: "1",
+          prompt: "the answer is one",
+          puzzleAnswer: "one",
         },
         {
             name: "Puzzle 2",
@@ -131,8 +131,21 @@ export default {
           filter: null, 
           itemType: "puzzle",
           puzzleType: 2,
-          prompt: "puzzle 2?",
+          prompt: "the answer is 1234",
           puzzleAnswer: "1234",
+        },
+        {
+          name: "Puzzle 3",
+          id: 5, 
+         // position: 85,
+          //margin: "85%",
+         // img: require("../assets/chest.jpg"),
+          isInteractable: false,
+          filter: null, 
+          itemType: "puzzle",
+          puzzleType: 3,
+          prompt: "the answer is a key",
+          puzzleAnswer: "key",
         },
       ],
       txtbx: false,
@@ -335,8 +348,14 @@ export default {
   border:#DECEFF solid 0.3rem ;
  height: 7.5rem;
  width: 7.5rem;
-}
-.textbox{
+ }
+ .textbox-button:active{
+   color: #c8b0fa;
+   background-color: #685194;
+
+ }
+ 
+ .textbox{
   border: purple 1rem solid;
   background-color: black;
   width: 100%;

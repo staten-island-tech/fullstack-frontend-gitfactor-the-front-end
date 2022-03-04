@@ -10,12 +10,13 @@ v-on:keyup.enter="checkAnswerClick"
 <button v-on:click="closePuzzleClick" class="close-puzzle-button">x</button>
     <h1 class="puzzleQuestionLine">{{puzzlePrompt}}</h1>
     <input type="text" class="puzzle-answer"
-    v-model="puzzleInput" :maxlength="puzzleInputMaxLength">
+    v-model="puzzleInput" :maxlength="puzzleInputMaxLength" :disabled="puzzleInputDisabled">
     <button v-on:click="checkAnswerClick" class="puzzle-submit-button" >enter</button>
     <div class="keypad-button-div" v-for="value in buttonValues" :key="value.id" v-show= "puzzleButtonVisibility">
        <button @click="puzzle2ButtonClick(value.value)" class="puzzle-button" >{{value.value}}</button> 
        
     </div>
+    <button class="puzzleClearButton" @click="clearInputClick"> clear </button>
     
     
 </div>
@@ -42,7 +43,7 @@ v-on:keyup.enter="checkAnswerClick"
 .puzzle-answer{
     font-size: 2rem;
 }
-.puzzle-submit-button{
+button{
     font-size: 2rem;
 }
 .close-puzzle-button{
@@ -50,6 +51,8 @@ v-on:keyup.enter="checkAnswerClick"
     position: fixed;
     left: 63%;
 }
+
+
 </style>
 
 <script>
@@ -71,6 +74,7 @@ export default {
     isDisabled: false,
     puzzleInputMaxLength: 10,
     puzzleButtonVisibility: false,
+    puzzleInputDisabled: false,
     
     buttonValues: [
         {value: "1", id: 1},
@@ -89,7 +93,6 @@ export default {
     methods:
     {
      closePuzzleClick(){
-            console.log('trying to close');
             this.$emit('turn-off'); 
             this.puzzleInput = ""; 
                     
@@ -113,22 +116,33 @@ export default {
         puzzle2ButtonClick(value){
             const testValue = this.puzzleInput + value ;
             this.puzzleInput = testValue;
-            console.log(testValue);
-            //https://stackoverflow.com/questions/56034027/how-to-limit-digit-number-in-vue-input 
-            //use this to fix
+           
+            if(this.puzzleInput.length > this.puzzleInputMaxLength){
+                this.puzzleInput = this.puzzleInput.slice(0, this.puzzleInputMaxLength);
+                
+            }
+            },
+            clearInputClick() { 
+                console.log('trying to clear');
+                this.puzzleInput = "";
             },
         checkPuzzle(){            
             if(this.puzzleVisibility === true) {
-                console.log('time to check puzzle type');
+                
                 if(this.puzzleType === 1){
                     console.log('puzzle 1');
                     this.puzzleButtonVisibility = false;
+                    this.puzzleInputDisabled = false;
                 }
                 else if(this.puzzleType === 2) {
                     console.log('puzzle 2');
                     this.puzzleButtonVisibility = true;
+                    this.puzzleInputDisabled = true;
                     this.puzzleInputMaxLength = 4;
                     console.log(this.puzzleInputMaxLength);
+                }
+                else if(this.puzzleType === 3) {
+                    console.log('puzzle 3');
                 }
             }
         
