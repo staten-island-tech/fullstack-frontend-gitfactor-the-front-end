@@ -169,12 +169,19 @@ export default {
     leftMove: function () {
       this.player.idle = "idle-left.gif";
       setTimeout(() => {
+
+        if (this.leftValue <= 1.5) {
+          if (this.currentLocation.section > 1) {
+            this.sectionChangeAnim();                      
+          }
+        };
+
         if (this.leftValue > 0) {
           this.leftValue -= 1.5;
         } else {
           if (this.currentLocation.section > 1) {
+            this.leftValue = 1;
             this.sectionChange();
-            this.sectionChangeAnim();
             this.currentLocation.section = this.currentLocation.section - 1;
             setTimeout(() => {
              this.leftValue = 84;
@@ -189,20 +196,27 @@ export default {
     rightMove: function () {
       this.player.idle = "idle-right.gif";
       setTimeout(() => {
+        if (this.leftValue >= 83.5) {
+          if (this.currentLocation.section < 3) {
+            this.sectionChangeAnim();                      
+          }
+        };
         if (this.leftValue <= 85) {
           this.leftValue += 1.5;
         } else {
           if (this.currentLocation.section < 3) {
-            this.leftValue = 84;
-            this.sectionChange();
-            this.sectionChangeAnim();
+            this.leftValue = 1;
             this.currentLocation.section = this.currentLocation.section + 1;
             setTimeout(() => {
+            this.sectionChange();
              this.leftValue = 1;
             }, 250);
                         
           }
         }
+        this.playerAvatar = this.player.right;
+        this.itemInteract();
+
         this.playerAvatar = this.player.right;
         this.itemInteract();
       }, 250);
@@ -221,18 +235,19 @@ export default {
           this.currentLocation.section - 1
         ].img;
       this.unhideItem();
-      }, 400);
+      }, 300);
 
 
     },
     sectionChangeAnim() {
       var gsapTest = gsap.to(".game-container", {
-       backgroundColor: "rgba(16, 1, 22, 1)",});
+       backgroundColor: "rgba(16, 1, 22, 1)",
+       duration:0.25});
       console.log(gsapTest);
 
             var gsapTes = gsap.to(".game-container", {
-       delay: .5, 
-       backgroundColor: "rgba(164, 21, 227, 0)",
+       delay: .7, 
+       backgroundColor: "rgba(16, 1, 22, 0)",
        ease: "power2.inOut"});
       console.log(gsapTes);
 
