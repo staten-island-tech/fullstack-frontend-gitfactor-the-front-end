@@ -37,15 +37,13 @@ export default {
         console.log(error);
       } 
     },
-   /*  async updateData() {
+   async updateData() {
       try {
-        const response = await fetch("http://localhost:3000/logout")
-        const data = await response.json();
-
+        await fetch(`http://localhost:3000/logout/${this.$store.state}`);
       } catch (error) {
         console.log(error);
       }
-    } */
+    } 
   }
 };
 </script>
