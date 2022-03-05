@@ -1,11 +1,14 @@
 <template>
-  <div class="home" v-if="isLoggedIn">
-    <HeartBar />
-    <MoveTest class="game" />
-    <div class="solid" >a</div>
-    <Inventory />
+  <div>
+    <div class="home" v-if="isLoggedIn">
+      <HeartBar />
+      <MoveTest class="game" />
+      <div class="solid"></div>
+      <Inventory />
+    </div>
+    <div class="pagebg"></div>
+    <button @click="getData()" v-if="!isLoggedIn">Log in</button>
   </div>
-  <button @click="getData()" v-if="!isLoggedIn">Log in</button>
 </template>
 
 <script>
@@ -67,6 +70,14 @@ export default {
   width: 100%;
   height: 100%;
 background-color: rgb(13, 7, 82);
+}
+.pagebg {
+  position: absolute;
+  z-index: -10;
+  top: 0%;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(31, 18, 39);
 }
 
 </style>
