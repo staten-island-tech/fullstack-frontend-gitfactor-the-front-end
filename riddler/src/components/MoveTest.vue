@@ -31,7 +31,9 @@ import ItemPopup from './ItemPopup.vue';
 
 export default {
   name: "MoveTest",
-  components: { ItemPopup },
+  components: { 
+    ItemPopup 
+  },
   data() {
     return {
       player: {
@@ -45,10 +47,12 @@ export default {
       leftValue: 50,
       currentItem: null,
       currentLocation: "bg_1_c.png",
+      // currentLevel: this.$store.userData.level,
       itemPopup: false,
       txtbx: false,
       textCount: 0,
       mainAnt: false,
+      gameItems: null,
     }
   },
   computed: {
@@ -57,6 +61,9 @@ export default {
         '--leftVar': (this.leftValue) + "%",
       }
     },
+  },
+  mounted() {
+    this.getGameItems();
   },
   methods: {  
     leftMove: function() {
@@ -85,6 +92,11 @@ export default {
       }, 250);
       this.itemInteract();
     },
+    getGameItems() {
+      this.gameItems = this.$store.state.gameItems.gameItems[this.$store.state.userData.level - 1];
+      // this.gameItems = this.$store.state.gameItems[this.$store.state.userData.level - 1];
+      console.log(this.gameItems);
+    },
     itemInteract() {
       this.currentItem = null;
       this.gameItems.forEach(item => {
@@ -108,7 +120,7 @@ export default {
     },
     addToInventory() {
       this.gameItems.splice(this.currentItem.id, 1);
-      this.$store.state.inventory.push(this.currentItem);
+      this.$store.state.userData.inventory.push(this.currentItem);
       this.closeItemPopup();
     },
     closeItemPopup() {

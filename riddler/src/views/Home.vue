@@ -1,14 +1,11 @@
 <template>
-  <div class="home">
+  <div class="home" v-if="isLoggedIn">
     <HeartBar />
     <MoveTest class="game" />
     <div class="solid" >a</div>
     <Inventory />
   </div>
-  <button @click="getData()">Log in</button>
-  <button @click="$store.replaceState({lifeCount: 0, inventory: null})">Log out</button>
-  <button @click="$store.commit('incrementLives')">Add life</button>
-  <button @click="$store.commit('decrementLives')">Die</button>
+  <button @click="getData()" v-if="!isLoggedIn">Log in</button>
 </template>
 
 <script>
@@ -24,15 +21,24 @@ export default {
     Inventory,
     HeartBar
   },
+  data() {
+    return {
+      isLoggedIn: false,
+    }
+  },
   methods: {
-    async getData() {
-      try {
-        const response = await fetch("http://localhost:3000/");
-        const data = await response.json();
-        this.$store.commit('updateState', data);
-      } catch (error) {
-        console.log(error);
-      } 
+    getData() {
+      this.isLoggedIn = true;
+      const data = [
+        {
+          level: 1,
+          section: 1,
+          leftValue: 50,
+          lifeCount: 7,
+          inventory: [],
+        }
+      ];
+      this.$store.commit('updateState', data);
     }
   }
 };
