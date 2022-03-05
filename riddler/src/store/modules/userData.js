@@ -16,6 +16,7 @@ export const mutations = {
   updateState(state, newState) {
     state.level = newState[0].level;
     state.section = newState[0].section;
+    state.leftValue = newState[0].leftValue;
     state.lifeCount = newState[0].lifeCount;
     state.inventory = newState[0].inventory;
   },

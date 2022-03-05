@@ -1,17 +1,12 @@
 <template>
     <section class="inventory">
-        <img @click="itemDetails(item)" v-for="item in $store.state.inventory" :src="require(`@/assets/${item.img}`)" :alt="item.name" :key="item.id">
+        <img @click="itemDetails(item)" v-for="item in $store.state.userData.inventory" :src="require(`@/assets/${item.img}`)" :alt="item.name" :key="item.id">
     </section>
 </template>
 
 <script>
 export default {
     name: "Inventory",
-    computed: {
-        inventory() {
-            return this.$store.state.inventory;
-        },
-    },
     methods: {
         itemDetails(item) {
             alert(`This item is a ${item.name}.`);

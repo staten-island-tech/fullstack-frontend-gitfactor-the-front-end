@@ -27,18 +27,16 @@ export default {
     }
   },
   methods: {
-    getData() {
-      this.isLoggedIn = true;
-      const data = [
-        {
-          level: 1,
-          section: 1,
-          leftValue: 50,
-          lifeCount: 7,
-          inventory: [],
-        }
-      ];
-      this.$store.commit('updateState', data);
+    async getData() {
+      try {
+        const response = await fetch("http://localhost:3000/");
+        const data = await response.json();
+        console.log(data);
+        this.$store.commit('updateState', data);
+        this.isLoggedIn = true;
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 };

@@ -3,6 +3,18 @@ export const state = {
   [
     [
       {
+        name: "Mushroom",
+        id: 0,
+        section: 2,
+        position: 40,
+        margin: "40%",
+        img: "mushroom.png",
+        isInteractable: false,
+        filter: null,
+        itemType: "object", 
+        prompt: "Do you want to pick up this amazing mushroom house?",
+      },
+      {
         name: "Riddler",
         id: 1,
         section: 1,
@@ -30,18 +42,6 @@ export const state = {
           }
         ],
       }, 
-      {
-        name: "Mushroom",
-        id: 0,
-        section: 2,
-        position: 40,
-        margin: "40%",
-        img: "mushroom.png",
-        isInteractable: false,
-        filter: null,
-        itemType: "object", 
-        prompt: "Do you want to pick up this amazing mushroom house?",
-      },
       {
         name: "Protagonist",
         id: 2,

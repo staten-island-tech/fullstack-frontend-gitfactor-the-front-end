@@ -44,10 +44,9 @@ export default {
       },
       playerAvatar: "idle-left.gif",
       npcDialogueSprite: "sprite_dialogue_riddl.png",
-      leftValue: 50,
+      leftValue: null,
       currentItem: null,
       currentLocation: "bg_1_c.png",
-      // currentLevel: this.$store.userData.level,
       itemPopup: false,
       txtbx: false,
       textCount: 0,
@@ -63,9 +62,15 @@ export default {
     },
   },
   mounted() {
-    this.getGameItems();
+    this.getUserData();
   },
   methods: {  
+    getUserData() {
+      console.log(this.$store.state.userData.level)
+      this.leftValue = this.$store.state.userData.leftValue;
+      this.gameItems = this.$store.state.gameItems.gameItems[this.$store.state.userData.level - 1];
+      // for each item in this.$store.userData.inventory, filter currentLevelItems for item.id, if true then pop from gameItems
+    },
     leftMove: function() {
       this.player.idle = "idle-left.gif";
       setTimeout(() => {
@@ -91,11 +96,6 @@ export default {
       this.playerAvatar = this.player.idle;
       }, 250);
       this.itemInteract();
-    },
-    getGameItems() {
-      this.gameItems = this.$store.state.gameItems.gameItems[this.$store.state.userData.level - 1];
-      // this.gameItems = this.$store.state.gameItems[this.$store.state.userData.level - 1];
-      console.log(this.gameItems);
     },
     itemInteract() {
       this.currentItem = null;
