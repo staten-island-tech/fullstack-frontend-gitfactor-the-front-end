@@ -7,8 +7,8 @@
       </div>
 
       <div v-else>
-        <p>
-          Welcome to VueAuth <strong>{{ AuthState.user.name }}</strong>
+        <p class="welcome">
+          Welcome to the Riddler's Tower, <strong>{{ AuthState.user.name }}</strong>
         </p>
         <button @click="logout()" class="btn btn-secondary">Logout</button>
       </div>
@@ -48,11 +48,15 @@ initAuth();
 }
 h1 {
   font-size: 5rem;
-  padding: 2rem;
+  padding-top: 2rem;
+}
+.welcome, .welcome strong {
+  display: inline;
+  font-size: 2rem;
 }
 .btn {
   padding: 8px 12px;
-  margin-bottom: 0;
+  margin: 2rem;
   font-size: 14px;
   font-weight: 400;
   line-height: 1.5;
