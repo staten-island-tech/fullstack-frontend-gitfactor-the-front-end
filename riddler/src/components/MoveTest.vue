@@ -7,6 +7,11 @@
     @keyup="reset()"
     @keydown.z="onEnter()"
   >
+    <div class="mobile-button-container">
+      <button @mousedown="leftMove()" @mouseup="reset()" class="mobile-button">&lt;</button>
+      <button @click="onEnter()" class="mobile-button">Z</button>
+      <button @mousedown="rightMove()" @mouseup="reset()" class="mobile-button">&gt;</button>
+    </div>
 
     <img
       :src="require(`@/assets/environment/lv1/${currentLocation.img}`)"
@@ -52,7 +57,6 @@
       </template>
     </item-popup>
 
-    <button @click="onEnter()" class="textbox-button">Z</button>
   </div>
 </template>
 
@@ -271,11 +275,13 @@ export default {
 <style scoped>
 
 .game-container {
+  overflow: hidden;
   position: relative;
   width: 60vw;
   height: 45vw;
+  margin: 2.5rem;
   border: .3rem solid;
-  overflow: hidden;
+  border-radius: 1.5rem;
   transition: all .2s;
 }
 .player {
@@ -302,16 +308,21 @@ export default {
 .hide {
   display: none;
 }
-.textbox-button {
+
+.mobile-button-container {
+  width: 100%;
+  height: fit-content;
+  margin: 2rem;
+}
+.mobile-button {
   font-size: 4rem;
   background-color: #766696;
   color: #deceff;
-  position: absolute;
-  left: 0;
   border-radius: 50%;
-  border: #DECEFF solid 0.3rem ;
+  border: #deceff solid 0.3rem ;
   height: 7.5rem;
   width: 7.5rem;
+  margin: 1rem;
 }
 .textbox {
   border: rgb(166, 11, 187) 1rem solid;

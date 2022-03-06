@@ -21,7 +21,10 @@ export default {
         min-height: 20rem;
         height: fit-content;
         font-size: 2rem;
+        padding: 1rem;
+        margin: 2.5rem;
         border: .2rem solid;
+        border-radius: 1.5rem;
     }
     .inventory img {
         height: 5rem;
