@@ -1,61 +1,72 @@
 <template>
-  <div
-    class="game-container"
-    id="game-viewport"
-    @keydown.right="rightMove()"
-    @keydown.left="leftMove()"
-    @keyup="reset()"
-    @keydown.z="onEnter()"
-  >
-    <!-- <div class="mobile-button-container">
+  <div>
+    <section class="game-contents">
+
+      <HeartBar />
+
+      <div
+        class="game-container"
+        id="game-viewport"
+        @keydown.right="rightMove()"
+        @keydown.left="leftMove()"
+        @keyup="reset()"
+        @keydown.z="onEnter()"
+      >
+
+        <img
+          :src="require(`@/assets/environment/lv1/${currentLocation.img}`)"
+          class="bg-img"
+        />
+        <div class="player" :style="cssProps" tabindex="-1">
+          <img
+            :src="require(`@/assets/sprites/${playerAvatar}`)"
+            class="player-avatar"
+          />
+        </div>
+
+        <img
+          v-for="item in gameItems"
+          :src="require(`@/assets/${item.img}`)"
+          :style="{ left: item.margin, filter: item.filter }"
+          :alt="item"
+          :key="item.key"
+          :id="item.section"
+          class="item hide"
+        />
+
+        <div :class="{ AC: mainAnt }" v-show="txtbx" class="textbox">
+          <img
+            :src="require(`@/assets/sprites/${player.dialogueSprite}`)"
+            class="player-avatar-dialogue"
+          />
+          <img
+            :src="require(`@/assets/sprites/${npcDialogueSprite}`)"
+            class="npc-avatar-dialogue"
+            id="npc-dialogue-sprite"
+          />
+          <p class="textbox-title"></p>
+          <p class="textbox-test typing-class"></p>
+        </div>
+        
+        <item-popup @itemAdded="addToInventory()" v-if="itemPopup" @closePopup="closeItemPopup()" :item="currentItem">
+          <template v-slot:item-img>
+            <img class="itempopup-img" :src="require(`@/assets/${currentItem.img}`)" :alt="currentItem.name"/>
+          </template>
+          <template v-slot:item-text>
+            {{ currentItem.prompt }}
+          </template>
+        </item-popup>
+      </div>
+
+      <Inventory />
+      
+    </section>
+
+    <div class="mobile-button-container">
       <button @mousedown="leftMove()" @mouseup="reset()" class="mobile-button">&lt;</button>
       <button @click="onEnter()" class="mobile-button">Z</button>
       <button @mousedown="rightMove()" @mouseup="reset()" class="mobile-button">&gt;</button>
-    </div> -->
-
-    <img
-      :src="require(`@/assets/environment/lv1/${currentLocation.img}`)"
-      class="bg-img"
-    />
-    <div class="player" :style="cssProps" tabindex="-1">
-      <img
-        :src="require(`@/assets/sprites/${playerAvatar}`)"
-        class="player-avatar"
-      />
     </div>
-
-    <img
-      v-for="item in gameItems"
-      :src="require(`@/assets/${item.img}`)"
-      :style="{ left: item.margin, filter: item.filter }"
-      :alt="item"
-      :key="item.key"
-      :id="item.section"
-      class="item hide"
-    />
-
-    <div :class="{ AC: mainAnt }" v-show="txtbx" class="textbox">
-      <img
-        :src="require(`@/assets/sprites/${player.dialogueSprite}`)"
-        class="player-avatar-dialogue"
-      />
-      <img
-        :src="require(`@/assets/sprites/${npcDialogueSprite}`)"
-        class="npc-avatar-dialogue"
-        id="npc-dialogue-sprite"
-      />
-      <p class="textbox-title"></p>
-      <p class="textbox-test typing-class"></p>
-    </div>
-
-    <item-popup @itemAdded="addToInventory()" v-if="itemPopup" @closePopup="closeItemPopup()" :item="currentItem">
-      <template v-slot:item-img>
-        <img class="itempopup-img" :src="require(`@/assets/${currentItem.img}`)" :alt="currentItem.name"/>
-      </template>
-      <template v-slot:item-text>
-        {{ currentItem.prompt }}
-      </template>
-    </item-popup>
 
   </div>
 </template>
@@ -64,12 +75,15 @@
 import { gsap } from "gsap";
 gsap.config;
 
+import HeartBar from "./HeartBar.vue";
+import Inventory from "./Inventory.vue";
 import ItemPopup from "./ItemPopup.vue";
+
 
 export default {
   name: "MoveTest",
   components: {
-    ItemPopup
+    HeartBar, Inventory, ItemPopup
   },
   created() {
     this.getUserData();
@@ -274,11 +288,15 @@ export default {
 
 <style scoped>
 
+.game-contents {
+  display: flex;
+}
 .game-container {
   overflow: hidden;
   position: relative;
   width: 60vw;
-  height: 45vw;
+  height: 31vw; 
+  /* should be height: 45vw, but temporarily it looks nice like this */
   margin: 2.5rem;
   border: .3rem solid;
   border-radius: 1.5rem;
@@ -309,11 +327,6 @@ export default {
   display: none;
 }
 
-.mobile-button-container {
-  width: 100%;
-  height: fit-content;
-  margin: 2rem;
-}
 .mobile-button {
   font-size: 4rem;
   background-color: #766696;

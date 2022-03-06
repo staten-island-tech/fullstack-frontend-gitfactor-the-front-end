@@ -1,10 +1,8 @@
 <template>
   <div>
     <div class="home" v-if="isLoggedIn">
-      <HeartBar />
       <MoveTest class="game" />
       <div class="solid"></div>
-      <Inventory />
     </div>
     <div class="pagebg"></div>
   </div>
@@ -13,15 +11,11 @@
 <script>
 
 import MoveTest from "@/components/MoveTest.vue";
-import Inventory from "@/components/Inventory.vue";
-import HeartBar from "@/components/HeartBar.vue";
 
 export default {
   name: "Home",
   components: {
     MoveTest,
-    Inventory,
-    HeartBar
   },
   data() {
     return {
@@ -48,21 +42,10 @@ export default {
 </script>
 
 <style scoped>
-  .home {
-    display: flex;
-    /* flex-direction: column; */
-  }
-  button {
-    font-size: 3rem;
-  }
 
 .player {
     position: relative;
     top: 0%;
-}
-
-.game {
-  display: flex;
 }
 
 .solid {

@@ -1,22 +1,24 @@
 <template>
+  <div id="app">
+    <div v-if="!AuthState.loading">
+      <div v-if="!AuthState.isAuthenticated" class="login-page">
+        <h1>Enter the Tower</h1>
+        <button @click="login()" class="btn btn-primary">Login</button>
+      </div>
 
-  <div v-if="!AuthState.loading">
-    <div v-if="!AuthState.isAuthenticated">
-      <button @click="login()" class="btn btn-primary">Login</button>
+      <div v-else>
+        <p>
+          Welcome to VueAuth <strong>{{ AuthState.user.name }}</strong>
+        </p>
+        <button @click="logout()" class="btn btn-secondary">Logout</button>
+      </div>
     </div>
 
-    <div v-else>
-      <p>
-        Welcome to VueAuth <strong>{{ AuthState.user.name }}</strong>
-      </p>
-      <button @click="logout()" class="btn btn-secondary">Logout</button>
-    </div>
+    <div v-else>Loading ...</div>
+
+    <router-link to="/" v-if="AuthState.isAuthenticated"></router-link>
+    <router-view v-if="AuthState.isAuthenticated"/>
   </div>
-
-  <div v-else>Loading ...</div>
-
-  <router-link to="/" v-if="AuthState.isAuthenticated"></router-link>
-  <router-view v-if="AuthState.isAuthenticated"/>
 </template>
 
 <script setup>
@@ -40,7 +42,14 @@ initAuth();
   text-align: center;
   color: #a591da;
 }
-
+.login-page {
+  height: 100vh;
+  background-color: rgb(31, 18, 39);
+}
+h1 {
+  font-size: 5rem;
+  padding: 2rem;
+}
 .btn {
   padding: 8px 12px;
   margin-bottom: 0;
