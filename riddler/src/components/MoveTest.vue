@@ -21,13 +21,14 @@
 
     <img
       v-for="item in gameItems"
-      :src="item.img"
+      :src="require(`@/assets/${item.img}`)"
       :style="{ left: item.margin, filter: item.filter }"
       :alt="item"
       :key="item.key"
       :id="item.section"
       class="item hide"
     />
+
     <div :class="{ AC: mainAnt }" v-show="txtbx" class="textbox">
       <img
         :src="require(`@/assets/sprites/${player.dialogueSprite}`)"
@@ -41,17 +42,33 @@
       <p class="textbox-title"></p>
       <p class="textbox-test typing-class"></p>
     </div>
+
+    <item-popup @itemAdded="addToInventory()" v-if="itemPopup" @closePopup="closeItemPopup()" :item="currentItem">
+      <template v-slot:item-img>
+        <img class="itempopup-img" :src="require(`@/assets/${currentItem.img}`)" :alt="currentItem.name"/>
+      </template>
+      <template v-slot:item-text>
+        {{ currentItem.prompt }}
+      </template>
+    </item-popup>
+
     <button @click="onEnter()" class="textbox-button">Z</button>
   </div>
 </template>
 
-<script >
+<script>
 import { gsap } from "gsap";
 gsap.config;
 
+import ItemPopup from "./ItemPopup.vue";
+
 export default {
   name: "MoveTest",
+  components: {
+    ItemPopup
+  },
   created() {
+    this.getUserData();
     this.sectionChange();
   },
   mounted() {
@@ -78,12 +95,12 @@ export default {
           ],
         },
       ],
-      currentItem: null,
       currentLocation: {
-        section: 1,
-        img: "bg_1_a.png",
+        section: null,
+        img: "",
       },
       gameItems: null,
+      currentItem: null,
       itemPopup: false,
       txtbx: false,
       textCount: 0,
@@ -97,18 +114,16 @@ export default {
       }
     },
   },
-  mounted() {
-    this.getUserData();
-  },
   methods: {  
     getUserData() {
-      console.log(this.$store.state.userData.level)
       this.leftValue = this.$store.state.userData.leftValue;
       this.currentLevel = this.$store.state.userData.level;
+      this.currentLocation.section = this.$store.state.userData.section;
+      this.currentLocation.img = this.playerLocation[this.currentLevel - 1].level[this.currentLocation.section - 1].img;
       this.gameItems = this.$store.state.gameItems.gameItems[this.$store.state.userData.level - 1];
-      // for each item in this.$store.userData.inventory, filter currentLevelItems for item.id, if true then pop from gameItems
+      // NEXT STEP: for each item in this.$store.userData.inventory, filter currentLevelItems for item.id, if true then pop item from gameItems
     },
-    leftMove: function() {
+    leftMove() {
       this.player.idle = "idle-left.gif";
       setTimeout(() => {
 
@@ -135,7 +150,7 @@ export default {
       }, 250);
      
     },
-    rightMove: function () {
+    rightMove() {
       this.player.idle = "idle-right.gif";
       setTimeout(() => {
         if (this.leftValue >= 83.5) {
@@ -163,7 +178,7 @@ export default {
         this.itemInteract();
       }, 250);
     },
-    reset: function () {
+    reset() {
       setTimeout(() => {
         this.playerAvatar = this.player.idle;
       }, 250);
@@ -171,27 +186,22 @@ export default {
     },
     sectionChange() {
       setTimeout(() => {
-      console.log(this.currentLocation);
-      this.currentLocation.img =
-        this.playerLocation[this.currentLevel - 1].level[
-          this.currentLocation.section - 1
-        ].img;
-      this.unhideItem();
+        console.log(this.currentLocation);
+        this.currentLocation.img = this.playerLocation[this.currentLevel - 1].level[this.currentLocation.section - 1].img;
+        this.unhideItem();
       }, 300);
-            var gsapTes = gsap.to(".game-container", {
-       delay: .2, 
-       backgroundColor: "rgba(16, 1, 22, 0)",
-       ease: "power2.inOut"});
-      console.log(gsapTes);
-
-
+        var gsapTes = gsap.to(".game-container", {
+          delay: .2, 
+          backgroundColor: "rgba(16, 1, 22, 0)",
+          ease: "power2.inOut"
+        });
+        console.log(gsapTes);
     },
     sectionChangeAnim() {
       var gsapTest = gsap.to(".game-container", {
        backgroundColor: "rgba(16, 1, 22, 1)",
        duration:0.25});
       console.log(gsapTest);
-
     },
     unhideItem() {
       const overworldItems = document.getElementsByClassName("item");
@@ -207,7 +217,7 @@ export default {
       this.currentItem = null;
       this.gameItems.forEach((item) => {
         const offset = item.position - this.leftValue;
-        if (Math.abs(offset) <= 10 || (offset >= -10 && offset < 10)) { //checks distance from left and right of the item
+        if ((item.section === this.currentLocation.section) && (Math.abs(offset) <= 10 || (offset >= -10 && offset < 10))) { //checks distance from left and right of the item
             item.isInteractable = true;
             this.currentItem = item;
             item.filter = "sepia(55%)";
@@ -218,10 +228,12 @@ export default {
       });
     },
     onEnter() {
-      if (this.currentItem.itemType === "object") {              
+      if (this.currentItem) {
+        if (this.currentItem.itemType === "object") {              
         this.itemPopup = true;
-      } else if (this.currentItem.itemType === "character") {              
-        this.txtbxShow();
+        } else if (this.currentItem.itemType === "character") {              
+          this.txtbxShow();
+        }
       }
     },
     addToInventory() {
@@ -290,7 +302,6 @@ export default {
 .hide {
   display: none;
 }
-
 .textbox-button {
   font-size: 4rem;
   background-color: #766696;
