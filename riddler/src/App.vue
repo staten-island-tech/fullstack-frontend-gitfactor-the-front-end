@@ -1,10 +1,27 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div v-if="!AuthState.loading">
+    <div v-if="!AuthState.isAuthenticated">
+      <button @click="login()" class="btn btn-primary">Login</button>
+    </div>
+
+    <div v-else>
+      <p>
+        Welcome to VueAuth <strong>{{ AuthState.user.name }}</strong>
+      </p>
+      <button @click="logout()" class="btn btn-secondary">Logout</button>
+    </div>
   </div>
-  <router-view />
+
+  <div v-else>Loading ...</div>
 </template>
+
+<script setup>
+import { useAuth0, AuthState } from "/utils/useAuth0.js";
+const { login, logout, initAuth } = useAuth0(AuthState);
+
+
+initAuth();
+</script>
 
 <style>
 *, html, body {
@@ -21,16 +38,26 @@
   color: #a591da;
 }
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
+.btn {
+  padding: 8px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  border: none;
+  cursor: pointer;
+  min-width: 100px;
+  border-radius: 4px;
   font-weight: bold;
-  color: #2c3e50;
 }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
+.btn-primary {
+  background: #41b883;
+  color: white;
+}
+
+.btn-secondary {
+  background: #aaa;
+  color: white;
 }
 </style>
