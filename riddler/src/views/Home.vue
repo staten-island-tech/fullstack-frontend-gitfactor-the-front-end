@@ -7,7 +7,6 @@
       <Inventory />
     </div>
     <div class="pagebg"></div>
-    <button @click="getData()" v-if="!isLoggedIn">Log in</button>
   </div>
 </template>
 
@@ -28,6 +27,9 @@ export default {
     return {
       isLoggedIn: false,
     }
+  },
+  mounted() {
+    this.getData();
   },
   methods: {
     async getData() {
@@ -69,7 +71,7 @@ export default {
   top: 0%;
   width: 100%;
   height: 100%;
-background-color: rgb(13, 7, 82);
+  background-color: rgb(13, 7, 82);
 }
 .pagebg {
   position: absolute;

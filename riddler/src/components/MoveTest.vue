@@ -7,11 +7,11 @@
     @keyup="reset()"
     @keydown.z="onEnter()"
   >
-    <div class="mobile-button-container">
+    <!-- <div class="mobile-button-container">
       <button @mousedown="leftMove()" @mouseup="reset()" class="mobile-button">&lt;</button>
       <button @click="onEnter()" class="mobile-button">Z</button>
       <button @mousedown="rightMove()" @mouseup="reset()" class="mobile-button">&gt;</button>
-    </div>
+    </div> -->
 
     <img
       :src="require(`@/assets/environment/lv1/${currentLocation.img}`)"

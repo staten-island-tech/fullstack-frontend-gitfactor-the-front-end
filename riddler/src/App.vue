@@ -1,4 +1,5 @@
 <template>
+
   <div v-if="!AuthState.loading">
     <div v-if="!AuthState.isAuthenticated">
       <button @click="login()" class="btn btn-primary">Login</button>
@@ -14,19 +15,13 @@
 
   <div v-else>Loading ...</div>
 
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
-
-  <router-view />
-  
+  <router-link to="/" v-if="AuthState.isAuthenticated"></router-link>
+  <router-view v-if="AuthState.isAuthenticated"/>
 </template>
 
 <script setup>
 import { useAuth0, AuthState } from "/utils/useAuth0.js";
 const { login, logout, initAuth } = useAuth0(AuthState);
-
 
 initAuth();
 </script>
@@ -60,7 +55,7 @@ initAuth();
 }
 
 .btn-primary {
-  background: #41b883;
+  background: #b84169;
   color: white;
 }
 
