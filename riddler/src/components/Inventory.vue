@@ -28,5 +28,6 @@ export default {
   }
   .inventory img {
       height: 5rem;
+      margin: 0 .5rem;
   }
 </style>
