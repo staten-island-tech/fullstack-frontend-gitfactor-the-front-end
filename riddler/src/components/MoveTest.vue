@@ -210,7 +210,7 @@ export default {
             setTimeout(() => {
             this.sectionChange();
              this.leftValue = 1;
-            }, 250);
+            }, 25);
                         
           }
         }
@@ -235,20 +235,21 @@ export default {
           this.currentLocation.section - 1
         ].img;
       this.unhideItem();
-      }, 300);
-            var gsapTes = gsap.to(".game-container", {
-       delay: .2, 
-       backgroundColor: "rgba(16, 1, 22, 0)",
-       ease: "power2.inOut"});
-      console.log(gsapTes);
+      }, 150);
+
 
 
     },
     sectionChangeAnim() {
-      var gsapTest = gsap.to(".game-container", {
+      var transOpaque = gsap.to(".game-container", {
        backgroundColor: "rgba(16, 1, 22, 1)",
        duration:0.25});
-      console.log(gsapTest);
+      var transClear = gsap.to(".game-container", {
+       delay: .2, 
+       backgroundColor: "rgba(16, 1, 22, 0)",
+       ease: "power2.inOut"});
+      console.log(transClear);
+      console.log(transOpaque);
 
     },
     unhideItem() {
