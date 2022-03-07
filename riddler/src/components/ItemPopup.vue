@@ -23,6 +23,7 @@ export default {
 <style scoped>
   .item-popup {
     position: absolute;
+    top: 0;
     width: calc(100% - 4rem);
     height: calc(100% - 4rem);
     padding: 5rem;
