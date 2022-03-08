@@ -11,19 +11,13 @@ export default {
 </script>
 
 <style scoped>
-    section {
-        width: 20%;
-        min-height: 20rem;
-        height: fit-content;
-        font-size: 2rem;
-        padding: 1rem;
-        margin: 2.5rem;
-        border: .2rem solid;
-        border-radius: 1.5rem;
-    }
-    section svg {
-        height: 3rem;
-        margin: auto .5rem;
-        color: red;
-    }
+  section {
+    text-align: left;
+    margin-bottom: 2.5rem;
+  }
+  section svg {
+    height: 2.5rem;
+    margin-right: .5rem;
+    color: red;
+  }
 </style>

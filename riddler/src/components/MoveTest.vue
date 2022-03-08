@@ -1,9 +1,12 @@
 <template>
-  <div>
-    <section class="game-contents">
+  <div class="game-page">
 
+    <div class="level-and-hearts">
+      <h1>Lvl. {{ $store.state.userData.level }}</h1>
       <HeartBar />
-
+    </div>
+    
+    <main class="game-contents">
       <div
         class="game-container"
         id="game-viewport"
@@ -34,7 +37,7 @@
           class="item hide"
         />
 
-        <div :class="{ AC: mainAnt }" v-show="txtbx" class="textbox">
+        <div :class="{ AC: mainAnt }" v-if="txtbx" class="textbox">
           <img
             :src="require(`@/assets/sprites/${player.dialogueSprite}`)"
             class="player-avatar-dialogue"
@@ -44,8 +47,8 @@
             class="npc-avatar-dialogue"
             id="npc-dialogue-sprite"
           />
-          <p class="textbox-title"></p>
-          <p class="textbox-test typing-class"></p>
+          <p class="textbox-title">{{ this.currentItem.dialogue[this.textCount].name }}</p>
+          <p class="textbox-test typing-class">{{ this.currentItem.dialogue[this.textCount].text }}</p>
         </div>
         
         <item-popup @itemAdded="addToInventory()" v-if="itemPopup" @closePopup="closeItemPopup()" :item="currentItem">
@@ -60,7 +63,7 @@
 
       <Inventory />
       
-    </section>
+    </main>
 
     <div class="mobile-button-container">
       <button @mousedown="leftMove()" @mouseup="reset()" class="mobile-button">&lt;</button>
@@ -121,7 +124,7 @@ export default {
       currentItem: null,
       itemPopup: false,
       txtbx: false,
-      textCount: 0,
+      textCount: -1,
       mainAnt: false,
     };
   },
@@ -263,15 +266,10 @@ export default {
       this.itemPopup = false;
     },
     txtbxShow() {
+      this.textCount += 1;
       if (this.textCount < this.currentItem.dialogue.length) {
         this.txtbx = true;
-        this.textCount += 1;
-        const charLabel = document.querySelector(".textbox-title");
-        const textOutput = document.querySelector(".textbox-test");
-        const num = this.textCount - 1;
-        textOutput.innerHTML = this.currentItem.dialogue[num].text;
-        charLabel.innerHTML = this.currentItem.dialogue[num].name;
-        if (this.currentItem.dialogue[num].isAntagonist) {
+        if (this.currentItem.dialogue[this.textCount].isAntagonist) {
           this.mainAnt = true;
         } else {
           this.mainAnt = false;
@@ -279,7 +277,7 @@ export default {
         this.npcDialogueSprite = this.currentItem.dialogueSprite;
       } else {
         this.txtbx = false;
-        this.textCount = 0;
+        this.textCount = -1;
       }
     },
   },
@@ -287,17 +285,25 @@ export default {
 </script>
 
 <style scoped>
-
+h1 {
+  text-align: left;
+}
+.game-page {
+  margin: auto;
+  display: inline-block;
+}
 .game-contents {
   display: flex;
+  flex-direction: row;
+  width: fit-content;
 }
 .game-container {
   overflow: hidden;
   position: relative;
   width: 60vw;
-  height: 31vw; 
-  /* should be height: 45vw, but temporarily it looks nice like this */
-  margin: 2.5rem;
+  height: 30vw; 
+  margin-right: 2.5rem;
+  margin-bottom: 2.5rem;
   border: .3rem solid;
   border-radius: 1.5rem;
   transition: all .2s;
@@ -365,7 +371,7 @@ export default {
   width: 130%;
   z-index: -5;
   position: absolute;
-  bottom: 5%;
+  bottom: 0;
   left: -20%;
 }
 
@@ -385,4 +391,16 @@ img {
   position: unset;
   margin-bottom: 5rem;
 }
+
+@media only screen and (max-width: 768px) {
+  .game-contents {
+    flex-direction: column;
+  }
+  .game-container {
+    width: 80vw;
+    height: 40vw;
+    margin-right: 0;
+  }
+}
+
 </style>
