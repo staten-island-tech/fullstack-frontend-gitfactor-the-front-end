@@ -1,9 +1,12 @@
 <template>
-  <div>
-    <section class="game-contents">
+  <div class="game-page">
 
+    <div class="level-and-hearts">
+      <h1>Lvl. {{ $store.state.userData.level }}</h1>
       <HeartBar />
-
+    </div>
+    
+    <main class="game-contents">
       <div
         class="game-container"
         id="game-viewport"
@@ -60,7 +63,7 @@
 
       <Inventory />
       
-    </section>
+    </main>
 
     <div class="mobile-button-container">
       <button @mousedown="leftMove()" @mouseup="reset()" class="mobile-button">&lt;</button>
@@ -282,17 +285,25 @@ export default {
 </script>
 
 <style scoped>
-
+h1 {
+  text-align: left;
+}
+.game-page {
+  margin: auto;
+  display: inline-block;
+}
 .game-contents {
   display: flex;
+  flex-direction: row;
+  width: fit-content;
 }
 .game-container {
   overflow: hidden;
   position: relative;
   width: 60vw;
-  height: 31vw; 
-  /* should be height: 45vw, but temporarily it looks nice like this */
-  margin: 2.5rem;
+  height: 30vw; 
+  margin-right: 2.5rem;
+  margin-bottom: 2.5rem;
   border: .3rem solid;
   border-radius: 1.5rem;
   transition: all .2s;
@@ -360,7 +371,7 @@ export default {
   width: 130%;
   z-index: -5;
   position: absolute;
-  bottom: 5%;
+  bottom: 0;
   left: -20%;
 }
 
@@ -380,4 +391,16 @@ img {
   position: unset;
   margin-bottom: 5rem;
 }
+
+@media only screen and (max-width: 768px) {
+  .game-contents {
+    flex-direction: column;
+  }
+  .game-container {
+    width: 80vw;
+    height: 40vw;
+    margin-right: 0;
+  }
+}
+
 </style>

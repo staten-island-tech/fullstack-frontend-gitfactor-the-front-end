@@ -17,17 +17,32 @@ export default {
 
 <style scoped>
   .inventory {
-      width: 20%;
-      min-height: 20rem;
-      height: fit-content;
-      font-size: 2rem;
-      padding: 1rem;
-      margin: 2.5rem;
-      border: .2rem solid;
-      border-radius: 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 20rem;
+    height: fit-content;
+    text-align: left;
+    font-size: 2rem;
+    padding: 1rem;
+    margin-left: 2.5rem;
+    border: .2rem solid;
+    border-radius: 1.5rem;
+    overflow: scroll;
   }
   .inventory img {
-      height: 5rem;
-      margin: 0 .5rem;
+      height: 7rem;
+      margin: .5rem;
+      background-color: #fff;
+      padding: .5rem;
+      border-radius: 1rem;
+      cursor: pointer;
   }
+
+@media only screen and (max-width: 768px) {
+  .inventory {
+    margin: 0;
+    min-height: 0;
+    display: flex;
+  }
+}
 </style>

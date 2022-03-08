@@ -8,9 +8,9 @@
 
       <div v-else>
         <p class="welcome">
-          Welcome to the Riddler's Tower, <strong>{{ AuthState.user.name }}</strong>
+          Welcome to the Riddler's Tower, <strong>{{ AuthState.user.name }}</strong> >:)
         </p>
-        <button @click="logout()" class="btn btn-secondary">Logout</button>
+        <button @click="logout()" class="btn btn-secondary">Save & Quit</button>
       </div>
     </div>
 
@@ -42,28 +42,32 @@ initAuth();
   text-align: center;
   color: #a591da;
 }
-.login-page {
-  height: 100vh;
-  background-color: rgb(31, 18, 39);
-}
 h1 {
   font-size: 5rem;
   padding-top: 2rem;
+}
+button {
+  cursor: pointer;
+}
+.login-page {
+  height: 100vh;
+  background-color: rgb(31, 18, 39);
 }
 .welcome, .welcome strong {
   display: inline;
   font-size: 2rem;
 }
 .btn {
-  padding: 8px 12px;
-  margin: 2rem;
-  font-size: 14px;
+  padding: .8rem 1.2rem;
+  margin-top: 2rem;
+  margin-left: 2rem;
+  font-size: 1.4rem;
   font-weight: 400;
   line-height: 1.5;
   border: none;
   cursor: pointer;
-  min-width: 100px;
-  border-radius: 4px;
+  min-width: 10rem;
+  border-radius: .4rem;
   font-weight: bold;
 }
 
