@@ -28,9 +28,15 @@ export default {
   methods: {
     async getData() {
       try {
-        const response = await fetch("http://localhost:3000/");
-        const data = await response.json();
-        console.log(data);
+        const data = [
+          {
+            level: 1,
+            section: 1,
+            leftValue: 50,
+            lifeCount: 7,
+            inventory: [],
+          }
+        ];
         this.$store.commit('updateState', data);
         this.isLoggedIn = true;
       } catch (error) {
