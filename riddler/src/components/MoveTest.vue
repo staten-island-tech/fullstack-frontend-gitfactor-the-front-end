@@ -52,7 +52,7 @@
           <p class="textbox-test typing-class">{{ this.currentItem.dialogue[this.textCount].text }}</p>
         </div>
         
-        <item-popup @itemAdded="addToInventory()" v-if="itemPopup" @closePopup="closeItemPopup()" :item="currentItem" v-on:turnoff="turnOff">
+        <item-popup @itemAdded="addToInventory()" v-if="itemPopup" @closePopup="closeItemPopup()" :item="currentItem" ref="itemPopupBox" >
           <template v-slot:item-img>
             <img class="itempopup-img" :src="require(`@/assets/${currentItem.img}`)" :alt="currentItem.name"/>
           </template>
@@ -152,8 +152,12 @@ export default {
       this.gameItems = this.$store.state.gameItems.gameItems[this.$store.state.userData.level - 1];
       // NEXT STEP: for each item in this.$store.userData.inventory, filter currentLevelItems for item.id, if true then pop item from gameItems
     },
-    leftMove() {
+    leftMove(e) {
       this.player.idle = "idle-left.gif";
+       if(this.enteredOnObject && e.key === "ArrowLeft") {
+        e.preventDefault();
+      }
+      else{
       setTimeout(() => {
 
         if (this.leftValue <= 1.5) {
@@ -177,10 +181,15 @@ export default {
         this.playerAvatar = this.player.left;
         this.itemInteract();
       }, 250);
+      }
      
     },
-    rightMove() {
+    rightMove(e) {
       this.player.idle = "idle-right.gif";
+         if(this.enteredOnObject && e.key === "ArrowRight") {
+        e.preventDefault();
+      }
+      else{
       setTimeout(() => {
         if (this.leftValue >= 83.5) {
           if (this.currentLocation.section < 3) {
@@ -206,6 +215,7 @@ export default {
         this.playerAvatar = this.player.right;
         this.itemInteract();
       }, 250);
+      }
     },
     reset() {
       setTimeout(() => {
@@ -261,6 +271,10 @@ export default {
         this.enteredOnObject = true;
         if (this.currentItem.itemType === "object") {              
         this.itemPopup = true;
+        setTimeout(() => {   this.openItemPopup();  
+               }, 10);
+        
+        
         
         } else if (this.currentItem.itemType === "character") {              
           this.txtbxShow();
@@ -272,8 +286,13 @@ export default {
       this.$store.state.userData.inventory.push(this.currentItem);
       this.closeItemPopup();
     },
+    openItemPopup() {
+      this.$refs.itemPopupBox.$el.focus();
+    },
     closeItemPopup() {
       this.itemPopup = false;
+      this.enteredOnObject = false;
+      this.enablePlayerMovement();
     },
     txtbxShow() {
       this.textCount += 1;
