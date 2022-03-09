@@ -5,7 +5,7 @@
       <h1>Lvl. {{ $store.state.userData.level }}</h1>
       <HeartBar />
     </div>
-    
+
     <div class="game-and-inventory">
       <main class="game-contents">
       <div
@@ -15,13 +15,14 @@
         @keydown.left="leftMove()"
         @keyup="reset()"
         @keydown.z="onEnter()"
+        
       >
 
         <img
           :src="require(`@/assets/environment/lv1/${currentLocation.img}`)"
           class="bg-img"
         />
-        <div class="player" :style="cssProps" tabindex="-1">
+        <div class="player" :style="cssProps" tabindex="-1" ref="playerMove">
           <img
             :src="require(`@/assets/sprites/${playerAvatar}`)"
             class="player-avatar"
@@ -52,7 +53,7 @@
           <p class="textbox-test typing-class">{{ this.currentItem.dialogue[this.textCount].text }}</p>
         </div>
         
-        <item-popup @itemAdded="addToInventory()" v-if="itemPopup" @closePopup="closeItemPopup()" :item="currentItem">
+        <item-popup @itemAdded="addToInventory()" v-if="itemPopup" @closePopup="closeItemPopup()" :item="currentItem" v-on:turnoff="turnOff">
           <template v-slot:item-img>
             <img class="itempopup-img" :src="require(`@/assets/${currentItem.img}`)" :alt="currentItem.name"/>
           </template>
@@ -97,6 +98,8 @@ export default {
   },
   mounted() {
     this.unhideItem();
+    this.enablePlayerMovement();
+    
   },
   data() {
     return {
@@ -129,6 +132,7 @@ export default {
       txtbx: false,
       textCount: -1,
       mainAnt: false,
+      enteredOnObject: false,
     };
   },
   computed: {
@@ -139,6 +143,10 @@ export default {
     },
   },
   methods: {  
+    enablePlayerMovement() {
+      this.$refs.playerMove.focus();  
+      console.log('done');    
+    },
     getUserData() {
       this.leftValue = this.$store.state.userData.leftValue;
       this.currentLevel = this.$store.state.userData.level;
@@ -253,8 +261,10 @@ export default {
     },
     onEnter() {
       if (this.currentItem) {
+        this.enteredOnObject = true;
         if (this.currentItem.itemType === "object") {              
         this.itemPopup = true;
+        
         } else if (this.currentItem.itemType === "character") {              
           this.txtbxShow();
         }
@@ -280,6 +290,7 @@ export default {
         this.npcDialogueSprite = this.currentItem.dialogueSprite;
       } else {
         this.txtbx = false;
+        this.enteredOnObject = false;
         this.textCount = -1;
       }
     },
