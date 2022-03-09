@@ -24,15 +24,14 @@ export default {
     text-align: left;
     font-size: 2rem;
     padding: 1rem;
-    margin-left: 2.5rem;
+    margin-left: 5rem;
     border: .2rem solid;
     border-radius: 1.5rem;
-    overflow: scroll;
   }
   .inventory img {
       height: 7rem;
       margin: .5rem;
-      background-color: #fff;
+      background-color: #deceff;
       padding: .5rem;
       border-radius: 1rem;
       cursor: pointer;

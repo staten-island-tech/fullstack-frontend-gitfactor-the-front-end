@@ -40,7 +40,7 @@ initAuth();
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #a591da;
+  color: #deceff;
 }
 h1 {
   font-size: 5rem;
@@ -51,7 +51,7 @@ button {
 }
 .login-page {
   height: 100vh;
-  background-color: rgb(31, 18, 39);
+  background-color: #1f1227;
 }
 .welcome, .welcome strong {
   display: inline;

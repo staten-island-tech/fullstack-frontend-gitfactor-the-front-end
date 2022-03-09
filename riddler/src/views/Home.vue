@@ -54,7 +54,7 @@ export default {
   top: 0%;
   width: 100%;
   height: 100%;
-  background-color: rgb(13, 7, 82);
+  background-color: #0d0752;
 }
 .pagebg {
   position: absolute;
@@ -62,7 +62,7 @@ export default {
   top: 0%;
   width: 100%;
   height: 100%;
-  background-color: rgb(31, 18, 39);
+  background-color: #1f1227;
 }
 
 </style>

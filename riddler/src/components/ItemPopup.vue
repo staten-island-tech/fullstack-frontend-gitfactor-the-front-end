@@ -29,10 +29,18 @@ export default {
     padding: 5rem;
     margin: 2rem;
     border-radius: 1.5rem;
-    background-color: #a791d4;
+    background-color: #deceff;
     z-index: 1;
-    overflow: scroll;
   }
+  .example::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.example {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
   .item-popup button {
     background-color: #fff;
     font-size: 2rem;

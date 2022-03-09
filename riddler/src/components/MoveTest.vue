@@ -6,7 +6,8 @@
       <HeartBar />
     </div>
     
-    <main class="game-contents">
+    <div class="game-and-inventory">
+      <main class="game-contents">
       <div
         class="game-container"
         id="game-viewport"
@@ -59,17 +60,19 @@
             {{ currentItem.prompt }}
           </template>
         </item-popup>
+      
       </div>
 
-      <Inventory />
-      
+      <div class="mobile-button-container">
+        <button @mousedown="leftMove()" @mouseup="reset()" class="mobile-button">&lt;</button>
+        <button @click="onEnter()" class="mobile-button">Z</button>
+        <button @mousedown="rightMove()" @mouseup="reset()" class="mobile-button">&gt;</button>
+      </div>
     </main>
 
-    <div class="mobile-button-container">
-      <button @mousedown="leftMove()" @mouseup="reset()" class="mobile-button">&lt;</button>
-      <button @click="onEnter()" class="mobile-button">Z</button>
-      <button @mousedown="rightMove()" @mouseup="reset()" class="mobile-button">&gt;</button>
-    </div>
+    <Inventory />
+
+  </div>      
 
   </div>
 </template>
@@ -258,7 +261,7 @@ export default {
       }
     },
     addToInventory() {
-      this.gameItems.splice(this.currentItem.id, 1);
+      // this.gameItems.splice(this.currentItem.id, 1);
       this.$store.state.userData.inventory.push(this.currentItem);
       this.closeItemPopup();
     },
@@ -291,22 +294,29 @@ h1 {
 .game-page {
   margin: auto;
   display: inline-block;
+  text-align: left;
+}
+.game-and-inventory {
+  display: flex;
+  flex-direction: row;
 }
 .game-contents {
   display: flex;
-  flex-direction: row;
-  width: fit-content;
+  flex-direction: column;
+  align-items: center;
 }
 .game-container {
   overflow: hidden;
   position: relative;
   width: 60vw;
   height: 30vw; 
-  margin-right: 2.5rem;
   margin-bottom: 2.5rem;
   border: .3rem solid;
   border-radius: 1.5rem;
   transition: all .2s;
+}
+.level-and-hearts h1 {
+  margin-bottom: .5rem;
 }
 .player {
   width: 100%;
@@ -332,7 +342,6 @@ h1 {
 .hide {
   display: none;
 }
-
 .mobile-button {
   font-size: 4rem;
   background-color: #766696;
@@ -344,8 +353,8 @@ h1 {
   margin: 1rem;
 }
 .textbox {
-  border: rgb(166, 11, 187) 1rem solid;
-  background-color: rgb(14, 11, 43);
+  border: #a60bbb 1rem solid;
+  background-color: #0e0b2b;
   width: 100%;
   min-height: 15rem;
   position: absolute;
@@ -355,7 +364,7 @@ h1 {
 }
 .textbox-test,
 .textbox-title {
-  color: rgb(244, 235, 255);
+  color: #f4ebff;
   font-size: 2rem;
   text-align: left;
   margin-top: 0.5rem;
@@ -364,7 +373,7 @@ h1 {
   font-size: 2.5rem;
 }
 .AC {
-  border: rgb(55, 11, 218) 1rem solid;
+  border: #370bda 1rem solid;
 }
 
 .bg-img {
