@@ -60,6 +60,12 @@
             {{ currentItem.prompt }}
           </template>
         </item-popup>
+
+        <PuzzlePopup ref="puzzlePopupBox" v-on:turn-off="turnOff" v-on:lose-heart="loseHeart"
+        :puzzleAnswer="emittedPuzzleAnswer"
+        :puzzleVisibility="enteredOnObject" 
+        :puzzlePrompt ="emittedPuzzlePrompt"
+        :puzzleType ="emittedPuzzleType"></PuzzlePopup>
       </div>
 
       <Inventory />
@@ -82,12 +88,13 @@ gsap.config;
 import HeartBar from "./HeartBar.vue";
 import Inventory from "./Inventory.vue";
 import ItemPopup from "./ItemPopup.vue";
+import PuzzlePopup from "./PuzzlePopup.vue";
 
 
 export default {
   name: "MoveTest",
   components: {
-    HeartBar, Inventory, ItemPopup
+    HeartBar, Inventory, ItemPopup, PuzzlePopup
   },
   created() {
     this.getUserData();
@@ -98,7 +105,7 @@ export default {
     this.enablePlayerMovement();
     
   },
-  data() {
+  data() { // got up to here need to add teh 3 puzzle types
     return {
        
       player: {
