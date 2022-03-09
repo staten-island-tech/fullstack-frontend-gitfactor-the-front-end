@@ -100,6 +100,7 @@ export default {
   },
   data() {
     return {
+       
       player: {
         idle: "idle-left.gif",
         left: "walk-left.gif",
@@ -131,6 +132,15 @@ export default {
       mainAnt: false,
       enteredOnObject: false,
     };
+  },
+  created() {
+    this.moveListen()
+   
+
+  },
+  mounted() {
+    this.enablePlayerMovement();
+
   },
   computed: {
     cssProps() {
@@ -221,7 +231,11 @@ export default {
       setTimeout(() => {
         this.playerAvatar = this.player.idle;
       }, 250);
-      this.itemInteract();
+       this.itemInteract();
+      },
+    enablePlayerMovement(){
+      this.$refs.playerMove.focus(); 
+     
     },
     sectionChange() {
       setTimeout(() => {
@@ -266,7 +280,8 @@ export default {
         }
       });
     },
-    onEnter() {
+             
+   onEnter() {
       if (this.currentItem) {
         this.enteredOnObject = true;
         if (this.currentItem.itemType === "object") {              
@@ -278,6 +293,28 @@ export default {
         
         } else if (this.currentItem.itemType === "character") {              
           this.txtbxShow();
+           
+        }
+        else if (this.currentItem.itemType === "puzzle") {        
+          this.enteredOnObject = true;
+          this.emittedPuzzleAnswer = this.currentItem.puzzleAnswer;
+          this.emittedPuzzlePrompt = this.currentItem.prompt;
+          this.emittedPuzzleType = this.currentItem.puzzleType;
+          setTimeout(() => {   this.openPuzzlePopup();  
+               }, 10);
+          if(this.currentItem.puzzleType === 1){
+            console.log('this is type 1');
+            
+          }
+          else if(this.currentItem.puzzleType === 2){
+            console.log('this is type 2');
+           
+          }
+          else if(this.currentItem.puzzleType === 3){
+            console.log('this is type 3');
+            
+          }
+
         }
       }
     },
@@ -339,8 +376,8 @@ h1 {
   transition: all .2s;
 }
 .player {
-  width: 100%;
-  height: 100%;
+  width: inherit;
+  height: inherit;
 }
 .player-avatar {
   width: 17.5%;

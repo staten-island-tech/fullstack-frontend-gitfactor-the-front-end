@@ -5,6 +5,8 @@
       <div class="solid"></div>
     </div>
     <div class="pagebg"></div>
+  <div class="home">
+ 
   </div>
 </template>
 
