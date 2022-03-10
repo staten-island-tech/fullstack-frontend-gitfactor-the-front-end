@@ -271,7 +271,7 @@ export default {
       }
     },
     addToInventory() {
-      // this.gameItems.splice(this.currentItem.id, 1);
+      this.gameItems.splice(this.currentItem.id, 1);
       this.$store.state.userData.inventory.push(this.currentItem);
       this.closeItemPopup();
     },
@@ -343,12 +343,12 @@ h1 {
 .player-avatar-dialogue {
   width: 70%;
   right: -20%;
-  bottom: -350%;
+  bottom: -40vw;
 }
 .npc-avatar-dialogue {
   width: 70%;
   left: -17%;
-  bottom: -350%;
+  bottom: -40vw;
 }
 .hide {
   display: none;
@@ -367,7 +367,7 @@ h1 {
   border: #a60bbb 1rem solid;
   background-color: #0e0b2b;
   width: 100%;
-  min-height: 15rem;
+  min-height: 15%;
   position: absolute;
   bottom: 0;
   padding: 2rem;
@@ -423,6 +423,12 @@ img {
   }
   .game-contents {
     margin-bottom: 5rem;
+  }
+  .player-avatar-dialogue {
+    bottom: -55vw;
+  }
+  .npc-avatar-dialogue {
+    bottom: -55vw;
   }
 }
 

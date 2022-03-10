@@ -32,6 +32,7 @@ export default {
     border-radius: 1.5rem;
     background-color: #deceff;
     z-index: 1;
+    overflow: scroll;
   }
   .item-popup button {
     background-color: #fff;
