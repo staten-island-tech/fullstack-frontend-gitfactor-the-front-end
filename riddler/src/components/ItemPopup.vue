@@ -24,6 +24,7 @@ export default {
   .item-popup {
     position: absolute;
     top: 0;
+    text-align: center;
     width: calc(100% - 4rem);
     height: calc(100% - 4rem);
     padding: 5rem;
@@ -32,15 +33,6 @@ export default {
     background-color: #deceff;
     z-index: 1;
   }
-  .example::-webkit-scrollbar {
-  display: none;
-}
-
-/* Hide scrollbar for IE, Edge and Firefox */
-.example {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-}
   .item-popup button {
     background-color: #fff;
     font-size: 2rem;
