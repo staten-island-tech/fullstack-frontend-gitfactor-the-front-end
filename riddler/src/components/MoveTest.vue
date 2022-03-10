@@ -249,7 +249,7 @@ export default {
       this.currentItem = null;
       this.gameItems.forEach((item) => {
         const offset = item.position - this.leftValue;
-        if ((item.section === this.currentLocation.section) && (Math.abs(offset) <= 10 || (offset >= -10 && offset < 10))) { //checks distance from left and right of the item
+        if ((item.section === this.currentLocation.section) && (Math.abs(offset) <= 10 || (offset >= -10 && offset < 10))) { //checks if right section and distance from left and right of the item
             item.isInteractable = true;
             this.currentItem = item;
             item.filter = "sepia(55%)";
@@ -413,13 +413,16 @@ img {
 }
 
 @media only screen and (max-width: 768px) {
-  .game-contents {
+  .game-and-inventory {
     flex-direction: column;
   }
   .game-container {
     width: 80vw;
     height: 40vw;
     margin-right: 0;
+  }
+  .game-contents {
+    margin-bottom: 5rem;
   }
 }
 
