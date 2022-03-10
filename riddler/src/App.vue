@@ -80,4 +80,10 @@ button {
   background: #aaa;
   color: white;
 }
+
+@media only screen and (max-width: 768px) {
+  *, html, body {
+    font-size: 45%;
+  }
+}
 </style>
