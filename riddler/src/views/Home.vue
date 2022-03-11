@@ -15,7 +15,7 @@ import MoveTest from "@/components/MoveTest.vue";
 export default {
   name: "Home",
   components: {
-    MoveTest,
+    MoveTest
   },
   data() {
     return {

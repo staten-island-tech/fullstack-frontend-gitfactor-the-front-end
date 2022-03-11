@@ -5,7 +5,6 @@
       <h1>Lvl. {{ $store.state.userData.level }}</h1>
       <HeartBar />
     </div>
-
     <div class="game-and-inventory">
       <main class="game-contents">
       <div
@@ -17,7 +16,7 @@
         @keydown.z="onEnter()"
         
       >
-
+<PauseMenu />
         <img
           :src="require(`@/assets/environment/lv1/${currentLocation.img}`)"
           class="bg-img"
@@ -85,12 +84,12 @@ gsap.config;
 import HeartBar from "./HeartBar.vue";
 import Inventory from "./Inventory.vue";
 import ItemPopup from "./ItemPopup.vue";
-
+import PauseMenu from "./PauseMenu.vue";
 
 export default {
   name: "MoveTest",
   components: {
-    HeartBar, Inventory, ItemPopup
+    HeartBar, Inventory, ItemPopup, PauseMenu
   },
   created() {
     this.getUserData();
