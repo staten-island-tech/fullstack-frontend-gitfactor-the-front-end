@@ -1,6 +1,5 @@
 export const state = {
-  gameItems:
-  [
+  gameItems: [
     [
       {
         name: "Mushroom",
@@ -11,7 +10,7 @@ export const state = {
         img: "mushroom.png",
         isInteractable: false,
         filter: null,
-        itemType: "object", 
+        itemType: "object",
         prompt: "Do you want to pick up this amazing mushroom house?",
       },
       {
@@ -30,18 +29,18 @@ export const state = {
             text: "Mwahaha welcome to my tower~",
             name: "???",
             isAntagonist: true,
-          }, 
+          },
           {
             text: "I didn't come here by choice...what is this?",
-            name: "Me"
+            name: "Me",
           },
           {
             text: "This...huh. I don't actually know what this is either! I just said that cause I thought it was spooky :D",
             name: "???",
             isAntagonist: true,
-          }
+          },
         ],
-      }, 
+      },
       {
         name: "Protagonist",
         id: 2,
@@ -52,26 +51,65 @@ export const state = {
         isInteractable: false,
         filter: null,
         itemType: "character",
-        dialogueSprite: "sprite_dialogue_player.png", 
+        dialogueSprite: "sprite_dialogue_player.png",
         dialogue: [
           {
             text: "What? Am I talking to myself",
             name: "Me?",
             isAntagonist: true,
-          }, 
+          },
           {
             text: "Wat",
-            name: "Me"
+            name: "Me",
           },
           {
             text: "This...huh. I don't actually know what this is either! I just said that cause I thought it was spooky :D",
             name: "Me?",
             isAntagonist: true,
-          }
+          },
         ],
       },
+      {
+        name: "Puzzle 1",
+        id: 3,
+        //position: 0,
+        //margin: "0%",
+        // img: require("../assets/door.png"),
+        isInteractable: false,
+        filter: null,
+        itemType: "puzzle",
+        puzzleType: 1,
+        prompt: "the answer is one",
+        puzzleAnswer: "one",
+      },
+      {
+        name: "Puzzle 2",
+        id: 4,
+        // position: 85,
+        // margin: "85%",
+        // img: require("../assets/chest.jpg"),
+        isInteractable: false,
+        filter: null,
+        itemType: "puzzle",
+        puzzleType: 2,
+        prompt: "the answer is 1234",
+        puzzleAnswer: "1234",
+      },
+      {
+        name: "Puzzle 3",
+        id: 5,
+        // position: 85,
+        //margin: "85%",
+        // img: require("../assets/chest.jpg"),
+        isInteractable: false,
+        filter: null,
+        itemType: "puzzle",
+        puzzleType: 3,
+        prompt: "the answer is a key",
+        puzzleAnswer: "key",
+      },
     ],
-  // [], level 2
-  // []  level 3
-  ]
-}
+    // [], level 2
+    // []  level 3
+  ],
+};
