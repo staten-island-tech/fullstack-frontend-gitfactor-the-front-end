@@ -6,7 +6,7 @@
     </div>
     <div class="pagebg"></div>
 
-    <MoveTest />
+    <!-- <MoveTest /> -->
   </div>
 </template>
 
