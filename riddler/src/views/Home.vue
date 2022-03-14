@@ -5,11 +5,12 @@
       <div class="solid"></div>
     </div>
     <div class="pagebg"></div>
+
+    <MoveTest />
   </div>
 </template>
 
 <script>
-
 import MoveTest from "@/components/MoveTest.vue";
 
 export default {
@@ -20,7 +21,7 @@ export default {
   data() {
     return {
       isLoggedIn: false,
-    }
+    };
   },
   mounted() {
     this.getData();
@@ -31,21 +32,20 @@ export default {
         const response = await fetch("http://localhost:3000/");
         const data = await response.json();
         console.log(data);
-        this.$store.commit('updateState', data);
+        this.$store.commit("updateState", data);
         this.isLoggedIn = true;
       } catch (error) {
         console.log(error);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped>
-
 .player {
-    position: relative;
-    top: 0%;
+  position: relative;
+  top: 0%;
 }
 
 .solid {
@@ -64,5 +64,4 @@ export default {
   height: 100%;
   background-color: rgb(31, 18, 39);
 }
-
 </style>

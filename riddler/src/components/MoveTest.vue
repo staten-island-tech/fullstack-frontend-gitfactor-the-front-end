@@ -1,12 +1,11 @@
 <template>
   <div class="game-page">
-
     <div class="level-and-hearts">
       <h1>Lvl. {{ $store.state.userData.level }}</h1>
       <HeartBar />
     </div>
-    
-    <main class="game-contents" >
+
+    <main class="game-contents">
       <div
         class="game-container"
         id="game-viewport"
@@ -14,9 +13,7 @@
         @keydown.left="leftMove()"
         @keyup="reset()"
         @keydown.z="onEnter()"
-        
       >
-
         <img
           :src="require(`@/assets/environment/lv1/${currentLocation.img}`)"
           class="bg-img"
@@ -48,30 +45,56 @@
             class="npc-avatar-dialogue"
             id="npc-dialogue-sprite"
           />
-          <p class="textbox-title">{{ this.currentItem.dialogue[this.textCount].name }}</p>
-          <p class="textbox-test typing-class">{{ this.currentItem.dialogue[this.textCount].text }}</p>
+          <p class="textbox-title">
+            {{ this.currentItem.dialogue[this.textCount].name }}
+          </p>
+          <p class="textbox-test typing-class">
+            {{ this.currentItem.dialogue[this.textCount].text }}
+          </p>
         </div>
-        
-        <item-popup @itemAdded="addToInventory()" v-if="itemPopup" @closePopup="closeItemPopup()" :item="currentItem" ref="itemPopupBox" >
+
+        <item-popup
+          @itemAdded="addToInventory()"
+          v-if="itemPopup"
+          @closePopup="closeItemPopup()"
+          :item="currentItem"
+          ref="itemPopupBox"
+        >
           <template v-slot:item-img>
-            <img class="itempopup-img" :src="require(`@/assets/${currentItem.img}`)" :alt="currentItem.name"/>
+            <img
+              class="itempopup-img"
+              :src="require(`@/assets/${currentItem.img}`)"
+              :alt="currentItem.name"
+            />
           </template>
           <template v-slot:item-text>
             {{ currentItem.prompt }}
           </template>
         </item-popup>
+        <PuzzlePopup
+          @turn-off="turnOff"
+          @lose-heart="loseHeart"
+          :puzzleAnswer="emittedPuzzleAnswer"
+          :puzzleVisibility="enteredOnObject"
+          :puzzlePrompt="emittedPuzzlePrompt"
+          :puzzleType="emittedPuzzleType"
+          ref="puzzlePopupBox"
+        >
+        </PuzzlePopup>
       </div>
 
       <Inventory />
-      
     </main>
 
     <div class="mobile-button-container">
-      <button @mousedown="leftMove()" @mouseup="reset()" class="mobile-button">&lt;</button>
+      <button @mousedown="leftMove()" @mouseup="reset()" class="mobile-button">
+        &lt;
+      </button>
       <button @click="onEnter()" class="mobile-button">Z</button>
-      <button @mousedown="rightMove()" @mouseup="reset()" class="mobile-button">&gt;</button>
+      <button @mousedown="rightMove()" @mouseup="reset()" class="mobile-button">
+        &gt;
+      </button>
     </div>
-
   </div>
 </template>
 
@@ -82,12 +105,15 @@ gsap.config;
 import HeartBar from "./HeartBar.vue";
 import Inventory from "./Inventory.vue";
 import ItemPopup from "./ItemPopup.vue";
-
+import PuzzlePopup from "./PuzzlePopup.vue";
 
 export default {
   name: "MoveTest",
   components: {
-    HeartBar, Inventory, ItemPopup
+    HeartBar,
+    Inventory,
+    ItemPopup,
+    PuzzlePopup,
   },
   created() {
     this.getUserData();
@@ -96,7 +122,6 @@ export default {
   mounted() {
     this.unhideItem();
     this.enablePlayerMovement();
-    
   },
   data() {
     return {
@@ -130,91 +155,96 @@ export default {
       textCount: -1,
       mainAnt: false,
       enteredOnObject: false,
+      emittedPuzzleAnswer: "",
+      emittedPuzzlePrompt: "",
+      emittedPuzzleType: null,
     };
   },
+
   computed: {
     cssProps() {
       return {
-        '--leftVar': (this.leftValue) + "%",
-      }
+        "--leftVar": this.leftValue + "%",
+      };
     },
   },
-  methods: {  
+  methods: {
     enablePlayerMovement() {
-      this.$refs.playerMove.focus();  
-      console.log('done');    
+      this.$refs.playerMove.focus();
+      console.log("done");
     },
     getUserData() {
       this.leftValue = this.$store.state.userData.leftValue;
       this.currentLevel = this.$store.state.userData.level;
       this.currentLocation.section = this.$store.state.userData.section;
-      this.currentLocation.img = this.playerLocation[this.currentLevel - 1].level[this.currentLocation.section - 1].img;
-      this.gameItems = this.$store.state.gameItems.gameItems[this.$store.state.userData.level - 1];
+      this.currentLocation.img =
+        this.playerLocation[this.currentLevel - 1].level[
+          this.currentLocation.section - 1
+        ].img;
+      this.gameItems =
+        this.$store.state.gameItems.gameItems[
+          this.$store.state.userData.level - 1
+        ];
       // NEXT STEP: for each item in this.$store.userData.inventory, filter currentLevelItems for item.id, if true then pop item from gameItems
     },
     leftMove(e) {
       this.player.idle = "idle-left.gif";
-       if(this.enteredOnObject && e.key === "ArrowLeft") {
+      if (this.enteredOnObject && e.key === "ArrowLeft") {
         e.preventDefault();
-      }
-      else{
-      setTimeout(() => {
-
-        if (this.leftValue <= 1.5) {
-          if (this.currentLocation.section > 1) {
-            this.sectionChangeAnim();                      
+      } else {
+        setTimeout(() => {
+          if (this.leftValue <= 1.5) {
+            if (this.currentLocation.section > 1) {
+              this.sectionChangeAnim();
+            }
           }
-        };
 
-        if (this.leftValue > 0) {
-          this.leftValue -= 1.5;
-        } else {
-          if (this.currentLocation.section > 1) {
-            this.leftValue = 1;
-            this.sectionChange();
-            this.currentLocation.section = this.currentLocation.section - 1;
-            setTimeout(() => {
-             this.leftValue = 84;
-            }, 25);
+          if (this.leftValue > 0) {
+            this.leftValue -= 1.5;
+          } else {
+            if (this.currentLocation.section > 1) {
+              this.leftValue = 1;
+              this.sectionChange();
+              this.currentLocation.section = this.currentLocation.section - 1;
+              setTimeout(() => {
+                this.leftValue = 84;
+              }, 25);
+            }
           }
-        }
-        this.playerAvatar = this.player.left;
-        this.itemInteract();
-      }, 250);
+          this.playerAvatar = this.player.left;
+          this.itemInteract();
+        }, 250);
       }
-     
     },
     rightMove(e) {
       this.player.idle = "idle-right.gif";
-         if(this.enteredOnObject && e.key === "ArrowRight") {
+      if (this.enteredOnObject && e.key === "ArrowRight") {
         e.preventDefault();
-      }
-      else{
-      setTimeout(() => {
-        if (this.leftValue >= 83.5) {
-          if (this.currentLocation.section < 3) {
-            this.sectionChangeAnim();                      
+      } else {
+        setTimeout(() => {
+          if (this.leftValue >= 83.5) {
+            if (this.currentLocation.section < 3) {
+              this.sectionChangeAnim();
+            }
           }
-        };
-        if (this.leftValue <= 85) {
-          this.leftValue += 1.5;
-        } else {
-          if (this.currentLocation.section < 3) {
-            this.leftValue = 1;
-            this.currentLocation.section = this.currentLocation.section + 1;
-            setTimeout(() => {
-            this.sectionChange();
-             this.leftValue = 1;
-            }, 250);
-                        
+          if (this.leftValue <= 85) {
+            this.leftValue += 1.5;
+          } else {
+            if (this.currentLocation.section < 3) {
+              this.leftValue = 1;
+              this.currentLocation.section = this.currentLocation.section + 1;
+              setTimeout(() => {
+                this.sectionChange();
+                this.leftValue = 1;
+              }, 250);
+            }
           }
-        }
-        this.playerAvatar = this.player.right;
-        this.itemInteract();
+          this.playerAvatar = this.player.right;
+          this.itemInteract();
 
-        this.playerAvatar = this.player.right;
-        this.itemInteract();
-      }, 250);
+          this.playerAvatar = this.player.right;
+          this.itemInteract();
+        }, 250);
       }
     },
     reset() {
@@ -223,23 +253,30 @@ export default {
       }, 250);
       this.itemInteract();
     },
+    enablePlayerMovement() {
+      this.$refs.playerMove.focus();
+    },
     sectionChange() {
       setTimeout(() => {
         console.log(this.currentLocation);
-        this.currentLocation.img = this.playerLocation[this.currentLevel - 1].level[this.currentLocation.section - 1].img;
+        this.currentLocation.img =
+          this.playerLocation[this.currentLevel - 1].level[
+            this.currentLocation.section - 1
+          ].img;
         this.unhideItem();
       }, 300);
-        var gsapTes = gsap.to(".game-container", {
-          delay: .2, 
-          backgroundColor: "rgba(16, 1, 22, 0)",
-          ease: "power2.inOut"
-        });
-        console.log(gsapTes);
+      var gsapTes = gsap.to(".game-container", {
+        delay: 0.2,
+        backgroundColor: "rgba(16, 1, 22, 0)",
+        ease: "power2.inOut",
+      });
+      console.log(gsapTes);
     },
     sectionChangeAnim() {
       var gsapTest = gsap.to(".game-container", {
-       backgroundColor: "rgba(16, 1, 22, 1)",
-       duration:0.25});
+        backgroundColor: "rgba(16, 1, 22, 1)",
+        duration: 0.25,
+      });
       console.log(gsapTest);
     },
     unhideItem() {
@@ -256,28 +293,46 @@ export default {
       this.currentItem = null;
       this.gameItems.forEach((item) => {
         const offset = item.position - this.leftValue;
-        if ((item.section === this.currentLocation.section) && (Math.abs(offset) <= 10 || (offset >= -10 && offset < 10))) { //checks distance from left and right of the item
-            item.isInteractable = true;
-            this.currentItem = item;
-            item.filter = "sepia(55%)";
+        if (
+          item.section === this.currentLocation.section &&
+          (Math.abs(offset) <= 10 || (offset >= -10 && offset < 10))
+        ) {
+          //checks distance from left and right of the item
+          item.isInteractable = true;
+          this.currentItem = item;
+          item.filter = "sepia(55%)";
         } else {
           item.isInteractable = false;
           item.filter = null;
         }
       });
     },
+
     onEnter() {
       if (this.currentItem) {
         this.enteredOnObject = true;
-        if (this.currentItem.itemType === "object") {              
-        this.itemPopup = true;
-        setTimeout(() => {   this.openItemPopup();  
-               }, 10);
-        
-        
-        
-        } else if (this.currentItem.itemType === "character") {              
+        if (this.currentItem.itemType === "object") {
+          this.itemPopup = true;
+          setTimeout(() => {
+            this.openItemPopup();
+          }, 10);
+        } else if (this.currentItem.itemType === "character") {
           this.txtbxShow();
+        } else if (this.currentItem.itemType === "puzzle") {
+          this.enteredOnObject = true;
+          this.emittedPuzzleAnswer = this.currentItem.puzzleAnswer;
+          this.emittedPuzzlePrompt = this.currentItem.prompt;
+          this.emittedPuzzleType = this.currentItem.puzzleType;
+          setTimeout(() => {
+            this.closingPuzzlePopup();
+          }, 10);
+          if (this.currentItem.puzzleType === 1) {
+            console.log("this is type 1");
+          } else if (this.currentItem.puzzleType === 2) {
+            console.log("this is type 2");
+          } else if (this.currentItem.puzzleType === 3) {
+            console.log("this is type 3");
+          }
         }
       }
     },
@@ -294,6 +349,18 @@ export default {
       this.enteredOnObject = false;
       this.enablePlayerMovement();
     },
+
+    turnOff() {
+      this.enteredOnObject = false;
+      this.enablePlayerMovement();
+    },
+    loseHeart() {
+      const heartsRemaining = this.hearts - 1;
+      this.hearts = heartsRemaining;
+      console.log(heartsRemaining);
+      this.$store.commit("decrementLives");
+    },
+
     txtbxShow() {
       this.textCount += 1;
       if (this.textCount < this.currentItem.dialogue.length) {
@@ -309,6 +376,9 @@ export default {
         this.enteredOnObject = false;
         this.textCount = -1;
       }
+    },
+    closingPuzzlePopup() {
+      this.$refs.puzzlePopupBox.$el.focus();
     },
   },
 };
@@ -331,16 +401,16 @@ h1 {
   overflow: hidden;
   position: relative;
   width: 60vw;
-  height: 30vw; 
+  height: 30vw;
   margin-right: 2.5rem;
   margin-bottom: 2.5rem;
-  border: .3rem solid;
+  border: 0.3rem solid;
   border-radius: 1.5rem;
-  transition: all .2s;
+  transition: all 0.2s;
 }
 .player {
-  width: 100%;
-  height: 100%;
+  width: inherit;
+  height: inherit;
 }
 .player-avatar {
   width: 17.5%;
@@ -368,7 +438,7 @@ h1 {
   background-color: #766696;
   color: #deceff;
   border-radius: 50%;
-  border: #deceff solid 0.3rem ;
+  border: #deceff solid 0.3rem;
   height: 7.5rem;
   width: 7.5rem;
   margin: 1rem;
@@ -432,5 +502,4 @@ img {
     margin-right: 0;
   }
 }
-
 </style>
