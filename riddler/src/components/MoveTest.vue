@@ -35,7 +35,7 @@
           :style="{ left: item.margin, filter: item.filter }"
           :alt="item"
           :key="item.key"
-          :class="'section' + item.section"
+          :id="item.section"
           class="item hide"
         />
 
@@ -74,7 +74,7 @@
     <Inventory />
 
   </div>      
-    <!-- <button @click="updateData('620ece68b4f9d19420cd904b')">Update</button> -->
+
   </div>
 </template>
 
@@ -93,10 +93,10 @@ export default {
     HeartBar, Inventory, ItemPopup
   },
   created() {
+    this.getUserData();
     this.sectionChange();
   },
   mounted() {
-    this.getUserData();
     this.unhideItem();
     this.enablePlayerMovement();
     
@@ -109,8 +109,10 @@ export default {
         right: "walk-right.gif",
         dialogueSprite: "sprite_dialogue_player.png",
       },
-      playerAvatar: "idle-right.gif",
+      playerAvatar: "idle-left.gif",
       npcDialogueSprite: "sprite_dialogue_riddl.png",
+      leftValue: null,
+      currentLevel: null,
       playerLocation: [
         {
           level: [
@@ -121,10 +123,11 @@ export default {
         },
       ],
       currentLocation: {
-        // section: null,
+        section: null,
         img: "",
       },
       gameItems: null,
+      currentItem: null,
       itemPopup: false,
       txtbx: false,
       textCount: -1,
@@ -135,63 +138,43 @@ export default {
   computed: {
     cssProps() {
       return {
-        '--leftVar': (this.$store.state.userData.leftValue) + "%",
+        '--leftVar': (this.leftValue) + "%",
       }
     },
   },
   methods: {  
-    // async updateData(id) {
-    //   try {
-    //     const newState = {
-    //       level: this.currentLevel,
-    //       section: this.currentLocation.section,
-    //       leftValue: this.leftValue,
-    //       lifeCount: this.$store.state.userData.lifeCount,
-    //       inventory: this.$store.state.userData.inventory,
-    //     };
-    //     this.$store.commit('updateState', newState);
-    //     console.log(this.$store.state.userData);
-    //     const response = await fetch(`http://localhost:3000/${id}`, {
-    //       method: 'PATCH',
-    //       mode: 'no-cors',
-    //       headers: {
-    //         'Content-Type': 'application/json'
-    //       },
-    //       body: JSON.stringify(this.$store.state.userData),
-    //     });
-    //     const data = await response.json();
-    //     console.log(data);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // },
-    getUserData() {
-      this.gameItems = this.$store.state.gameItems.gameItems[this.$store.state.userData.level - 1];
-      // NEXT STEP: for each item in this.$store.userData.inventory, filter currentLevelItems for item.id, if true then pop item from gameItems
-    },
     enablePlayerMovement() {
       this.$refs.playerMove.focus();  
       console.log('done');    
     },
-    leftMove: function () {
+    getUserData() {
+      this.leftValue = this.$store.state.userData.leftValue;
+      this.currentLevel = this.$store.state.userData.level;
+      this.currentLocation.section = this.$store.state.userData.section;
+      this.currentLocation.img = this.playerLocation[this.currentLevel - 1].level[this.currentLocation.section - 1].img;
+      this.gameItems = this.$store.state.gameItems.gameItems[this.$store.state.userData.level - 1];
+      // NEXT STEP: for each item in this.$store.userData.inventory, filter currentLevelItems for item.id, if true then pop item from gameItems
+    },
+    leftMove() {
       this.player.idle = "idle-left.gif";
       setTimeout(() => {
 
-        if (this.$store.state.userData.leftValue <= 1.5) { //consolidate
-          if (this.$store.state.userData.section > 1) {
+        if (this.leftValue <= 1.5) {
+          if (this.currentLocation.section > 1) {
             this.sectionChangeAnim();                      
           }
         };
 
-        if (this.$store.state.userData.leftValue > 0) {
-          this.$store.state.userData.leftValue -= 1.5;
+        if (this.leftValue > 0) {
+          this.leftValue -= 1.5;
         } else {
-          if (this.$store.state.userData.section > 1) {
+          if (this.currentLocation.section > 1) {
+            this.leftValue = 1;
             this.sectionChange();
-            this.$store.state.userData.section = this.$store.state.userData.section - 1;
+            this.currentLocation.section = this.currentLocation.section - 1;
             setTimeout(() => {
-             this.$store.state.userData.leftValue = 84;
-            }, 10);
+             this.leftValue = 84;
+            }, 25);
           }
         }
         this.playerAvatar = this.player.left;
@@ -199,23 +182,24 @@ export default {
       }, 250);
      
     },
-    rightMove: function () {
+    rightMove() {
       this.player.idle = "idle-right.gif";
       setTimeout(() => {
-        if (this.$store.state.userData.leftValue >= 83) {
-          if (this.$store.state.userData.section < 3) {
+        if (this.leftValue >= 83.5) {
+          if (this.currentLocation.section < 3) {
             this.sectionChangeAnim();                      
           }
         };
-        if (this.$store.state.userData.leftValue <= 85) {
-          this.$store.state.userData.leftValue += 1.5;
+        if (this.leftValue <= 85) {
+          this.leftValue += 1.5;
         } else {
-          if (this.$store.state.userData.section < 3) {
-            this.$store.state.userData.leftValue = this.$store.state.userData.section + 1;
+          if (this.currentLocation.section < 3) {
+            this.leftValue = 1;
+            this.currentLocation.section = this.currentLocation.section + 1;
             setTimeout(() => {
             this.sectionChange();
-             this.$store.state.userData.leftValue = 1;
-            }, 10);
+             this.leftValue = 1;
+            }, 250);
                         
           }
         }
@@ -226,7 +210,7 @@ export default {
         this.itemInteract();
       }, 250);
     },
-    reset: function () {
+    reset() {
       setTimeout(() => {
         this.playerAvatar = this.player.idle;
       }, 250);
@@ -234,50 +218,40 @@ export default {
     },
     sectionChange() {
       setTimeout(() => {
-      this.currentLocation.img =
-        this.playerLocation[this.$store.state.userData.level - 1].level[this.$store.state.userData.section - 1].img;
-      this.unhideItem();
+        console.log(this.currentLocation);
+        this.currentLocation.img = this.playerLocation[this.currentLevel - 1].level[this.currentLocation.section - 1].img;
+        this.unhideItem();
       }, 300);
-
-
-
+        var gsapTes = gsap.to(".game-container", {
+          delay: .2, 
+          backgroundColor: "rgba(16, 1, 22, 0)",
+          ease: "power2.inOut"
+        });
+        console.log(gsapTes);
     },
     sectionChangeAnim() {
-      var transOpaque = gsap.to(".game-container", {
+      var gsapTest = gsap.to(".game-container", {
        backgroundColor: "rgba(16, 1, 22, 1)",
-       duration:0.2});
-      var transClear = gsap.to(".game-container", {
-       delay: .25, 
-       backgroundColor: "rgba(16, 1, 22, 0)",
-       ease: "power2.inOut"});
-      transClear.play;
-      transOpaque.play;
-
+       duration:0.25});
+      console.log(gsapTest);
     },
     unhideItem() {
-      document.querySelectorAll('.item').forEach(el => el.classList.add("hide"));
-
-      document.querySelectorAll('.section' + this.$store.state.userData.section).forEach(el => el.classList.remove("hide"));
-
-      //maybe :class="item.section" then select current section's class and remove
-
-/*       
       const overworldItems = document.getElementsByClassName("item");
       for (let item of overworldItems) {
-        if (this.currentLocation.section === item.id) {
+        if (this.currentLocation.section == item.id) {
           item.classList.remove("hide");
         } else {
           item.classList.add("hide");
         }
-      } */
+      }
     },
     itemInteract() {
-      this.$store.state.userData.currentItem = null;
+      this.currentItem = null;
       this.gameItems.forEach((item) => {
         const offset = item.position - this.leftValue;
-        if ((item.section === this.$store.state.userData.section) && (Math.abs(offset) <= 10 || (offset >= -10 && offset < 10))) { //checks if right section and distance from left and right of the item
-            this.$store.state.userData.currentItem = item;
+        if ((item.section === this.currentLocation.section) && (Math.abs(offset) <= 10 || (offset >= -10 && offset < 10))) { //checks if right section and distance from left and right of the item
             item.isInteractable = true;
+            this.currentItem = item;
             item.filter = "sepia(55%)";
         } else {
           item.isInteractable = false;
@@ -286,19 +260,19 @@ export default {
       });
     },
     onEnter() {
-      if (this.$store.state.userData.currentItem) {
+      if (this.currentItem) {
         this.enteredOnObject = true;
-        if (this.$store.state.userData.currentItem.itemType === "object") {              
+        if (this.currentItem.itemType === "object") {              
         this.itemPopup = true;
         
-        } else if (this.$store.state.userData.currentItem.itemType === "character") {              
+        } else if (this.currentItem.itemType === "character") {              
           this.txtbxShow();
         }
       }
     },
     addToInventory() {
-      this.gameItems.splice(this.$store.state.userData.currentItem.id, 1);
-      this.$store.state.userData.inventory.push(this.$store.state.userData.currentItem);
+      this.gameItems.splice(this.currentItem.id, 1);
+      this.$store.state.userData.inventory.push(this.currentItem);
       this.closeItemPopup();
     },
     closeItemPopup() {
@@ -306,14 +280,14 @@ export default {
     },
     txtbxShow() {
       this.textCount += 1;
-      if (this.textCount < this.$store.state.userData.currentItem.dialogue.length) {
+      if (this.textCount < this.currentItem.dialogue.length) {
         this.txtbx = true;
-        if (this.$store.state.userData.currentItem.dialogue[this.textCount].isAntagonist) {
+        if (this.currentItem.dialogue[this.textCount].isAntagonist) {
           this.mainAnt = true;
         } else {
           this.mainAnt = false;
         }
-        this.npcDialogueSprite = this.$store.state.userData.currentItem.dialogueSprite;
+        this.npcDialogueSprite = this.currentItem.dialogueSprite;
       } else {
         this.txtbx = false;
         this.enteredOnObject = false;
