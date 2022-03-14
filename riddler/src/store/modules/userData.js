@@ -3,6 +3,7 @@ export const state = {
   section: null,
   leftValue: null,
   lifeCount: null,
+  currentItem: null,
   inventory: [],
 }
 
@@ -18,6 +19,7 @@ export const mutations = {
     state.section = newState[0].section;
     state.leftValue = newState[0].leftValue;
     state.lifeCount = newState[0].lifeCount;
+    state.currentItem = newState[0].currentItem;
     state.inventory = newState[0].inventory;
   },
 }

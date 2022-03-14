@@ -19,7 +19,7 @@
       >
 
         <img
-          :src="require(`@/assets/environment/lv1/${currentLocation.img}`)"
+          :src="require(`@/assets/environment/lv1/${currentLocationImg}`)"
           class="bg-img"
         />
         <div class="player" :style="cssProps" tabindex="-1" ref="playerMove">
@@ -49,16 +49,16 @@
             class="npc-avatar-dialogue"
             id="npc-dialogue-sprite"
           />
-          <p class="textbox-title">{{ this.currentItem.dialogue[this.textCount].name }}</p>
-          <p class="textbox-test typing-class">{{ this.currentItem.dialogue[this.textCount].text }}</p>
+          <p class="textbox-title">{{ this.$store.state.userData.currentItem.dialogue[this.textCount].name }}</p>
+          <p class="textbox-test typing-class">{{ this.$store.state.userData.currentItem.dialogue[this.textCount].text }}</p>
         </div>
         
         <item-popup @itemAdded="addToInventory()" v-if="itemPopup" @closePopup="closeItemPopup()" :item="currentItem" v-on:turnoff="turnOff">
           <template v-slot:item-img>
-            <img class="itempopup-img" :src="require(`@/assets/${currentItem.img}`)" :alt="currentItem.name"/>
+            <img class="itempopup-img" :src="require(`@/assets/${$store.state.userData.currentItem.img}`)" :alt="$store.state.userData.currentItem.name"/>
           </template>
           <template v-slot:item-text>
-            {{ currentItem.prompt }}
+            {{ $store.state.userData.currentItem.prompt }}
           </template>
         </item-popup>
       
@@ -111,8 +111,6 @@ export default {
       },
       playerAvatar: "idle-left.gif",
       npcDialogueSprite: "sprite_dialogue_riddl.png",
-      leftValue: null,
-      currentLevel: null,
       playerLocation: [
         {
           level: [
@@ -122,10 +120,7 @@ export default {
           ],
         },
       ],
-      currentLocation: {
-        section: null,
-        img: "",
-      },
+      currentLocationImg: "",
       gameItems: null,
       currentItem: null,
       itemPopup: false,
@@ -138,7 +133,7 @@ export default {
   computed: {
     cssProps() {
       return {
-        '--leftVar': (this.leftValue) + "%",
+        '--leftVar': (this.$store.state.userData.leftValue) + "%",
       }
     },
   },
@@ -148,10 +143,7 @@ export default {
       console.log('done');    
     },
     getUserData() {
-      this.leftValue = this.$store.state.userData.leftValue;
-      this.currentLevel = this.$store.state.userData.level;
-      this.currentLocation.section = this.$store.state.userData.section;
-      this.currentLocation.img = this.playerLocation[this.currentLevel - 1].level[this.currentLocation.section - 1].img;
+      this.currentLocationImg = this.playerLocation[this.$store.state.userData.level - 1].level[this.$store.state.userData.section - 1].img;
       this.gameItems = this.$store.state.gameItems.gameItems[this.$store.state.userData.level - 1];
       // NEXT STEP: for each item in this.$store.userData.inventory, filter currentLevelItems for item.id, if true then pop item from gameItems
     },
@@ -159,21 +151,21 @@ export default {
       this.player.idle = "idle-left.gif";
       setTimeout(() => {
 
-        if (this.leftValue <= 1.5) {
-          if (this.currentLocation.section > 1) {
+        if (this.$store.state.userData.leftValue <= 1.5) {
+          if (this.$store.state.userData.section > 1) {
             this.sectionChangeAnim();                      
           }
         };
 
-        if (this.leftValue > 0) {
-          this.leftValue -= 1.5;
+        if (this.$store.state.userData.leftValue > 0) {
+          this.$store.state.userData.leftValue -= 1.5;
         } else {
-          if (this.currentLocation.section > 1) {
-            this.leftValue = 1;
+          if (this.$store.state.userData.section > 1) {
+            this.$store.state.userData.leftValue = 1;
             this.sectionChange();
-            this.currentLocation.section = this.currentLocation.section - 1;
+            this.$store.state.userData.section = this.$store.state.userData.section - 1;
             setTimeout(() => {
-             this.leftValue = 84;
+             this.$store.state.userData.leftValue = 84;
             }, 25);
           }
         }
@@ -185,20 +177,20 @@ export default {
     rightMove() {
       this.player.idle = "idle-right.gif";
       setTimeout(() => {
-        if (this.leftValue >= 83.5) {
-          if (this.currentLocation.section < 3) {
+        if (this.$store.state.userData.leftValue >= 83.5) {
+          if (this.$store.state.userData.section < 3) {
             this.sectionChangeAnim();                      
           }
         };
-        if (this.leftValue <= 85) {
-          this.leftValue += 1.5;
+        if (this.$store.state.userData.leftValue <= 85) {
+          this.$store.state.userData.leftValue += 1.5;
         } else {
-          if (this.currentLocation.section < 3) {
-            this.leftValue = 1;
-            this.currentLocation.section = this.currentLocation.section + 1;
+          if (this.$store.state.userData.section < 3) {
+            this.$store.state.userData.leftValue = 1;
+            this.$store.state.userData.section = this.$store.state.userData.section + 1;
             setTimeout(() => {
             this.sectionChange();
-             this.leftValue = 1;
+             this.$store.state.userData.leftValue = 1;
             }, 250);
                         
           }
@@ -218,8 +210,8 @@ export default {
     },
     sectionChange() {
       setTimeout(() => {
-        console.log(this.currentLocation);
-        this.currentLocation.img = this.playerLocation[this.currentLevel - 1].level[this.currentLocation.section - 1].img;
+        console.log(this.currentLocationImg);
+        this.currentLocationImg = this.playerLocation[this.$store.state.userData.level - 1].level[this.$store.state.userData.section - 1].img;
         this.unhideItem();
       }, 300);
         var gsapTes = gsap.to(".game-container", {
@@ -238,7 +230,7 @@ export default {
     unhideItem() {
       const overworldItems = document.getElementsByClassName("item");
       for (let item of overworldItems) {
-        if (this.currentLocation.section == item.id) {
+        if (this.$store.state.userData.section == item.id) {
           item.classList.remove("hide");
         } else {
           item.classList.add("hide");
@@ -246,12 +238,12 @@ export default {
       }
     },
     itemInteract() {
-      this.currentItem = null;
+      this.$store.state.userData.currentItem = null;
       this.gameItems.forEach((item) => {
-        const offset = item.position - this.leftValue;
-        if ((item.section === this.currentLocation.section) && (Math.abs(offset) <= 10 || (offset >= -10 && offset < 10))) { //checks if right section and distance from left and right of the item
+        const offset = item.position - this.$store.state.userData.leftValue;
+        if ((item.section === this.$store.state.userData.section) && (Math.abs(offset) <= 10 || (offset >= -10 && offset < 10))) { //checks if right section and distance from left and right of the item
             item.isInteractable = true;
-            this.currentItem = item;
+            this.$store.state.userData.currentItem = item;
             item.filter = "sepia(55%)";
         } else {
           item.isInteractable = false;
@@ -260,19 +252,19 @@ export default {
       });
     },
     onEnter() {
-      if (this.currentItem) {
+      if (this.$store.state.userData.currentItem) {
         this.enteredOnObject = true;
-        if (this.currentItem.itemType === "object") {              
+        if (this.$store.state.userData.currentItem.itemType === "object") {              
         this.itemPopup = true;
         
-        } else if (this.currentItem.itemType === "character") {              
+        } else if (this.$store.state.userData.currentItem.itemType === "character") {              
           this.txtbxShow();
         }
       }
     },
     addToInventory() {
-      this.gameItems.splice(this.currentItem.id, 1);
-      this.$store.state.userData.inventory.push(this.currentItem);
+      this.gameItems.splice(this.$store.state.userData.currentItem.id, 1);
+      this.$store.state.userData.inventory.push(this.$store.state.userData.currentItem);
       this.closeItemPopup();
     },
     closeItemPopup() {
@@ -280,14 +272,14 @@ export default {
     },
     txtbxShow() {
       this.textCount += 1;
-      if (this.textCount < this.currentItem.dialogue.length) {
+      if (this.textCount < this.$store.state.userData.currentItem.dialogue.length) {
         this.txtbx = true;
-        if (this.currentItem.dialogue[this.textCount].isAntagonist) {
+        if (this.$store.state.userData.currentItem.dialogue[this.textCount].isAntagonist) {
           this.mainAnt = true;
         } else {
           this.mainAnt = false;
         }
-        this.npcDialogueSprite = this.currentItem.dialogueSprite;
+        this.npcDialogueSprite = this.$store.state.userData.currentItem.dialogueSprite;
       } else {
         this.txtbx = false;
         this.enteredOnObject = false;
