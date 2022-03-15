@@ -16,7 +16,7 @@
         @keydown.z="onEnter()"
         
       >
-<PauseMenu />
+      <PauseMenu />
         <img
           :src="require(`@/assets/environment/lv1/${currentLocation.img}`)"
           class="bg-img"
@@ -27,7 +27,6 @@
             class="player-avatar"
           />
         </div>
-
         <img
           v-for="item in gameItems"
           :src="require(`@/assets/${item.img}`)"
