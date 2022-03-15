@@ -7,7 +7,11 @@
     </div>
 
     <div class="game-and-inventory">
-      <main class="game-contents">
+    <main class="game-contents">
+      <div class="audio-container">
+        <audio id="audio-test" :src="require(`@/assets/audio/bgm/${currentOST}.mp3`)"></audio>
+      </div>
+
       <div
         class="game-container"
         id="game-viewport"
@@ -111,18 +115,18 @@ export default {
       },
       playerAvatar: "idle-right.gif",
       npcDialogueSprite: "sprite_dialogue_riddl.png",
-      playerLocation: [
+      locations: [
         {
           level: [
-            { id: 1, img: "bg_1_a.png" },
-            { id: 2, img: "bg_1_b.png" },
-            { id: 3, img: "bg_1_c.png" },
+            { id: 1, img: "bg_1_a.png", ost:"Speed" },
+            { id: 2, img: "bg_1_b.png", ost:"DSK" },
+            { id: 3, img: "bg_1_c.png", ost:"DSK" },
           ],
         },
       ],
       currentLocationImg: "",
       gameItems: null,
-      currentItem: null,
+      currentOST: "DSK",
       itemPopup: false,
       txtbx: false,
       textCount: -1,
@@ -143,7 +147,7 @@ export default {
       console.log('done');    
     },
     getUserData() {
-      this.currentLocationImg = this.playerLocation[this.$store.state.userData.level - 1].level[this.$store.state.userData.section - 1].img;
+      this.currentLocationImg = this.locations[this.$store.state.userData.level - 1].level[this.$store.state.userData.section - 1].img;
       this.gameItems = this.$store.state.gameItems.gameItems[this.$store.state.userData.level - 1];
       // NEXT STEP: for each item in this.$store.userData.inventory, filter currentLevelItems for item.id, if true then pop item from gameItems
     },
@@ -151,47 +155,42 @@ export default {
       this.player.idle = "idle-left.gif";
       setTimeout(() => {
 
-        if (this.$store.state.userData.leftValue <= 1.5) {
-          if (this.$store.state.userData.section > 1) {
-            this.sectionChangeAnim();                      
-          }
-        };
+        if (this.$store.state.userData.leftValue <= 1.5 && this.$store.state.userData.section > 1) {
+          this.sectionChangeAnim();                      
+        }
 
         if (this.$store.state.userData.leftValue > 0) {
           this.$store.state.userData.leftValue -= 1.5;
         } else {
           if (this.$store.state.userData.section > 1) {
-            this.$store.state.userData.leftValue = 1;
             this.sectionChange();
             this.$store.state.userData.section = this.$store.state.userData.section - 1;
             setTimeout(() => {
              this.$store.state.userData.leftValue = 84;
-            }, 25);
+            }, 10);
           }
         }
         this.playerAvatar = this.player.left;
         this.itemInteract();
+        
       }, 250);
      
     },
     rightMove: function () {
       this.player.idle = "idle-right.gif";
       setTimeout(() => {
-        if (this.$store.state.userData.leftValue >= 83.5) {
-          if (this.$store.state.userData.section < 3) {
-            this.sectionChangeAnim();                      
-          }
-        };
+        if (this.$store.state.userData.leftValue >= 83 && this.$store.state.userData.section < 3) {
+          this.sectionChangeAnim();                      
+        }
         if (this.$store.state.userData.leftValue <= 85) {
           this.$store.state.userData.leftValue += 1.5;
         } else {
           if (this.$store.state.userData.section < 3) {
-            this.$store.state.userData.leftValue = 1;
             this.$store.state.userData.section = this.$store.state.userData.section + 1;
             setTimeout(() => {
             this.sectionChange();
              this.$store.state.userData.leftValue = 1;
-            }, 250);
+            }, 10);
                         
           }
         }
@@ -211,12 +210,12 @@ export default {
     sectionChange() {
       setTimeout(() => {
         console.log(this.currentLocationImg);
-        this.currentLocationImg = this.playerLocation[this.$store.state.userData.level - 1].level[this.$store.state.userData.section - 1].img;
+        this.currentLocationImg = this.locations[this.$store.state.userData.level - 1].level[this.$store.state.userData.section - 1].img;
+        this.currentOST = this.locations[this.$store.state.userData.level - 1].level[this.$store.state.userData.section - 1].ost;
+        console.log(this.currentOST);
         this.unhideItem();
+        this.playAudio();
       }, 300);
-
-
-
     },
     sectionChangeAnim() {
       var transOpaque = gsap.to(".game-container", {
@@ -232,20 +231,7 @@ export default {
     },
     unhideItem() {
       document.querySelectorAll('.item').forEach(el => el.classList.add("hide"));
-
       document.querySelectorAll('.section' + this.$store.state.userData.section).forEach(el => el.classList.remove("hide"));
-
-      //maybe :class="item.section" then select current section's class and remove
-
-/*       
-      const overworldItems = document.getElementsByClassName("item");
-      for (let item of overworldItems) {
-        if (this.$store.state.userData.section === item.id) {
-          item.classList.remove("hide");
-        } else {
-          item.classList.add("hide");
-        }
-      } */
     },
     itemInteract() {
       this.$store.state.userData.currentItem = null;
@@ -266,7 +252,6 @@ export default {
         this.enteredOnObject = true;
         if (this.$store.state.userData.currentItem.itemType === "object") {              
         this.itemPopup = true;
-        
         } else if (this.$store.state.userData.currentItem.itemType === "character") {              
           this.txtbxShow();
         }
