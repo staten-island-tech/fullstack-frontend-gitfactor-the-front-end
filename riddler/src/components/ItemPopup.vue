@@ -30,16 +30,20 @@ export default {
     padding: 5rem;
     margin: 2rem;
     border-radius: 1.5rem;
-    background-color: #deceff;
+    /* background-color: #deceff; */
+    border-color: #deceff;
+    border: solid .3rem;
+    background-color: #2b0d47;
     z-index: 1;
-    overflow: scroll;
+    overflow: hidden;
   }
   .item-popup button {
-    background-color: #fff;
+    background-color: #deceff;
     font-size: 2rem;
     padding: 1rem 2rem;
     border: none;
     border-radius: 1.5rem;
+    color: #2b0d47;
   }
   .item-popup .close-btn {
     position: absolute;
@@ -50,7 +54,7 @@ export default {
     margin-top: 5rem;
   }
   .item-popup p {
-    color: #000;
+    color: rgb(236, 213, 255);
     font-size: 2rem;
     text-align: left;
     font-weight: 700;

@@ -35,7 +35,7 @@
           :style="{ left: item.margin, filter: item.filter }"
           :alt="item"
           :key="item.key"
-          :id="item.section"
+          :class="'section' + item.section"
           class="item hide"
         />
 
@@ -109,7 +109,7 @@ export default {
         right: "walk-right.gif",
         dialogueSprite: "sprite_dialogue_player.png",
       },
-      playerAvatar: "idle-left.gif",
+      playerAvatar: "idle-right.gif",
       npcDialogueSprite: "sprite_dialogue_riddl.png",
       playerLocation: [
         {
@@ -147,7 +147,7 @@ export default {
       this.gameItems = this.$store.state.gameItems.gameItems[this.$store.state.userData.level - 1];
       // NEXT STEP: for each item in this.$store.userData.inventory, filter currentLevelItems for item.id, if true then pop item from gameItems
     },
-    leftMove() {
+    leftMove: function () {
       this.player.idle = "idle-left.gif";
       setTimeout(() => {
 
@@ -174,7 +174,7 @@ export default {
       }, 250);
      
     },
-    rightMove() {
+    rightMove: function () {
       this.player.idle = "idle-right.gif";
       setTimeout(() => {
         if (this.$store.state.userData.leftValue >= 83.5) {
@@ -202,7 +202,7 @@ export default {
         this.itemInteract();
       }, 250);
     },
-    reset() {
+    reset: function () {
       setTimeout(() => {
         this.playerAvatar = this.player.idle;
       }, 250);
@@ -214,28 +214,38 @@ export default {
         this.currentLocationImg = this.playerLocation[this.$store.state.userData.level - 1].level[this.$store.state.userData.section - 1].img;
         this.unhideItem();
       }, 300);
-        var gsapTes = gsap.to(".game-container", {
-          delay: .2, 
-          backgroundColor: "rgba(16, 1, 22, 0)",
-          ease: "power2.inOut"
-        });
-        console.log(gsapTes);
+
+
+
     },
     sectionChangeAnim() {
-      var gsapTest = gsap.to(".game-container", {
+      var transOpaque = gsap.to(".game-container", {
        backgroundColor: "rgba(16, 1, 22, 1)",
-       duration:0.25});
-      console.log(gsapTest);
+       duration:0.2});
+      var transClear = gsap.to(".game-container", {
+       delay: .25, 
+       backgroundColor: "rgba(16, 1, 22, 0)",
+       ease: "power2.inOut"});
+      transClear.play;
+      transOpaque.play;
+
     },
     unhideItem() {
+      document.querySelectorAll('.item').forEach(el => el.classList.add("hide"));
+
+      document.querySelectorAll('.section' + this.$store.state.userData.section).forEach(el => el.classList.remove("hide"));
+
+      //maybe :class="item.section" then select current section's class and remove
+
+/*       
       const overworldItems = document.getElementsByClassName("item");
       for (let item of overworldItems) {
-        if (this.$store.state.userData.section == item.id) {
+        if (this.$store.state.userData.section === item.id) {
           item.classList.remove("hide");
         } else {
           item.classList.add("hide");
         }
-      }
+      } */
     },
     itemInteract() {
       this.$store.state.userData.currentItem = null;
