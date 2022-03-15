@@ -35,7 +35,7 @@ export default {
     border: solid .3rem;
     background-color: #2b0d47;
     z-index: 1;
-    overflow: hidden;
+    overflow: scroll;
   }
   .item-popup button {
     background-color: #deceff;
