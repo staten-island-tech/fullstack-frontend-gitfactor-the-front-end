@@ -7,9 +7,10 @@
     </div>
 
     <div class="game-and-inventory">
-    <main class="game-contents">
+    <main class="game-contents" :key="$store.state.userData.section">
       <div class="audio-container">
-        <audio id="audio-test" :src="require(`@/assets/audio/bgm/${currentOST}.mp3`)"></audio>
+        <audio id="audio-bgm" :src="require(`@/assets/audio/bgm/${currentOST}.mp3`)"></audio>
+        <audio id="footstep-sfx" :src="require(`@/assets/audio/sfx/Footsteps02-1L.mp3`)"></audio>
       </div>
 
       <div
@@ -118,9 +119,9 @@ export default {
       locations: [
         {
           level: [
-            { id: 1, img: "bg_1_a.png", ost:"Speed" },
-            { id: 2, img: "bg_1_b.png", ost:"DSK" },
-            { id: 3, img: "bg_1_c.png", ost:"DSK" },
+            { id: 1, img: "bg_1_a.png", ost:"lv01" },
+            { id: 2, img: "bg_1_b.png", ost:"lv01" },
+            { id: 3, img: "bg_1_c.png", ost:"lv01" },
           ],
         },
       ],
@@ -209,7 +210,6 @@ export default {
     },
     sectionChange() {
       setTimeout(() => {
-        console.log(this.currentLocationImg);
         this.currentLocationImg = this.locations[this.$store.state.userData.level - 1].level[this.$store.state.userData.section - 1].img;
         this.currentOST = this.locations[this.$store.state.userData.level - 1].level[this.$store.state.userData.section - 1].ost;
         console.log(this.currentOST);
@@ -236,7 +236,7 @@ export default {
       //maybe :class="item.section" then select current section's class and remove
     },
         playAudio(){
-      const audio = document.getElementById("audio-test");
+      const audio = document.getElementById("audio-bgm");
       setTimeout(() => {
         audio.play();
         audio.loop = true;
@@ -245,7 +245,7 @@ export default {
 
     },
     pauseAudio(){
-      const audio = document.getElementById("audio-test");
+      const audio = document.getElementById("audio-bgm");
       audio.pause();
     },
     itemInteract() {
