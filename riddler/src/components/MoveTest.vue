@@ -25,6 +25,15 @@ export default {
   components:{
     PuzzlePopup,
   },
+    created() {
+    this.moveListen()
+   
+
+  },
+  mounted() {
+    this.enablePlayerMovement();
+
+  },
   data() {
     return {
        
@@ -153,15 +162,7 @@ export default {
       mainAnt: false,
     }
   },
-  created() {
-    this.moveListen()
-   
 
-  },
-  mounted() {
-    this.enablePlayerMovement();
-
-  },
   computed: {
     cssProps() { 
       return {
