@@ -232,6 +232,21 @@ export default {
     unhideItem() {
       document.querySelectorAll('.item').forEach(el => el.classList.add("hide"));
       document.querySelectorAll('.section' + this.$store.state.userData.section).forEach(el => el.classList.remove("hide"));
+
+      //maybe :class="item.section" then select current section's class and remove
+    },
+        playAudio(){
+      const audio = document.getElementById("audio-test");
+      setTimeout(() => {
+        audio.play();
+        audio.loop = true;
+      }, 200);
+      this.itemInteract();
+
+    },
+    pauseAudio(){
+      const audio = document.getElementById("audio-test");
+      audio.pause();
     },
     itemInteract() {
       this.$store.state.userData.currentItem = null;
