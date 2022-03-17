@@ -295,7 +295,8 @@ export default {
     },
     closeItemPopup() {
       this.itemPopup = false;
-      //this.enablePlayerMovement();
+        this.enteredOnObject = false;
+      this.enablePlayerMovement();
     },
     txtbxShow() {
       this.textCount += 1;
