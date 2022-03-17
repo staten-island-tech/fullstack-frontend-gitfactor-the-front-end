@@ -53,7 +53,7 @@
           <p class="textbox-test typing-class">{{ this.$store.state.userData.currentItem.dialogue[this.textCount].text }}</p>
         </div>
         
-        <item-popup @itemAdded="addToInventory()" v-if="itemPopup" @closePopup="closeItemPopup()" :item="currentItem" @turnoff="turnOff"
+        <item-popup @itemAdded="addToInventory()" v-if="itemPopup" @closePopup="closeItemPopup()" :item="currentItem" 
         ref="itemPopupBox">
           <template v-slot:item-img>
             <img class="itempopup-img" :src="require(`@/assets/${$store.state.userData.currentItem.img}`)" :alt="$store.state.userData.currentItem.name"/>
@@ -295,6 +295,7 @@ export default {
     },
     closeItemPopup() {
       this.itemPopup = false;
+      //this.enablePlayerMovement();
     },
     txtbxShow() {
       this.textCount += 1;
