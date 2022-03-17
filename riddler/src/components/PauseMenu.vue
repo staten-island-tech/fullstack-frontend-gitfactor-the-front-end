@@ -3,7 +3,7 @@
       <!-- <font-awesome-icon icon="fa-solid fa-gear" /> -->
       <h2 class="pause-title">Pause Menu</h2>
       <div class="pause-button-box">
-      <button>Instruction Manual</button>
+      <button @click="instruction">Instruction Manual</button>
       <!-- Doing instructions manual first; need some fncn to take you to the manual component on click ... or superimpose it?? -->
        <button>Save & Resume</button>
         <button>Save & Exit</button>
@@ -14,10 +14,19 @@
 
 <script>
 
+// import Instructions from "Instructions.vue"
 export default {
 name: "PauseMenu", 
 components: {
-}
+  // Instructions
+},
+data() {
+    return {
+      instruction(){
+alert("hey this does work onclick")
+      }
+    }
+} 
 }
 </script>
 
@@ -44,7 +53,8 @@ align-items: center;
 .pause-menu button{
   width: 30%;
 font-size: 2.5rem;
-margin: 2rem;
+margin: 2.5rem;
+padding: 1rem;
 background-color: #A68FD5;
 color: black;
 border: black 0.05rem solid;

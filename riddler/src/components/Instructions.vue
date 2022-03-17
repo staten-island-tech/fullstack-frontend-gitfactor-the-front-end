@@ -19,7 +19,7 @@ My Tower awaits, and we are hungry…
 
 <script>
 export default {
-name: "Instrunctions"
+name: "Instructions"
 }
 </script>
 
