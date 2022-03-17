@@ -164,13 +164,13 @@ export default {
             this.$store.state.userData.section = this.$store.state.userData.section - 1;
             setTimeout(() => {
              this.$store.state.userData.leftValue = 84;
-            }, 50);
+            }, 10);
           }
         }
         this.playerAvatar = this.player.left;
         this.itemInteract();
         
-      }, 250);
+      }, 150);
      
     },
     rightMove: function () {
@@ -184,7 +184,7 @@ export default {
             setTimeout(() => {
             this.sectionChange();
              this.$store.state.userData.leftValue = 1;
-            }, 50);
+            }, 10);
                         
           }
         }
@@ -193,7 +193,7 @@ export default {
 
         this.playerAvatar = this.player.right;
         this.itemInteract();
-      }, 250);
+      }, 150);
     },
     reset: function () {
       setTimeout(() => {
@@ -214,9 +214,9 @@ export default {
     sectionChangeAnim() {
       var transOpaque = gsap.to(".game-container", {
        backgroundColor: "rgba(16, 1, 22, 1)",
-       duration:0.2});
+       duration:0.1});
       var transClear = gsap.to(".game-container", {
-       delay: .5, 
+       delay: .3, 
        backgroundColor: "rgba(16, 1, 22, 0)",
        ease: "power2.inOut"});
       transClear.play;
