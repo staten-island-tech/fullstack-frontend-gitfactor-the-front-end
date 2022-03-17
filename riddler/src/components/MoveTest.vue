@@ -7,7 +7,7 @@
     </div>
 
     <div class="game-and-inventory">
-    <main class="game-contents" :key="$store.state.userData.section">
+    <main class="game-contents" >
       <div class="audio-container">
         <audio id="audio-bgm" :src="require(`@/assets/audio/bgm/${currentOST}.mp3`)"></audio>
         <audio id="footstep-sfx" :src="require(`@/assets/audio/sfx/Footsteps02-1L.mp3`)"></audio>
@@ -156,10 +156,6 @@ export default {
       this.player.idle = "idle-left.gif";
       setTimeout(() => {
 
-        if (this.$store.state.userData.leftValue <= 1.5 && this.$store.state.userData.section > 1) {
-          this.sectionChangeAnim();                      
-        }
-
         if (this.$store.state.userData.leftValue > 0) {
           this.$store.state.userData.leftValue -= 1.5;
         } else {
@@ -168,7 +164,7 @@ export default {
             this.$store.state.userData.section = this.$store.state.userData.section - 1;
             setTimeout(() => {
              this.$store.state.userData.leftValue = 84;
-            }, 10);
+            }, 50);
           }
         }
         this.playerAvatar = this.player.left;
@@ -180,9 +176,6 @@ export default {
     rightMove: function () {
       this.player.idle = "idle-right.gif";
       setTimeout(() => {
-        if (this.$store.state.userData.leftValue >= 83 && this.$store.state.userData.section < 3) {
-          this.sectionChangeAnim();                      
-        }
         if (this.$store.state.userData.leftValue <= 85) {
           this.$store.state.userData.leftValue += 1.5;
         } else {
@@ -191,7 +184,7 @@ export default {
             setTimeout(() => {
             this.sectionChange();
              this.$store.state.userData.leftValue = 1;
-            }, 10);
+            }, 50);
                         
           }
         }
@@ -209,6 +202,7 @@ export default {
       this.itemInteract();
     },
     sectionChange() {
+      this.sectionChangeAnim();
       setTimeout(() => {
         this.currentLocationImg = this.locations[this.$store.state.userData.level - 1].level[this.$store.state.userData.section - 1].img;
         this.currentOST = this.locations[this.$store.state.userData.level - 1].level[this.$store.state.userData.section - 1].ost;
@@ -222,7 +216,7 @@ export default {
        backgroundColor: "rgba(16, 1, 22, 1)",
        duration:0.2});
       var transClear = gsap.to(".game-container", {
-       delay: .25, 
+       delay: .5, 
        backgroundColor: "rgba(16, 1, 22, 0)",
        ease: "power2.inOut"});
       transClear.play;
