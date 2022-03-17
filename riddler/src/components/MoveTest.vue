@@ -162,9 +162,6 @@ export default {
           if (this.$store.state.userData.section > 1) {
             this.sectionChange();
             this.$store.state.userData.section = this.$store.state.userData.section - 1;
-            setTimeout(() => {
-             this.$store.state.userData.leftValue = 84;
-            }, 10);
           }
         }
         this.playerAvatar = this.player.left;
@@ -176,16 +173,12 @@ export default {
     rightMove: function () {
       this.player.idle = "idle-right.gif";
       setTimeout(() => {
-        if (this.$store.state.userData.leftValue <= 85) {
+        if (this.$store.state.userData.leftValue < 86) {
           this.$store.state.userData.leftValue += 1.5;
         } else {
           if (this.$store.state.userData.section < 3) {
             this.$store.state.userData.section = this.$store.state.userData.section + 1;
-            setTimeout(() => {
-            this.sectionChange();
-             this.$store.state.userData.leftValue = 1;
-            }, 10);
-                        
+            this.sectionChange();                   
           }
         }
         this.playerAvatar = this.player.right;
@@ -210,6 +203,9 @@ export default {
         this.unhideItem();
         this.playAudio();
       }, 300);
+      if (this.$store.state.userData.leftValue < 86) {
+          this.$store.state.userData.leftValue = 1.5;
+        } else {this.$store.state.userData.leftValue = 3;}
     },
     sectionChangeAnim() {
       var transOpaque = gsap.to(".game-container", {
