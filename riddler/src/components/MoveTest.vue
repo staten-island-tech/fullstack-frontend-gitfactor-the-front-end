@@ -138,7 +138,7 @@ export default {
   computed: {
     cssProps() {
       return {
-        '--leftVar': (this.$store.state.userData.leftValue) + "%",
+        '--leftVar': (this.$store.state.userData.leftValue) + "vw",
       }
     },
   },
@@ -157,9 +157,10 @@ export default {
       setTimeout(() => {
 
         if (this.$store.state.userData.leftValue > 0) {
-          this.$store.state.userData.leftValue -= 1.5;
+          this.$store.state.userData.leftValue -= 1;
         } else {
           if (this.$store.state.userData.section > 1) {
+            this.sectionChangeAnim();
             this.sectionChange();
             this.$store.state.userData.section = this.$store.state.userData.section - 1;
           }
@@ -173,10 +174,11 @@ export default {
     rightMove: function () {
       this.player.idle = "idle-right.gif";
       setTimeout(() => {
-        if (this.$store.state.userData.leftValue < 86) {
-          this.$store.state.userData.leftValue += 1.5;
+        if (this.$store.state.userData.leftValue < 50) {
+          this.$store.state.userData.leftValue += 1;
         } else {
           if (this.$store.state.userData.section < 3) {
+            this.sectionChangeAnim();
             this.$store.state.userData.section = this.$store.state.userData.section + 1;
             this.sectionChange();                   
           }
@@ -195,7 +197,13 @@ export default {
       this.itemInteract();
     },
     sectionChange() {
-      this.sectionChangeAnim();
+      
+      setTimeout(() => {
+        if (this.$store.state.userData.leftValue >= 49) {
+          this.$store.state.userData.leftValue = 1.5;
+        } else {this.$store.state.userData.leftValue = 47;}
+      },10);
+      
       setTimeout(() => {
         this.currentLocationImg = this.locations[this.$store.state.userData.level - 1].level[this.$store.state.userData.section - 1].img;
         this.currentOST = this.locations[this.$store.state.userData.level - 1].level[this.$store.state.userData.section - 1].ost;
@@ -203,14 +211,12 @@ export default {
         this.unhideItem();
         this.playAudio();
       }, 300);
-      if (this.$store.state.userData.leftValue < 86) {
-          this.$store.state.userData.leftValue = 1.5;
-        } else {this.$store.state.userData.leftValue = 3;}
+
     },
     sectionChangeAnim() {
       var transOpaque = gsap.to(".game-container", {
        backgroundColor: "rgba(16, 1, 22, 1)",
-       duration:0.1});
+       duration:0.001});
       var transClear = gsap.to(".game-container", {
        delay: .3, 
        backgroundColor: "rgba(16, 1, 22, 0)",
