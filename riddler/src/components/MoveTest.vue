@@ -72,8 +72,13 @@
       </div>
     </main>
 
-    <Inventory />
+    <PuzzlePopup ref="puzzlePopupBox" v-on:turn-off="turnOff" v-on:lose-heart="loseHeart"
+        :puzzleAnswer="emittedPuzzleAnswer"
+        :puzzleVisibility="enteredOnObject" 
+        :puzzlePrompt ="emittedPuzzlePrompt"
+        :puzzleType ="emittedPuzzleType"></PuzzlePopup>
 
+    <Inventory />
   </div>      
 
   </div>
@@ -86,21 +91,22 @@ gsap.config;
 import HeartBar from "./HeartBar.vue";
 import Inventory from "./Inventory.vue";
 import ItemPopup from "./ItemPopup.vue";
+import PuzzlePopup from "./PuzzlePopup.vue"; 
 
 
 export default {
   name: "MoveTest",
   components: {
-    HeartBar, Inventory, ItemPopup
+    HeartBar, Inventory, ItemPopup, PuzzlePopup
   },
   created() {
     this.getUserData();
     this.sectionChange();
+    this.moveListen();
   },
   mounted() {
     this.unhideItem();
     this.enablePlayerMovement();
-    
   },
   data() {
     return {
@@ -113,14 +119,11 @@ export default {
       playerAvatar: "idle-right.gif",
       npcDialogueSprite: "sprite_dialogue_riddl.png",
       playerLocation: [
-        {
-          level: [
-            { id: 1, img: "bg_1_a.png" },
-            { id: 2, img: "bg_1_b.png" },
-            { id: 3, img: "bg_1_c.png" },
-          ],
-        },
       ],
+      enteredOnObject: false,
+      emittedPuzzleAnswer: "", 
+      emittedPuzzlePrompt: "",
+      emittedPuzzleType: null,
       currentLocationImg: "",
       gameItems: null,
       currentItem: null,
@@ -129,8 +132,10 @@ export default {
       textCount: -1,
       mainAnt: false,
       enteredOnObject: false,
+      hearts: 5,
     };
   },
+
   computed: {
     cssProps() {
       return {
@@ -216,8 +221,62 @@ export default {
     reset: function () {
       setTimeout(() => {
         this.playerAvatar = this.player.idle;
+      });
+    },
+    moveListen: function() {
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+          setTimeout(() => {
+            if (this.leftValue > 0) {
+           this.leftValue -= 0;
+             };        
+          this.itemInteract();
+          }, 250);      
+        };
+      })
+    }, 
+    leftMove: function(e) {
+      this.player.idle = "idle-left.gif";
+      if(this.enteredOnObject && e.key === "ArrowLeft") {
+        e.preventDefault();
+      } else {
+      setTimeout(() => {
+            if (this.leftValue > 0) {
+              this.leftValue -= 1.5;
+            };  
+              this.playerAvatar = this.player.left;
+              this.itemInteract();
+            }, 250);
+            }
+     
+    },
+    rightMove: function(e) {
+      this.player.idle = "idle-right.gif";
+      if(this.enteredOnObject && e.key === "ArrowRight") {
+        e.preventDefault(); // i broke the site
+      }
+      else {
+ setTimeout(() => {
+      if (this.leftValue <= 85) {
+        this.leftValue += 1.5;
+      };  
+        this.playerAvatar = this.player.right;
+        this.itemInteract();
       }, 250);
-      this.itemInteract();
+      }
+      
+    },
+  
+    reset: function() {
+      setTimeout(() => {
+      this.playerAvatar = this.player.idleRight;
+      this.playerAvatar = this.player.idle;
+      }, 250);
+       this.itemInteract();
+      },
+    enablePlayerMovement(){
+      this.$refs.playerMove.focus(); 
+     
     },
     sectionChange() {
       setTimeout(() => {
@@ -225,9 +284,6 @@ export default {
         this.currentLocationImg = this.playerLocation[this.$store.state.userData.level - 1].level[this.$store.state.userData.section - 1].img;
         this.unhideItem();
       }, 300);
-
-
-
     },
     sectionChangeAnim() {
       var transOpaque = gsap.to(".game-container", {
@@ -272,17 +328,39 @@ export default {
         }
       });
     },
+    testingPopup() {
+         this.$refs.puzzlePopupBox.$el.focus();
+    },
     onEnter() {
       if (this.$store.state.userData.currentItem) {
         this.enteredOnObject = true;
         if (this.$store.state.userData.currentItem.itemType === "object") {              
         this.itemPopup = true;
-        setTimeout(() => {   this.openItemPopup();  
-               }, 10);
-        
+          setTimeout(() => {   
+            this.openItemPopup();  
+          }, 10);
+
         } else if (this.$store.state.userData.currentItem.itemType === "character") {              
           this.txtbxShow();
-        }
+
+        } else if (this.currentItem.itemType === "puzzle") {        
+            this.enteredOnObject = true;
+            this.emittedPuzzleAnswer = this.currentItem.puzzleAnswer;
+            this.emittedPuzzlePrompt = this.currentItem.prompt;
+            this.emittedPuzzleType = this.currentItem.puzzleType;
+            setTimeout(() => {   
+              this.testingPopup();  
+            }, 10);
+              if (this.currentItem.puzzleType === 1){
+                console.log('this is type 1');
+              }
+              else if (this.currentItem.puzzleType === 2){
+                console.log('this is type 2');
+              }
+              else if (this.currentItem.puzzleType === 3){
+                console.log('this is type 3'); 
+              }
+          }
       }
     },
     addToInventory() {
@@ -297,6 +375,18 @@ export default {
       this.itemPopup = false;
         this.enteredOnObject = false;
       this.enablePlayerMovement();
+    },
+    turnOff() { 
+      this.enteredOnObject = false;
+      //const currentScore = this.score + 100;
+      //this.score = currentScore;
+      this.enablePlayerMovement();
+    },
+    loseHeart() {
+        const heartsRemaining = this.hearts - 1;
+        this.hearts = heartsRemaining;
+        console.log(heartsRemaining);
+        this.$store.commit('decrementLives');
     },
     txtbxShow() {
       this.textCount += 1;
@@ -350,8 +440,8 @@ h1 {
   margin-bottom: .5rem;
 }
 .player {
-  width: 100%;
-  height: 100%;
+  width: inherit;
+  height: inherit;
 }
 .player-avatar {
   width: 17.5%;
