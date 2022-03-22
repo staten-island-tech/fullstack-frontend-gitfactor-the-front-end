@@ -4,8 +4,8 @@
     <div class="level-and-hearts">
       <h1>Lvl. {{ $store.state.userData.level }}</h1>
       <HeartBar />
-         <PauseIcon />
     </div>
+    <PauseIcon />
     <div class="game-and-inventory">
       <main class="game-contents">
       <div
@@ -85,13 +85,12 @@ import HeartBar from "./HeartBar.vue";
 import Inventory from "./Inventory.vue";
 import ItemPopup from "./ItemPopup.vue";
 import PauseMenu from "./PauseMenu.vue";
-import PauseIcon from './PauseIcon.vue';
+import PauseIcon from "./PauseIcon.vue";
 
 export default {
   name: "MoveTest",
   components: {
-    HeartBar, Inventory, ItemPopup, PauseMenu,
-    PauseIcon
+    HeartBar, Inventory, ItemPopup, PauseMenu, PauseIcon
   },
   created() {
     this.getUserData();

@@ -1,6 +1,7 @@
 <template>
 <div class="icon-container">
-<font-awesome-icon class="pause-icon" icon="[pause" />
+<!-- <font-awesome-icon icon="phone" /> -->
+<font-awesome-icon icon="fa-solid fa-pause" />
       </div>
 </template>
 
