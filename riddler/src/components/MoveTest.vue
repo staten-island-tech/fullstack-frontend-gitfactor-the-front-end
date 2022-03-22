@@ -72,11 +72,13 @@
       </div>
     </main>
 
-    <PuzzlePopup ref="puzzlePopupBox" v-on:turn-off="turnOff" v-on:lose-heart="loseHeart"
+    <PuzzlePopup  
+        @turn-off="closePuzzlePopup" 
         :puzzleAnswer="emittedPuzzleAnswer"
-        :puzzleVisibility="enteredOnObject" 
+        :puzzleVisibility="puzzlePopupVisilibility" 
         :puzzlePrompt ="emittedPuzzlePrompt"
-        :puzzleType ="emittedPuzzleType"></PuzzlePopup>
+        :puzzleType ="emittedPuzzleType"ref="puzzlePopupBox"
+        ></PuzzlePopup>
 
     <Inventory />
   </div>      
@@ -102,7 +104,7 @@ export default {
   created() {
     this.getUserData();
     this.sectionChange();
-    this.moveListen();
+    
   },
   mounted() {
     this.unhideItem();
@@ -127,7 +129,7 @@ export default {
           ],
         },
       ],
-      //enteredOnObject: false,
+      enteredOnObject: false,
       emittedPuzzleAnswer: "", 
       emittedPuzzlePrompt: "",
       emittedPuzzleType: null,
@@ -138,7 +140,8 @@ export default {
       txtbx: false,
       textCount: -1,
       mainAnt: false,
-      hearts: 5,
+      puzzlePopupVisilibility: false,
+    
     };
   },
 
@@ -224,19 +227,8 @@ export default {
       }, 250);
       }
     },
-    moveListen: function() {
-      window.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft') {
-          setTimeout(() => {
-            if (this.leftValue > 0) {
-           this.leftValue -= 0;
-             };        
-          this.itemInteract();
-          }, 250);      
-        };
-      })
-    }, 
-    reset: function() {
+   
+    reset() {
       setTimeout(() => {
       this.playerAvatar = this.player.idleRight;
       this.playerAvatar = this.player.idle;
@@ -293,9 +285,7 @@ export default {
         }
       });
     },
-    testingPopup() {
-         this.$refs.puzzlePopupBox.$el.focus();
-    },
+  
     onEnter() {
       if (this.$store.state.userData.currentItem) {
         this.enteredOnObject = true;
@@ -308,13 +298,15 @@ export default {
         } else if (this.$store.state.userData.currentItem.itemType === "character") {              
           this.txtbxShow();
 
-        } else if (this.currentItem.itemType === "puzzle") {        
-            this.enteredOnObject = true;
+        } else if (this.$store.state.userData.currentItem.itemType === "puzzle") {        
+      
+            this.puzzlePopupVisilibility = true;
+            console.log(this.puzzlePopupVisilibility);
             this.emittedPuzzleAnswer = this.currentItem.puzzleAnswer;
             this.emittedPuzzlePrompt = this.currentItem.prompt;
             this.emittedPuzzleType = this.currentItem.puzzleType;
             setTimeout(() => {   
-              this.testingPopup();  
+              this.openPuzzlePopup();  
             }, 10);
               if (this.currentItem.puzzleType === 1){
                 console.log('this is type 1');
@@ -333,6 +325,9 @@ export default {
       this.$store.state.userData.inventory.push(this.$store.state.userData.currentItem);
       this.closeItemPopup();
     },
+    openPuzzlePopup() {
+      this.$refs.puzzlePopupBox.$el.focus();// this not working
+    },
     openItemPopup() {
       this.$refs.itemPopupBox.$el.focus();
     },
@@ -341,15 +336,12 @@ export default {
         this.enteredOnObject = false;
       this.enablePlayerMovement();
     },
-    turnOff() { 
+    closePuzzlePopup() { 
       this.enteredOnObject = false;
-      //const currentScore = this.score + 100;
-      //this.score = currentScore;
+      this.puzzlePopupVisilibility = false;
       this.enablePlayerMovement();
     },
-    loseHeart() { // move to component 
-        this.$store.commit('decrementLives');
-    },
+  
     txtbxShow() {
       this.textCount += 1;
       if (this.textCount < this.$store.state.userData.currentItem.dialogue.length) {

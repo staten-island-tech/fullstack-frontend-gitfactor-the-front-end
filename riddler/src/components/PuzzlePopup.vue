@@ -27,7 +27,7 @@ v-on:keyup.enter="checkAnswerClick"
 
 export default {
     name: "PuzzlePopup",
-    emits: ["turn-off", "lose-heart"],
+    emits: ["turn-off", ],
 
     props: {
     puzzleVisibility: Boolean, 
@@ -76,10 +76,13 @@ export default {
             }
             else{
                 console.log('taking away 1 heart');
-                this.$emit('lose-heart'); //run losehearts function here
+                this.loseHeart(); 
                 this.puzzleInput = "";  
 
             }
+        },
+          loseHeart() { // move to component 
+        this.$store.commit('decrementLives');
         },
         puzzle2ButtonClick(value){
             const testValue = this.puzzleInput + value ;
