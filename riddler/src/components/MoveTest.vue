@@ -119,6 +119,13 @@ export default {
       playerAvatar: "idle-right.gif",
       npcDialogueSprite: "sprite_dialogue_riddl.png",
       playerLocation: [
+        {
+          level: [
+            { id: 1, img: "bg_1_a.png" },
+            { id: 2, img: "bg_1_b.png" },
+            { id: 3, img: "bg_1_c.png" },
+          ],
+        },
       ],
       //enteredOnObject: false,
       emittedPuzzleAnswer: "", 
@@ -131,7 +138,6 @@ export default {
       txtbx: false,
       textCount: -1,
       mainAnt: false,
-      enteredOnObject: false,
       hearts: 5,
     };
   },
@@ -218,11 +224,6 @@ export default {
       }, 250);
       }
     },
-    reset: function () {
-      setTimeout(() => {
-        this.playerAvatar = this.player.idle;
-      });
-    },
     moveListen: function() {
       window.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowLeft') {
@@ -235,38 +236,6 @@ export default {
         };
       })
     }, 
-    leftMove: function(e) {
-      this.player.idle = "idle-left.gif";
-      if(this.enteredOnObject && e.key === "ArrowLeft") {
-        e.preventDefault();
-      } else {
-      setTimeout(() => {
-            if (this.leftValue > 0) {
-              this.leftValue -= 1.5;
-            };  
-              this.playerAvatar = this.player.left;
-              this.itemInteract();
-            }, 250);
-            }
-     
-    },
-    rightMove: function(e) {
-      this.player.idle = "idle-right.gif";
-      if(this.enteredOnObject && e.key === "ArrowRight") {
-        e.preventDefault(); // i broke the site
-      }
-      else {
- setTimeout(() => {
-      if (this.leftValue <= 85) {
-        this.leftValue += 1.5;
-      };  
-        this.playerAvatar = this.player.right;
-        this.itemInteract();
-      }, 250);
-      }
-      
-    },
-  
     reset: function() {
       setTimeout(() => {
       this.playerAvatar = this.player.idleRight;
@@ -274,10 +243,6 @@ export default {
       }, 250);
        this.itemInteract();
       },
-    enablePlayerMovement(){
-      this.$refs.playerMove.focus(); 
-     
-    },
     sectionChange() {
       setTimeout(() => {
         console.log(this.currentLocationImg);
