@@ -138,7 +138,7 @@ export default {
   computed: {
     cssProps() {
       return {
-        '--leftVar': (this.$store.state.userData.leftValue) + "vw",
+        '--leftVar': (this.$store.state.userData.leftValue) + "%",
       }
     },
   },
@@ -157,7 +157,7 @@ export default {
       setTimeout(() => {
 
         if (this.$store.state.userData.leftValue > 0) {
-          this.$store.state.userData.leftValue -= 1;
+          this.$store.state.userData.leftValue -= 1.5;
         } else {
           if (this.$store.state.userData.section > 1) {
             this.sectionChangeAnim();
@@ -174,18 +174,14 @@ export default {
     rightMove: function () {
       this.player.idle = "idle-right.gif";
       setTimeout(() => {
-        if (this.$store.state.userData.leftValue < 50) {
-          this.$store.state.userData.leftValue += 1;
-        } else {
-          if (this.$store.state.userData.section < 3) {
+        if (this.$store.state.userData.leftValue < 85) {
+          this.$store.state.userData.leftValue += 1.5;
+        }; 
+        if (this.$store.state.userData.section < 3 && this.$store.state.userData.leftValue > 85) {
             this.sectionChangeAnim();
             this.$store.state.userData.section = this.$store.state.userData.section + 1;
             this.sectionChange();                   
           }
-        }
-        this.playerAvatar = this.player.right;
-        this.itemInteract();
-
         this.playerAvatar = this.player.right;
         this.itemInteract();
       }, 150);
@@ -199,9 +195,9 @@ export default {
     sectionChange() {
       
       setTimeout(() => {
-        if (this.$store.state.userData.leftValue >= 49) {
+        if (this.$store.state.userData.leftValue >= 85) {
           this.$store.state.userData.leftValue = 1.5;
-        } else {this.$store.state.userData.leftValue = 47;}
+        } else {this.$store.state.userData.leftValue = 80;}
       },10);
       
       setTimeout(() => {
