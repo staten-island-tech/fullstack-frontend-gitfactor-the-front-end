@@ -120,7 +120,7 @@ export default {
       npcDialogueSprite: "sprite_dialogue_riddl.png",
       playerLocation: [
       ],
-      enteredOnObject: false,
+      //enteredOnObject: false,
       emittedPuzzleAnswer: "", 
       emittedPuzzlePrompt: "",
       emittedPuzzleType: null,
@@ -382,10 +382,7 @@ export default {
       //this.score = currentScore;
       this.enablePlayerMovement();
     },
-    loseHeart() {
-        const heartsRemaining = this.hearts - 1;
-        this.hearts = heartsRemaining;
-        console.log(heartsRemaining);
+    loseHeart() { // move to component 
         this.$store.commit('decrementLives');
     },
     txtbxShow() {

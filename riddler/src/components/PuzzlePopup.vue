@@ -23,38 +23,6 @@ v-on:keyup.enter="checkAnswerClick"
     
 </template>
 
-<style scoped>
-.popup-container{
-    width: 30vw; 
-    height: 40vh;
-    border: 2px solid black;
-    position: fixed;
-    top:15%;
-    left: 35%;
-    z-index: 5;
-    background-color: rgb(105, 105, 189);
-}
-.invisible{
-    display:none;
-}
-.puzzleQuestionLine{
-    font-size: 2rem;
-}
-.puzzle-answer{
-    font-size: 2rem;
-}
-button{
-    font-size: 2rem;
-}
-.close-puzzle-button{
-    font-size: 2rem;
-    position: fixed;
-    left: 63%;
-}
-
-
-</style>
-
 <script>
 
 export default {
@@ -108,7 +76,7 @@ export default {
             }
             else{
                 console.log('taking away 1 heart');
-                this.$emit('lose-heart');
+                this.$emit('lose-heart'); //run losehearts function here
                 this.puzzleInput = "";  
 
             }
@@ -152,3 +120,34 @@ export default {
 
 }
 </script>
+
+<style scoped>
+.popup-container {
+    width: 30vw; 
+    height: 40vh;
+    border: 2px solid black;
+    position: fixed;
+    top:15%;
+    left: 35%;
+    z-index: 5;
+    background-color: rgb(105, 105, 189);
+}
+.invisible {
+    display:none;
+}
+
+.puzzleQuestionLine {
+    font-size: 2rem;
+}
+.puzzle-answer {
+    font-size: 2rem;
+}
+button {
+    font-size: 2rem;
+}
+.close-puzzle-button {
+    font-size: 2rem;
+    position: fixed;
+    left: 63%;
+}
+</style>
