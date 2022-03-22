@@ -161,7 +161,6 @@ export default {
         } else {
           if (this.$store.state.userData.section > 1) {
             this.sectionChangeAnim();
-            this.sectionChange();
             this.$store.state.userData.section = this.$store.state.userData.section - 1;
           }
         }
@@ -179,8 +178,7 @@ export default {
         }; 
         if (this.$store.state.userData.section < 3 && this.$store.state.userData.leftValue > 85) {
             this.sectionChangeAnim();
-            this.$store.state.userData.section = this.$store.state.userData.section + 1;
-            this.sectionChange();                   
+            this.$store.state.userData.section = this.$store.state.userData.section + 1;                   
           }
         this.playerAvatar = this.player.right;
         this.itemInteract();
@@ -210,15 +208,22 @@ export default {
 
     },
     sectionChangeAnim() {
-      var transOpaque = gsap.to(".game-container", {
+      var transition = gsap.fromTo(".game-container", {
        backgroundColor: "rgba(16, 1, 22, 1)",
-       duration:0.001});
-      var transClear = gsap.to(".game-container", {
-       delay: .3, 
+       duration:0.001}, {
+       delay: .2, 
        backgroundColor: "rgba(16, 1, 22, 0)",
        ease: "power2.inOut"});
-      transClear.play;
-      transOpaque.play;
+       transition.play;
+
+       var chrAnim = gsap.fromTo(".player",  {
+       backgroundColor: "rgba(16, 1, 22, 1)",
+       duration:0.001}, {
+       delay: .1, 
+       backgroundColor: "rgba(16, 1, 22, 0)",
+       ease: "power2.inOut"});
+       chrAnim.play;
+       this.sectionChange();
 
     },
     unhideItem() {
@@ -326,6 +331,7 @@ h1 {
 .player {
   width: 100%;
   height: 100%;
+  
 }
 .player-avatar {
   width: 17.5%;
