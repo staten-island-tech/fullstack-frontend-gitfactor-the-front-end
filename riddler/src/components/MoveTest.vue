@@ -76,9 +76,15 @@
         @turn-off="closePuzzlePopup" 
         :puzzleAnswer="emittedPuzzleAnswer"
         :puzzleVisibility="puzzlePopupVisilibility" 
-        :puzzlePrompt ="emittedPuzzlePrompt"
-        :puzzleType ="emittedPuzzleType"ref="puzzlePopupBox"
-        ></PuzzlePopup>
+        
+        :puzzleType ="emittedPuzzleType"
+        ref="puzzlePopupBox"
+        >
+        <template v-slot:puzzle-text>
+          <h1>{{$store.state.userData.currentItem.prompt}}</h1>
+          
+        </template>
+        </PuzzlePopup>
 
     <Inventory />
   </div>      
@@ -131,7 +137,7 @@ export default {
       ],
       enteredOnObject: false,
       emittedPuzzleAnswer: "", 
-      emittedPuzzlePrompt: "",
+      
       emittedPuzzleType: null,
       currentLocationImg: "",
       gameItems: null,
@@ -302,9 +308,9 @@ export default {
       
             this.puzzlePopupVisilibility = true;
             console.log(this.puzzlePopupVisilibility);
-            this.emittedPuzzleAnswer = this.currentItem.puzzleAnswer;
-            this.emittedPuzzlePrompt = this.currentItem.prompt;
-            this.emittedPuzzleType = this.currentItem.puzzleType;
+            this.emittedPuzzleAnswer = this.$store.state.userData.currentItem.puzzleAnswer;
+           
+            this.emittedPuzzleType = this.$store.state.userData.currentItem.puzzleType;
             setTimeout(() => {   
               this.openPuzzlePopup();  
             }, 10);

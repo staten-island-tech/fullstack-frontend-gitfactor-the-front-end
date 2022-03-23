@@ -8,7 +8,8 @@ v-on:keyup.enter="checkAnswerClick"
 
 >
 <button v-on:click="closePuzzleClick" class="close-puzzle-button">x</button>
-    <h1 class="puzzleQuestionLine">{{puzzlePrompt}}</h1>
+    <!-- <h1 class="puzzleQuestionLine">{{puzzlePrompt}}</h1> -->
+    <slot name="puzzle-text"></slot>
     <input type="text" class="puzzle-answer"
     v-model="puzzleInput" :maxlength="puzzleInputMaxLength" :disabled="puzzleInputDisabled">
     <button v-on:click="checkAnswerClick" class="puzzle-submit-button" >enter</button>
@@ -55,7 +56,7 @@ export default {
         }
         },
         updated() {
-            this.checkPuzzle();
+            //this.checkPuzzle();
         },
 
     methods:
@@ -126,15 +127,21 @@ export default {
 
 <style scoped>
 .popup-container {
-    width: 30vw; 
-    height: 40vh;
-    border: 2px solid black;
-    position: fixed;
-    top:15%;
-    left: 35%;
-    z-index: 5;
-    background-color: rgb(105, 105, 189);
-}
+    position: absolute;
+    top: 0;
+    text-align: center;
+    width: calc(60% - 4rem);
+    height: calc(70% - 4rem);
+    padding: 5rem;
+    margin: 2rem;
+    border-radius: 1.5rem;
+    /* background-color: #deceff; */
+    border-color: #deceff;
+    border: solid .3rem;
+    background-color: #2b0d47;
+    z-index: 1;
+    overflow: scroll;
+  }
 .invisible {
     display:none;
 }
