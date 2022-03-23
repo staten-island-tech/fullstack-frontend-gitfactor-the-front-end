@@ -118,11 +118,19 @@ export default {
       npcDialogueSprite: "sprite_dialogue_riddl.png",
       locations: [
         {
-          level: [
-            { id: 1, img: "bg_1_a.png", ost:"lv01" },
-            { id: 2, img: "bg_1_b.png", ost:"lv01" },
-            { id: 3, img: "bg_1_c.png", ost:"lv01" },
-          ],
+          level: 
+            [
+              { id: 1, img: "bg_1_a.png", ost:"lv01" },
+              { id: 2, img: "bg_1_b.png", ost:"lv01" },
+              { id: 3, img: "bg_1_c.png", ost:"lv01" },
+            ],
+        },
+        {
+          level2:             [
+              { id: 1, img: "bg_1_b.png", ost:"lv02" },
+              { id: 2, img: "bg_1_c.png", ost:"lv02" },
+              { id: 3, img: "bg_1_a.png", ost:"lv02" },
+            ],
         },
       ],
       currentLocationImg: "",
