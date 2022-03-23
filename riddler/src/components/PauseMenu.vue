@@ -3,7 +3,6 @@
       <h2 class="pause-title">Pause Menu</h2>
       <div class="pause-button-box">
       <button @click="instruction">Instruction Manual</button>
-      <!-- Doing instructions manual first; need some fncn to take you to the manual component on click ... or superimpose it?? -->
        <button>Save & Resume</button>
         <button>Save & Exit</button>
           <button>Settings</button>
