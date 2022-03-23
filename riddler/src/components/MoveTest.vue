@@ -10,7 +10,7 @@
     <main class="game-contents" >
       <div class="audio-container">
         <audio id="audio-bgm" :src="require(`@/assets/audio/bgm/${currentOST}.mp3`)"></audio>
-        <audio id="footstep-sfx" :src="require(`@/assets/audio/sfx/Footsteps02-1L.mp3`)"></audio>
+        <audio id="walk-sfx" :src="require(`@/assets/audio/sfx/walkstep.mp3`)"></audio>
       </div>
 
       <div
@@ -153,9 +153,10 @@ export default {
       // NEXT STEP: for each item in this.$store.userData.inventory, filter currentLevelItems for item.id, if true then pop item from gameItems
     },
     leftMove: function () {
+      this.playWalkSfx();
       this.player.idle = "idle-left.gif";
       setTimeout(() => {
-
+        
         if (this.$store.state.userData.leftValue > 0) {
           this.$store.state.userData.leftValue -= 1.5;
         } else {
@@ -171,8 +172,10 @@ export default {
      
     },
     rightMove: function () {
+      this.playWalkSfx();
       this.player.idle = "idle-right.gif";
       setTimeout(() => {
+        
         if (this.$store.state.userData.leftValue < 85) {
           this.$store.state.userData.leftValue += 1.5;
         }; 
@@ -185,6 +188,7 @@ export default {
       }, 150);
     },
     reset: function () {
+      this.stopWalkSfx();
       setTimeout(() => {
         this.playerAvatar = this.player.idle;
       }, 250);
@@ -210,19 +214,12 @@ export default {
     sectionChangeAnim() {
       var transition = gsap.fromTo(".game-container", {
        backgroundColor: "rgba(16, 1, 22, 1)",
-       duration:0.001}, {
+       duration:0.01}, {
        delay: .2, 
+       duration: .3,
        backgroundColor: "rgba(16, 1, 22, 0)",
        ease: "power2.inOut"});
        transition.play;
-
-       var chrAnim = gsap.fromTo(".player",  {
-       backgroundColor: "rgba(16, 1, 22, 1)",
-       duration:0.001}, {
-       delay: .1, 
-       backgroundColor: "rgba(16, 1, 22, 0)",
-       ease: "power2.inOut"});
-       chrAnim.play;
        this.sectionChange();
 
     },
@@ -232,8 +229,9 @@ export default {
 
       //maybe :class="item.section" then select current section's class and remove
     },
-        playAudio(){
+    playAudio(){
       const audio = document.getElementById("audio-bgm");
+      audio.volume = .25;
       setTimeout(() => {
         audio.play();
         audio.loop = true;
@@ -241,9 +239,15 @@ export default {
       this.itemInteract();
 
     },
-    pauseAudio(){
-      const audio = document.getElementById("audio-bgm");
+    playWalkSfx(){
+      const audio = document.getElementById("walk-sfx");
+      audio.loop = true;
+      audio.play();
+    },
+    stopWalkSfx(){
+      const audio = document.getElementById("walk-sfx");
       audio.pause();
+      audio.currentTime = 60;
     },
     itemInteract() {
       this.$store.state.userData.currentItem = null;
@@ -340,6 +344,7 @@ h1 {
   bottom: 10%;
   left: var(--leftVar);
 }
+
 .player-avatar-dialogue {
   width: 70%;
   right: -20%;
