@@ -2,10 +2,10 @@
   <div class="game-page">
 
     <div class="level-and-hearts">
+                <PauseIcon />
       <h1>Lvl. {{ $store.state.userData.level }}</h1>
       <HeartBar />
     </div>
-    <PauseIcon />
     <div class="game-and-inventory">
       <main class="game-contents">
       <div

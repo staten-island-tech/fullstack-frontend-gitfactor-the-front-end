@@ -1,5 +1,5 @@
 <template>
-  <div class="pause-menu">
+  <div v-if="isPauseOpen" class="pause-menu">
       <h2 class="pause-title">Pause Menu</h2>
       <div class="pause-button-box">
       <button @click="instruction">Instruction Manual</button>

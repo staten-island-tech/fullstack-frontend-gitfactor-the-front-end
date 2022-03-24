@@ -1,23 +1,32 @@
 <template>
 <div class="icon-container">
-<font-awesome-icon class="pause-icon" icon="pause" />
+<font-awesome-icon @click="openPause()" class="pause-icon" icon="pause" />
       </div>
 </template>
 
 <script>
 export default {
-name: "PauseIcon"
+name: "PauseIcon",
+ data() {
+     return{
+         isPauseOpen: false,
+     }
+ }, 
+ methods: {
+     openPause(){
+this.isPauseOpen = true;
+     }
+ }
 }
 </script>
 
 <style>
 .icon-container{
-    width: 60vw;
     display: flex;
-    justify-content: flex-end;
+    justify-content: right;
 }
 .pause-icon{
-    font-size: 3rem;
+    font-size: 4rem;
         color:  #deceff;
 }
 </style>
