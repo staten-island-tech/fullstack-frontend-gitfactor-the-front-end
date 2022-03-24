@@ -1,5 +1,8 @@
 <template>
-  <div class="game-page">
+
+  <div class="game-page" :key="$store.state.userData.level">
+    <button @click="levelAdd" class="mobile-button">l+ratio</button>
+    <button @click="levelMinus" class="mobile-button">l-1</button>
 
     <div class="level-and-hearts">
       <h1>Lvl. {{ $store.state.userData.level }}</h1>
@@ -126,7 +129,7 @@ export default {
             ],
         },
         {
-          level2:             [
+          level:             [
               { id: 1, img: "bg_1_b.png", ost:"lv02" },
               { id: 2, img: "bg_1_c.png", ost:"lv02" },
               { id: 3, img: "bg_1_a.png", ost:"lv02" },
@@ -135,7 +138,7 @@ export default {
       ],
       currentLocationImg: "",
       gameItems: null,
-      currentOST: "DSK",
+      currentOST: "lv01",
       itemPopup: false,
       txtbx: false,
       textCount: -1,
@@ -213,7 +216,6 @@ export default {
       setTimeout(() => {
         this.currentLocationImg = this.locations[this.$store.state.userData.level - 1].level[this.$store.state.userData.section - 1].img;
         this.currentOST = this.locations[this.$store.state.userData.level - 1].level[this.$store.state.userData.section - 1].ost;
-        console.log(this.currentOST);
         this.unhideItem();
         this.playAudio();
       }, 300);
@@ -222,7 +224,7 @@ export default {
     sectionChangeAnim() {
       var transition = gsap.fromTo(".game-container", {
        backgroundColor: "rgba(16, 1, 22, 1)",
-       duration:0.01}, {
+       duration:0.1}, {
        delay: .2, 
        duration: .3,
        backgroundColor: "rgba(16, 1, 22, 0)",
@@ -304,6 +306,16 @@ export default {
         this.enteredOnObject = false;
         this.textCount = -1;
       }
+    },
+    levelAdd() {
+      this.$store.state.userData.level += 1;
+      console.log(this.$store.state.userData.level);
+      this.sectionChange();      
+    },
+    levelMinus() {
+      this.$store.state.userData.level -= 1;
+      console.log(this.$store.state.userData.level);
+      this.sectionChange();      
     },
   },
 };
