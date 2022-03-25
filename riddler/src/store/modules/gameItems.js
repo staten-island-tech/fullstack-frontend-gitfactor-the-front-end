@@ -82,6 +82,7 @@ export const state = {
         puzzleType: 1,
         prompt: "the answer is one",
         puzzleAnswer: "one",
+        puzzleCompleted: false,
       },
       {
         name: "Puzzle 2",
@@ -96,6 +97,7 @@ export const state = {
         puzzleType: 2,
         prompt: "the answer is 1234",
         puzzleAnswer: "1234",
+        puzzleCompleted: false,
       },
       // {
       //   name: "Puzzle 3",
@@ -109,6 +111,7 @@ export const state = {
       //   puzzleType: 3,
       //   prompt: "the answer is a key",
       //   puzzleAnswer: "key",
+      //   puzzleCompleted: false,
       // },
     ],
     // [], level 2

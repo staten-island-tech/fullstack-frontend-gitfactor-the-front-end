@@ -76,6 +76,7 @@
         @turn-off="closePuzzlePopup" 
         :puzzleAnswer="emittedPuzzleAnswer"
         :puzzleVisibility="puzzlePopupVisilibility" 
+        :promptAnswered="puzzleQuestionCompleted"
         
         :puzzleType ="emittedPuzzleType"
         ref="puzzlePopupBox"
@@ -137,7 +138,7 @@ export default {
       ],
       enteredOnObject: false,
       emittedPuzzleAnswer: "", 
-      
+      puzzleQuestionCompleted: null,
       emittedPuzzleType: null,
       currentLocationImg: "",
       gameItems: null,
@@ -308,9 +309,9 @@ export default {
       
             this.puzzlePopupVisilibility = true;
             console.log(this.puzzlePopupVisilibility);
-            this.emittedPuzzleAnswer = this.$store.state.userData.currentItem.puzzleAnswer;
-           
+            this.emittedPuzzleAnswer = this.$store.state.userData.currentItem.puzzleAnswer;           
             this.emittedPuzzleType = this.$store.state.userData.currentItem.puzzleType;
+            this.puzzleQuestionCompleted = this.$store.state.userData.currentItem.puzzleCompleted;
             setTimeout(() => {   
               this.openPuzzlePopup();  
             }, 10);

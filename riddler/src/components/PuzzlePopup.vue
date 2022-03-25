@@ -2,14 +2,15 @@
 <div class="popup-container"
 tabindex="-1"
 v-if ='puzzleVisibility'
-
 v-on:keyup.esc="closePuzzleClick"
 v-on:keyup.enter="checkAnswerClick"
+
 
 >
 <button v-on:click="closePuzzleClick" class="close-puzzle-button">x</button>
     <!-- <h1 class="puzzleQuestionLine">{{puzzlePrompt}}</h1> -->
-    <div class="questionPrompt" v-if="promptUnanswered">
+    <div class="promptAnsweredText" v-if="promptAnswered">correct!</div>
+    <div class="questionPrompt" v-else>
         <slot name="puzzle-text"></slot>
     <input type="text" class="puzzle-answer"
     v-model="puzzleInput" :maxlength="puzzleInputMaxLength" :disabled="puzzleInputDisabled">
@@ -21,11 +22,7 @@ v-on:keyup.enter="checkAnswerClick"
        
     </div>
 
-    </div>
-    <div class="promptAnsweredText" v-else>correct!</div>
-    
-   
-    
+    </div>  
     
 </div>
     
@@ -42,7 +39,7 @@ export default {
     puzzlePrompt: String,
     puzzleAnswer: String,
     puzzleType: Number,
-    //promptUnanswered: Boolean,
+    promptAnswered: Boolean,
     },
 
     data() {
@@ -52,7 +49,7 @@ export default {
     puzzleInputMaxLength: 10,
     puzzleButtonVisibility: false,
     puzzleInputDisabled: false,
-    promptUnanswered: true,  //give each puzzle a string value 
+    //promptAnswered: false,  //give each puzzle a string value 
     
     buttonValues: [
         {value: "1", id: 1},
@@ -64,8 +61,8 @@ export default {
  
         }
         },
-        updated() {
-            this.checkPuzzle();
+    updated() {
+            this.checkPuzzleType();
         },
 
     methods:
@@ -76,18 +73,23 @@ export default {
                     
 
         },
-        checkAnswerClick(){
-            if(this.puzzleInput === this.puzzleAnswer){
+        checkAnswerClick(){            
+            const puzzleAnswerInput = (this.puzzleInput.trim()).toLowerCase()
+            console.log(puzzleAnswerInput);
+            
+            if(puzzleAnswerInput === this.puzzleAnswer){
                 
                 this.puzzleInput = "";  
-                this.promptUnanswered = false;
+                //this.promptAnswered = true;
+                //cant mutate prop
+             
+                
                 //this.$refs.puzzlePopupBox.$el.focus();  //make it focus on the popup
             }
             else{
                 console.log('taking away 1 heart');
                 this.loseHeart(); 
                 this.puzzleInput = "";  
-
             }
         },
           loseHeart() { // move to component 
@@ -107,7 +109,7 @@ export default {
                 console.log('trying to clear');
                 this.puzzleInput = "";
             },
-        checkPuzzle(){            
+        checkPuzzleType(){            
             if(this.puzzleVisibility === true) {
                 
                 if(this.puzzleType === 1){
