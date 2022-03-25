@@ -121,7 +121,7 @@ export default {
       npcDialogueSprite: "sprite_dialogue_riddl.png",
       locations: [
         {
-          level: 
+          assets: 
             [
               { id: 1, img: "bg_1_a.png", ost:"lv01" },
               { id: 2, img: "bg_1_b.png", ost:"lv01" },
@@ -129,10 +129,10 @@ export default {
             ],
         },
         {
-          level:             [
-              { id: 1, img: "bg_1_b.png", ost:"lv02" },
-              { id: 2, img: "bg_1_c.png", ost:"lv02" },
-              { id: 3, img: "bg_1_a.png", ost:"lv02" },
+          assets:             [
+              { id: 1, img: "bg_2_a.png", ost:"lv02" },
+              { id: 2, img: "bg_2_b.png", ost:"lv02" },
+              { id: 3, img: "bg_2_c.png", ost:"lv02" },
             ],
         },
       ],
@@ -159,7 +159,7 @@ export default {
       console.log('done');    
     },
     getUserData() {
-      this.currentLocationImg = this.locations[this.$store.state.userData.level - 1].level[this.$store.state.userData.section - 1].img;
+      this.currentLocationImg = this.locations[this.$store.state.userData.level - 1].assets[this.$store.state.userData.section - 1].img;
       this.gameItems = this.$store.state.gameItems.gameItems[this.$store.state.userData.level - 1];
       // NEXT STEP: for each item in this.$store.userData.inventory, filter currentLevelItems for item.id, if true then pop item from gameItems
     },
@@ -214,8 +214,8 @@ export default {
       },10);
       
       setTimeout(() => {
-        this.currentLocationImg = this.locations[this.$store.state.userData.level - 1].level[this.$store.state.userData.section - 1].img;
-        this.currentOST = this.locations[this.$store.state.userData.level - 1].level[this.$store.state.userData.section - 1].ost;
+        this.currentLocationImg = this.locations[this.$store.state.userData.level - 1].assets[this.$store.state.userData.section - 1].img;
+        this.currentOST = this.locations[this.$store.state.userData.level - 1].assets[this.$store.state.userData.section - 1].ost;
         this.unhideItem();
         this.playAudio();
       }, 300);
@@ -310,11 +310,15 @@ export default {
     levelAdd() {
       this.$store.state.userData.level += 1;
       console.log(this.$store.state.userData.level);
-      this.sectionChange();      
+      this.getUserData();
+      this.sectionChange();
+      setTimeout(()=> {this.$store.state.userData.leftValue = 40;}, 250);
+          
     },
     levelMinus() {
       this.$store.state.userData.level -= 1;
       console.log(this.$store.state.userData.level);
+      this.getUserData();
       this.sectionChange();      
     },
   },
