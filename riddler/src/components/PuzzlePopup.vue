@@ -9,15 +9,22 @@ v-on:keyup.enter="checkAnswerClick"
 >
 <button v-on:click="closePuzzleClick" class="close-puzzle-button">x</button>
     <!-- <h1 class="puzzleQuestionLine">{{puzzlePrompt}}</h1> -->
-    <slot name="puzzle-text"></slot>
+    <div class="questionPrompt" v-if="promptUnanswered">
+        <slot name="puzzle-text"></slot>
     <input type="text" class="puzzle-answer"
     v-model="puzzleInput" :maxlength="puzzleInputMaxLength" :disabled="puzzleInputDisabled">
     <button v-on:click="checkAnswerClick" class="puzzle-submit-button" >enter</button>
+     <button class="puzzleClearButton" @click="clearInputClick"> clear </button>
     <div class="keypad-button-div" v-for="value in buttonValues" :key="value.id" v-show= "puzzleButtonVisibility">
+        
        <button @click="puzzle2ButtonClick(value.value)" class="puzzle-button" >{{value.value}}</button> 
        
     </div>
-    <button class="puzzleClearButton" @click="clearInputClick"> clear </button>
+
+    </div>
+    <div class="promptAnsweredText" v-else>correct!</div>
+    
+   
     
     
 </div>
@@ -35,6 +42,7 @@ export default {
     puzzlePrompt: String,
     puzzleAnswer: String,
     puzzleType: Number,
+    //promptUnanswered: Boolean,
     },
 
     data() {
@@ -44,6 +52,7 @@ export default {
     puzzleInputMaxLength: 10,
     puzzleButtonVisibility: false,
     puzzleInputDisabled: false,
+    promptUnanswered: true,  //give each puzzle a string value 
     
     buttonValues: [
         {value: "1", id: 1},
@@ -56,7 +65,7 @@ export default {
         }
         },
         updated() {
-            //this.checkPuzzle();
+            this.checkPuzzle();
         },
 
     methods:
@@ -69,11 +78,10 @@ export default {
         },
         checkAnswerClick(){
             if(this.puzzleInput === this.puzzleAnswer){
-                console.log('correct!');
-                this.$emit('turn-off'); 
-                this.puzzleInput = "";  
                 
-
+                this.puzzleInput = "";  
+                this.promptUnanswered = false;
+                //this.$refs.puzzlePopupBox.$el.focus();  //make it focus on the popup
             }
             else{
                 console.log('taking away 1 heart');
@@ -83,8 +91,9 @@ export default {
             }
         },
           loseHeart() { // move to component 
-        this.$store.commit('decrementLives');
+             this.$store.commit('decrementLives');
         },
+
         puzzle2ButtonClick(value){
             const testValue = this.puzzleInput + value ;
             this.puzzleInput = testValue;
@@ -115,6 +124,7 @@ export default {
                 }
                 else if(this.puzzleType === 3) {
                     console.log('puzzle 3');
+                    this.puzzleButtonVisibility = false;
                 }
             }
         

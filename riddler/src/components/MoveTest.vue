@@ -314,14 +314,14 @@ export default {
             setTimeout(() => {   
               this.openPuzzlePopup();  
             }, 10);
-              if (this.currentItem.puzzleType === 1){
+              if (this.$store.state.userData.currentItem.puzzleType === 1){ //technically not needed
                 console.log('this is type 1');
               }
-              else if (this.currentItem.puzzleType === 2){
+              else if (this.$store.state.userData.currentItem.puzzleType === 2){
                 console.log('this is type 2');
               }
-              else if (this.currentItem.puzzleType === 3){
-                console.log('this is type 3'); 
+              else if (this.$store.state.userData.currentItem.puzzleType === 3){
+                console.log('this is type 3');  
               }
           }
       }
