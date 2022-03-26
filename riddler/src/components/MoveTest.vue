@@ -281,6 +281,7 @@ export default {
       this.$store.state.userData.currentItem = null;
       this.gameItems.forEach((item) => {
         const offset = item.position - this.$store.state.userData.leftValue;
+        console.log(offset)
         if ((item.section === this.$store.state.userData.section) && (Math.abs(offset) <= 10 || (offset >= -10 && offset < 10))) { //checks if right section and distance from left and right of the item
             item.isInteractable = true;
             this.$store.state.userData.currentItem = item;
@@ -327,7 +328,8 @@ export default {
       }
     },
     addToInventory() {
-      this.gameItems.splice(this.$store.state.userData.currentItem.id, 1);
+      const selectedItem = this.gameItems.findIndex(item => item.id === this.$store.state.userData.currentItem.id);
+      this.gameItems.splice(selectedItem, 1);
       this.$store.state.userData.inventory.push(this.$store.state.userData.currentItem);
       this.closeItemPopup();
     },
@@ -473,7 +475,6 @@ img {
   z-index: -2;
   position: absolute;
   bottom: 10%;
-  /* left: 25%; this is represented in the item.position property*/
   width: 20%;
   border-radius: 3rem;
 }

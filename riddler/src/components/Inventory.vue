@@ -56,6 +56,8 @@ export default {
   }
   .inventory img {
     height: 7rem;
+    width: 7rem;
+    object-fit: contain;
     margin: .5rem;
     background-color: #deceff;
     padding: .5rem;
