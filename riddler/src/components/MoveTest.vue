@@ -82,7 +82,11 @@
         ref="puzzlePopupBox"
         >
         <template v-slot:puzzle-text>
-          <h1>{{$store.state.userData.currentItem.prompt}}</h1>
+          <div class="puzzle-text-div">
+            <h1 class="puzzle-name">{{$store.state.userData.currentItem.name}}</h1>
+          <h2 class="puzzle-prompt">{{$store.state.userData.currentItem.prompt}}</h2>
+          </div>
+          
           
         </template>
         </PuzzlePopup>
@@ -372,6 +376,13 @@ export default {
 <style scoped>
 h1 {
   text-align: left;
+}
+.puzzle-name {
+  text-align: center;
+  font-size: 3.5rem;
+}
+.puzzle-prompt {
+  font-size: 2rem;
 }
 .game-page {
   margin: auto;

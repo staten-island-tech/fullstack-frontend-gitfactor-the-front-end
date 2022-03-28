@@ -18,7 +18,7 @@ export default {
     },
     methods: {
         itemDetails(item) {
-            alert(`This item is a ${item.name}.`);
+            alert(`This item is a ${item.name}.`); //imma have to emit a value 
         },
         toggleInventory() {
           this.isInventoryOpen = !this.isInventoryOpen;
