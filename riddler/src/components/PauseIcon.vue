@@ -1,6 +1,6 @@
 <template>
 <div class="icon-container">
-<font-awesome-icon @click="openPause()" class="pause-icon" icon="pause" />
+<font-awesome-icon @click="$emit('openPause')" class="pause-icon" icon="pause" />
       </div>
 </template>
 
