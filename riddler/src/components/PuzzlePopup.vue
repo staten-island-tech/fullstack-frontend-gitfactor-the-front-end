@@ -81,7 +81,7 @@ export default {
                 
                 this.puzzleInput = "";  
                 //this.promptAnswered = true;
-                //cant mutate prop
+                //cant mutate prop so create a data value that changes based on the prop
              
                 
                 //this.$refs.puzzlePopupBox.$el.focus();  //make it focus on the popup
