@@ -308,7 +308,7 @@ export default {
       }
     },
     levelAdd() {
-      this.$store.state.userData.level += 1;
+      this.$store.commit('incrementLevel');
       console.log(this.$store.state.userData.level);
       this.getUserData();
       this.sectionChange();
@@ -316,7 +316,7 @@ export default {
           
     },
     levelMinus() {
-      this.$store.state.userData.level -= 1;
+      this.$store.commit('decrementLevel');
       console.log(this.$store.state.userData.level);
       this.getUserData();
       this.sectionChange();      

@@ -1,11 +1,11 @@
-export const state = {  
+export const state = {
   level: null,
   section: null,
   leftValue: null,
   lifeCount: null,
   currentItem: null,
   inventory: [],
-}
+};
 
 export const mutations = {
   incrementLives(state) {
@@ -13,6 +13,12 @@ export const mutations = {
   },
   decrementLives(state) {
     state.lifeCount--;
+  },
+  incrementLevel(state) {
+    state.level++;
+  },
+  decrementLevel(state) {
+    state.level--;
   },
   updateState(state, newState) {
     state.level = newState[0].level;
@@ -22,4 +28,4 @@ export const mutations = {
     state.currentItem = newState[0].currentItem;
     state.inventory = newState[0].inventory;
   },
-}
+};
