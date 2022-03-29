@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="home" v-if="isLoggedIn">
-      <MoveTest class="game" />
+      <MoveTest class="game"/>
       <div class="solid"></div>
     </div>
     <div class="pagebg"></div>

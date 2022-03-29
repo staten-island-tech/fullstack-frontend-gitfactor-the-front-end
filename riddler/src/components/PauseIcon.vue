@@ -1,12 +1,18 @@
 <template>
 <div class="icon-container">
-<font-awesome-icon @click="$emit('openPause')" class="pause-icon" icon="pause" />
+<font-awesome-icon @click="openPause" class="pause-icon" icon="pause" />
+<div v-if="isPauseOpen">
+    Hiiii pause is open
+</div>
       </div>
 </template>
 
 <script>
 export default {
 name: "PauseIcon",
+created(){
+    this.$emit('openPause');
+},
  data() {
      return{
          isPauseOpen: false,
