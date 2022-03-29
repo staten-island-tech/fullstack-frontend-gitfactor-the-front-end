@@ -77,7 +77,7 @@
         :puzzleAnswer="emittedPuzzleAnswer"
         :puzzleVisibility="puzzlePopupVisilibility" 
         :promptAnswered="puzzleQuestionCompleted"
-        
+        :inventoryItem="selectedInventoryItem"        
         :puzzleType ="emittedPuzzleType"
         ref="puzzlePopupBox"
         >
@@ -91,7 +91,8 @@
         </template>
         </PuzzlePopup>
 
-    <Inventory />
+    <Inventory @clickedItem="test">
+      </Inventory>
   </div>      
 
   </div>
@@ -152,6 +153,7 @@ export default {
       textCount: -1,
       mainAnt: false,
       puzzlePopupVisilibility: false,
+      selectedInventoryItem:"",
     
     };
   },
@@ -164,6 +166,10 @@ export default {
     },
   },
   methods: {  
+    test() {
+      this.selectedInventoryItem = (this.$store.state.userData.inventory.item.name);
+      console.log(this.selectedInventoryItem);
+    },
     enablePlayerMovement() {
       this.$refs.playerMove.focus();  
       console.log('done');    

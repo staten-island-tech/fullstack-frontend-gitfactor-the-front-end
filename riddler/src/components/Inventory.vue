@@ -10,6 +10,7 @@
 <script>
 export default {
     name: "Inventory",
+    emits: ["clickedItem", ],
     data() {
       return {
         isInventoryOpen: true,
@@ -18,7 +19,8 @@ export default {
     },
     methods: {
         itemDetails(item) {
-            alert(`This item is a ${item.name}.`); //imma have to emit a value 
+            alert(`This item is a ${item.name}.`); 
+            this.$emit('clickedItem');
         },
         toggleInventory() {
           this.isInventoryOpen = !this.isInventoryOpen;

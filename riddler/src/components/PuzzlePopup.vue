@@ -21,6 +21,9 @@ v-on:keyup.enter="checkAnswerClick"
        <button @click="puzzle2ButtonClick(value.value)" class="puzzle-button" >{{value.value}}</button> 
        
     </div>
+    <div class="selected-item-div">
+        <h2>selected:{{inventoryItem}}</h2>
+    </div>
 
     </div>  
     
@@ -40,6 +43,7 @@ export default {
     puzzleAnswer: String,
     puzzleType: Number,
     promptAnswered: Boolean,
+    inventoryItem: String,
     },
 
     data() {
