@@ -20,7 +20,7 @@ export default {
     methods: {
         itemDetails(item) {
             alert(`This item is a ${item.name}.`); 
-            this.$emit('clickedItem');
+            this.$emit('clickedItem', item);
         },
         toggleInventory() {
           this.isInventoryOpen = !this.isInventoryOpen;
