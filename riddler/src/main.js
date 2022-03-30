@@ -6,8 +6,8 @@ import store from "./store";
 
 // createApp(App).use(store).use(router).mount("#app");
 
-import authConfig from '../auth_config.json'
-import { setupAuth } from './auth'
+import authConfig from '../src/auth_config.json'
+import { setupAuth } from '../src/auth'
 
 let app = createApp(App).use(store).use(router)
 

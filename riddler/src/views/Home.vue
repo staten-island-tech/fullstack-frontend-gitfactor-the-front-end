@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="home" v-if="isLoggedIn">
+  <div v-if="$auth.isAuthenticated">
+    <div class="home">
       <MoveTest class="game" />
       <div class="solid"></div>
     </div>
@@ -19,11 +19,6 @@ export default {
   components: {
     MoveTest,
   },
-  data() {
-    return {
-      isLoggedIn: false,
-    }
-  },
   mounted() {
     this.getData();
   },
@@ -34,7 +29,6 @@ export default {
         const data = await response.json();
         console.log(data);
         this.$store.commit('updateState', data);
-        this.isLoggedIn = true;
       } catch (error) {
         console.log(error);
       }
