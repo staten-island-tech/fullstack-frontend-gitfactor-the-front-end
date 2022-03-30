@@ -9,7 +9,7 @@ v-on:keyup.enter="checkAnswerClick"
 >
 <button v-on:click="closePuzzleClick" class="close-puzzle-button">x</button>
     <!-- <h1 class="puzzleQuestionLine">{{puzzlePrompt}}</h1> -->
-    <div class="promptAnsweredText" v-if="promptAnswered">correct!</div>
+    <div class="promptAnsweredText" v-if="puzzlePromptAnswered">correct!</div>
     <div class="questionPrompt" v-else>
         <slot name="puzzle-text"></slot>
     <input type="text" class="puzzle-answer"
@@ -53,7 +53,8 @@ export default {
     puzzleInputMaxLength: 10,
     puzzleButtonVisibility: false,
     puzzleInputDisabled: false,
-    //promptAnswered: false,  //give each puzzle a string value 
+
+    puzzlePromptAnswered: "",  //give each puzzle a string value 
     
     buttonValues: [
         {value: "1", id: 1},
@@ -84,12 +85,10 @@ export default {
             if(puzzleAnswerInput === this.puzzleAnswer){
                 
                 this.puzzleInput = "";  
-                //this.promptAnswered = true;
-                //cant mutate prop so create a data value that changes based on the prop
-             
+                this.$store.state.userData.currentItem.puzzleAnswer = true;
+                this.puzzlePromptAnswered = true;
                 
-                //this.$refs.puzzlePopupBox.$el.focus();  //make it focus on the popup
-            }
+                }
             else{
                 console.log('taking away 1 heart');
                 this.loseHeart(); 
@@ -113,7 +112,8 @@ export default {
                 console.log('trying to clear');
                 this.puzzleInput = "";
             },
-        checkPuzzleType(){            
+        checkPuzzleType(){        
+            this.puzzlePromptAnswered = this.promptAnswered; 
             if(this.puzzleVisibility === true) {
                 
                 if(this.puzzleType === 1){

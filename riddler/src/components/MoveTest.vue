@@ -91,7 +91,7 @@
         </template>
         </PuzzlePopup>
 
-    <Inventory @clickedItem="test">
+    <Inventory @clicked-item="test">
       </Inventory>
   </div>      
 
@@ -167,8 +167,9 @@ export default {
   },
   methods: {  
     test() {
-      this.selectedInventoryItem = (this.$store.state.userData.inventory.item.name);
-      console.log(this.selectedInventoryItem);
+      //this.selectedInventoryItem = (this.$store.state.userData.inventory.item.name);
+      //console.log(this.selectedInventoryItem);
+      console.log('hi');
     },
     enablePlayerMovement() {
       this.$refs.playerMove.focus();  
