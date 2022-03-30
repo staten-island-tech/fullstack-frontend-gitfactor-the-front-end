@@ -11,7 +11,7 @@
 export default {
 name: "PauseIcon",
 created(){
-    this.$emit('openPause');
+    this.$emit('openPause', [this.isPauseOpen = true]);
 },
  data() {
      return{

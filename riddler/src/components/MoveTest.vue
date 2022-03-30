@@ -2,7 +2,7 @@
   <div class="game-page">
 
     <div class="level-and-hearts">
-                <PauseIcon  @on-pause="passPause"/>
+                <PauseIcon  @open-pause="passPause"/>
       <h1>Lvl. {{ $store.state.userData.level }}</h1>
       <HeartBar />
     </div>
@@ -294,7 +294,9 @@ export default {
         this.textCount = -1;
       }
     },
-    passPause(){}
+    passPause(isPauseOpen){
+      alert(isPauseOpen)
+    }
   },
 };
 </script>
