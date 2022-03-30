@@ -1,13 +1,11 @@
 <template>
-  <div v-if="$auth.isAuthenticated">
-    <div class="home">
-      <MoveTest class="game" />
-      <div class="solid"></div>
-    </div>
-    <div class="pagebg"></div>
-      <button @click="addNewUser()">New user</button>
-      <button @click="updateData($store.state.userData.id)">Update</button>
+  <div class="home" v-if="isLoggedIn">
+    <MoveTest class="game" />
+    <div class="solid"></div>
   </div>
+  <div class="pagebg"></div>
+    <button @click="addNewUser()">New user</button>
+    <button @click="updateData($store.state.userData.id)">Update</button>
 </template>
 
 <script>
@@ -19,6 +17,11 @@ export default {
   components: {
     MoveTest,
   },
+  data() {
+    return {
+      isLoggedIn: false,
+    }
+  },
   mounted() {
     this.getData();
   },
@@ -29,6 +32,7 @@ export default {
         const data = await response.json();
         console.log(data);
         this.$store.commit('updateState', data);
+        this.isLoggedIn = true;
       } catch (error) {
         console.log(error);
       }

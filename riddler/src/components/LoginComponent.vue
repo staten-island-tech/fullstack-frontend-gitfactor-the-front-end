@@ -15,17 +15,11 @@
       </div>
     </div>
 
-    <router-link to="/" v-if="$auth.isAuthenticated.value"></router-link>
-    <router-view v-if="$auth.isAuthenticated.value"/>
+    <div v-if="$auth.isAuthenticated.value">
+      <router-link to="/"></router-link>
+      <router-view />
+    </div>
   </div>
-  
-  
-      
-        
-        
-
-
-
 </template>
 
 <script>
