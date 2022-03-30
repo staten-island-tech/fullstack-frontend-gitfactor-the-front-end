@@ -4,7 +4,7 @@
     <div v-if="!$auth.loading.value">
       
       <div v-if="!$auth.isAuthenticated.value"  class="login-page" @click="login">
-       <h1>Welcome Into The Tower</h1>
+       <h1>Enter The Tower</h1>
        <button @click="login()" class="btn btn-primary">Login</button>
       </div>
       <div v-if="$auth.isAuthenticated.value" @click="logout">

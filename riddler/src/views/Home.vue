@@ -1,4 +1,5 @@
 <template>
+<div>
   <div class="home" v-if="isLoggedIn">
     <MoveTest class="game" />
     <div class="solid"></div>
@@ -6,6 +7,7 @@
   <div class="pagebg"></div>
     <button @click="addNewUser()">New user</button>
     <button @click="updateData($store.state.userData.id)">Update</button>
+</div>
 </template>
 
 <script>
