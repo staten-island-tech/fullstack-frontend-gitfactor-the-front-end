@@ -71,12 +71,13 @@ export const state = {
       },
     ],
     [
+      //level 2
       {
         name: "Mushroom",
         id: 0,
         section: 1,
-        position: 40,
-        margin: "40%",
+        position: 50,
+        margin: "50%",
         img: "mushroom.png",
         isInteractable: false,
         filter: null,
@@ -87,8 +88,8 @@ export const state = {
         name: "Riddler",
         id: 1,
         section: 3,
-        position: 10,
-        margin: "10%",
+        position: 50,
+        margin: "50%",
         img: "riddl.png",
         isInteractable: false,
         filter: null,
@@ -96,16 +97,20 @@ export const state = {
         dialogueSprite: "sprite_dialogue_riddl.png",
         dialogue: [
           {
-            text: "Mwahaha welcome to my tower~",
+            text: "What is this place... looks like the bottom of the ocean, but the tower was clearly above ground...",
+            name: "Me",
+          },
+          {
+            text: "this isn't the ocean, you know~",
             name: "???",
             isAntagonist: true,
           },
           {
-            text: "I didn't come here by choice...what is this?",
+            text: "Anyways, I need to find some better way to advance floors.",
             name: "Me",
           },
           {
-            text: "This...huh. I don't actually know what this is either! I just said that cause I thought it was spooky :D",
+            text: "this. isn't. the. ocean.",
             name: "???",
             isAntagonist: true,
           },
@@ -115,8 +120,8 @@ export const state = {
         name: "Protagonist",
         id: 2,
         section: 2,
-        position: 70,
-        margin: "70%",
+        position: 50,
+        margin: "50%",
         img: "prt.png",
         isInteractable: false,
         filter: null,
