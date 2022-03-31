@@ -36,6 +36,10 @@ v-on:keyup.enter="checkAnswerClick"
 export default {
     name: "PuzzlePopup",
     emits: ["turn-off", ],
+      mounted() {
+            this.checkPuzzleType();
+            console.log('this is running');
+        },
 
     props: {
     puzzleVisibility: Boolean, 
@@ -66,9 +70,7 @@ export default {
  
         }
         },
-    updated() {
-            this.checkPuzzleType();
-        },
+  
 
     methods:
     {
@@ -87,6 +89,7 @@ export default {
                 this.puzzleInput = "";  
                 this.$store.state.userData.currentItem.puzzleAnswer = true;
                 this.puzzlePromptAnswered = true;
+                console.log( "2" + this.puzzlePromptAnswered);
                 
                 }
             else{
@@ -113,9 +116,10 @@ export default {
                 this.puzzleInput = "";
             },
         checkPuzzleType(){        
-            this.puzzlePromptAnswered = this.promptAnswered; 
+            
             if(this.puzzleVisibility === true) {
-                
+                this.puzzlePromptAnswered = this.promptAnswered; 
+            console.log( "1" + this.puzzlePromptAnswered);
                 if(this.puzzleType === 1){
                     console.log('puzzle 1');
                     this.puzzleButtonVisibility = false;

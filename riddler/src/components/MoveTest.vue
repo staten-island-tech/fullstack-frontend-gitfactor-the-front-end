@@ -74,6 +74,7 @@
 
     <PuzzlePopup  
         @turn-off="closePuzzlePopup" 
+        
         :puzzleAnswer="emittedPuzzleAnswer"
         :puzzleVisibility="puzzlePopupVisilibility" 
         :promptAnswered="puzzleQuestionCompleted"
