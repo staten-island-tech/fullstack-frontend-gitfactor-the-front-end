@@ -18,6 +18,9 @@ name: "PauseMenu",
 components: {
   // Instructions
 },
+mounted(){
+  this.passPause()
+},
 data() {
     return {
       instruction(){

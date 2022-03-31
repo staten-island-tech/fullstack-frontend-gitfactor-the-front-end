@@ -17,7 +17,7 @@
         @keydown.z="onEnter()"
         
       >
-      <PauseMenu /> 
+      <PauseMenu :method="passPause"/> 
         <img
           :src="require(`@/assets/environment/lv1/${currentLocation.img}`)"
           class="bg-img"
