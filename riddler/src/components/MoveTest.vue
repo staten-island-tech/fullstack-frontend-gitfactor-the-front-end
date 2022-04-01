@@ -51,6 +51,7 @@
           <img
             :src="require(`@/assets/sprites/${player.dialogueSprite}`)"
             class="player-avatar-dialogue"
+            id="player-dialogue-sprite"
           />
           <img
             :src="require(`@/assets/sprites/${npcDialogueSprite}`)"
@@ -190,7 +191,7 @@ export default {
         if (this.$store.state.userData.leftValue < 85) {
           this.$store.state.userData.leftValue += 1.5;
         }; 
-        if (this.$store.state.userData.section < 3 && this.$store.state.userData.leftValue > 85) {
+        if (this.$store.state.userData.section < 3 && this.$store.state.userData.leftValue > 83) {
             this.sectionChangeAnim();
             this.$store.state.userData.section = this.$store.state.userData.section + 1;                   
           }
@@ -208,7 +209,7 @@ export default {
     sectionChange() {
       
       setTimeout(() => {
-        if (this.$store.state.userData.leftValue >= 85) {
+        if (this.$store.state.userData.leftValue >= 83) {
           this.$store.state.userData.leftValue = 1.5;
         } else {this.$store.state.userData.leftValue = 80;}
       },10);
@@ -292,6 +293,9 @@ export default {
       this.itemPopup = false;
     },
     txtbxShow() {
+      const playerTxtSprite = document.getElementById("player-dialogue-sprite");
+      const npcTxtSprite = document.getElementById("npc-dialogue-sprite");
+      
       this.textCount += 1;
       if (this.textCount < this.$store.state.userData.currentItem.dialogue.length) {
         this.txtbx = true;
@@ -300,12 +304,23 @@ export default {
         } else {
           this.mainAnt = false;
         }
+
         this.npcDialogueSprite = this.$store.state.userData.currentItem.dialogueSprite;
+
+      if (this.mainAnt == true) {
+        playerTxtSprite.classList.add("avatar-dialogue-unfocus");
+        npcTxtSprite.classList.remove("avatar-dialogue-unfocus");
+      } else {
+        npcTxtSprite.classList.add("avatar-dialogue-unfocus");
+        playerTxtSprite.classList.remove("avatar-dialogue-unfocus");
+      }
+
       } else {
         this.txtbx = false;
         this.enteredOnObject = false;
         this.textCount = -1;
-      }
+      };
+
     },
     levelAdd() {
       this.$store.commit('incrementLevel');
@@ -379,6 +394,11 @@ h1 {
   left: -17%;
   bottom: -40vw;
 }
+
+.avatar-dialogue-unfocus {
+  filter: brightness(50%);
+}
+
 .hide {
   display: none;
 }
