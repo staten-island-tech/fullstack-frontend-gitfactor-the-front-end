@@ -2,7 +2,9 @@
   <div class="game-page">
 
     <div class="level-and-hearts">
-                <PauseIcon  @open-pause="passPause"/>
+      <div class="pause-container">
+            <font-awesome-icon @click="openPause" class="pause-icon" icon="pause" />
+            </div>
       <h1>Lvl. {{ $store.state.userData.level }}</h1>
       <HeartBar />
     </div>
@@ -17,7 +19,7 @@
         @keydown.z="onEnter()"
         
       >
-      <PauseMenu :method="passPause"/> 
+       <PauseMenu />  
         <img
           :src="require(`@/assets/environment/lv1/${currentLocation.img}`)"
           class="bg-img"
@@ -85,12 +87,11 @@ import HeartBar from "./HeartBar.vue";
 import Inventory from "./Inventory.vue";
 import ItemPopup from "./ItemPopup.vue";
 import PauseMenu from "./PauseMenu.vue";
-import PauseIcon from "./PauseIcon.vue";
 
 export default {
   name: "MoveTest",
   components: {
-    HeartBar, Inventory, ItemPopup, PauseMenu, PauseIcon
+    HeartBar, Inventory, ItemPopup, PauseMenu
   },
   created() {
     this.getUserData();
@@ -132,6 +133,7 @@ export default {
       txtbx: false,
       textCount: -1,
       mainAnt: false,
+      isPauseOpen: false,
       enteredOnObject: false,
     };
   },
@@ -294,8 +296,8 @@ export default {
         this.textCount = -1;
       }
     },
-    passPause(isPauseOpen){
-      alert(isPauseOpen)
+    openPause(){
+      this.isPauseOpen = true;
     }
   },
 };
@@ -331,6 +333,13 @@ h1 {
 }
 .level-and-hearts h1 {
   margin-bottom: .5rem;
+}
+.pause-icon{
+    font-size: 4rem;
+        color:  #deceff;
+}
+.pause-container{
+  text-align: right;
 }
 .player {
   width: 100%;
