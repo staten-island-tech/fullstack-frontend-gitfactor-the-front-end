@@ -36,12 +36,12 @@ v-on:keyup.enter="checkAnswerClick"
 export default {
     name: "PuzzlePopup",
     emits: ["turn-off", ],
-      mounted() {
-            this.checkPuzzleType();
-            console.log('this is running');
+  
+  updated()  {
+            console.log(this.puzzleVisibility);
+            console.log("mounted!");
         },
-
-    props: {
+     props: {
     puzzleVisibility: Boolean, 
     puzzlePrompt: String,
     puzzleAnswer: String,
@@ -70,6 +70,7 @@ export default {
  
         }
         },
+      
   
 
     methods:
