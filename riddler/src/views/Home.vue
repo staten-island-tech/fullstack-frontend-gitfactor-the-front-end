@@ -5,6 +5,8 @@
       <div class="solid"></div>
     </div>
     <div class="pagebg"></div>
+      <button @click="addNewUser()">New user</button>
+      <button @click="updateData($store.state.userData.id)">Update</button>
   </div>
 </template>
 
@@ -33,6 +35,36 @@ export default {
         console.log(data);
         this.$store.commit('updateState', data);
         this.isLoggedIn = true;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async updateData(id) {
+      try {
+        const response = await fetch(`http://localhost:3000/user/${id}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(this.$store.state.userData),
+        });
+        const data = await response.json();
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async addNewUser() {
+      try {
+        const response = await fetch("http://localhost:3000/add", {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(this.$store.state.userData),
+        });
+        const data = await response.json();
+        console.log(data);
       } catch (error) {
         console.log(error);
       }
