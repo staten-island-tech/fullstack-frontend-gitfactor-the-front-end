@@ -33,6 +33,8 @@ export default {
 </script>
 
 <style scoped>
+@import "../assets/global.css";
+
   .inventory-container {
     background-color: #4c3188;
     text-align: right;
