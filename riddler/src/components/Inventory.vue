@@ -18,8 +18,7 @@ export default {
     },
     methods: {
         itemDetails(item) {
-            console.log(item);
-            alert(`This item is a ${item.name}. Check your console for more information.`);
+            alert(`This item is a ${item.name}.`);
         },
         toggleInventory() {
           this.isInventoryOpen = !this.isInventoryOpen;

@@ -165,12 +165,8 @@ export default {
     },
     getUserData() {
       this.currentLocationImg = this.playerLocation[this.$store.state.userData.level - 1].level[this.$store.state.userData.section - 1].img;
-      const levelItems = this.$store.state.gameItems.gameItems[this.$store.state.userData.level - 1];
-      this.$store.state.userData.inventory.forEach(inventoryItem => { //removes items already in inventory from game items
-        const duplicate = levelItems.find(levelItem => levelItem.id === inventoryItem.id);
-        levelItems.splice(duplicate, 1);
-      }); 
-      this.gameItems = levelItems; 
+      this.gameItems = this.$store.state.gameItems.gameItems[this.$store.state.userData.level - 1];
+      // NEXT STEP: for each item in this.$store.userData.inventory, filter currentLevelItems for item.id, if true then pop item from gameItems
     },
     leftMove(e){
       this.player.idle = "idle-left.gif";
