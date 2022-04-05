@@ -10,19 +10,19 @@
 <script>
 export default {
 name: "PauseIcon",
-created(){
-    this.$emit('openPause', [this.isPauseOpen = true]);
-},
+// created(){
+//     this.$emit('openPause', [this.isPauseOpen = true]);
+// },
  data() {
      return{
          isPauseOpen: false,
      }
  }, 
- methods: {
-     openPause(){
-this.isPauseOpen = true;
-     }
- }
+//  methods: {
+//      openPause(){
+// this.isPauseOpen = true;
+//      }
+//  }
 }
 </script>
 

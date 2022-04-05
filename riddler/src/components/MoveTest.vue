@@ -19,7 +19,7 @@
         @keydown.z="onEnter()"
         
       >
-       <PauseMenu />  
+       <PauseMenu v-if="this.isPauseOpen" />  
         <img
           :src="require(`@/assets/environment/lv1/${currentLocation.img}`)"
           class="bg-img"

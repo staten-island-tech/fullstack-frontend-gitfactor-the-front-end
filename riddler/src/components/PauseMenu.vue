@@ -1,6 +1,7 @@
 <template>
-  <div v-if="isPauseOpen" class="pause-menu">
+  <div class="pause-menu">
       <h2 class="pause-title">Pause Menu</h2>
+ <font-awesome-icon icon="fa-solid fa-xmark" class="x-icon"/>
       <div class="pause-button-box">
       <button @click="instruction">Instruction Manual</button>
        <button>Save & Resume</button>
@@ -41,6 +42,11 @@ alert("hey this does work onclick")
   margin-top: 2rem;
   color: black;
   font-size: 5rem;
+}
+.x-icon{
+  font-size: 3rem;
+  color: black;
+  text-align: right;
 }
 .pause-button-box{
 display: flex;
