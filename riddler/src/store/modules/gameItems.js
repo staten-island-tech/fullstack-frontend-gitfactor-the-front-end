@@ -2,149 +2,141 @@ export const state = {
   gameItems: [
     [
       {
-        name: "Mushroom",
+        name: "Door of Truth",
         id: 0,
         section: 2,
-        position: 40,
-        margin: "40%",
-        img: "mushroom.png",
+        position: 10,
+        margin: "10%",
+        img: "door.png",
+        isInteractable: false,
+        filter: null,
+        itemType: "puzzle",
+        puzzleType: 1,
+        prompt:
+          "I live in the ocean, I live in your ear. You cannot hear me, but you see when I'm near.",
+        puzzleAnswer: "light",
+      },
+      {
+        name: "Sheet of Paper",
+        id: 1,
+        section: 2,
+        position: 60,
+        margin: "60%",
+        img: "paper.png",
         isInteractable: false,
         filter: null,
         itemType: "object",
-        prompt: "Do you want to pick up this amazing mushroom house?",
+        prompt:
+          "Hmm. It's just a blank sheet of paper with a faint scent of lemon.",
       },
       {
-        name: "Riddler",
-        id: 1,
-        section: 1,
-        position: 10,
-        margin: "10%",
-        img: "riddl.png",
+        name: "Prism",
+        id: 2,
+        section: 3,
+        position: 20,
+        margin: "20%",
+        img: "prism.png",
         isInteractable: false,
         filter: null,
-        itemType: "character", //could also be puzzle, object, etc.
-        dialogueSprite: "sprite_dialogue_riddl.png",
-        dialogue: [
-          {
-            text: "Mwahaha welcome to my tower~",
-            name: "???",
-            isAntagonist: true,
-          },
-          {
-            text: "I didn't come here by choice...what is this?",
-            name: "Me",
-          },
-          {
-            text: "This...huh. I don't actually know what this is either! I just said that cause I thought it was spooky :D",
-            name: "???",
-            isAntagonist: true,
-          },
-        ],
+        itemType: "object",
+        prompt: "A triangular glass prism. So pretty and shiny!",
       },
       {
-        name: "Protagonist",
-        id: 2,
+        name: "Feather",
+        id: 3,
         section: 3,
         position: 70,
         margin: "70%",
-        img: "prt.png",
-        isInteractable: false,
-        filter: null,
-        itemType: "character",
-        dialogueSprite: "sprite_dialogue_player.png",
-        dialogue: [
-          {
-            text: "What? Am I talking to myself",
-            name: "Me?",
-            isAntagonist: true,
-          },
-          {
-            text: "Wat",
-            name: "Me",
-          },
-          {
-            text: "This...huh. I don't actually know what this is either! I just said that cause I thought it was spooky :D",
-            name: "Me?",
-            isAntagonist: true,
-          },
-        ],
-      },
-    ],
-    [
-      //level 2
-      {
-        name: "Mushroom",
-        id: 0,
-        section: 1,
-        position: 50,
-        margin: "50%",
-        img: "mushroom.png",
+        img: "feather.png",
         isInteractable: false,
         filter: null,
         itemType: "object",
-        prompt: "Do you want to pick up this amazing mushroom house?",
+        prompt: "A feather with beautiful blue hues.",
       },
       {
-        name: "Riddler",
-        id: 1,
-        section: 3,
-        position: 50,
-        margin: "50%",
-        img: "riddl.png",
+        name: "Lantern",
+        id: 4,
+        section: 1,
+        position: 35,
+        margin: "35%",
+        img: "lantern.png",
         isInteractable: false,
         filter: null,
-        itemType: "character", //could also be puzzle, object, etc.
-        dialogueSprite: "sprite_dialogue_riddl.png",
-        dialogue: [
-          {
-            text: "What is this place... looks like the bottom of the ocean, but the tower was clearly above ground...",
-            name: "Me",
-          },
-          {
-            text: "this isn't the ocean, you know~",
-            name: "???",
-            isAntagonist: true,
-          },
-          {
-            text: "Anyways, I need to find some better way to advance floors.",
-            name: "Me",
-          },
-          {
-            text: "this. isn't. the. ocean.",
-            name: "???",
-            isAntagonist: true,
-          },
-        ],
+        itemType: "puzzle",
+        puzzleType: 3,
+        prompt: "It's a bright lantern. What could it be used for, though?",
+        puzzleAnswer: "Sheet of Paper",
       },
-      {
-        name: "Protagonist",
-        id: 2,
-        section: 2,
-        position: 50,
-        margin: "50%",
-        img: "prt.png",
-        isInteractable: false,
-        filter: null,
-        itemType: "character",
-        dialogueSprite: "sprite_dialogue_player.png",
-        dialogue: [
-          {
-            text: "What? Am I talking to myself",
-            name: "Me?",
-            isAntagonist: true,
-          },
-          {
-            text: "Wat",
-            name: "Me",
-          },
-          {
-            text: "This...huh. I don't actually know what this is either! I just said that cause I thought it was spooky :D",
-            name: "Me?",
-            isAntagonist: true,
-          },
-        ],
-      },
+      // {
+      //   name: "",
+      //   id: 5,
+      //   section: 1/2/3,
+      //   position: (0, 100),
+      //   margin: "(position)%",
+      //   img: ".png",
+      //   isInteractable: false,
+      //   filter: null,
+      //   itemType: "object",
+      //   prompt: "",
+      // },
     ],
+    // [], level 2
     // []  level 3
   ],
 };
+
+/*
+Templates for Items
+-------------------
+Object:
+{
+  name: "",
+  id: Number,
+  section: 1/2/3,
+  position: (0, 100),
+  margin: "(position)%",
+  img: ".png",
+  isInteractable: false,
+  filter: null,
+  itemType: "object",
+  prompt: "",
+},
+
+Character: 
+{
+  name: "",
+  id: 1,
+  section: 1/2/3,
+  position: 0,
+  margin: "(position)%",
+  img: ".png",
+  isInteractable: false,
+  filter: null,
+  itemType: "character",
+  dialogueSprite: ".png",
+  dialogue: [
+    {
+      text: "",
+      name: "",
+      isAntagonist: Boolean,
+    },
+    {},
+  ],
+},
+
+Puzzle:
+{
+  name: "",
+  id: 2,
+  section: 1/2/3,
+  position: Number,
+  margin: "(position)%",
+  img: ".png",
+  isInteractable: false,
+  filter: null,
+  itemType: "puzzle",
+  puzzleType: 1/2/3,
+  prompt: "",
+  puzzleAnswer: "",
+},
+*/

@@ -62,7 +62,8 @@
           <p class="textbox-test typing-class">{{ this.$store.state.userData.currentItem.dialogue[this.textCount].text }}</p>
         </div>
         
-        <item-popup @itemAdded="addToInventory()" v-if="itemPopup" @closePopup="closeItemPopup()" :item="currentItem" v-on:turnoff="turnOff">
+        <item-popup @itemAdded="addToInventory()" v-if="itemPopup" @closePopup="closeItemPopup()" :item="currentItem" 
+        ref="itemPopupBox">
           <template v-slot:item-img>
             <img class="itempopup-img" :src="require(`@/assets/${$store.state.userData.currentItem.img}`)" :alt="$store.state.userData.currentItem.name"/>
           </template>
@@ -80,8 +81,21 @@
       </div>
     </main>
 
-    <Inventory />
+    <PuzzlePopup  
+        @turn-off="closePuzzlePopup" 
+        :puzzleAnswer="emittedPuzzleAnswer"
+        :puzzleVisibility="puzzlePopupVisilibility" 
+        
+        :puzzleType ="emittedPuzzleType"
+        ref="puzzlePopupBox"
+        >
+        <template v-slot:puzzle-text>
+          <h1>{{$store.state.userData.currentItem.prompt}}</h1>
+          
+        </template>
+        </PuzzlePopup>
 
+    <Inventory />
   </div>      
 
   </div>
@@ -94,21 +108,22 @@ gsap.config;
 import HeartBar from "./HeartBar.vue";
 import Inventory from "./Inventory.vue";
 import ItemPopup from "./ItemPopup.vue";
+import PuzzlePopup from "./PuzzlePopup.vue"; 
 
 
 export default {
   name: "MoveTest",
   components: {
-    HeartBar, Inventory, ItemPopup
+    HeartBar, Inventory, ItemPopup, PuzzlePopup
   },
   created() {
     this.getUserData();
     this.sectionChange();
+    
   },
   mounted() {
     this.unhideItem();
     this.enablePlayerMovement();
-    
   },
   data() {
     return {
@@ -137,6 +152,10 @@ export default {
             ],
         },
       ],
+      enteredOnObject: false,
+      emittedPuzzleAnswer: "", 
+      
+      emittedPuzzleType: null,
       currentLocationImg: "",
       gameItems: null,
       currentOST: "lv01",
@@ -144,9 +163,11 @@ export default {
       txtbx: false,
       textCount: -1,
       mainAnt: false,
-      enteredOnObject: false,
+      puzzlePopupVisilibility: false,
+    
     };
   },
+
   computed: {
     cssProps() {
       return {
@@ -164,9 +185,13 @@ export default {
       this.gameItems = this.$store.state.gameItems.gameItems[this.$store.state.userData.level - 1];
       // NEXT STEP: for each item in this.$store.userData.inventory, filter currentLevelItems for item.id, if true then pop item from gameItems
     },
-    leftMove: function () {
+    leftMove(e){
       this.playWalkSfx();
       this.player.idle = "idle-left.gif";
+      if(this.enteredOnObject && e.key === "ArrowLeft"){
+        e.preventDefault();
+      }
+      else{
       setTimeout(() => {
         
         if (this.$store.state.userData.leftValue > 0) {
@@ -179,13 +204,16 @@ export default {
         }
         this.playerAvatar = this.player.left;
         this.itemInteract();
-        
       }, 150);
+      }
      
     },
-    rightMove: function () {
-      this.playWalkSfx();
+    rightMove(e) {
       this.player.idle = "idle-right.gif";
+      if(this.enteredOnObject && e.key === "ArrowRight") {
+        e.preventDefault();
+      }
+      else{
       setTimeout(() => {
         
         if (this.$store.state.userData.leftValue < 85) {
@@ -198,14 +226,17 @@ export default {
         this.playerAvatar = this.player.right;
         this.itemInteract();
       }, 150);
+      }
     },
-    reset: function () {
+   
+    reset() {
       this.stopWalkSfx();
       setTimeout(() => {
-        this.playerAvatar = this.player.idle;
+      this.playerAvatar = this.player.idleRight;
+      this.playerAvatar = this.player.idle;
       }, 250);
-      this.itemInteract();
-    },
+       this.itemInteract();
+      },
     sectionChange() {
       
       setTimeout(() => {
@@ -220,7 +251,6 @@ export default {
         this.unhideItem();
         this.playAudio();
       }, 300);
-
     },
     sectionChangeAnim() {
       var transition = gsap.fromTo(".game-container", {
@@ -264,6 +294,7 @@ export default {
       this.$store.state.userData.currentItem = null;
       this.gameItems.forEach((item) => {
         const offset = item.position - this.$store.state.userData.leftValue;
+        console.log(offset)
         if ((item.section === this.$store.state.userData.section) && (Math.abs(offset) <= 10 || (offset >= -10 && offset < 10))) { //checks if right section and distance from left and right of the item
             item.isInteractable = true;
             this.$store.state.userData.currentItem = item;
@@ -274,24 +305,64 @@ export default {
         }
       });
     },
+  
     onEnter() {
       if (this.$store.state.userData.currentItem) {
         this.enteredOnObject = true;
         if (this.$store.state.userData.currentItem.itemType === "object") {              
         this.itemPopup = true;
+          setTimeout(() => {   
+            this.openItemPopup();  
+          }, 10);
+
         } else if (this.$store.state.userData.currentItem.itemType === "character") {              
           this.txtbxShow();
-        }
+
+        } else if (this.$store.state.userData.currentItem.itemType === "puzzle") {        
+      
+            this.puzzlePopupVisilibility = true;
+            console.log(this.puzzlePopupVisilibility);
+            this.emittedPuzzleAnswer = this.$store.state.userData.currentItem.puzzleAnswer;
+           
+            this.emittedPuzzleType = this.$store.state.userData.currentItem.puzzleType;
+            setTimeout(() => {   
+              this.openPuzzlePopup();  
+            }, 10);
+              if (this.currentItem.puzzleType === 1){
+                console.log('this is type 1');
+              }
+              else if (this.currentItem.puzzleType === 2){
+                console.log('this is type 2');
+              }
+              else if (this.currentItem.puzzleType === 3){
+                console.log('this is type 3'); 
+              }
+          }
       }
     },
     addToInventory() {
-      this.gameItems.splice(this.$store.state.userData.currentItem.id, 1);
+      const selectedItem = this.gameItems.findIndex(item => item.id === this.$store.state.userData.currentItem.id);
+      this.gameItems.splice(selectedItem, 1);
       this.$store.state.userData.inventory.push(this.$store.state.userData.currentItem);
       this.closeItemPopup();
     },
+    openPuzzlePopup() {
+      this.$refs.puzzlePopupBox.$el.focus();// this not working
+    },
+    openItemPopup() {
+      this.$refs.itemPopupBox.$el.focus();
+    },
     closeItemPopup() {
       this.itemPopup = false;
+        this.enteredOnObject = false;
+      this.enablePlayerMovement();
     },
+    closePuzzlePopup() { 
+      this.enteredOnObject = false;
+      this.puzzlePopupVisilibility = false;
+      this.enablePlayerMovement();
+    },
+  
     txtbxShow() {
       const playerTxtSprite = document.getElementById("player-dialogue-sprite");
       const npcTxtSprite = document.getElementById("npc-dialogue-sprite");
@@ -372,9 +443,8 @@ h1 {
   margin-bottom: .5rem;
 }
 .player {
-  width: 100%;
-  height: 100%;
-  
+  width: inherit;
+  height: inherit;
 }
 .player-avatar {
   width: 17.5%;
@@ -452,7 +522,6 @@ img {
   z-index: -2;
   position: absolute;
   bottom: 10%;
-  /* left: 25%; this is represented in the item.position property*/
   width: 20%;
   border-radius: 3rem;
 }
