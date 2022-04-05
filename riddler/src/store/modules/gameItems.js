@@ -80,7 +80,23 @@ export const state = {
       //   prompt: "",
       // },
     ],
-    // [], level 2
+    [
+      {
+        name: "Door of Truth",
+        id: 0,
+        section: 1,
+        position: 50,
+        margin: "50%",
+        img: "door.png",
+        isInteractable: false,
+        filter: null,
+        itemType: "puzzle",
+        puzzleType: 1,
+        prompt:
+          "I live in the ocean, I live in your ear. You cannot hear me, but you see when I'm near.",
+        puzzleAnswer: "light",
+      },
+    ],
     // []  level 3
   ],
 };
