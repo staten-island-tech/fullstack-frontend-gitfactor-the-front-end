@@ -1,7 +1,9 @@
 <template>
   <div class="pause-menu">
+          <div class="icon-div">
+<font-awesome-icon @click="closePause" icon="x" class="x-icon"/>
+</div>
       <h2 class="pause-title">Pause Menu</h2>
- <font-awesome-icon icon="fa-solid fa-xmark" class="x-icon"/>
       <div class="pause-button-box">
       <button @click="instruction">Instruction Manual</button>
        <button>Save & Resume</button>
@@ -25,7 +27,12 @@ data() {
 alert("hey this does work onclick")
       }
     }
-} 
+}, 
+methods: {
+  closePause(){
+    this.isPauseOpen = false;
+  }
+}
 }
 </script>
 
@@ -39,14 +46,18 @@ alert("hey this does work onclick")
     background-color: #deceff;
 }
 .pause-title{
-  margin-top: 2rem;
   color: black;
   font-size: 5rem;
+}
+.icon-div{
+display: flex;
+justify-content: right;
+padding-right: 6rem;
+padding-top: 3rem;
 }
 .x-icon{
   font-size: 3rem;
   color: black;
-  text-align: right;
 }
 .pause-button-box{
 display: flex;
