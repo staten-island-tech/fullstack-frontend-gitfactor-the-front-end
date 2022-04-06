@@ -20,6 +20,7 @@
         <audio id="walk-sfx" :src="require(`@/assets/audio/sfx/walkstep.mp3`)"></audio>
       </div>
 
+    <div class="game-overlay">
       <div
         class="game-container"
         id="game-viewport"
@@ -76,6 +77,7 @@
         </item-popup>
       
       </div>
+    </div>
 
       <div class="mobile-button-container">
         <button @mousedown="leftMove()" @mouseup="reset()" class="mobile-button">&lt;</button>
@@ -100,8 +102,7 @@
 
     <Inventory />
     <button @click="flashlight()" class="flashlight"></button>
-
-  </div>      
+  </div>   
 
   </div>
 </template>
@@ -418,19 +419,19 @@ export default {
       if (!this.isFlashlightOn) {
         alert("Use this flashlight at your own risk. If the battery runs out, you will be lost in the dark forever! Muahahahaha!!")
         this.isFlashlightOn = true;
-        document.querySelector(".game-container").style.filter = "brightness(1)";
+        document.querySelector(".game-overlay").style.filter = "brightness(1)";
         setInterval(() => { 
           if (this.isFlashlightOn) {
             this.battery--;
             if (this.battery === 0) {
               this.isFlashlightOn = false;
-              document.querySelector(".game-container").style.filter = "brightness(.1)";
+              document.querySelector(".game-overlay").style.filter = "brightness(.1)";
             }
           }
         }, 1000);
       } else {
         this.isFlashlightOn = false;
-        document.querySelector(".game-container").style.filter = "brightness(.1)";
+        document.querySelector(".game-overlay").style.filter = "brightness(.1)";
       }
     }
   },
@@ -464,7 +465,9 @@ h1 {
   border: .3rem solid;
   border-radius: 1.5rem;
   transition: all .2s;
-  filter: brightness(.1);
+}
+.game-overlay {
+  filter: brightness(.2);
 }
 .level-and-hearts h1 {
   margin-bottom: .5rem;
