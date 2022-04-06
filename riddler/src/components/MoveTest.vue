@@ -167,10 +167,11 @@ export default {
     },
   },
   methods: {  
-    test() {
+    test(e) {
       //this.selectedInventoryItem = (this.$store.state.userData.inventory.item.name);
       //console.log(this.selectedInventoryItem);
-      console.log('hi');
+      console.log(e);
+      this.selectedInventoryItem = e;
     },
     enablePlayerMovement() {
       this.$refs.playerMove.focus();  

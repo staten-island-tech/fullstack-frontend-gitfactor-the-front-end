@@ -22,7 +22,7 @@ v-on:keyup.enter="checkAnswerClick"
        
     </div>
     <div class="selected-item-div">
-        <h2>selected:{{inventoryItem}}</h2>
+        <h2 >selected:{{inventoryItem}}</h2>  <!-- v-show="selectedInventoryItemVisilibty" -->
     </div>
 
     </div>  
@@ -51,12 +51,13 @@ export default {
     },
 
     data() {
-        return{
+        return{  //to do: section change string, answered value "working", and puzzle 3 (halfway there)
     puzzleInput: "" , 
     isDisabled: false,
     puzzleInputMaxLength: 10,
     puzzleButtonVisibility: false,
     puzzleInputDisabled: false,
+    //selectedInventoryItemVisilibty = false,
 
     puzzlePromptAnswered: "",  //give each puzzle a string value 
     
@@ -125,17 +126,20 @@ export default {
                     console.log('puzzle 1');
                     this.puzzleButtonVisibility = false;
                     this.puzzleInputDisabled = false;
+                    //this.selectedInventoryItemVisilibty = false;
                 }
                 else if(this.puzzleType === 2) {
                     console.log('puzzle 2');
                     this.puzzleButtonVisibility = true;
                     this.puzzleInputDisabled = true;
+                    //this.selectedInventoryItemVisilibty = false;
                     this.puzzleInputMaxLength = 4;
                     console.log(this.puzzleInputMaxLength);
                 }
                 else if(this.puzzleType === 3) {
                     console.log('puzzle 3');
                     this.puzzleButtonVisibility = false;
+                    //this.selectedInventoryItemVisilibty = true;
                 }
             }
         
