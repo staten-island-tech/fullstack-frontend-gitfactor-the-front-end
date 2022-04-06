@@ -9,6 +9,10 @@
       <HeartBar />
     </div>
 
+    <div class="battery-meter">
+      <div class="battery" :style="{ width: batteryPercentage }"></div>
+    </div>
+    
     <div class="game-and-inventory">
     <main class="game-contents" >
       <div class="audio-container">
@@ -25,7 +29,6 @@
         @keydown.z="onEnter()"
         
       >
-
         <img
           :src="require(`@/assets/environment/lv1/${currentLocationImg}`)"
           class="bg-img"
@@ -96,6 +99,8 @@
         </PuzzlePopup>
 
     <Inventory />
+    <button @click="flashlight()" class="flashlight"></button>
+
   </div>      
 
   </div>
@@ -164,7 +169,8 @@ export default {
       textCount: -1,
       mainAnt: false,
       puzzlePopupVisilibility: false,
-    
+      isFlashlightOn: false,
+      battery: 100,
     };
   },
 
@@ -174,8 +180,11 @@ export default {
         '--leftVar': (this.$store.state.userData.leftValue) + "%",
       }
     },
+    batteryPercentage() {
+      return this.battery + "%";
+    }
   },
-  methods: {  
+  methods: {
     enablePlayerMovement() {
       this.$refs.playerMove.focus();  
       console.log('done');    
@@ -183,7 +192,6 @@ export default {
     getUserData() {
       this.currentLocationImg = this.locations[this.$store.state.userData.level - 1].assets[this.$store.state.userData.section - 1].img;
       this.gameItems = this.$store.state.gameItems.gameItems[this.$store.state.userData.level - 1];
-      // NEXT STEP: for each item in this.$store.userData.inventory, filter currentLevelItems for item.id, if true then pop item from gameItems
     },
     leftMove(e){
       this.playWalkSfx();
@@ -398,15 +406,33 @@ export default {
       console.log(this.$store.state.userData.level);
       this.getUserData();
       this.sectionChange();
-      setTimeout(()=> {this.$store.state.userData.leftValue = 40;}, 250);
-          
+      setTimeout(()=> {this.$store.state.userData.leftValue = 40;}, 250);          
     },
     levelMinus() {
       this.$store.commit('decrementLevel');
       console.log(this.$store.state.userData.level);
       this.getUserData();
-      this.sectionChange();      
+      this.sectionChange();    
     },
+    flashlight() {
+      if (!this.isFlashlightOn) {
+        alert("Use this flashlight at your own risk. If the battery runs out, you will be lost in the dark forever! Muahahahaha!!")
+        this.isFlashlightOn = true;
+        document.querySelector(".game-container").style.filter = "brightness(1)";
+        setInterval(() => { 
+          if (this.isFlashlightOn) {
+            this.battery--;
+            if (this.battery === 0) {
+              this.isFlashlightOn = false;
+              document.querySelector(".game-container").style.filter = "brightness(.1)";
+            }
+          }
+        }, 1000);
+      } else {
+        this.isFlashlightOn = false;
+        document.querySelector(".game-container").style.filter = "brightness(.1)";
+      }
+    }
   },
 };
 </script>
@@ -438,6 +464,7 @@ h1 {
   border: .3rem solid;
   border-radius: 1.5rem;
   transition: all .2s;
+  filter: brightness(.1);
 }
 .level-and-hearts h1 {
   margin-bottom: .5rem;
@@ -528,6 +555,18 @@ img {
 .item-popup img {
   position: unset;
   margin-bottom: 5rem;
+}
+
+.flashlight {
+  height: 5rem;
+  width: 5rem;
+}
+.battery-meter {
+  width: 20rem;
+}
+.battery {
+  background-color: #fff200;
+  height: 2rem;
 }
 
 @media only screen and (max-width: 768px) {
