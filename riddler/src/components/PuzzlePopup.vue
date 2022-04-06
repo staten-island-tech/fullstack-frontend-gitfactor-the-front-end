@@ -126,6 +126,8 @@ export default {
 </script>
 
 <style scoped>
+@import "../assets/global.css";
+
 .popup-container {
     position: absolute;
     top: 0;
@@ -135,10 +137,9 @@ export default {
     padding: 5rem;
     margin: 2rem;
     border-radius: 1.5rem;
-    /* background-color: #deceff; */
-    border-color: #deceff;
+    border-color: var(--highlight-color);
     border: solid .3rem;
-    background-color: #2b0d47;
+    background-color: var(--popup-color);
     z-index: 1;
     overflow: scroll;
   }

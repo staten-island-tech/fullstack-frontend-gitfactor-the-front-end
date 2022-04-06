@@ -40,7 +40,8 @@ initAuth();
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #deceff;
+  background-color: var(--background-color);
+  color: var(--highlight-color);
 }
 h1 {
   font-size: 5rem;
