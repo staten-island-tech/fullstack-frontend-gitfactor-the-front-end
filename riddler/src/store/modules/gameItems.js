@@ -83,6 +83,8 @@ export const state = {
         prompt: "the answer is one",
         puzzleAnswer: "one",
         puzzleCompleted: false,
+        puzzleAnsweredText:
+          "some random text or info that needs to be inserted 1",
       },
       {
         name: "Puzzle 2",
@@ -98,6 +100,8 @@ export const state = {
         prompt: "the answer is 1234",
         puzzleAnswer: "1234",
         puzzleCompleted: false,
+        puzzleAnsweredText:
+          "some random text or info that needs to be inserted 2",
       },
       // {
       //   name: "Puzzle 3",

@@ -90,6 +90,9 @@
           
           
         </template>
+        <template v-slot:puzzle-correct-text>
+          <p class="puzzle-correct-info">{{$store.state.userData.currentItem.puzzleAnsweredText}}</p>
+        </template>
         </PuzzlePopup>
 
     <Inventory @clicked-item="test">
@@ -167,11 +170,11 @@ export default {
     },
   },
   methods: {  
-    test(e) {
+    test(name) {
       //this.selectedInventoryItem = (this.$store.state.userData.inventory.item.name);
       //console.log(this.selectedInventoryItem);
-      console.log(e);
-      this.selectedInventoryItem = e;
+      console.log(name);
+      this.selectedInventoryItem = name;
     },
     enablePlayerMovement() {
       this.$refs.playerMove.focus();  

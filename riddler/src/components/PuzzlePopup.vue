@@ -9,7 +9,10 @@ v-on:keyup.enter="checkAnswerClick"
 >
 <button v-on:click="closePuzzleClick" class="close-puzzle-button">x</button>
     <!-- <h1 class="puzzleQuestionLine">{{puzzlePrompt}}</h1> -->
-    <div class="promptAnsweredText" v-if="puzzlePromptAnswered">correct!</div>
+    <div class="promptAnsweredText" v-if="puzzlePromptAnswered">
+        <h2>correct!</h2>
+         <slot name="puzzle-correct-text"></slot>
+    </div>
     <div class="questionPrompt" v-else>
         <slot name="puzzle-text"></slot>
     <input type="text" class="puzzle-answer"
@@ -38,8 +41,8 @@ export default {
     emits: ["turn-off", ],
   
   updated()  {
-            console.log(this.puzzleVisibility);
-            console.log("mounted!");
+            
+            console.log("updated!");
         },
      props: {
     puzzleVisibility: Boolean, 
@@ -89,9 +92,14 @@ export default {
             if(puzzleAnswerInput === this.puzzleAnswer){
                 
                 this.puzzleInput = "";  
-                this.$store.state.userData.currentItem.puzzleAnswer = true;
-                this.puzzlePromptAnswered = true;
-                console.log( "2" + this.puzzlePromptAnswered);
+                //this.$store.state.userData.currentItem.puzzleAnswer = true;
+                // this.puzzlePromptAnswered = true;
+                // console.log( "2" + this.puzzlePromptAnswered);
+
+                //check if puzzle 3, then make the selected item gone
+                    // in order to do so find teh id of the thing and then use splice to delete from gameItems
+                //change the puzzle visibility thing for correct to true
+                // go and change the value in gameItems
                 
                 }
             else{
@@ -120,8 +128,8 @@ export default {
         checkPuzzleType(){        
             
             if(this.puzzleVisibility === true) {
-                this.puzzlePromptAnswered = this.promptAnswered; 
-            console.log( "1" + this.puzzlePromptAnswered);
+                //this.puzzlePromptAnswered = this.promptAnswered; 
+            //console.log( "1" + this.puzzlePromptAnswered);
                 if(this.puzzleType === 1){
                     console.log('puzzle 1');
                     this.puzzleButtonVisibility = false;
@@ -133,12 +141,13 @@ export default {
                     this.puzzleButtonVisibility = true;
                     this.puzzleInputDisabled = true;
                     //this.selectedInventoryItemVisilibty = false;
-                    this.puzzleInputMaxLength = 4;
+                    this.puzzleInputMaxLength = 4;  //gotta add reusability 
                     console.log(this.puzzleInputMaxLength);
                 }
                 else if(this.puzzleType === 3) {
                     console.log('puzzle 3');
                     this.puzzleButtonVisibility = false;
+                    this.puzzleInput = this.inventoryItem;
                     //this.selectedInventoryItemVisilibty = true;
                 }
             }
