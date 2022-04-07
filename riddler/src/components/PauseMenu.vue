@@ -5,7 +5,7 @@
 </div>
       <h2 class="pause-title">Pause Menu</h2>
       <div class="pause-button-box">
-      <button @click="instruction">Instruction Manual</button>
+      <button>Instruction Manual</button>
        <button>Save & Resume</button>
         <button>Save & Exit</button>
           <button>Settings</button>
@@ -18,20 +18,21 @@
 // import Instructions from "Instructions.vue"
 export default {
 name: "PauseMenu", 
+props: ["isPauseOpen"],
 components: {
   // Instructions
 },
 data() {
     return {
-      instruction(){
-alert("hey this does work onclick")
-      }
+      newIsPause: ""
     }
 }, 
 methods: {
   closePause(){
-    this.isPauseOpen = false;
-  }
+    this.newIsPause = this.isPauseOpen
+    this.newIsPause = false;
+    alert(this.newIsPause)
+  },
 }
 }
 </script>

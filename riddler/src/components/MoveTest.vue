@@ -19,7 +19,7 @@
         @keydown.z="onEnter()"
         
       >
-       <PauseMenu v-if="this.isPauseOpen" />  
+       <PauseMenu v-if="isPauseOpen" />  
         <img
           :src="require(`@/assets/environment/lv1/${currentLocation.img}`)"
           class="bg-img"
@@ -298,6 +298,10 @@ export default {
     },
     openPause(){
       this.isPauseOpen = true;
+      alert(this.isPauseOpen)
+      if(this.newIsPause === false){
+        this.isPauseOpen = false;
+      }
     }
   },
 };
