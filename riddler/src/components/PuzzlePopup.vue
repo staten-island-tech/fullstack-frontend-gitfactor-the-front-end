@@ -92,6 +92,7 @@ export default {
             if(puzzleAnswerInput === this.puzzleAnswer){
                 
                 this.puzzleInput = "";  
+                console.log("puzzle answered correctly")
                 //this.$store.state.userData.currentItem.puzzleAnswer = true;
                 // this.puzzlePromptAnswered = true;
                 // console.log( "2" + this.puzzlePromptAnswered);
