@@ -448,6 +448,7 @@ h1 {
 }
 .player-avatar {
   width: 17.5%;
+  z-index: -1;
   display: flex;
   position: absolute;
   bottom: 10%;
