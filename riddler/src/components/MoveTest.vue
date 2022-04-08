@@ -9,7 +9,8 @@
       <HeartBar />
     </div>
 
-    <div class="battery-meter">
+    <div v-if="$store.state.userData.level === 2" class="battery-meter">
+      <h1>Battery: {{ $store.state.userData.battery }}</h1>
       <div class="battery" :style="{ width: batteryPercentage }"></div>
     </div>
     
@@ -28,7 +29,6 @@
         @keydown.left="leftMove()"
         @keyup="reset()"
         @keydown.z="onEnter()"
-        
       >
         <img
           :src="require(`@/assets/environment/lv1/${currentLocationImg}`)"
@@ -101,7 +101,7 @@
         </PuzzlePopup>
 
     <Inventory />
-    <button @click="flashlight()" class="flashlight"></button>
+    <button v-if="$store.state.userData.level === 2" @click="flashlight()" class="flashlight"></button>
   </div>   
 
   </div>
@@ -125,11 +125,11 @@ export default {
   created() {
     this.getUserData();
     this.sectionChange();
-    
   },
   mounted() {
     this.unhideItem();
     this.enablePlayerMovement();
+    this.checkLevel();
   },
   data() {
     return {
@@ -171,7 +171,6 @@ export default {
       mainAnt: false,
       puzzlePopupVisilibility: false,
       isFlashlightOn: false,
-      battery: 100,
     };
   },
 
@@ -182,7 +181,7 @@ export default {
       }
     },
     batteryPercentage() {
-      return this.battery + "%";
+      return this.$store.state.userData.battery + "%";
     }
   },
   methods: {
@@ -193,6 +192,13 @@ export default {
     getUserData() {
       this.currentLocationImg = this.locations[this.$store.state.userData.level - 1].assets[this.$store.state.userData.section - 1].img;
       this.gameItems = this.$store.state.gameItems.gameItems[this.$store.state.userData.level - 1];
+    },
+    checkLevel() {
+      if (this.$store.state.userData.level === 2) {
+        setTimeout(() => {
+          document.querySelector(".game-overlay").style.filter = "brightness(.1)";
+        }, 0)      
+      }
     },
     leftMove(e){
       this.playWalkSfx();
@@ -247,14 +253,22 @@ export default {
        this.itemInteract();
       },
     sectionChange() {
-      
       setTimeout(() => {
         if (this.$store.state.userData.leftValue >= 83) {
           this.$store.state.userData.leftValue = 1.5;
         } else {this.$store.state.userData.leftValue = 80;}
-      },10);
+      }, 10);
       
       setTimeout(() => {
+        this.currentLocationImg = this.locations[this.$store.state.userData.level - 1].assets[this.$store.state.userData.section - 1].img;
+        this.currentOST = this.locations[this.$store.state.userData.level - 1].assets[this.$store.state.userData.section - 1].ost;
+        this.unhideItem();
+        this.playAudio();
+      }, 300);
+    },
+    levelChange() {
+      setTimeout(() => {
+        this.$store.state.userData.leftValue = 40;
         this.currentLocationImg = this.locations[this.$store.state.userData.level - 1].assets[this.$store.state.userData.section - 1].img;
         this.currentOST = this.locations[this.$store.state.userData.level - 1].assets[this.$store.state.userData.section - 1].ost;
         this.unhideItem();
@@ -271,7 +285,6 @@ export default {
        ease: "power2.inOut"});
        transition.play;
        this.sectionChange();
-
     },
     unhideItem() {
       document.querySelectorAll('.item').forEach(el => el.classList.add("hide"));
@@ -406,34 +419,38 @@ export default {
       this.$store.commit('incrementLevel');
       console.log(this.$store.state.userData.level);
       this.getUserData();
-      this.sectionChange();
-      setTimeout(()=> {this.$store.state.userData.leftValue = 40;}, 250);          
+      this.levelChange();
+      setTimeout(()=> {this.$store.state.userData.leftValue = 40;}, 250);
+      this.checkLevel();
     },
     levelMinus() {
       this.$store.commit('decrementLevel');
       console.log(this.$store.state.userData.level);
       this.getUserData();
-      this.sectionChange();    
+      this.levelChange();    
+      this.checkLevel();
     },
     flashlight() {
       if (!this.isFlashlightOn) {
         alert("Use this flashlight at your own risk. If the battery runs out, you will be lost in the dark forever! Muahahahaha!!")
         this.isFlashlightOn = true;
         document.querySelector(".game-overlay").style.filter = "brightness(1)";
-        setInterval(() => { 
+        const intervalId = setInterval(() => { 
           if (this.isFlashlightOn) {
-            this.battery--;
-            if (this.battery === 0) {
+            if (this.$store.state.userData.battery === 0) {
+              clearInterval(intervalId);
               this.isFlashlightOn = false;
               document.querySelector(".game-overlay").style.filter = "brightness(.1)";
+            } else {
+              this.$store.state.userData.battery = this.$store.state.userData.battery - 1;
             }
           }
-        }, 1000);
+        }, 2000);
       } else {
         this.isFlashlightOn = false;
         document.querySelector(".game-overlay").style.filter = "brightness(.1)";
       }
-    }
+    },
   },
 };
 </script>
@@ -465,9 +482,6 @@ h1 {
   border: .3rem solid;
   border-radius: 1.5rem;
   transition: all .2s;
-}
-.game-overlay {
-  filter: brightness(.2);
 }
 .level-and-hearts h1 {
   margin-bottom: .5rem;
@@ -570,6 +584,9 @@ img {
 .battery {
   background-color: #fff200;
   height: 2rem;
+}
+.dark {
+  filter: brightness(.1);
 }
 
 @media only screen and (max-width: 768px) {

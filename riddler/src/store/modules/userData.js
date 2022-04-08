@@ -5,6 +5,7 @@ export const state = {
   lifeCount: null,
   currentItem: null,
   inventory: [],
+  battery: null,
 };
 
 export const mutations = {
@@ -27,5 +28,6 @@ export const mutations = {
     state.lifeCount = newState[0].lifeCount;
     state.currentItem = newState[0].currentItem;
     state.inventory = newState[0].inventory;
+    state.battery = newState[0].battery;
   },
 };
