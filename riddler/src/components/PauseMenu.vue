@@ -24,14 +24,11 @@ components: {
 },
 data() {
     return {
-      newIsPause: ""
     }
 }, 
 methods: {
   closePause(){
-    this.newIsPause = this.isPauseOpen
-    this.newIsPause = false;
-    alert(this.newIsPause)
+    alert(this.isPauseOpen)
   },
 }
 }
