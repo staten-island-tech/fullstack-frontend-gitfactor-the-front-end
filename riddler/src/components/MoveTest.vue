@@ -44,7 +44,7 @@
         <img
           v-for="item in gameItems"
           :src="require(`@/assets/${item.img}`)"
-          :style="{ left: item.margin, filter: item.filter }"
+          :style="{ left: item.margin, width: item.width, filter: item.filter }"
           :alt="item"
           :key="item.key"
           :class="'section' + item.section"
@@ -69,7 +69,7 @@
         <item-popup @itemAdded="addToInventory()" v-if="itemPopup" @closePopup="closeItemPopup()" :item="currentItem" 
         ref="itemPopupBox">
           <template v-slot:item-img>
-            <img class="itempopup-img" :src="require(`@/assets/${$store.state.userData.currentItem.img}`)" :alt="$store.state.userData.currentItem.name"/>
+            <img class="itempopup-img" style="width: 12.5%" :src="require(`@/assets/${$store.state.userData.currentItem.img}`)" :alt="$store.state.userData.currentItem.name"/>
           </template>
           <template v-slot:item-text>
             {{ $store.state.userData.currentItem.prompt }}
@@ -566,8 +566,6 @@ img {
   z-index: -2;
   position: absolute;
   bottom: 10%;
-  width: 20%;
-  border-radius: 3rem;
 }
 .item-popup img {
   position: unset;
