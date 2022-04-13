@@ -474,6 +474,8 @@ export default {
 </script>
 
 <style scoped>
+@import "../assets/global.css";
+
 h1 {
   text-align: left;
 }

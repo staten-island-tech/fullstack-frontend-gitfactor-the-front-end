@@ -29,12 +29,6 @@ initAuth();
 </script>
 
 <style>
-*, html, body {
-  font-size: 62.5%;
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -46,9 +40,6 @@ initAuth();
 h1 {
   font-size: 5rem;
   padding-top: 2rem;
-}
-button {
-  cursor: pointer;
 }
 .login-page {
   height: 100vh;
@@ -80,11 +71,5 @@ button {
 .btn-secondary {
   background: #aaa;
   color: white;
-}
-
-@media only screen and (max-width: 768px) {
-  *, html, body {
-    font-size: 45%;
-  }
 }
 </style>
