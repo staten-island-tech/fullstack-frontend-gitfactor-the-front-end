@@ -66,7 +66,7 @@
           <p class="textbox-test typing-class">{{ this.$store.state.userData.currentItem.dialogue[this.textCount].text }}</p>
         </div>
         
-        <item-popup @itemAdded="addToInventory()" v-if="itemPopup" @closePopup="closeItemPopup()" :item="currentItem" 
+        <ItemPopup @itemAdded="addToInventory()" v-if="itemPopup" @closePopup="closeItemPopup()" :item="currentItem" 
         ref="itemPopupBox">
           <template v-slot:item-img>
             <img class="itempopup-img" style="width: 12.5%" :src="require(`@/assets/${$store.state.userData.currentItem.img}`)" :alt="$store.state.userData.currentItem.name"/>
@@ -74,8 +74,21 @@
           <template v-slot:item-text>
             {{ $store.state.userData.currentItem.prompt }}
           </template>
-        </item-popup>
-      
+        </ItemPopup>
+
+        <PuzzlePopup  
+          @turn-off="closePuzzlePopup" 
+          :puzzleAnswer="emittedPuzzleAnswer"
+          :puzzleVisibility="puzzlePopupVisilibility" 
+          
+          :puzzleType ="emittedPuzzleType"
+          ref="puzzlePopupBox"
+          >
+          <template v-slot:puzzle-text>
+            <h1>{{$store.state.userData.currentItem.prompt}}</h1>
+            
+          </template>
+        </PuzzlePopup>
       </div>
     </div>
 
@@ -85,20 +98,6 @@
         <button @mousedown="rightMove()" @mouseup="reset()" class="mobile-button">&gt;</button>
       </div>
     </main>
-
-    <PuzzlePopup  
-        @turn-off="closePuzzlePopup" 
-        :puzzleAnswer="emittedPuzzleAnswer"
-        :puzzleVisibility="puzzlePopupVisilibility" 
-        
-        :puzzleType ="emittedPuzzleType"
-        ref="puzzlePopupBox"
-        >
-        <template v-slot:puzzle-text>
-          <h1>{{$store.state.userData.currentItem.prompt}}</h1>
-          
-        </template>
-        </PuzzlePopup>
 
     <Inventory />
     <button v-if="$store.state.userData.level === 2" @click="flashlight()" class="flashlight"></button>
@@ -157,6 +156,13 @@ export default {
               { id: 3, img: "bg_2_c.png", ost:"lv02" },
             ],
         },
+        {
+          assets:             [
+              { id: 1, img: "bg_2_a.png", ost:"lv02" },
+              { id: 2, img: "bg_2_b.png", ost:"lv02" },
+              { id: 3, img: "bg_2_c.png", ost:"lv02" },
+            ],
+        },
       ],
       enteredOnObject: false,
       emittedPuzzleAnswer: "", 
@@ -194,9 +200,21 @@ export default {
       this.gameItems = this.$store.state.gameItems.gameItems[this.$store.state.userData.level - 1];
     },
     checkLevel() {
+      if (this.$store.state.userData.level === 1) {
+        console.log("level 1");
+          document.querySelector(".game-overlay").classList.add("game-overlay");
+      } 
       if (this.$store.state.userData.level === 2) {
+        console.log("level 2");
         setTimeout(() => {
-          document.querySelector(".game-overlay").style.filter = "brightness(.1)";
+          document.querySelector(".game-overlay").classList.add("dark");
+
+        }, 0)      
+      } 
+      if (this.$store.state.userData.level === 3) {
+        console.log("level 3");
+        setTimeout(() => {
+          document.querySelector(".game-overlay").classList.add("fog");
         }, 0)      
       }
     },
@@ -473,12 +491,15 @@ h1 {
   flex-direction: column;
   align-items: center;
 }
+.game-overlay {
+  overflow: hidden;
+  border-radius: 1.5rem;
+}
 .game-container {
   overflow: hidden;
   position: relative;
   width: 60vw;
   height: 30vw; 
-  margin-bottom: 2.5rem;
   border: .3rem solid;
   border-radius: 1.5rem;
   transition: all .2s;
@@ -515,6 +536,9 @@ h1 {
 
 .hide {
   display: none;
+}
+.mobile-button-container {
+  margin-top: 2.5rem;
 }
 .mobile-button {
   font-size: 4rem;
@@ -586,6 +610,49 @@ img {
 .dark {
   filter: brightness(.1);
 }
+
+.fog {
+  position: relative;
+}
+.fog:before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.6;
+  background-image: url("../assets/bubbles.png");
+  animation: fogFade 20s ease-in-out infinite;
+}
+    @keyframes fogFade {
+      0% {
+        filter: brightness(0%);
+      }
+      20% {
+        filter: brightness(70%);
+      }
+      30% {
+        filter: brightness(90%);
+      }
+      40% {
+        filter: brightness(95%);
+      }
+      50% {
+        filter: brightness(100%);
+      }
+      60% {
+        filter: brightness(40%);
+      }
+      70% {
+        filter: brightness(70%);
+      }
+      100% {
+        filter: brightness(0%);
+      }
+    }
+
 
 @media only screen and (max-width: 768px) {
   .game-and-inventory {

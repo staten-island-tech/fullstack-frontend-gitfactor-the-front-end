@@ -85,8 +85,34 @@ export const state = {
       //   prompt: "",
       // },
     ],
-    // [], level 2
-    // []  level 3
+    [
+      {
+        name: "Lantern",
+        id: 4,
+        section: 1,
+        position: 35,
+        margin: "35%",
+        img: "lantern.png",
+        isInteractable: false,
+        width: "20%",
+        filter: null,
+        itemType: "object",
+      },
+    ],
+    [
+      {
+        name: "Lantern",
+        id: 4,
+        section: 1,
+        position: 35,
+        margin: "35%",
+        img: "lantern.png",
+        isInteractable: false,
+        width: "20%",
+        filter: null,
+        itemType: "object",
+      },
+    ],
   ],
 };
 
