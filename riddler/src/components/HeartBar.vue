@@ -11,6 +11,8 @@ export default {
 </script>
 
 <style scoped>
+@import "../assets/global.css";
+
   section {
     text-align: left;
     margin-bottom: 2.5rem;

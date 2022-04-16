@@ -25,6 +25,8 @@ export default {
 </script>
 
 <style scoped>
+@import "../assets/global.css";
+
   .item-popup {
     position: absolute;
     top: 0;
@@ -34,25 +36,26 @@ export default {
     padding: 5rem;
     margin: 2rem;
     border-radius: 1.5rem;
-    /* background-color: #deceff; */
-    border-color: #deceff;
-    border: solid .3rem;
-    background-color: #2b0d47;
+    border: solid var(--highlight-color) .3rem;
+    background-color: var(--background-color);
     z-index: 1;
     overflow: scroll;
   }
   .item-popup button {
-    background-color: #deceff;
-    font-size: 2rem;
-    padding: 1rem 2rem;
+    background-color: var(--highlight-color);
+    font-size: 1.8rem;
+    font-weight: 700;
+    padding: 1.5rem 2rem;
     border: none;
-    border-radius: 1.5rem;
-    color: #2b0d47;
+    border-radius: 1rem;
+    color: var(--background-color);
   }
   .item-popup .close-btn {
     position: absolute;
     top: 2rem;
     right: 2rem;
+    background-color: unset;
+    color: var(--highlight-color);
   }
   .item-popup .add-btn {
     margin-top: 5rem;
@@ -61,7 +64,6 @@ export default {
     color: rgb(236, 213, 255);
     font-size: 2rem;
     text-align: left;
-    font-weight: 700;
   }
   img {
     position: absolute;

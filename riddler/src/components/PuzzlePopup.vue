@@ -126,21 +126,26 @@ export default {
 </script>
 
 <style scoped>
-.popup-container {
+@import "../assets/global.css";
+
+  .popup-container {
     position: absolute;
     top: 0;
     text-align: center;
-    width: calc(60% - 4rem);
-    height: calc(70% - 4rem);
+    width: calc(100% - 4rem);
+    height: calc(100% - 4rem);
     padding: 5rem;
     margin: 2rem;
     border-radius: 1.5rem;
-    /* background-color: #deceff; */
-    border-color: #deceff;
-    border: solid .3rem;
-    background-color: #2b0d47;
+    border: solid var(--highlight-color) .3rem;
+    background-color: var(--background-color);
     z-index: 1;
     overflow: scroll;
+  }
+  .close-puzzle-button {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
   }
 .invisible {
     display:none;
@@ -154,10 +159,5 @@ export default {
 }
 button {
     font-size: 2rem;
-}
-.close-puzzle-button {
-    font-size: 2rem;
-    position: fixed;
-    left: 63%;
 }
 </style>

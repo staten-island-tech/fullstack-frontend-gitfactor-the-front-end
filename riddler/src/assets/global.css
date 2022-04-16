@@ -1,0 +1,63 @@
+:root {
+  /* colors */
+  --darkest-purple: #1f1227;
+  --dark-purple: #2b0d47;
+  --purple: #4c3188;
+  --light-purple: #deceff;
+
+  /* intentions */
+  --background-color: var(--darkest-purple);
+  --highlight-color: var(--light-purple);
+  --popup-color: var(--dark-purple);
+
+  /* font size */
+  --title-font: "Mystery Quest", cursive;
+  --text-font: "Raleway", sans-serif;
+
+  --h1: 5.653rem;
+  --h2: 3.998rem;
+  --h3: 2.827rem;
+  --h4: 1.999rem;
+  --h5: 1.414rem;
+  --small-text: 0.707rem;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Mystery+Quest:wght@500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@600;700&display=swap");
+
+h1 {
+  font-size: var(--h1);
+}
+h2 {
+  font-size: var(--h2);
+}
+h3 {
+  font-size: var(--h3);
+}
+h4 {
+  font-size: var(--h4);
+}
+h5 {
+  font-size: var(--h5);
+}
+p {
+  font-size: var(--small-text);
+}
+
+*, html, body {
+  font-size: 62.5%;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: var(--text-font);
+  font-weight: 600;
+}
+button {
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 768px) {
+  *, html, body {
+    font-size: 45%;
+  }
+}
