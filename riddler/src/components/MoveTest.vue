@@ -333,11 +333,12 @@ export default {
     itemInteract() {
       this.$store.state.userData.currentItem = null;
       this.gameItems.forEach((item) => {
-        const offset = item.position - this.$store.state.userData.leftValue;
-        console.log(offset)
-        if ((item.section === this.$store.state.userData.section) && (Math.abs(offset) <= 10 || (offset >= -10 && offset < 10))) { //checks if right section and distance from left and right of the item
+        const itemLeft = item.position;
+        const itemRight = item.position + item.widthInt;
+        if ((item.section === this.$store.state.userData.section) && ((this.$store.state.userData.leftValue + 8) >= itemLeft && (this.$store.state.userData.leftValue + 8) <= itemRight)) { //checks if avatar is in range of item
             item.isInteractable = true;
             this.$store.state.userData.currentItem = item;
+            console.log('in range');
             item.filter = "sepia(55%)";
         } else {
           item.isInteractable = false;
