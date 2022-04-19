@@ -63,10 +63,5 @@ export default {
   .item-popup p {
     color: rgb(236, 213, 255);
     font-size: 2rem;
-    text-align: left;
-  }
-  img {
-    position: absolute;
-    top: 0;
   }
 </style>

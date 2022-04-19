@@ -52,6 +52,6 @@ export default {
   z-index: -10;
   width: 100%;
   height: fit-content;
-  background-color: var(--darkest-purple);
+  background-color: var(--background-color);
 }
 </style>

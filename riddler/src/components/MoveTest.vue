@@ -339,7 +339,7 @@ export default {
             item.isInteractable = true;
             this.$store.state.userData.currentItem = item;
             console.log('in range');
-            item.filter = "sepia(55%)";
+            item.filter = "sepia(70%)";
         } else {
           item.isInteractable = false;
           item.filter = null;
@@ -595,9 +595,10 @@ img {
   position: absolute;
   bottom: 10%;
 }
+
 .item-popup img {
   position: unset;
-  margin-bottom: 5rem;
+  margin-bottom: 3rem;
 }
 
 .flashlight {
