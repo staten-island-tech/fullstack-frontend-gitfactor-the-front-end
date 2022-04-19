@@ -3,7 +3,9 @@
   tabindex="-1"
   v-on:keyup.esc="$emit('closePopup')"
   v-on:keyup.enter="$emit('itemAdded')">
-    
+    <h2>
+      <slot name="item-name"></slot>
+    </h2>
     <button @click="$emit('closePopup')" class="close-btn">X</button>
     <slot name="item-img"></slot>
     <p>
@@ -43,7 +45,7 @@ export default {
   }
   .item-popup button {
     background-color: var(--highlight-color);
-    font-size: 1.8rem;
+    font-size: var(--h4);
     font-weight: 700;
     padding: 1.5rem 2rem;
     border: none;
@@ -61,7 +63,8 @@ export default {
     margin-top: 5rem;
   }
   .item-popup p {
-    color: rgb(236, 213, 255);
-    font-size: 2rem;
+    color: var(--highlight-color);
+    font-size: var(--h4);
+    line-height: 1.5;
   }
 </style>

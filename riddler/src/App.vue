@@ -36,10 +36,6 @@ initAuth();
   background-color: var(--background-color);
   color: var(--highlight-color);
 }
-h1 {
-  font-size: 5rem;
-  padding-top: 2rem;
-}
 .login-page {
   height: 100vh;
   background-color: #1f1227;

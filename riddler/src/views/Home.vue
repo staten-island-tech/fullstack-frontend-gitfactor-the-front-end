@@ -51,7 +51,7 @@ export default {
   position: absolute;
   z-index: -10;
   width: 100%;
-  height: fit-content;
+  height: 100%;
   background-color: var(--background-color);
 }
 </style>

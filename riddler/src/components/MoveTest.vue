@@ -68,6 +68,9 @@
         
         <ItemPopup @itemAdded="addToInventory()" v-if="itemPopup" @closePopup="closeItemPopup()" :item="currentItem" 
         ref="itemPopupBox">
+          <template v-slot:item-name>
+            {{ $store.state.userData.currentItem.name }}
+          </template>
           <template v-slot:item-img>
             <img class="itempopup-img" style="width: 12.5%" :src="require(`@/assets/${$store.state.userData.currentItem.img}`)" :alt="$store.state.userData.currentItem.name"/>
           </template>
@@ -335,11 +338,11 @@ export default {
       this.gameItems.forEach((item) => {
         const itemLeft = item.position;
         const itemRight = item.position + item.widthInt;
-        if ((item.section === this.$store.state.userData.section) && ((this.$store.state.userData.leftValue + 8) >= itemLeft && (this.$store.state.userData.leftValue + 8) <= itemRight)) { //checks if avatar is in range of item
+        if ((item.section === this.$store.state.userData.section) && ((this.$store.state.userData.leftValue + 8) >= itemLeft && (this.$store.state.userData.leftValue + 10) <= itemRight)) { //checks if avatar is in range of item
             item.isInteractable = true;
             this.$store.state.userData.currentItem = item;
             console.log('in range');
-            item.filter = "sepia(70%)";
+            item.filter = "brightness(55%)";
         } else {
           item.isInteractable = false;
           item.filter = null;
@@ -501,8 +504,8 @@ h1 {
 .game-container {
   overflow: hidden;
   position: relative;
-  width: 60vw;
-  height: 30vw; 
+  width: 66vw;
+  height: 33vw; 
   border: .3rem solid;
   border-radius: 1.5rem;
   transition: all .2s;
@@ -515,7 +518,7 @@ h1 {
   height: inherit;
 }
 .player-avatar {
-  width: 17.5%;
+  width: 20%;
   z-index: -1;
   display: flex;
   position: absolute;
@@ -593,7 +596,7 @@ h1 {
 img {
   z-index: -2;
   position: absolute;
-  bottom: 10%;
+  bottom: 14%;
 }
 
 .item-popup img {

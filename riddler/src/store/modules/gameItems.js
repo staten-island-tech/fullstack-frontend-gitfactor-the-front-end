@@ -19,7 +19,7 @@ export const state = {
         puzzleAnswer: "light",
       },
       {
-        name: "Sheet of Paper",
+        name: "Blank Scroll",
         id: 1,
         section: 2,
         position: 60,
@@ -31,10 +31,10 @@ export const state = {
         filter: null,
         itemType: "object",
         prompt:
-          "Hmm. It looks like a mysterious scroll but it's completely blank! It's bound together with a string of twine and has a faint scent of citrus.",
+          "Hmm... It looks like a mysterious scroll, but it's completely blank! It's bound together with a string of twine and has a faint scent of citrus.",
       },
       {
-        name: "Prism",
+        name: "Shiny Prism",
         id: 2,
         section: 3,
         position: 20,
@@ -48,7 +48,7 @@ export const state = {
         prompt: "It's a triangular glass prism. So pretty and shiny!",
       },
       {
-        name: "Feather",
+        name: "Large Feather",
         id: 3,
         section: 3,
         position: 70,
@@ -62,7 +62,7 @@ export const state = {
         prompt: "A large yet dainty feather with beautiful blue hues.",
       },
       {
-        name: "Lantern",
+        name: "Bright Lantern",
         id: 4,
         section: 1,
         position: 35,
