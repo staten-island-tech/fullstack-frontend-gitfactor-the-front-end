@@ -1,25 +1,24 @@
 <template>
 <div class="popup-container"
 tabindex="-1"
-v-if ='puzzleVisibility'
 
 v-on:keyup.esc="closePuzzleClick"
 v-on:keyup.enter="checkAnswerClick"
 
 >
-<button v-on:click="closePuzzleClick" class="close-puzzle-button">x</button>
+  <button v-on:click="closePuzzleClick" class="close-puzzle-button">x</button>
     <!-- <h1 class="puzzleQuestionLine">{{puzzlePrompt}}</h1> -->
-    <slot name="puzzle-text"></slot>
-    <input type="text" class="puzzle-answer"
-    v-model="puzzleInput" :maxlength="puzzleInputMaxLength" :disabled="puzzleInputDisabled">
-    <button v-on:click="checkAnswerClick" class="puzzle-submit-button" >enter</button>
-    <div class="keypad-button-div" v-for="value in buttonValues" :key="value.id" v-show= "puzzleButtonVisibility">
-       <button @click="puzzle2ButtonClick(value.value)" class="puzzle-button" >{{value.value}}</button> 
-       
-    </div>
-    <button class="puzzleClearButton" @click="clearInputClick"> clear </button>
-    
-    
+  <slot name="puzzle-text"></slot>
+
+  <button class="puzzle-btn puzzleClearButton" @click="clearInputClick">Clear</button>
+  <input type="text" class="puzzle-answer"
+  v-model="puzzleInput" :maxlength="puzzleInputMaxLength" :disabled="puzzleInputDisabled" placeholder="Answer the riddle">
+  <button @click="checkAnswerClick" class="puzzle-btn puzzle-submit-button">Enter</button>
+  <div class="keypad-button-div" v-for="value in buttonValues" :key="value.id" v-show= "puzzleButtonVisibility">
+    <button @click="puzzle2ButtonClick(value.value)" class="puzzle-btn puzzle-button">
+      {{value.value}}
+    </button> 
+  </div>
 </div>
     
 </template>
@@ -143,9 +142,13 @@ export default {
     overflow: scroll;
   }
   .close-puzzle-button {
+    font-size: var(--h4);
     position: absolute;
     top: 2rem;
     right: 2rem;
+    border: none;
+    background-color: unset;
+    color: var(--highlight-color);
   }
 .invisible {
     display:none;
@@ -154,10 +157,24 @@ export default {
 .puzzleQuestionLine {
     font-size: 2rem;
 }
-.puzzle-answer {
-    font-size: 2rem;
+.puzzle-btn, input {
+    font-size: var(--h4);
+    font-weight: 700;
+    padding: .6rem 1.2rem;
+    border: none;
+    border-radius: .5rem;
+    margin-top: 5rem;
 }
-button {
-    font-size: 2rem;
-}
+  input {
+    margin: 5rem 1rem;
+    width: 25rem;
+  }
+  .puzzle-btn {
+    background-color: var(--highlight-color);
+    color: var(--background-color);
+  }
+  .puzzleClearButton {
+    background-color: #f9e3e3;
+    color: #ad2020;
+  }
 </style>

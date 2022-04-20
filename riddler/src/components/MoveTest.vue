@@ -10,8 +10,10 @@
     </div>
 
     <div v-if="$store.state.userData.level === 2" class="battery-meter">
-      <h1>Battery: {{ $store.state.userData.battery }}</h1>
-      <div class="battery" :style="{ width: batteryPercentage }"></div>
+      <h1>{{ $store.state.userData.battery }}%</h1>
+      <div class="charge-container">
+        <div class="charge" :style="{ width: batteryPercentage }"></div>
+      </div>
     </div>
     
     <div class="game-and-inventory">
@@ -82,7 +84,7 @@
         <PuzzlePopup  
           @turn-off="closePuzzlePopup" 
           :puzzleAnswer="emittedPuzzleAnswer"
-          :puzzleVisibility="puzzlePopupVisilibility" 
+          v-if="puzzlePopupVisilibility" 
           
           :puzzleType ="emittedPuzzleType"
           ref="puzzlePopupBox"
@@ -101,9 +103,10 @@
         <button @mousedown="rightMove()" @mouseup="reset()" class="mobile-button">&gt;</button>
       </div>
     </main>
+    
+    <button v-if="$store.state.userData.level === 2" @click="flashlight()" class="flashlight"></button>
 
     <Inventory />
-    <button v-if="$store.state.userData.level === 2" @click="flashlight()" class="flashlight"></button>
   </div>   
 
   </div>
@@ -605,15 +608,25 @@ img {
 }
 
 .flashlight {
+  background-color: #fff200;
   height: 5rem;
   width: 5rem;
+  margin: 2rem;
+  border-radius: 5rem;
 }
 .battery-meter {
-  width: 20rem;
+  margin-bottom: 1rem;
 }
-.battery {
+.charge-container {
+  overflow: hidden;
+  width: 15rem;
+  background-color: var(--purple);
+  margin-top: .5rem;
+  border-radius: .5rem;
+}
+.charge {
   background-color: #fff200;
-  height: 2rem;
+  height: 2.5rem;
 }
 .dark {
   filter: brightness(.1);

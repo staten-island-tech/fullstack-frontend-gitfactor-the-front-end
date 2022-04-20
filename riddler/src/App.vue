@@ -8,7 +8,7 @@
 
       <div v-else>
         <p class="welcome">
-          Welcome to the Riddler's Tower, <strong>{{ AuthState.user.name }}</strong> >:)
+          Welcome to the Riddler's Tower, <strong>{{ AuthState.user.name }}.</strong>
         </p>
         <button @click="logout()" class="btn btn-secondary">Save & Quit</button>
       </div>
@@ -43,6 +43,9 @@ initAuth();
 .welcome, .welcome strong {
   display: inline;
   font-size: 2rem;
+}
+.welcome strong {
+  font-weight: 700;
 }
 .btn {
   padding: .8rem 1.2rem;

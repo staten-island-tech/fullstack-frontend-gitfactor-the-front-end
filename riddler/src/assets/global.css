@@ -52,8 +52,12 @@ p {
   font-family: var(--text-font);
   font-weight: 600;
 }
-button {
+button, input {
   cursor: pointer;
+}
+button:hover, input:hover {
+  filter: brightness(80%);
+  transition: all .15s;
 }
 
 @media only screen and (max-width: 768px) {
