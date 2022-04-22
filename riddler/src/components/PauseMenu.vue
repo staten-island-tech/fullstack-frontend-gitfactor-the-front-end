@@ -1,11 +1,11 @@
 <template>
   <div class="pause-menu">
           <div class="icon-div">
-<font-awesome-icon @click="closePause" icon="x" class="x-icon"/>
+<font-awesome-icon @click="$emit('closePause')" icon="x" class="x-icon"/>
 </div>
       <h2 class="pause-title">Pause Menu</h2>
       <div class="pause-button-box">
-      <button>Instruction Manual</button>
+      <button @click="$emit('instruction')" >Instruction Manual</button>
        <button>Save & Resume</button>
         <button>Save & Exit</button>
           <button>Settings</button>
@@ -27,9 +27,6 @@ data() {
     }
 }, 
 methods: {
-  closePause(){
-    alert(this.isPauseOpen)
-  },
 }
 }
 </script>
@@ -62,11 +59,12 @@ display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
+margin-top: 1rem;
 }
 .pause-menu button{
   width: 30%;
 font-size: 2.5rem;
-margin: 2.5rem;
+margin: 1rem;
 padding: 1rem;
 background-color: #A68FD5;
 color: black;

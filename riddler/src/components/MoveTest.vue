@@ -19,7 +19,8 @@
         @keydown.z="onEnter()"
         
       >
-       <PauseMenu v-if="isPauseOpen"/>  
+       <PauseMenu @closePause="closePM()" @instruction="instructionHandle()" v-if="isPauseOpen"/> 
+       <Instructions @closeInstruc="closeInstrucHandler()" v-if="instruction"/> 
         <img
           :src="require(`@/assets/environment/lv1/${currentLocation.img}`)"
           class="bg-img"
@@ -87,11 +88,13 @@ import HeartBar from "./HeartBar.vue";
 import Inventory from "./Inventory.vue";
 import ItemPopup from "./ItemPopup.vue";
 import PauseMenu from "./PauseMenu.vue";
+import Instructions from './Instructions.vue';
 
 export default {
   name: "MoveTest",
   components: {
-    HeartBar, Inventory, ItemPopup, PauseMenu
+    HeartBar, Inventory, ItemPopup, PauseMenu,
+    Instructions
   },
   created() {
     this.getUserData();
@@ -134,6 +137,7 @@ export default {
       textCount: -1,
       mainAnt: false,
       isPauseOpen: false,
+      instruction: false,
       enteredOnObject: false,
     };
   },
@@ -298,8 +302,16 @@ export default {
     },
     openPause(){
       this.isPauseOpen = true;
-      alert(this.isPauseOpen)
-    }
+    },
+  closePM(){
+    this.isPauseOpen = false;
+  }, 
+  instructionHandle(){
+    this.instruction = true;
+  },
+  closeInstrucHandler(){
+    this.instruction = false;
+  }
   },
 };
 </script>
