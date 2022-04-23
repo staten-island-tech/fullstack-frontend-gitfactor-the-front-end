@@ -19,8 +19,10 @@
         @keydown.z="onEnter()"
         
       >
-       <PauseMenu @closePause="closePM()" @instruction="instructionHandle()" v-if="isPauseOpen"/> 
+       <PauseMenu @closePause="closePM()" @instruction="instructionHandle()"
+       @setting="settingHandler()" v-if="isPauseOpen"/> 
        <Instructions @closeInstruc="closeInstrucHandler()" v-if="instruction"/> 
+       <Settings @closeSetting="closeSettingHandler()" v-if="setting"/>
         <img
           :src="require(`@/assets/environment/lv1/${currentLocation.img}`)"
           class="bg-img"
@@ -89,12 +91,13 @@ import Inventory from "./Inventory.vue";
 import ItemPopup from "./ItemPopup.vue";
 import PauseMenu from "./PauseMenu.vue";
 import Instructions from './Instructions.vue';
+import Settings from "./Settings.vue"
 
 export default {
   name: "MoveTest",
   components: {
     HeartBar, Inventory, ItemPopup, PauseMenu,
-    Instructions
+    Instructions, Settings
   },
   created() {
     this.getUserData();
@@ -138,6 +141,7 @@ export default {
       mainAnt: false,
       isPauseOpen: false,
       instruction: false,
+      setting: false,
       enteredOnObject: false,
     };
   },
@@ -311,6 +315,12 @@ export default {
   },
   closeInstrucHandler(){
     this.instruction = false;
+  }, 
+  settingHandler(){
+    this.setting = true;
+  },
+  closeSettingHandler(){
+    this.setting = false;
   }
   },
 };

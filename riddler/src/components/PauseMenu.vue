@@ -8,7 +8,7 @@
       <button @click="$emit('instruction')" >Instruction Manual</button>
        <button>Save & Resume</button>
         <button>Save & Exit</button>
-          <button>Settings</button>
+          <button @click="$emit('setting')">Settings</button>
           </div>
   </div>
 </template>
