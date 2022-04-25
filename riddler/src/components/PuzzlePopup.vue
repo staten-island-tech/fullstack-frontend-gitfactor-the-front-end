@@ -62,7 +62,7 @@ export default {
     puzzleInputDisabled: false,
     //selectedInventoryItemVisilibty = false,
 
-    puzzlePromptAnswered: "",  //give each puzzle a string value 
+    puzzlePromptAnswered: null,  //give each puzzle a string value 
     
     buttonValues: [
         {value: "1", id: 1},
@@ -70,22 +70,17 @@ export default {
         {value: "3", id: 3},
         {value: "4", id:4},
     ],
-
  
         }
         },
-      
-  
-
     methods:
     {
      closePuzzleClick(){
             this.$emit('turn-off'); 
-            this.puzzleInput = ""; 
-                    
+            this.puzzleInput = "";       
 
         },
-        checkAnswerClick(){            
+        checkAnswerClick(){         //add door custom function where it sends you to next level     
             const puzzleAnswerInput = (this.puzzleInput.trim()).toLowerCase()
             console.log(puzzleAnswerInput);
             
@@ -129,8 +124,7 @@ export default {
         checkPuzzleType(){        
             
             if(this.puzzleVisibility === true) {
-                //this.puzzlePromptAnswered = this.promptAnswered; 
-            //console.log( "1" + this.puzzlePromptAnswered);
+                
                 if(this.puzzleType === 1){
                     console.log('puzzle 1');
                     this.puzzleButtonVisibility = false;
