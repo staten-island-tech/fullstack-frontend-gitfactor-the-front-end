@@ -98,6 +98,7 @@ export const state = {
         itemType: "puzzle",
         puzzleType: 2,
         prompt: "the answer is 1234",
+        //4 answer cuz puzzle 2
         puzzleAnswer: "1234",
         puzzleCompleted: false,
         puzzleAnsweredText:
