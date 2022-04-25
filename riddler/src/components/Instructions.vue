@@ -10,6 +10,9 @@
 Welcome to my tower…
 </p>
 <p>
+Each floor has a tantalizing riddle for you to solve. Click on the door and test your wit if you want to survive...
+</p>
+<p>
 Press/click the arrow buttons on the screen to move left or right. You can also click the corresponding buttons on your keyboard (&lt; and >) to move. 
 </p>
 <p>
