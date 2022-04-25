@@ -55,7 +55,7 @@ p {
 button, input {
   cursor: pointer;
 }
-button:hover, input:hover {
+button:hover {
   filter: brightness(80%);
   transition: all .15s;
 }
