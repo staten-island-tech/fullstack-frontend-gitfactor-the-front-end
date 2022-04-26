@@ -409,6 +409,10 @@ export default {
       this.puzzlePopupVisilibility = false;
       this.enablePlayerMovement();
     },
+
+    lvLoadCutscene() {
+      
+    },
   
     txtbxShow() {
       const playerTxtSprite = document.getElementById("player-dialogue-sprite");
