@@ -1,7 +1,7 @@
 <template>
 <div class="popup-container"
 tabindex="-1"
-v-if ='puzzleVisibility'
+v-if ='puzzleVisibilityFunction()'
 v-on:keyup.esc="closePuzzleClick"
 v-on:keyup.enter="checkAnswerClick"
 
@@ -40,11 +40,8 @@ export default {
     name: "PuzzlePopup",
     emits: ["turn-off", ],
   
-  updated()  {
-            
-            console.log("updated!");
-        },
-     props: {
+
+props: {
     puzzleVisibility: Boolean, 
     puzzlePrompt: String,
     puzzleAnswer: String,
@@ -73,8 +70,23 @@ export default {
  
         }
         },
+     
+
+
     methods:
     {
+        puzzleVisibilityFunction() {
+            if(this.puzzleVisibility === true){  //this checks everytime, mad annoying and prevents the correct screen from displaying 
+                this.puzzlePromptAnswered = this.promptAnswered;
+                console.log(this.puzzlePromptAnswered + " visibility boolean");
+                this.checkPuzzleType();
+                return true;
+            }
+
+            else{
+                return false;
+            }
+        },
      closePuzzleClick(){
             this.$emit('turn-off'); 
             this.puzzleInput = "";       
@@ -88,14 +100,13 @@ export default {
                 
                 this.puzzleInput = "";  
                 console.log("puzzle answered correctly")
-                //this.$store.state.userData.currentItem.puzzleAnswer = true;
-                // this.puzzlePromptAnswered = true;
+                this.$store.state.userData.currentItem.puzzleAnswer = true;
+                 this.puzzlePromptAnswered = true;
                 // console.log( "2" + this.puzzlePromptAnswered);
 
                 //check if puzzle 3, then make the selected item gone
                     // in order to do so find teh id of the thing and then use splice to delete from gameItems
-                //change the puzzle visibility thing for correct to true
-                // go and change the value in gameItems
+               
                 
                 }
             else{

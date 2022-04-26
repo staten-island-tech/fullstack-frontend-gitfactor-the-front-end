@@ -324,7 +324,7 @@ export default {
         } else if (this.$store.state.userData.currentItem.itemType === "puzzle") {        
       
             this.puzzlePopupVisilibility = true;
-            console.log(this.puzzlePopupVisilibility);
+           // console.log(this.puzzlePopupVisilibility);
             this.emittedPuzzleAnswer = this.$store.state.userData.currentItem.puzzleAnswer;           
             this.emittedPuzzleType = this.$store.state.userData.currentItem.puzzleType;
             this.puzzleQuestionCompleted = this.$store.state.userData.currentItem.puzzleCompleted;
