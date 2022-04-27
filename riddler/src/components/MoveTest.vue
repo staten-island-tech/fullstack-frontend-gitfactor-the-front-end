@@ -4,6 +4,9 @@
     <button @click="levelAdd" class="mobile-button">l+ratio</button>
     <button @click="levelMinus" class="mobile-button">l-1</button>
 
+    
+    
+
     <div class="level-and-hearts">
       <h1>Lvl. {{ $store.state.userData.level }}</h1>
       <HeartBar />
@@ -22,6 +25,7 @@
         <audio id="audio-bgm" :src="require(`@/assets/audio/bgm/${currentOST}.mp3`)"></audio>
         <audio id="walk-sfx" :src="require(`@/assets/audio/sfx/walkstep.mp3`)"></audio>
       </div>
+      
 
     <div class="game-overlay">
       <div
@@ -32,6 +36,7 @@
         @keyup="reset()"
         @keydown.z="onEnter()"
       >
+      <EndGamePopup/>
         <img
           :src="require(`@/assets/environment/lv1/${currentLocationImg}`)"
           class="bg-img"
@@ -120,12 +125,13 @@ import HeartBar from "./HeartBar.vue";
 import Inventory from "./Inventory.vue";
 import ItemPopup from "./ItemPopup.vue";
 import PuzzlePopup from "./PuzzlePopup.vue"; 
+import EndGamePopup from "./EndGamePopup.vue"; 
 
 
 export default {
   name: "MoveTest",
   components: {
-    HeartBar, Inventory, ItemPopup, PuzzlePopup
+    HeartBar, Inventory, ItemPopup, PuzzlePopup, EndGamePopup
   },
   created() {
     this.getUserData();
