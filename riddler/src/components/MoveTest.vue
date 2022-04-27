@@ -5,12 +5,12 @@
     <button @click="levelMinus" class="mobile-button">l-1</button>
 
     <div class="level-and-hearts">
-      <h1>Lvl. {{ $store.state.userData.level }}</h1>
+      <h2>Lv. {{ $store.state.userData.level }}</h2>
       <HeartBar />
     </div>
 
     <div v-if="$store.state.userData.level === 2" class="battery-meter">
-      <h1>{{ $store.state.userData.battery }}%</h1>
+      <h2>{{ $store.state.userData.battery }}%</h2>
       <div class="charge-container">
         <div class="charge" :style="{ width: batteryPercentage }"></div>
       </div>
@@ -90,8 +90,7 @@
           ref="puzzlePopupBox"
           >
           <template v-slot:puzzle-text>
-            <h1>{{$store.state.userData.currentItem.prompt}}</h1>
-            
+            {{$store.state.userData.currentItem.prompt}}
           </template>
         </PuzzlePopup>
       </div>
@@ -486,6 +485,9 @@ export default {
 h1 {
   text-align: left;
 }
+h2 {
+  font-size: var(--h4);
+}
 .game-page {
   margin: auto;
   display: inline-block;
@@ -513,7 +515,8 @@ h1 {
   border-radius: 1.5rem;
   transition: all .2s;
 }
-.level-and-hearts h1 {
+.level-and-hearts h2 {
+  font-size: var(--h3);
   margin-bottom: .5rem;
 }
 .player {
@@ -590,10 +593,6 @@ h1 {
   position: absolute;
   bottom: 0;
   left: -20%;
-}
-
-h1 {
-  font-size: 2rem;
 }
 
 img {
