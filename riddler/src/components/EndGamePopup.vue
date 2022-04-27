@@ -1,10 +1,12 @@
 <template>
-  <div class="end-game-popup">
+  <div class="end-game-popup" 
+    tabindex="-1"
+    v-on:keyup.esc="$emit('closePopup')">
       <h1>You have bested the Riddler!</h1>
 
       <div class="btn-group">
-         <button class="reset-btn">Let's do it again.</button>
-         <button class="reset-btn">Get me out of here.</button>
+         <button @click="$emit('resetData')" class="reset-btn">Let's do it again.</button>
+         <button @click="$emit('logOut')" class="reset-btn">Get me out of here.</button>
       </div>
 
       <h3>"Man, I'm hungry now. Wonder if the bloodcake store is still open?"</h3>
@@ -30,7 +32,8 @@ export default {
 .end-game-popup {
     width: 100%;
     height: 100%;
-    position: ;
+    position: absolute;
+    bottom: 0%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -59,7 +62,4 @@ h3 {
     color: var(--purple);
 }
 
-.btn-group{
-
-}
 </style>

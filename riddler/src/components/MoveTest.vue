@@ -21,6 +21,7 @@
     
     <div class="game-and-inventory">
     <main class="game-contents" >
+      
       <div class="audio-container">
         <audio id="audio-bgm" :src="require(`@/assets/audio/bgm/${currentOST}.mp3`)"></audio>
         <audio id="walk-sfx" :src="require(`@/assets/audio/sfx/walkstep.mp3`)"></audio>
@@ -28,6 +29,7 @@
       
 
     <div class="game-overlay">
+      
       <div
         class="game-container"
         id="game-viewport"
@@ -36,11 +38,14 @@
         @keyup="reset()"
         @keydown.z="onEnter()"
       >
-      <EndGamePopup/>
+      
         <img
           :src="require(`@/assets/environment/lv1/${currentLocationImg}`)"
           class="bg-img"
         />
+
+        <EndGamePopup @closePopup="closeItemPopup()" @logOut="testConsole()" @resetData="resetData()" />
+
         <div class="player" :style="cssProps" tabindex="-1" ref="playerMove">
           <img
             :src="require(`@/assets/sprites/${playerAvatar}`)"
@@ -72,7 +77,7 @@
           <p class="textbox-title">{{ this.$store.state.userData.currentItem.dialogue[this.textCount].name }}</p>
           <p class="textbox-test typing-class">{{ this.$store.state.userData.currentItem.dialogue[this.textCount].text }}</p>
         </div>
-        
+
         <ItemPopup @itemAdded="addToInventory()" v-if="itemPopup" @closePopup="closeItemPopup()" :item="currentItem" 
         ref="itemPopupBox">
           <template v-slot:item-name>
@@ -273,6 +278,13 @@ export default {
       }, 150);
       }
     },
+
+    testConsole() {
+      console.log("lol no");
+    },
+    resetData() {
+      console.log("nuclear option");
+    },
    
     reset() {
       this.stopWalkSfx();
@@ -414,10 +426,6 @@ export default {
       this.enteredOnObject = false;
       this.puzzlePopupVisilibility = false;
       this.enablePlayerMovement();
-    },
-
-    lvLoadCutscene() {
-      
     },
   
     txtbxShow() {
