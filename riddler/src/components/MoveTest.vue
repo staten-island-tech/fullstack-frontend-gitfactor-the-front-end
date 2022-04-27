@@ -74,6 +74,8 @@
 
     <PuzzlePopup  
         @turn-off="closePuzzlePopup" 
+        @testFunction="makeThePuzzleFinallyWork"
+        @refocus-on-puzzle="openPuzzlePopup"
         
         :puzzleAnswer="emittedPuzzleAnswer"
         :puzzleVisibility="puzzlePopupVisilibility" 
@@ -95,7 +97,7 @@
         </template>
         </PuzzlePopup>
 
-    <Inventory @clicked-item="test">
+    <Inventory @clicked-item="selectedInventoryItemName">
       </Inventory>
   </div>      
 
@@ -170,7 +172,10 @@ export default {
     },
   },
   methods: {  
-    test(name) {
+    makeThePuzzleFinallyWork(){
+      this.puzzlePopupVisilibility = null;
+    },
+    selectedInventoryItemName(name) {
       //this.selectedInventoryItem = (this.$store.state.userData.inventory.item.name);
       //console.log(this.selectedInventoryItem);
       console.log(name);

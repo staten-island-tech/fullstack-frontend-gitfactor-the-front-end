@@ -38,7 +38,7 @@ v-on:keyup.enter="checkAnswerClick"
 
 export default {
     name: "PuzzlePopup",
-    emits: ["turn-off", ],
+    emits: ["turn-off","testFunction", "refocus-on-puzzle"],
   
 
 props: {
@@ -72,7 +72,7 @@ props: {
         },
      
 
-
+ 
     methods:
     {
         puzzleVisibilityFunction() {
@@ -80,7 +80,13 @@ props: {
                 this.puzzlePromptAnswered = this.promptAnswered;
                 console.log(this.puzzlePromptAnswered + " visibility boolean");
                 this.checkPuzzleType();
+                console.log(this.puzzleVisibility);
+                this.$emit('testFunction');
                 return true;
+            }
+            else if(this.puzzleVisibility === null){
+               console.log(this.puzzleVisibility);
+               return true;
             }
 
             else{
@@ -97,12 +103,15 @@ props: {
             console.log(puzzleAnswerInput);
             
             if(puzzleAnswerInput === this.puzzleAnswer){
-                
+                //error with puzzleAnswer 
                 this.puzzleInput = "";  
                 console.log("puzzle answered correctly")
-                this.$store.state.userData.currentItem.puzzleAnswer = true;
+               this.$store.state.userData.currentItem.puzzleAnswer = true;
                  this.puzzlePromptAnswered = true;
-                // console.log( "2" + this.puzzlePromptAnswered);
+
+                    this.$emit('refocus-on-puzzle');
+                 //have to change teh game item answer state to true
+                
 
                 //check if puzzle 3, then make the selected item gone
                     // in order to do so find teh id of the thing and then use splice to delete from gameItems
