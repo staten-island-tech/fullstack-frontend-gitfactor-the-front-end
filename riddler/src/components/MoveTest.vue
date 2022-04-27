@@ -46,7 +46,7 @@
         <img
           v-for="item in gameItems"
           :src="require(`@/assets/${item.img}`)"
-          :style="{ left: item.margin, width: item.width, filter: item.filter }"
+          :style="{ left: item.margin, width: item.width, bottom: item.bottom, filter: item.filter }"
           :alt="item"
           :key="item.key"
           :class="'section' + item.section"
@@ -595,10 +595,9 @@ h2 {
   left: -20%;
 }
 
-img {
+.item {
   z-index: -2;
   position: absolute;
-  bottom: 14%;
 }
 
 .item-popup img {
