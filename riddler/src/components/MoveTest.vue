@@ -78,8 +78,8 @@
         @refocus-on-puzzle="openPuzzlePopup"
         
         :puzzleAnswer="emittedPuzzleAnswer"
-        :puzzleVisibility="puzzlePopupVisilibility" 
-        :promptAnswered="puzzleQuestionCompleted"
+        :puzzleVisibility="puzzlePopupVisibility" 
+        :isPromptAnswered="puzzleQuestionCompleted"
         :inventoryItem="selectedInventoryItem"        
         :puzzleType ="emittedPuzzleType"
         ref="puzzlePopupBox"
@@ -158,7 +158,7 @@ export default {
       txtbx: false,
       textCount: -1,
       mainAnt: false,
-      puzzlePopupVisilibility: false,
+      puzzlePopupVisibility: false,
       selectedInventoryItem:"",
     
     };
@@ -173,7 +173,7 @@ export default {
   },
   methods: {  
     makeThePuzzleFinallyWork(){
-      this.puzzlePopupVisilibility = null;
+      this.puzzlePopupVisibility = null;
     },
     selectedInventoryItemName(name) {
       //this.selectedInventoryItem = (this.$store.state.userData.inventory.item.name);
@@ -328,8 +328,8 @@ export default {
 
         } else if (this.$store.state.userData.currentItem.itemType === "puzzle") {        
       
-            this.puzzlePopupVisilibility = true;
-           // console.log(this.puzzlePopupVisilibility);
+            this.puzzlePopupVisibility = true;
+          
             this.emittedPuzzleAnswer = this.$store.state.userData.currentItem.puzzleAnswer;           
             this.emittedPuzzleType = this.$store.state.userData.currentItem.puzzleType;
             this.puzzleQuestionCompleted = this.$store.state.userData.currentItem.puzzleCompleted;
@@ -366,7 +366,7 @@ export default {
     },
     closePuzzlePopup() { 
       this.enteredOnObject = false;
-      this.puzzlePopupVisilibility = false;
+      this.puzzlePopupVisibility = false;
       this.enablePlayerMovement();
     },
   

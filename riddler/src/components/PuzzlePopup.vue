@@ -24,8 +24,8 @@ v-on:keyup.enter="checkAnswerClick"
        <button @click="puzzle2ButtonClick(value.value)" class="puzzle-button" >{{value.value}}</button> 
        
     </div>
-    <div class="selected-item-div">
-        <h2 >selected:{{inventoryItem}}</h2>  <!-- v-show="selectedInventoryItemVisilibty" -->
+    <div class="selected-item-div" v-show="selectedItemDiv" >
+        <h2 >selected:{{inventoryItem}}</h2>  
     </div>
 
     </div>  
@@ -46,7 +46,7 @@ props: {
     puzzlePrompt: String,
     puzzleAnswer: String,
     puzzleType: Number,
-    promptAnswered: Boolean,
+    isPromptAnswered: Boolean,
     inventoryItem: String,
     },
 
@@ -57,6 +57,7 @@ props: {
     puzzleInputMaxLength: 10,
     puzzleButtonVisibility: false,
     puzzleInputDisabled: false,
+    selectedItemDiv: false,
     //selectedInventoryItemVisilibty = false,
 
     puzzlePromptAnswered: null,  //give each puzzle a string value 
@@ -77,15 +78,15 @@ props: {
     {
         puzzleVisibilityFunction() {
             if(this.puzzleVisibility === true){  //this checks everytime, mad annoying and prevents the correct screen from displaying 
-                this.puzzlePromptAnswered = this.promptAnswered;
-                console.log(this.puzzlePromptAnswered + " visibility boolean");
+                this.puzzlePromptAnswered = this.isPromptAnswered;
+                console.log(this.puzzlePromptAnswered + " visibility boolean");   // can be deleted
                 this.checkPuzzleType();
-                console.log(this.puzzleVisibility);
+                console.log(this.puzzleVisibility);   // can be deleted
                 this.$emit('testFunction');
                 return true;
             }
             else if(this.puzzleVisibility === null){
-               console.log(this.puzzleVisibility);
+               console.log(this.puzzleVisibility);    // can be deleted
                return true;
             }
 
@@ -101,23 +102,32 @@ props: {
         checkAnswerClick(){         //add door custom function where it sends you to next level     
             const puzzleAnswerInput = (this.puzzleInput.trim()).toLowerCase()
             console.log(puzzleAnswerInput);
-            
-            if(puzzleAnswerInput === this.puzzleAnswer){
+            if(this.puzzleType === 3){
+                if(puzzleAnswerInput === this.inventoryItem){
+                    console.log("puzzle 3 answered correctly")
+                    this.$store.state.userData.currentItem.puzzleCompleted = true;
+                    this.puzzlePromptAnswered = true;
+                     this.$emit('refocus-on-puzzle');
+                    //gotta delete the item
+
+                    //check if puzzle 3, then make the selected item gone
+                    // in order to do so find teh id of the thing and then use splice to delete from gameItems
+                }
+            else {
+                if(puzzleAnswerInput === this.puzzleAnswer){
                 //error with puzzleAnswer 
                 this.puzzleInput = "";  
                 console.log("puzzle answered correctly")
-               this.$store.state.userData.currentItem.puzzleAnswer = true;
+               this.$store.state.userData.currentItem.puzzleCompleted = true;
                  this.puzzlePromptAnswered = true;
 
                     this.$emit('refocus-on-puzzle');
-                 //have to change teh game item answer state to true
-                
+             }
 
-                //check if puzzle 3, then make the selected item gone
-                    // in order to do so find teh id of the thing and then use splice to delete from gameItems
-               
-                
                 }
+            }
+
+          
             else{
                 console.log('taking away 1 heart');
                 this.loseHeart(); 
@@ -149,12 +159,14 @@ props: {
                     console.log('puzzle 1');
                     this.puzzleButtonVisibility = false;
                     this.puzzleInputDisabled = false;
-                    //this.selectedInventoryItemVisilibty = false;
+                    this.selectedItemDiv = false;
+                    //this.selectedInventoryItemVisibility = false;
                 }
                 else if(this.puzzleType === 2) {
                     console.log('puzzle 2');
                     this.puzzleButtonVisibility = true;
                     this.puzzleInputDisabled = true;
+                    this.selectedItemDiv = false;
                     //this.selectedInventoryItemVisilibty = false;
                     this.puzzleInputMaxLength = 4;  //gotta add reusability 
                     console.log(this.puzzleInputMaxLength);
@@ -163,7 +175,9 @@ props: {
                     console.log('puzzle 3');
                     this.puzzleButtonVisibility = false;
                     this.puzzleInput = this.inventoryItem;
+                    this.selectedItemDiv = true;
                     //this.selectedInventoryItemVisilibty = true;
+                    //change teh input to the clicked item and disable the ability to edit the input tag
                 }
             }
         

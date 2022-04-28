@@ -104,20 +104,23 @@ export const state = {
         puzzleAnsweredText:
           "some random text or info that needs to be inserted 2",
       },
-      // {
-      //   name: "Puzzle 3",
-      //   id: 5,
-      //   position: 85,
-      //   margin: "85%",
-      //   img: require("../assets/chest.jpg"),
-      //   isInteractable: false,
-      //   filter: null,
-      //   itemType: "puzzle",
-      //   puzzleType: 3,
-      //   prompt: "the answer is a key",
-      //   puzzleAnswer: "key",
-      //   puzzleCompleted: false,
-      // },
+      {
+        name: "Puzzle 3",
+        id: 5,
+        section: 2,
+        position: 15,
+        margin: "15%",
+        img: "chest.jpg",
+        isInteractable: false,
+        filter: null,
+        itemType: "puzzle",
+        puzzleType: 3,
+        prompt: "the answer is mushroom",
+        puzzleAnswer: "Mushroom",
+        puzzleCompleted: false,
+        puzzleAnsweredText:
+          "some random text or info that needs to be inserted 3",
+      },
     ],
     // [], level 2
     // []  level 3
