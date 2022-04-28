@@ -2,7 +2,7 @@
   <div class="end-game-popup" 
     tabindex="-1"
     v-on:keyup.esc="$emit('closePopup')">
-      <h1>You have bested the Riddler!</h1>
+      <h2>You have bested the Riddler!</h2>
 
       <div class="btn-group">
          <button @click="$emit('resetData')" class="reset-btn">Let's do it again.</button>
@@ -54,7 +54,7 @@ export default {
     color: var(--background-color);
 }
 
-h1 {
+h2 {
     margin-top: 15rem;
 }
 
