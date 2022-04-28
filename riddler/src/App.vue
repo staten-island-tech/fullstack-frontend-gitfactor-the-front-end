@@ -2,7 +2,8 @@
   <div id="app">
     <div v-if="!AuthState.loading">
       <div v-if="!AuthState.isAuthenticated" class="login-page">
-        <h1>Enter the Tower</h1>
+        <h1>Riddler on the Roof</h1>
+        <h2>Enter the tower</h2>
         <button @click="login()" class="btn btn-primary">Login</button>
       </div>
 

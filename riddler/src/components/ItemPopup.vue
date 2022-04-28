@@ -3,9 +3,9 @@
   tabindex="-1"
   v-on:keyup.esc="$emit('closePopup')"
   v-on:keyup.enter="$emit('itemAdded')">
-    <h2>
+    <h4>
       <slot name="item-name"></slot>
-    </h2>
+    </h4>
     <button @click="$emit('closePopup')" class="close-btn">X</button>
     <slot name="item-img"></slot>
     <p>

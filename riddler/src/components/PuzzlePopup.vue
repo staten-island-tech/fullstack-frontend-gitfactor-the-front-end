@@ -8,7 +8,9 @@ v-on:keyup.enter="checkAnswerClick"
 >
   <button v-on:click="closePuzzleClick" class="close-puzzle-button">x</button>
     <!-- <h1 class="puzzleQuestionLine">{{puzzlePrompt}}</h1> -->
-  <slot name="puzzle-text"></slot>
+  <h4>
+    <slot name="puzzle-text"></slot>
+  </h4>
 
   <button class="puzzle-btn puzzleClearButton" @click="clearInputClick">Clear</button>
   <input type="text" class="puzzle-answer"
