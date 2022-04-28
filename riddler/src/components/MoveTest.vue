@@ -44,7 +44,7 @@
           class="bg-img"
         />
 
-        <EndGamePopup @closePopup="closeItemPopup()" @logOut="testConsole()" @resetData="resetData()" />
+        <TransitionPopup @closePopup="closeItemPopup()" @logOut="saveQuit()" @resetData="resetData()" />
 
         <div class="player" :style="cssProps" tabindex="-1" ref="playerMove">
           <img
@@ -130,13 +130,13 @@ import HeartBar from "./HeartBar.vue";
 import Inventory from "./Inventory.vue";
 import ItemPopup from "./ItemPopup.vue";
 import PuzzlePopup from "./PuzzlePopup.vue"; 
-import EndGamePopup from "./EndGamePopup.vue"; 
+import TransitionPopup from "./TransitionPopup.vue"; 
 
 
 export default {
   name: "MoveTest",
   components: {
-    HeartBar, Inventory, ItemPopup, PuzzlePopup, EndGamePopup
+    HeartBar, Inventory, ItemPopup, PuzzlePopup, TransitionPopup
   },
   created() {
     this.getUserData();
@@ -279,8 +279,8 @@ export default {
       }
     },
 
-    testConsole() {
-      console.log("lol no");
+    saveQuit() {
+      console.log("Save and Quit");
     },
     resetData() {
       console.log("nuclear option");
