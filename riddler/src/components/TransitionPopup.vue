@@ -1,7 +1,7 @@
 <template>
-  <div class="end-game-popup" 
+  <div class="transition-popup" 
     tabindex="-1"
-    v-on:keyup.esc="$emit('closePopup')">
+    v-on:keyup.esc="$emit('closeTransitionPopup')">
       <h2>You have bested the Riddler!</h2>
 
       <div class="btn-group">
@@ -29,7 +29,7 @@ export default {
 <style scoped>
 @import "../assets/global.css";
 
-.end-game-popup {
+.transition-popup {
     width: 100%;
     height: 100%;
     position: absolute;

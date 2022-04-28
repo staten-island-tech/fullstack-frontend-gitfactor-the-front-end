@@ -44,7 +44,7 @@
           class="bg-img"
         />
 
-        <TransitionPopup @closePopup="closeItemPopup()" @logOut="saveQuit()" @resetData="resetData()" />
+        <TransitionPopup class="tr-popup hide" ref="transitionPopupBox" @closePopup="closeItemPopup()" @logOut="saveQuit()" @resetData="resetData()" />
 
         <div class="player" :style="cssProps" tabindex="-1" ref="playerMove">
           <img
@@ -188,6 +188,7 @@ export default {
       gameItems: null,
       currentOST: "lv01",
       itemPopup: false,
+      transitionPopup:false,
       txtbx: false,
       textCount: -1,
       mainAnt: false,
@@ -415,6 +416,12 @@ export default {
     },
     openItemPopup() {
       this.$refs.itemPopupBox.$el.focus();
+    },
+    openTransitionPopup() {
+      this.$refs.transitionPopupBox.$el.focus();
+    },
+    closeTransitionPopup() {
+      this.transitionPopup = false;
     },
     closeItemPopup() {
       this.itemPopup = false;
