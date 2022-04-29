@@ -21,6 +21,12 @@ export const mutations = {
   decrementLevel(state) {
     state.level--;
   },
+  resetLevel(state) {
+    while (state.level > 1) {
+      state.level--;
+    }
+    console.log(state.level + "poggers");
+  },
   updateState(state, newState) {
     state.level = newState[0].level;
     state.section = newState[0].section;

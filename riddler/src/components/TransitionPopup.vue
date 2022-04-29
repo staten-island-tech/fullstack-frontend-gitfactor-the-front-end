@@ -1,7 +1,6 @@
 <template>
   <div class="transition-popup" 
-    tabindex="-1"
-    v-on:keyup.esc="$emit('closeTransitionPopup')">
+    tabindex="-1">
       <h2>You have bested the Riddler!</h2>
 
       <div class="btn-group">

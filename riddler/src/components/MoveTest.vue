@@ -1,7 +1,7 @@
 <template>
 
   <div class="game-page" :key="$store.state.userData.level">
-    <button @click="levelAdd" class="mobile-button">l+ratio</button>
+    <button @click="openTransitionPopup" class="mobile-button">l+ratio</button>
     <button @click="levelMinus" class="mobile-button">l-1</button>
 
     
@@ -44,7 +44,7 @@
           class="bg-img"
         />
 
-        <TransitionPopup class="tr-popup hide" ref="transitionPopupBox" @closePopup="closeItemPopup()" @logOut="saveQuit()" @resetData="resetData()" />
+        <TransitionPopup id="tr-popup" ref="transitionPopupBox" @logOut="saveQuit()" @resetData="resetData()" />
 
         <div class="player" :style="cssProps" tabindex="-1" ref="playerMove">
           <img
@@ -278,13 +278,6 @@ export default {
       }, 150);
       }
     },
-
-    saveQuit() {
-      console.log("Save and Quit");
-    },
-    resetData() {
-      console.log("nuclear option");
-    },
    
     reset() {
       this.stopWalkSfx();
@@ -418,10 +411,19 @@ export default {
       this.$refs.itemPopupBox.$el.focus();
     },
     openTransitionPopup() {
-      this.$refs.transitionPopupBox.$el.focus();
+      document.getElementById("tr-popup").classList.remove("hide");
     },
-    closeTransitionPopup() {
-      this.transitionPopup = false;
+    saveQuit() {
+      this.isFlashlightOn = true;
+      this.levelAdd();
+      console.log("Save and Quit");
+      this.closeTransitionPopup();
+    },
+    resetData() {
+      this.levelReset();
+      console.log("nuclear option");
+      this.closeTransitionPopup();
+      
     },
     closeItemPopup() {
       this.itemPopup = false;
@@ -434,6 +436,13 @@ export default {
       this.enablePlayerMovement();
     },
   
+      closeTransitionPopup() {
+      setTimeout(()=> {
+        document.getElementById("tr-popup").classList.add("hide");
+      },500);
+      this.enablePlayerMovement();
+    },
+
     txtbxShow() {
       const playerTxtSprite = document.getElementById("player-dialogue-sprite");
       const npcTxtSprite = document.getElementById("npc-dialogue-sprite");
@@ -477,6 +486,13 @@ export default {
       console.log(this.$store.state.userData.level);
       this.getUserData();
       this.levelChange();    
+      this.checkLevel();
+    },
+    levelReset() {
+      this.$store.commit('resetLevel');
+      console.log(this.$store.state.userData.level);
+      this.getUserData();
+      this.levelChange();  
       this.checkLevel();
     },
     flashlight() {
@@ -652,7 +668,7 @@ h2 {
   height: 2.5rem;
 }
 .dark {
-  filter: brightness(.1);
+  filter: brightness(1);
 }
 
 .fog {
