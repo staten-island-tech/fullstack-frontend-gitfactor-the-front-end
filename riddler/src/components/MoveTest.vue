@@ -181,7 +181,6 @@ export default {
       gameItems: null,
       currentOST: "lv01",
       itemPopup: false,
-      // riddlerRadio: true,
       textbox: false,
       playerDialogueSprite: null,
       npcDialogueSprite: null,
@@ -426,26 +425,32 @@ export default {
           Array.from(items).forEach((item) => {
             item.style.visibility = "hidden";
           });
-
-        // if (this.riddlerRadio) {
-        //   npcTxtSprite.style.filter = "brightness(0)";
-        // }
-
-        if (this.$store.state.userData.currentItem.dialogue[0].name !== "Me") {
+        if (this.$store.state.userData.currentItem.dialogue[0].name === "???") {
           if (this.textCount % 2 === 0) {
-            this.playerDialogueSprite = "filter: brightness(.5)";
-            this.npcDialogueSprite = "none";
-          } else {
-            this.playerDialogueSprite = "none";
-            this.npcDialogueSprite = "filter: brightness(.5)";
+              this.playerDialogueSprite = "filter: brightness(.5)";
+              this.npcDialogueSprite = "filter: brightness(0)";
+            } else {
+              this.playerDialogueSprite = "none";
+              this.npcDialogueSprite = "filter: brightness(0)";
+            }
           }
-        } else {
+        else {
+          if (this.$store.state.userData.currentItem.dialogue[0].name !== "Me") {
             if (this.textCount % 2 === 0) {
-            this.npcDialogueSprite = "filter: brightness(.5)";
-            this.playerDialogueSprite = "none";
+              this.playerDialogueSprite = "filter: brightness(.5)";
+              this.npcDialogueSprite = "none";
+            } else {
+              this.playerDialogueSprite = "none";
+              this.npcDialogueSprite = "filter: brightness(.5)";
+            }
           } else {
-            this.npcDialogueSprite = "none";
-            this.playerDialogueSprite = "filter: brightness(.5)";
+              if (this.textCount % 2 === 0) {
+              this.npcDialogueSprite = "filter: brightness(.5)";
+              this.playerDialogueSprite = "none";
+            } else {
+              this.npcDialogueSprite = "none";
+              this.playerDialogueSprite = "filter: brightness(.5)";
+            }
           }
         }
         

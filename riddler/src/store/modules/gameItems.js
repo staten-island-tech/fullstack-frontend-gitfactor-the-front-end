@@ -43,7 +43,7 @@ export const state = {
         margin: "20%",
         widthInt: 12,
         width: "12%",
-        bottom: "10%",
+        bottom: "14%",
         img: "lv1_prism.png",
         isInteractable: false,
         filter: null,
