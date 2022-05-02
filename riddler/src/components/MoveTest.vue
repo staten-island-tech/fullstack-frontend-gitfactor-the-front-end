@@ -8,66 +8,32 @@
       <h2>Lv. {{ $store.state.userData.level }}</h2>
       <HeartBar />
     </div>
-
-    <div v-if="$store.state.userData.level === 2" class="battery-meter">
-      <h2>{{ $store.state.userData.battery }}%</h2>
-      <div class="charge-container">
-        <div class="charge" :style="{ width: batteryPercentage }"></div>
-      </div>
-    </div>
     
     <div class="game-and-inventory">
-    <main class="game-contents" >
-      <div class="audio-container">
-        <audio id="audio-bgm" :src="require(`@/assets/audio/bgm/${currentOST}.mp3`)"></audio>
-        <audio id="walk-sfx" :src="require(`@/assets/audio/sfx/walkstep.mp3`)"></audio>
-      </div>
-
-    <div class="game-overlay">
-      <div
-        class="game-container"
-        id="game-viewport"
-        @keydown.right="rightMove()"
-        @keydown.left="leftMove()"
-        @keyup="reset()"
-        @keydown.z="onEnter()"
-      >
-        <img
-          :src="require(`@/assets/environment/lv1/${currentLocationImg}`)"
-          class="bg-img"
-        />
-        <div class="player" :style="cssProps" tabindex="-1" ref="playerMove">
-          <img
-            :src="require(`@/assets/sprites/${playerAvatar}`)"
-            class="player-avatar"
-          />
+      <main class="game-contents" >
+        <div class="audio-container">
+          <audio id="audio-bgm" :src="require(`@/assets/audio/bgm/${currentOST}.mp3`)"></audio>
+          <audio id="walk-sfx" :src="require(`@/assets/audio/sfx/walkstep.mp3`)"></audio>
         </div>
 
-        <img
-          v-for="item in gameItems"
-          :src="require(`@/assets/${item.img}`)"
-          :style="{ left: item.margin, width: item.width, bottom: item.bottom, filter: item.filter }"
-          :alt="item"
-          :key="item.key"
-          :class="'section' + item.section"
-          class="item hide"
-        />
-
-        <div :class="{ AC: mainAnt }" v-if="txtbx" class="textbox">
+      <div class="more-shit">
+        <div :style="{ border: `.3rem solid var(--${$store.state.userData.currentItem.dialogue[this.textCount].color})` }" v-if="textbox" class="textbox">
           <img
             :src="require(`@/assets/sprites/${player.dialogueSprite}`)"
+            :style="playerDialogueSprite"
             class="player-avatar-dialogue"
             id="player-dialogue-sprite"
           />
           <img
-            :src="require(`@/assets/sprites/${npcDialogueSprite}`)"
+            :src="require(`@/assets/sprites/${$store.state.userData.currentItem.dialogueSprite}`)"
+            :style="npcDialogueSprite"
             class="npc-avatar-dialogue"
             id="npc-dialogue-sprite"
           />
-          <p class="textbox-title">{{ this.$store.state.userData.currentItem.dialogue[this.textCount].name }}</p>
+          <p :style="{ color: `var(--${$store.state.userData.currentItem.dialogue[this.textCount].color})` }" class="textbox-title">{{ this.$store.state.userData.currentItem.dialogue[this.textCount].name }}</p>
           <p class="textbox-test typing-class">{{ this.$store.state.userData.currentItem.dialogue[this.textCount].text }}</p>
         </div>
-        
+            
         <ItemPopup @itemAdded="addToInventory()" v-if="itemPopup" @closePopup="closeItemPopup()" :item="currentItem" 
         ref="itemPopupBox">
           <template v-slot:item-name>
@@ -93,22 +59,61 @@
             {{$store.state.userData.currentItem.prompt}}
           </template>
         </PuzzlePopup>
+
+
+        <div v-if="$store.state.userData.level === 2" class="battery-meter">
+          <h2>{{ $store.state.userData.battery }}%</h2>
+          <div class="charge-container">
+            <div class="charge" :style="{ width: batteryPercentage }"></div>
+          </div>
+        </div>
+        <button v-if="$store.state.userData.level === 2" @click="flashlight()" class="flashlight"></button>
+
+        <div class="game-overlay">
+          <div
+            class="game-container"
+            id="game-viewport"
+            @keydown.right="rightMove()"
+            @keydown.left="leftMove()"
+            @keyup="reset()"
+            @keydown.z="onEnter()"
+        >
+          <img
+            :src="require(`@/assets/environment/lv1/${currentLocationImg}`)"
+            class="bg-img"
+          />
+          <div class="player" :style="cssProps" tabindex="-1" ref="playerMove">
+            <img
+              :src="require(`@/assets/sprites/${playerAvatar}`)"
+              class="player-avatar"
+            />
+          </div>
+
+          <img
+            v-for="item in gameItems"
+            :src="require(`@/assets/${item.img}`)"
+            :style="{ left: item.margin, width: item.width, bottom: item.bottom, filter: item.filter }"
+            :alt="item"
+            :key="item.key"
+            :class="'section' + item.section"
+            class="item hide"
+          />
+        </div>
       </div>
     </div>
 
-      <div class="mobile-button-container">
-        <button @mousedown="leftMove()" @mouseup="reset()" class="mobile-button">&lt;</button>
-        <button @click="onEnter()" class="mobile-button">Z</button>
-        <button @mousedown="rightMove()" @mouseup="reset()" class="mobile-button">&gt;</button>
-      </div>
-    </main>
+    <div class="mobile-button-container">
+      <button @mousedown="leftMove()" @mouseup="reset()" class="mobile-button">&lt;</button>
+      <button @click="onEnter()" class="mobile-button">Z</button>
+      <button @mousedown="rightMove()" @mouseup="reset()" class="mobile-button">&gt;</button>
+    </div>
+  </main>
     
-    <button v-if="$store.state.userData.level === 2" @click="flashlight()" class="flashlight"></button>
+  <Inventory v-if="$store.state.userData.inventory[0]"/>
 
-    <Inventory />
   </div>   
 
-  </div>
+</div>
 </template>
 
 <script>
@@ -144,7 +149,6 @@ export default {
         dialogueSprite: "sprite_dialogue_player.png",
       },
       playerAvatar: "idle-right.gif",
-      npcDialogueSprite: "sprite_dialogue_riddl.png",
       locations: [
         {
           assets: 
@@ -177,9 +181,11 @@ export default {
       gameItems: null,
       currentOST: "lv01",
       itemPopup: false,
-      txtbx: false,
+      // riddlerRadio: true,
+      textbox: false,
+      playerDialogueSprite: null,
+      npcDialogueSprite: null,
       textCount: -1,
-      mainAnt: false,
       puzzlePopupVisilibility: false,
       isFlashlightOn: false,
     };
@@ -362,7 +368,7 @@ export default {
           }, 10);
 
         } else if (this.$store.state.userData.currentItem.itemType === "character") {              
-          this.txtbxShow();
+          this.textboxShow();
 
         } else if (this.$store.state.userData.currentItem.itemType === "puzzle") {        
       
@@ -409,35 +415,51 @@ export default {
       this.enablePlayerMovement();
     },
   
-    txtbxShow() {
-      const playerTxtSprite = document.getElementById("player-dialogue-sprite");
-      const npcTxtSprite = document.getElementById("npc-dialogue-sprite");
-      
+    textboxShow() {
+      this.textbox = true;
       this.textCount += 1;
+      
       if (this.textCount < this.$store.state.userData.currentItem.dialogue.length) {
-        this.txtbx = true;
-        if (this.$store.state.userData.currentItem.dialogue[this.textCount].isAntagonist) {
-          this.mainAnt = true;
+        document.querySelector(".bg-img").style.filter = "brightness(0.3)";
+        document.querySelector(".player-avatar").style.display = "none";
+        const items = document.querySelectorAll(".item");
+          Array.from(items).forEach((item) => {
+            item.style.visibility = "hidden";
+          });
+
+        // if (this.riddlerRadio) {
+        //   npcTxtSprite.style.filter = "brightness(0)";
+        // }
+
+        if (this.$store.state.userData.currentItem.dialogue[0].name !== "Me") {
+          if (this.textCount % 2 === 0) {
+            this.playerDialogueSprite = "filter: brightness(.5)";
+            this.npcDialogueSprite = "none";
+          } else {
+            this.playerDialogueSprite = "none";
+            this.npcDialogueSprite = "filter: brightness(.5)";
+          }
         } else {
-          this.mainAnt = false;
+            if (this.textCount % 2 === 0) {
+            this.npcDialogueSprite = "filter: brightness(.5)";
+            this.playerDialogueSprite = "none";
+          } else {
+            this.npcDialogueSprite = "none";
+            this.playerDialogueSprite = "filter: brightness(.5)";
+          }
         }
-
-        this.npcDialogueSprite = this.$store.state.userData.currentItem.dialogueSprite;
-
-      if (this.mainAnt == true) {
-        playerTxtSprite.classList.add("avatar-dialogue-unfocus");
-        npcTxtSprite.classList.remove("avatar-dialogue-unfocus");
+        
       } else {
-        npcTxtSprite.classList.add("avatar-dialogue-unfocus");
-        playerTxtSprite.classList.remove("avatar-dialogue-unfocus");
-      }
-
-      } else {
-        this.txtbx = false;
+        document.querySelector(".bg-img").style.filter = "brightness(1)";
+        document.querySelector(".player-avatar").style.display = "block";
+        const items = document.querySelectorAll(".item");
+          Array.from(items).forEach((item) => {
+            item.style.visibility = 'visible';
+          });
+        this.textbox = false;
         this.enteredOnObject = false;
         this.textCount = -1;
       };
-
     },
     levelAdd() {
       this.$store.commit('incrementLevel');
@@ -488,6 +510,11 @@ h1 {
 h2 {
   font-size: var(--h4);
 }
+/* DO NOT DELETE THIS */
+img { 
+  position: absolute;
+}
+
 .game-page {
   margin: auto;
   display: inline-block;
@@ -501,6 +528,11 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.more-shit {
+  overflow: hidden;
+  border-radius: 1.5rem;
+  position: relative;
 }
 .game-overlay {
   overflow: hidden;
@@ -525,28 +557,30 @@ h2 {
 }
 .player-avatar {
   width: 20%;
-  z-index: -1;
+  z-index: -2;
   display: flex;
   position: absolute;
   bottom: 10%;
   left: var(--leftVar);
 }
 
-.player-avatar-dialogue {
+.item {
+  z-index: -3;
+}
+
+.player-avatar-dialogue,
+.npc-avatar-dialogue {
   width: 70%;
-  right: -20%;
-  bottom: -40vw;
+  right: -15%;
+  bottom: -45vw;
+  z-index: -1;
 }
 .npc-avatar-dialogue {
   width: 70%;
-  left: -17%;
-  bottom: -40vw;
+  left: -15%;
+  bottom: -45vw;
+  z-index: -1;
 }
-
-.avatar-dialogue-unfocus {
-  filter: brightness(50%);
-}
-
 .hide {
   display: none;
 }
@@ -563,15 +597,15 @@ h2 {
   width: 7.5rem;
   margin: 1rem;
 }
-.textbox {
-  border: #a60bbb 1rem solid;
-  background-color: #0e0b2b;
-  width: 100%;
-  min-height: 15%;
+.textbox {  
   position: absolute;
   bottom: 0;
+  background-color: #0e0b2b;
+  width: 100%;
+  min-height: 30%;
   padding: 2rem;
   padding-top: 1rem;
+  border-radius: 1rem;
 }
 .textbox-test,
 .textbox-title {
@@ -583,9 +617,6 @@ h2 {
 .textbox-title {
   font-size: 2.5rem;
 }
-.AC {
-  border: #370bda 1rem solid;
-}
 
 .bg-img {
   width: 130%;
@@ -595,25 +626,28 @@ h2 {
   left: -20%;
 }
 
-.item {
-  z-index: -2;
-  position: absolute;
-}
-
 .item-popup img {
   position: unset;
   margin-bottom: 3rem;
 }
 
 .flashlight {
+  position: absolute;
+  right: 5%;
+  top: 7%;
   background-color: #fff200;
   height: 5rem;
   width: 5rem;
   margin: 2rem;
   border-radius: 5rem;
+  z-index: 1;
 }
 .battery-meter {
+  position: absolute;
+  left: 5%;
+  top: 7%;
   margin-bottom: 1rem;
+  z-index: 2;
 }
 .charge-container {
   overflow: hidden;
