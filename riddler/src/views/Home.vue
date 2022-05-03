@@ -6,6 +6,7 @@
   </div>
   <div class="pagebg"></div>
     <button @click="addNewUser()">New user</button>
+    <button @click="authorize()">poop</button>
     <button @click="updateData($store.state.userData.id)">Update</button>
 </div>
 </template>
@@ -28,6 +29,15 @@ export default {
     this.getData();
   },
   methods: {
+    async authorize() {
+      try {
+        const response = await fetch("http://localhost:3000/authorized");
+        const data = await response.json();
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    },
     async getData() {
       try {
         const response = await fetch("http://localhost:3000/");
