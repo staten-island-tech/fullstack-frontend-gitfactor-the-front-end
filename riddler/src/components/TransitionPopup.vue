@@ -4,11 +4,11 @@
       <h2>You have bested the Riddler!</h2>
 
       <div class="btn-group">
-         <button @click="$emit('resetData')" class="reset-btn">Let's do it again.</button>
-         <button @click="$emit('logOut')" class="reset-btn">Get me out of here.</button>
+         <button @click="$emit('resetData')" class="reset-btn">{{phases.nextLevel.textEnd}}</button>
+         <button @click="$emit('nxtLvl')" class="reset-btn">{{phases.nextLevel.textNormal}}.</button>
       </div>
 
-      <h3>"Man, I'm hungry now. Wonder if the bloodcake store is still open?"</h3>
+      <h3>"L + Ratio + you tried to eat a vampire"</h3>
 
   </div>
 </template>
@@ -17,11 +17,33 @@
 
 /* reset button: wipes user data from the store, essentially the same as the "give up" but without the giving up 
 
-Get me out button: logs user out
+next floor button: adds 1 to floor
+
+when popup is triggered, if floor < 3 then send out the dulled version. if floor = 3 then send out the give up version
+
+button that gets replaced is reset/next floor, save + quit stays the same
+
 */
 
 export default {
-
+    props: ['endGamePhase'],
+    data() {
+        return {
+            phases: {
+                saveQuit: {
+                    textNormal: "Let's take a breather.",
+                    textEnd: "Get me out of here.",
+                },
+                nextLevel: {
+                    textNormal: "To the next floor.",
+                    textEnd: "Let's start from the beginning.",
+                }
+            }
+        }
+    }, 
+    methods() {
+        
+    }
 }
 </script>
 
