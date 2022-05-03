@@ -134,6 +134,43 @@ export const state = {
           },
         ],
       },
+      {
+        name: "Riddler",
+        id: 6,
+        section: 1,
+        position: 30,
+        margin: "30%",
+        widthInt: 20,
+        width: "20%",
+        bottom: "5%",
+        img: "sprites/sprite_dialogue_riddl.png",
+        isInteractable: false,
+        filter: null,
+        itemType: "character",
+        dialogueSprite: "sprite_dialogue_riddl.png",
+        dialogue: [
+          {
+            name: "???",
+            text: "Frick",
+            color: "riddler"
+          },
+          {
+            name: "Me",
+            text: "Frick",
+            color: "protagonist"
+          },
+          {
+            name: "???",
+            text: "Frick",
+            color: "riddler"
+          },
+          {
+            name: "Me",
+            text: "Frick",
+            color: "protagonist"
+          },
+        ],
+      },
     ],
     [
       {

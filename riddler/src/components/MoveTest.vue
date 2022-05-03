@@ -428,10 +428,10 @@ export default {
         if (this.$store.state.userData.currentItem.dialogue[0].name === "???") {
           if (this.textCount % 2 === 0) {
               this.playerDialogueSprite = "filter: brightness(.5)";
-              this.npcDialogueSprite = "filter: brightness(0)";
+              this.npcDialogueSprite = "filter: brightness(0.05)";
             } else {
               this.playerDialogueSprite = "none";
-              this.npcDialogueSprite = "filter: brightness(0)";
+              this.npcDialogueSprite = "filter: brightness(0.05)";
             }
           }
         else {
