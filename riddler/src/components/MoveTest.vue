@@ -76,6 +76,7 @@
         @turn-off="closePuzzlePopup" 
         @testFunction="makeThePuzzleFinallyWork"
         @refocus-on-puzzle="openPuzzlePopup"
+        @delete-item="deleteFromInventory"
         
         :puzzleAnswer="emittedPuzzleAnswer"
         :puzzleVisibility="puzzlePopupVisibility" 
@@ -353,8 +354,13 @@ export default {
       this.$store.state.userData.inventory.push(this.$store.state.userData.currentItem);
       this.closeItemPopup();
     },
+    deleteFromInventory() {
+      console.log(this.$store.state.userData.currentItem.id);
+      this.$store.state.userData.inventory.splice(this.$store.state.userData.currentItem.id, 1);
+      //this is not working :/
+    },
     openPuzzlePopup() {
-      this.$refs.puzzlePopupBox.$el.focus();// this not working
+      this.$refs.puzzlePopupBox.$el.focus();
     },
     openItemPopup() {
       this.$refs.itemPopupBox.$el.focus();

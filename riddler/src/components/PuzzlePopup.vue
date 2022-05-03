@@ -16,17 +16,18 @@ v-on:keyup.enter="checkAnswerClick"
     <div class="questionPrompt" v-else>
         <slot name="puzzle-text"></slot>
     <input type="text" class="puzzle-answer"
-    v-model="puzzleInput" :maxlength="puzzleInputMaxLength" :disabled="puzzleInputDisabled">
+    v-model="puzzleInput" :maxlength="puzzleInputMaxLength" :disabled="puzzleInputDisabled" v-show="puzzleInputVisibility">
+       <div class="selected-item-div" v-show="selectedItemDiv" >
+        <h2 >selected:{{inventoryItem}}</h2>  
+    </div>
     <button v-on:click="checkAnswerClick" class="puzzle-submit-button" >enter</button>
      <button class="puzzleClearButton" @click="clearInputClick"> clear </button>
-    <div class="keypad-button-div" v-for="value in buttonValues" :key="value.id" v-show= "puzzleButtonVisibility">
+    <div class="keypad-button-div" v-for="value in buttonValues" :key="value.id" v-show="puzzleButtonVisibility">
         
        <button @click="puzzle2ButtonClick(value.value)" class="puzzle-button" >{{value.value}}</button> 
        
     </div>
-    <div class="selected-item-div" v-show="selectedItemDiv" >
-        <h2 >selected:{{inventoryItem}}</h2>  
-    </div>
+ 
 
     </div>  
     
@@ -38,7 +39,7 @@ v-on:keyup.enter="checkAnswerClick"
 
 export default {
     name: "PuzzlePopup",
-    emits: ["turn-off","testFunction", "refocus-on-puzzle"],
+    emits: ["turn-off","testFunction", "refocus-on-puzzle", "delete-item"],
   
 
 props: {
@@ -58,7 +59,8 @@ props: {
     puzzleButtonVisibility: false,
     puzzleInputDisabled: false,
     selectedItemDiv: false,
-    //selectedInventoryItemVisilibty = false,
+    puzzleInputVisibility: true,
+    
 
     puzzlePromptAnswered: null,  //give each puzzle a string value 
     
@@ -103,19 +105,17 @@ props: {
             const puzzleAnswerInput = (this.puzzleInput.trim()).toLowerCase()
             console.log(puzzleAnswerInput);
             if(this.puzzleType === 3){
-                if(puzzleAnswerInput === this.inventoryItem){
+                if(this.inventoryItem === this.puzzleAnswer){
                     console.log("puzzle 3 answered correctly")
                     this.$store.state.userData.currentItem.puzzleCompleted = true;
                     this.puzzlePromptAnswered = true;
                      this.$emit('refocus-on-puzzle');
-                    //gotta delete the item
-
-                    //check if puzzle 3, then make the selected item gone
-                    // in order to do so find teh id of the thing and then use splice to delete from gameItems
+                     this.$emit('delete-item');
+                   
                 }
             else {
                 if(puzzleAnswerInput === this.puzzleAnswer){
-                //error with puzzleAnswer 
+                
                 this.puzzleInput = "";  
                 console.log("puzzle answered correctly")
                this.$store.state.userData.currentItem.puzzleCompleted = true;
@@ -160,6 +160,7 @@ props: {
                     this.puzzleButtonVisibility = false;
                     this.puzzleInputDisabled = false;
                     this.selectedItemDiv = false;
+                    this.puzzleInputVisibility= true;
                     //this.selectedInventoryItemVisibility = false;
                 }
                 else if(this.puzzleType === 2) {
@@ -167,6 +168,7 @@ props: {
                     this.puzzleButtonVisibility = true;
                     this.puzzleInputDisabled = true;
                     this.selectedItemDiv = false;
+                    this.puzzleInputVisibility= true;
                     //this.selectedInventoryItemVisilibty = false;
                     this.puzzleInputMaxLength = 4;  //gotta add reusability 
                     console.log(this.puzzleInputMaxLength);
@@ -176,6 +178,8 @@ props: {
                     this.puzzleButtonVisibility = false;
                     this.puzzleInput = this.inventoryItem;
                     this.selectedItemDiv = true;
+                    this.puzzleInputDisabled = true;
+                    this.puzzleInputVisibility= false;
                     //this.selectedInventoryItemVisilibty = true;
                     //change teh input to the clicked item and disable the ability to edit the input tag
                 }
