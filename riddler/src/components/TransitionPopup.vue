@@ -1,14 +1,12 @@
 <template>
   <div class="transition-popup" 
     tabindex="-1">
-      <h2>You have bested the Riddler!</h2>
+      <h2>{{titleText}}</h2>
 
       <div class="btn-group">
-         <button @click="$emit('resetData')" class="reset-btn">{{phases.nextLevel.textEnd}}</button>
-         <button @click="$emit('nxtLvl')" class="reset-btn">{{phases.nextLevel.textNormal}}.</button>
+         <button @click="$emit(buttonData.nextLevel.emitEnd)" class="reset-btn">{{buttonData.saveQuit.textNormal}}</button>
+         <button @click="checkEndGame" class="reset-btn">{{buttonData.nextLevel.textNormal}}</button>
       </div>
-
-      <h3>"L + Ratio + you tried to eat a vampire"</h3>
 
   </div>
 </template>
@@ -29,21 +27,40 @@ export default {
     props: ['endGamePhase'],
     data() {
         return {
-            phases: {
+            titleText: "The Door of Dimensions beckons...", 
+            buttonData: {
                 saveQuit: {
                     textNormal: "Let's take a breather.",
-                    textEnd: "Get me out of here.",
+                    emitNormal: "saveQuit",
                 },
                 nextLevel: {
                     textNormal: "To the next floor.",
                     textEnd: "Let's start from the beginning.",
+                    emitNormal: "nextLevel",
+                    emitEnd: "resetData"
                 }
-            }
+            },
+
+            
         }
     }, 
-    methods() {
+    methods: {
+        checkEndGame() {
+            if (this.$store.state.userData.level >= 3) {
+                this.$emit(this.buttonData.nextLevel.emitEnd);      
+                } else {
+                if (this.$store.state.userData.level === 2) {
+                this.buttonData.nextLevel.textNormal == "pog";
+                };
+                this.$emit(this.buttonData.nextLevel.emitNormal);
+
+                
+
+                };
+            
+        },
         
-    }
+    },
 }
 </script>
 

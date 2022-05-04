@@ -44,7 +44,7 @@
           class="bg-img"
         />
 
-        <TransitionPopup id="tr-popup" ref="transitionPopupBox" @nxtLvl="nextLevel()" @resetData="resetData()" />
+        <TransitionPopup id="tr-popup" ref="transitionPopupBox" @nextLevel="nextLevel()" @resetData="resetData()" />
 
         <div class="player" :style="cssProps" tabindex="-1" ref="playerMove">
           <img
@@ -189,7 +189,6 @@ export default {
       currentOST: "lv01",
       itemPopup: false,
       transitionPopup:false,
-      endGamePhase:false,
       txtbx: false,
       textCount: -1,
       mainAnt: false,
@@ -412,12 +411,6 @@ export default {
       this.$refs.itemPopupBox.$el.focus();
     },
     openTransitionPopup() {
-      if (this.$store.state.userData.level >= 3) {
-        this.endGamePhase === true        
-      } else {
-        this.endGamePhase === false
-      };
-
       document.getElementById("tr-popup").classList.remove("hide");
     },
     nextLevel() {
