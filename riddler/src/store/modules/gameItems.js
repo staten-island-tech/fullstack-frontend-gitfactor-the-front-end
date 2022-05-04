@@ -80,6 +80,7 @@ export const state = {
         filter: null,
         itemType: "puzzle",
         puzzleType: 1,
+        isLevelTransitionPuzzle: true,
         prompt: "the answer is one",
         puzzleAnswer: "one",
         puzzleCompleted: false,
@@ -97,6 +98,7 @@ export const state = {
         filter: null,
         itemType: "puzzle",
         puzzleType: 2,
+        isLevelTransitionPuzzle: false,
         prompt: "the answer is 1234",
         //4 answer cuz puzzle 2
         puzzleAnswer: "1234",
@@ -115,6 +117,7 @@ export const state = {
         filter: null,
         itemType: "puzzle",
         puzzleType: 3,
+        isLevelTransitionPuzzle: false,
         prompt: "the answer is mushroom",
         puzzleAnswer: "Mushroom",
         puzzleCompleted: false,

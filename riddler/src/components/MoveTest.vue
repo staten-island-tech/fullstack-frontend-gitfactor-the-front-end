@@ -74,15 +74,17 @@
 
     <PuzzlePopup  
         @turn-off="closePuzzlePopup" 
-        @testFunction="makeThePuzzleFinallyWork"
+        @reset-visibility="makeThePuzzleFinallyWork"
         @refocus-on-puzzle="openPuzzlePopup"
         @delete-item="deleteFromInventory"
+        @next-level="openTransitionPopup"
         
         :puzzleAnswer="emittedPuzzleAnswer"
         :puzzleVisibility="puzzlePopupVisibility" 
         :isPromptAnswered="puzzleQuestionCompleted"
         :inventoryItem="selectedInventoryItem"        
         :puzzleType ="emittedPuzzleType"
+        :isLevelTransitionPuzzle="isLevelTransitionPuzzleValue"
         ref="puzzlePopupBox"
         >
         <template v-slot:puzzle-text>
@@ -161,6 +163,7 @@ export default {
       mainAnt: false,
       puzzlePopupVisibility: false,
       selectedInventoryItem:"",
+      isLevelTransitionPuzzleValue:null,
     
     };
   },
@@ -173,6 +176,7 @@ export default {
     },
   },
   methods: {  
+   
     makeThePuzzleFinallyWork(){
       this.puzzlePopupVisibility = null;
     },
@@ -334,6 +338,7 @@ export default {
             this.emittedPuzzleAnswer = this.$store.state.userData.currentItem.puzzleAnswer;           
             this.emittedPuzzleType = this.$store.state.userData.currentItem.puzzleType;
             this.puzzleQuestionCompleted = this.$store.state.userData.currentItem.puzzleCompleted;
+            this.isLevelTransitionPuzzleValue = this.$store.state.userData.currentItem.isLevelTransitionPuzzle;
             setTimeout(() => {   
               this.openPuzzlePopup();  
             }, 10);

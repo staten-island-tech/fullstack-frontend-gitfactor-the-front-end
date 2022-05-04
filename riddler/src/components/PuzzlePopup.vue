@@ -23,7 +23,7 @@ v-on:keyup.enter="checkAnswerClick"
     <button v-on:click="checkAnswerClick" class="puzzle-submit-button" >enter</button>
      <button class="puzzleClearButton" @click="clearInputClick"> clear </button>
     <div class="keypad-button-div" v-for="value in buttonValues" :key="value.id" v-show="puzzleButtonVisibility">
-        
+    
        <button @click="puzzle2ButtonClick(value.value)" class="puzzle-button" >{{value.value}}</button> 
        
     </div>
@@ -39,7 +39,7 @@ v-on:keyup.enter="checkAnswerClick"
 
 export default {
     name: "PuzzlePopup",
-    emits: ["turn-off","testFunction", "refocus-on-puzzle", "delete-item"],
+    emits: ["turn-off","reset-visibility", "refocus-on-puzzle", "delete-item", "next-level"],
   
 
 props: {
@@ -49,6 +49,7 @@ props: {
     puzzleType: Number,
     isPromptAnswered: Boolean,
     inventoryItem: String,
+    isLevelTransitionPuzzle: Boolean,
     },
 
     data() {
@@ -84,7 +85,7 @@ props: {
                 console.log(this.puzzlePromptAnswered + " visibility boolean");   // can be deleted
                 this.checkPuzzleType();
                 console.log(this.puzzleVisibility);   // can be deleted
-                this.$emit('testFunction');
+                this.$emit('reset-visibility');
                 return true;
             }
             else if(this.puzzleVisibility === null){
@@ -103,6 +104,7 @@ props: {
         },
         checkAnswerClick(){         //add door custom function where it sends you to next level     
             const puzzleAnswerInput = (this.puzzleInput.trim()).toLowerCase()
+            
             console.log(puzzleAnswerInput);
             if(this.puzzleType === 3){
                 if(this.inventoryItem === this.puzzleAnswer){
@@ -111,8 +113,12 @@ props: {
                     this.puzzlePromptAnswered = true;
                      this.$emit('refocus-on-puzzle');
                      this.$emit('delete-item');
+                     this.levelTransition();
+                       this.loseHeart(); 
+                       //this.inventoryItem ="";
                    
                 }
+            }
             else {
                 if(puzzleAnswerInput === this.puzzleAnswer){
                 
@@ -122,16 +128,22 @@ props: {
                  this.puzzlePromptAnswered = true;
 
                     this.$emit('refocus-on-puzzle');
-             }
-
+                    this.levelTransition();
                 }
-            }
-
-          
-            else{
+                else {
                 console.log('taking away 1 heart');
                 this.loseHeart(); 
                 this.puzzleInput = "";  
+                 }
+
+             }
+            
+         
+        },
+        levelTransition(){
+            if(this.isLevelTransitionPuzzle === true){
+            console.log("door opened trying to go to next level");
+           //this.$emit('next-level');
             }
         },
           loseHeart() { // move to component 
