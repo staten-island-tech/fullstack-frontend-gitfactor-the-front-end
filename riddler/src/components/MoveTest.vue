@@ -209,8 +209,7 @@ export default {
   },
   methods: {
     enablePlayerMovement() {
-      this.$refs.playerMove.focus();  
-      console.log('done');    
+      this.$refs.playerMove.focus();     
     },
     getUserData() {
       this.currentLocationImg = this.locations[this.$store.state.userData.level - 1].assets[this.$store.state.userData.section - 1].img;
@@ -218,18 +217,15 @@ export default {
     },
     checkLevel() {
       if (this.$store.state.userData.level === 1) {
-        console.log("level 1");
           document.querySelector(".game-overlay").classList.add("game-overlay");
       } 
       if (this.$store.state.userData.level === 2) {
-        console.log("level 2");
         setTimeout(() => {
           document.querySelector(".game-overlay").classList.add("dark");
 
         }, 0)      
       } 
       if (this.$store.state.userData.level === 3) {
-        console.log("level 3");
         setTimeout(() => {
           document.querySelector(".game-overlay").classList.add("fog");
         }, 0)      
@@ -308,7 +304,7 @@ export default {
         this.currentOST = this.locations[this.$store.state.userData.level - 1].assets[this.$store.state.userData.section - 1].ost;
         this.unhideItem();
         this.playAudio();
-      }, 300);
+      }, 10);
     },
     sectionChangeAnim() {
       var transition = gsap.fromTo(".game-container", {
@@ -355,7 +351,6 @@ export default {
         if ((item.section === this.$store.state.userData.section) && ((this.$store.state.userData.leftValue + 8) >= itemLeft && (this.$store.state.userData.leftValue + 10) <= itemRight)) { //checks if avatar is in range of item
             item.isInteractable = true;
             this.$store.state.userData.currentItem = item;
-            console.log('in range');
             item.filter = "brightness(55%)";
         } else {
           item.isInteractable = false;
@@ -411,17 +406,17 @@ export default {
       this.$refs.itemPopupBox.$el.focus();
     },
     openTransitionPopup() {
+      this.$refs.transitionPopupBox.prepEndGame();
+      
       document.getElementById("tr-popup").classList.remove("hide");
     },
     nextLevel() {
       this.isFlashlightOn = true;
       this.levelAdd();
-      console.log("next level");
       this.closeTransitionPopup();
     },
     resetData() {
       this.levelReset();
-      console.log("levelreset");
       this.closeTransitionPopup();
       
     },
@@ -439,7 +434,7 @@ export default {
       closeTransitionPopup() {
       setTimeout(()=> {
         document.getElementById("tr-popup").classList.add("hide");
-      },500);
+      },40);
       this.enablePlayerMovement();
     },
 
@@ -475,22 +470,19 @@ export default {
     },
     levelAdd() {
       this.$store.commit('incrementLevel');
-      console.log(this.$store.state.userData.level);
       this.getUserData();
       this.levelChange();
-      setTimeout(()=> {this.$store.state.userData.leftValue = 40;}, 250);
+      this.$store.state.userData.leftValue = 40;
       this.checkLevel();
     },
     levelMinus() {
       this.$store.commit('decrementLevel');
-      console.log(this.$store.state.userData.level);
       this.getUserData();
       this.levelChange();    
       this.checkLevel();
     },
     levelReset() {
       this.$store.commit('resetLevel');
-      console.log(this.$store.state.userData.level);
       this.getUserData();
       this.levelChange();  
       this.checkLevel();
