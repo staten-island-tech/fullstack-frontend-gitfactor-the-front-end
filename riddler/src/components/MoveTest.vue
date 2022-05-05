@@ -163,6 +163,7 @@ export default {
       mainAnt: false,
       puzzlePopupVisibility: false,
       selectedInventoryItem:"",
+      selectedInventoryItemId: 0,
       isLevelTransitionPuzzleValue:null,
     
     };
@@ -182,11 +183,10 @@ export default {
     makeThePuzzleFinallyWork(){
       this.puzzlePopupVisibility = null;
     },
-    selectedInventoryItemName(name) {
-      //this.selectedInventoryItem = (this.$store.state.userData.inventory.item.name);
-      //console.log(this.selectedInventoryItem);
-      console.log(name);
+    selectedInventoryItemName(name, id) {
       this.selectedInventoryItem = name;
+      console.log(name);
+      this.selectedInventoryItemId = id;
     },
     enablePlayerMovement() {
       this.$refs.playerMove.focus();  
@@ -362,11 +362,8 @@ export default {
       this.closeItemPopup();
     },
     deleteFromInventory() {
-      console.log(this.$store.state.userData.currentItem.id);
-      this.$store.state.userData.inventory.splice(this.$store.state.userData.currentItem.id, 1);
-      console.log(this.$store.state.userData.inventory);
-      // /this.$store.state.userData.currentItem.id is not the right value of the id of the inventory item in the array
-      //this is not working :/
+      console.log(this.selectedInventoryItemId);
+      this.$store.state.userData.inventory.splice(this.selectedInventoryItemId, 1);
     },
     openPuzzlePopup() {
       this.$refs.puzzlePopupBox.$el.focus();
