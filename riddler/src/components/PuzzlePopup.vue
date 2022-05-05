@@ -81,14 +81,14 @@ props: {
         puzzleVisibilityFunction() {
             if(this.puzzleVisibility === true){  //this checks everytime, mad annoying and prevents the correct screen from displaying 
                 this.puzzlePromptAnswered = this.isPromptAnswered;
-                console.log(this.puzzlePromptAnswered + " visibility boolean");   // can be deleted
+                //console.log(this.puzzlePromptAnswered + " visibility boolean");   // can be deleted
                 this.checkPuzzleType();
-                console.log(this.puzzleVisibility);   // can be deleted
+                //console.log(this.puzzleVisibility);   // can be deleted
                 this.$emit('reset-visibility');
                 return true;
             }
             else if(this.puzzleVisibility === null){
-               console.log(this.puzzleVisibility);    // can be deleted
+              // console.log(this.puzzleVisibility);    // can be deleted
                return true;
             }
 
@@ -183,7 +183,8 @@ props: {
                     this.puzzleInputVisibility= true;
                     //this.selectedInventoryItemVisilibty = false;
                     this.puzzleInputMaxLength = 4;  //gotta add reusability 
-                    console.log(this.puzzleInputMaxLength);
+                    
+                    //if this is true pull the value from gameItems.js
                 }
                 else if(this.puzzleType === 3) {
                     console.log('puzzle 3');
