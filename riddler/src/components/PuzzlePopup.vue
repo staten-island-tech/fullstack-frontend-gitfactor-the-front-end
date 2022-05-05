@@ -74,7 +74,6 @@ props: {
  
         }
         },
-     
 
  
     methods:
@@ -97,15 +96,15 @@ props: {
                 return false;
             }
         },
-     closePuzzleClick(){
+        closePuzzleClick(){
             this.$emit('turn-off'); 
             this.puzzleInput = "";       
 
         },
-        checkAnswerClick(){         //add door custom function where it sends you to next level     
+        checkAnswerClick(){             
             const puzzleAnswerInput = (this.puzzleInput.trim()).toLowerCase()
-            
             console.log(puzzleAnswerInput);
+            
             if(this.puzzleType === 3){
                 if(this.inventoryItem === this.puzzleAnswer){
                     console.log("puzzle 3 answered correctly")
@@ -113,27 +112,28 @@ props: {
                     this.puzzlePromptAnswered = true;
                      this.$emit('refocus-on-puzzle');
                      this.$emit('delete-item');
-                     this.levelTransition();
+                     this.levelTransition();                  
+                                         
+                }
+                 else {
                        this.loseHeart(); 
-                       //this.inventoryItem ="";
-                   
                 }
             }
             else {
-                if(puzzleAnswerInput === this.puzzleAnswer){
-                
-                this.puzzleInput = "";  
-                console.log("puzzle answered correctly")
-               this.$store.state.userData.currentItem.puzzleCompleted = true;
-                 this.puzzlePromptAnswered = true;
+                if(puzzleAnswerInput === this.puzzleAnswer){                
+                    this.puzzleInput = "";  
+                    console.log("puzzle answered correctly")
+                    this.$store.state.userData.currentItem.puzzleCompleted = true;
+                    this.puzzlePromptAnswered = true;
 
                     this.$emit('refocus-on-puzzle');
                     this.levelTransition();
                 }
+
                 else {
-                console.log('taking away 1 heart');
-                this.loseHeart(); 
-                this.puzzleInput = "";  
+                    console.log('taking away 1 heart');
+                    this.loseHeart(); 
+                    this.puzzleInput = "";  
                  }
 
              }
@@ -146,7 +146,7 @@ props: {
            //this.$emit('next-level');
             }
         },
-          loseHeart() { // move to component 
+        loseHeart() { // move to component 
              this.$store.commit('decrementLives');
         },
 
@@ -193,7 +193,7 @@ props: {
                     this.puzzleInputDisabled = true;
                     this.puzzleInputVisibility= false;
                     //this.selectedInventoryItemVisilibty = true;
-                    //change teh input to the clicked item and disable the ability to edit the input tag
+                    
                 }
             }
         

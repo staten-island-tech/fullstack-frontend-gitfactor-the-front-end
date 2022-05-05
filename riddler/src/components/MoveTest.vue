@@ -176,7 +176,9 @@ export default {
     },
   },
   methods: {  
-   
+    openTransitionPopup(){
+      console.log('opening the transition thingie');
+    },
     makeThePuzzleFinallyWork(){
       this.puzzlePopupVisibility = null;
     },
@@ -362,6 +364,8 @@ export default {
     deleteFromInventory() {
       console.log(this.$store.state.userData.currentItem.id);
       this.$store.state.userData.inventory.splice(this.$store.state.userData.currentItem.id, 1);
+      console.log(this.$store.state.userData.inventory);
+      // /this.$store.state.userData.currentItem.id is not the right value of the id of the inventory item in the array
       //this is not working :/
     },
     openPuzzlePopup() {
