@@ -85,6 +85,7 @@
         :inventoryItem="selectedInventoryItem"        
         :puzzleType ="emittedPuzzleType"
         :isLevelTransitionPuzzle="isLevelTransitionPuzzleValue"
+        :puzzle2ButtonArray="puzzle2ButtonChoices"
         ref="puzzlePopupBox"
         >
         <template v-slot:puzzle-text>
@@ -165,6 +166,7 @@ export default {
       selectedInventoryItem:"",
       selectedInventoryItemId: 0,
       isLevelTransitionPuzzleValue:null,
+      puzzle2ButtonChoices:[],
     
     };
   },
@@ -341,6 +343,8 @@ export default {
             this.emittedPuzzleType = this.$store.state.userData.currentItem.puzzleType;
             this.puzzleQuestionCompleted = this.$store.state.userData.currentItem.puzzleCompleted;
             this.isLevelTransitionPuzzleValue = this.$store.state.userData.currentItem.isLevelTransitionPuzzle;
+            this.puzzle2ButtonChoices = this.$store.state.userData.currentItem.buttonChoices;
+            
             setTimeout(() => {   
               this.openPuzzlePopup();  
             }, 10);

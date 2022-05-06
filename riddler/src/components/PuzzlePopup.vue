@@ -22,7 +22,7 @@ v-on:keyup.enter="checkAnswerClick"
     </div>
     <button v-on:click="checkAnswerClick" class="puzzle-submit-button" >enter</button>
      <button class="puzzleClearButton" @click="clearInputClick"> clear </button>
-    <div class="keypad-button-div" v-for="value in buttonValues" :key="value.id" v-show="puzzleButtonVisibility">
+    <div class="keypad-button-div" v-for="value in puzzle2ButtonArray" :key="value.id" v-show="puzzleButtonVisibility">
     
        <button @click="puzzle2ButtonClick(value.value)" class="puzzle-button" >{{value.value}}</button> 
        
@@ -50,6 +50,7 @@ props: {
     isPromptAnswered: Boolean,
     inventoryItem: String,
     isLevelTransitionPuzzle: Boolean,
+    puzzle2ButtonArray: Array,
     },
 
     data() {
@@ -65,12 +66,7 @@ props: {
 
     puzzlePromptAnswered: null,  //give each puzzle a string value 
     
-    buttonValues: [
-        {value: "1", id: 1},
-        {value: "2", id: 2},
-        {value: "3", id: 3},
-        {value: "4", id:4},
-    ],
+    buttonValues: [],
  
         }
         },
@@ -177,14 +173,14 @@ props: {
                 }
                 else if(this.puzzleType === 2) {
                     console.log('puzzle 2');
+                    
                     this.puzzleButtonVisibility = true;
                     this.puzzleInputDisabled = true;
                     this.selectedItemDiv = false;
                     this.puzzleInputVisibility= true;
-                    //this.selectedInventoryItemVisilibty = false;
-                    this.puzzleInputMaxLength = 4;  //gotta add reusability 
+                    this.puzzleInputMaxLength = 4; 
                     
-                    //if this is true pull the value from gameItems.js
+                  
                 }
                 else if(this.puzzleType === 3) {
                     console.log('puzzle 3');
