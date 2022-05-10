@@ -3,8 +3,8 @@
     tabindex="-1">
       <h2>{{titleText}}</h2>
 
-      <div class="btn-group">
-         <button @click="$emit('saveQuit');" class="save-btn reset-btn" id="end-btn">{{leftBtnText}}</button>
+      <div class="btn-group" :key="titleText">
+         <button @click="$emit('saveQuit');" class="reset-btn" id="end-btn">{{leftBtnText}}</button>
          <button @click="checkEndGame" class="reset-btn">{{rightBtnText}}</button>
       </div>
 
@@ -49,22 +49,25 @@ export default {
     }, 
     methods: {
         prepEndGame() {
-            if (this.$store.state.userData.level >= 3) {
+            setTimeout(()=> {if (this.$store.state.userData.level >= 3) {
                 this.titleText = "You have defeated the Riddler!";
                 this.leftBtnText = this.buttonData.saveQuit.textEnd;     
                 this.rightBtnText = this.buttonData.nextLevel.textEnd;     
-                document.getElementById("end-btn").classList.remove("save-btn");
+                document.getElementById("end-btn").classList.add("save-btn");
+                console.log(document.getElementById("end-btn"));
                 } else {
                 this.titleText = "The Door of Dimensions beckons...";
                 this.leftBtnText = this.buttonData.saveQuit.textNormal;     
                 this.rightBtnText = this.buttonData.nextLevel.textNormal;
                 };
+            },100);
+            
             
         },
         checkEndGame() {
             if (this.$store.state.userData.level >= 3) {
                 this.$emit(this.buttonData.nextLevel.emitEnd);      
-                document.getElementById("end-btn").classList.remove("save-btn");
+                document.getElementById("end-btn").classList.add("save-btn");
                 } else {
                 this.$emit(this.buttonData.nextLevel.emitNormal);
 

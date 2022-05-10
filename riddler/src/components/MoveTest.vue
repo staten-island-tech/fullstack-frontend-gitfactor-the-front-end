@@ -407,8 +407,8 @@ export default {
     },
     openTransitionPopup() {
       this.$refs.transitionPopupBox.prepEndGame();
+      setTimeout(()=>{document.getElementById("tr-popup").classList.remove("hide");},50);
       
-      document.getElementById("tr-popup").classList.remove("hide");
     },
     nextLevel() {
       this.isFlashlightOn = true;
