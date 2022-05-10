@@ -4,7 +4,7 @@
       <h2>{{titleText}}</h2>
 
       <div class="btn-group">
-         <button @click="$emit(buttonData.nextLevel.emitEnd)" class="reset-btn">{{leftBtnText}}</button>
+         <button @click="$emit('saveQuit');" class="save-btn reset-btn" id="end-btn">{{leftBtnText}}</button>
          <button @click="checkEndGame" class="reset-btn">{{rightBtnText}}</button>
       </div>
 
@@ -53,6 +53,7 @@ export default {
                 this.titleText = "You have defeated the Riddler!";
                 this.leftBtnText = this.buttonData.saveQuit.textEnd;     
                 this.rightBtnText = this.buttonData.nextLevel.textEnd;     
+                document.getElementById("end-btn").classList.remove("save-btn");
                 } else {
                 this.titleText = "The Door of Dimensions beckons...";
                 this.leftBtnText = this.buttonData.saveQuit.textNormal;     
@@ -63,10 +64,8 @@ export default {
         checkEndGame() {
             if (this.$store.state.userData.level >= 3) {
                 this.$emit(this.buttonData.nextLevel.emitEnd);      
+                document.getElementById("end-btn").classList.remove("save-btn");
                 } else {
-                if (this.$store.state.userData.level === 2) {
-                this.buttonData.nextLevel.textNormal == "pog";
-                };
                 this.$emit(this.buttonData.nextLevel.emitNormal);
 
                 
@@ -105,6 +104,10 @@ export default {
     border: none;
     border-radius: 1rem;
     color: var(--background-color);
+}
+
+.save-btn {
+    display: none;
 }
 
 h2 {

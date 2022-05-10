@@ -1,7 +1,7 @@
 <template>
   <div class="background">
-    <div class="home" v-if="isLoggedIn">
-      <MoveTest class="game" />
+    <div class="home"  v-if="isLoggedIn">
+      <MoveTest class="game" @saveQuit="logout()" />
       <div class="solid"></div>
     </div>
   </div>
@@ -35,7 +35,11 @@ export default {
       } catch (error) {
         console.log(error);
       }
-    }
+    },
+    logout() {
+      console.log("save n quit uwu");
+      
+    },
   }
 };
 </script>

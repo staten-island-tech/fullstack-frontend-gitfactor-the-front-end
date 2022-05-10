@@ -44,7 +44,7 @@
           class="bg-img"
         />
 
-        <TransitionPopup id="tr-popup" ref="transitionPopupBox" @nextLevel="nextLevel()" @resetData="resetData()" />
+        <TransitionPopup id="tr-popup" ref="transitionPopupBox" @nextLevel="nextLevel()" @resetData="resetData()" @saveQuit="saveQuit()" />
 
         <div class="player" :style="cssProps" tabindex="-1" ref="playerMove">
           <img
@@ -473,6 +473,7 @@ export default {
       this.getUserData();
       this.levelChange();
       this.$store.state.userData.leftValue = 40;
+      this.$store.state.userData.section = 2;
       this.checkLevel();
     },
     levelMinus() {
@@ -483,9 +484,15 @@ export default {
     },
     levelReset() {
       this.$store.commit('resetLevel');
+      this.$store.state.userData.leftValue = 40;
+      this.$store.state.userData.section = 2;
       this.getUserData();
       this.levelChange();  
       this.checkLevel();
+    },
+    saveQuit() {
+      this.$emit("saveQuit");
+      this.closeTransitionPopup();
     },
     flashlight() {
       if (!this.isFlashlightOn) {
