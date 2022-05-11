@@ -4,7 +4,7 @@
       <h2>{{titleText}}</h2>
 
       <div class="btn-group" :key="titleText">
-         <button @click="$emit('saveQuit');" class="reset-btn" id="end-btn">{{leftBtnText}}</button>
+         <button @click="logout()" class="reset-btn" id="end-btn">{{leftBtnText}}</button>
          <button @click="checkEndGame" class="reset-btn">{{rightBtnText}}</button>
       </div>
 
@@ -12,6 +12,8 @@
 </template>
 
 <script>
+
+import { useAuth0, AuthState } from "/utils/useAuth0.js";
 
 /* reset button: wipes user data from the store, essentially the same as the "give up" but without the giving up 
 
@@ -24,6 +26,14 @@ button that gets replaced is reset/next floor, save + quit stays the same
 */
 
 export default {
+    setup() {
+    const { logout } = useAuth0(AuthState);
+    return {
+        logout: () => {
+          logout({ returnTo: window.location.origin });
+        }
+      };
+    },
     props: ['endGamePhase'],
     data() {
         return {
