@@ -11,12 +11,14 @@ export default {
 </script>
 
 <style scoped>
+@import "../assets/global.css";
+
   section {
     text-align: left;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1rem;
   }
   section svg {
-    height: 2.5rem;
+    height: 2.25rem;
     margin-right: .5rem;
     color: red;
   }

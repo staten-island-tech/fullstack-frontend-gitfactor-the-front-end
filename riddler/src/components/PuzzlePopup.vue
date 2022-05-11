@@ -7,8 +7,7 @@ v-on:keyup.enter="checkAnswerClick"
 
 
 >
-<button v-on:click="closePuzzleClick" class="close-puzzle-button">x</button>
-    <!-- <h1 class="puzzleQuestionLine">{{puzzlePrompt}}</h1> -->
+  <button v-on:click="closePuzzleClick" class="close-puzzle-button">x</button>
     <div class="promptAnsweredText" v-if="puzzlePromptAnswered">
         <h2>correct!</h2>
          <slot name="puzzle-correct-text"></slot>
@@ -202,21 +201,30 @@ props: {
 </script>
 
 <style scoped>
-.popup-container {
+@import "../assets/global.css";
+
+  .popup-container {
     position: absolute;
     top: 0;
     text-align: center;
-    width: calc(60% - 4rem);
-    height: calc(70% - 4rem);
+    width: calc(100% - 4rem);
+    height: calc(100% - 4rem);
     padding: 5rem;
     margin: 2rem;
     border-radius: 1.5rem;
-    /* background-color: #deceff; */
-    border-color: #deceff;
-    border: solid .3rem;
-    background-color: #2b0d47;
+    border: solid var(--highlight-color) .3rem;
+    background-color: var(--background-color);
     z-index: 1;
     overflow: scroll;
+  }
+  .close-puzzle-button {
+    font-size: var(--h4);
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    border: none;
+    background-color: unset;
+    color: var(--highlight-color);
   }
 .invisible {
     display:none;
@@ -225,15 +233,24 @@ props: {
 .puzzleQuestionLine {
     font-size: 2rem;
 }
-.puzzle-answer {
-    font-size: 2rem;
+.puzzle-btn, input {
+    font-size: var(--h4);
+    font-weight: 700;
+    padding: .6rem 1.2rem;
+    border: none;
+    border-radius: .5rem;
+    margin-top: 5rem;
 }
-button {
-    font-size: 2rem;
-}
-.close-puzzle-button {
-    font-size: 2rem;
-    position: fixed;
-    left: 63%;
-}
+  input {
+    margin: 5rem 1rem;
+    width: 25rem;
+  }
+  .puzzle-btn {
+    background-color: var(--highlight-color);
+    color: var(--background-color);
+  }
+  .puzzleClearButton {
+    background-color: #f9e3e3;
+    color: #ad2020;
+  }
 </style>
