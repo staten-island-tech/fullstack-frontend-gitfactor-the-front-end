@@ -1,6 +1,4 @@
 export const state = {  
-  name: null,
-  id: null,
   level: null,
   section: null,
   leftValue: null,
@@ -17,14 +15,12 @@ export const mutations = {
     state.lifeCount--;
   },
   updateState(state, newState) {
-    state.name = newState[0].name;
-    state.id = newState[0]._id;
-    state.level = newState[0].level;
-    state.section = newState[0].section;
-    state.leftValue = newState[0].leftValue;
-    state.lifeCount = newState[0].lifeCount;
-    state.currentItem = newState[0].currentItem;
-    state.inventory = newState[0].inventory;
+    state.level = newState.level;
+    state.section = newState.section;
+    state.leftValue = newState.leftValue;
+    state.lifeCount = newState.lifeCount;
+    state.currentItem = newState.currentItem;
+    state.inventory = newState.inventory;
     console.log(state);
   },
 }

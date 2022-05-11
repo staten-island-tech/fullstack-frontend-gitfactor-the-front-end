@@ -4,10 +4,10 @@
     <MoveTest class="game" />
     <div class="solid"></div>
   </div>
-  <div class="pagebg"></div>
+  <!-- <div class="pagebg"></div>
     <button @click="addNewUser()">New user</button>
     <button @click="authorize()">poop</button>
-    <button @click="updateData($store.state.userData.id)">Update</button>
+    <button @click="updateData(userdata.sub)">Update</button> -->
 </div>
 </template>
 
@@ -23,62 +23,66 @@ export default {
   data() {
     return {
       isLoggedIn: false,
+      userdata: this.$auth.user,
     }
   },
   mounted() {
+    // this.callApi();
     this.getData();
   },
+  
   methods: {
-    async authorize() {
-      try {
-        const response = await fetch("http://localhost:3000/authorized");
-        const data = await response.json();
-        console.log(data);
-      } catch (error) {
-        console.log(error);
-      }
-    },
+    // async callApi() {
+    //     const token = await this.$auth.getTokenSilently();
+    //   try {
+    //     const response = await fetch("http://localhost:3000/authorized", {
+    //       headers: {
+    //         Authorization: `Bearer ${token}`,
+    //       },
+    //     });
+    //     const data = await response.json();
+    //     console.log(data);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // },
     async getData() {
+      // const id = this.userdata.sub.replace("auth0|", "");
       try {
-        const response = await fetch("http://localhost:3000/");
+        const token = await this.$auth.getTokenSilently();
+
+        const response = await fetch(`http://localhost:3000/api/index`, {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          // body: JSON.stringify(this.$store.state.userData),
+        });
         const data = await response.json();
         console.log(data);
-        this.$store.commit('updateState', data);
+        // this.$store.commit('updateState', data);
         this.isLoggedIn = true;
       } catch (error) {
         console.log(error);
       }
     },
-    async updateData(id) {
-      try {
-        const response = await fetch(`http://localhost:3000/user/${id}`, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(this.$store.state.userData),
-        });
-        const data = await response.json();
-        console.log(data);
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    async addNewUser() {
-      try {
-        const response = await fetch("http://localhost:3000/add", {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(this.$store.state.userData),
-        });
-        const data = await response.json();
-        console.log(data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
+    // async updateData(id) {
+    //   try {
+    //     console.log(id);
+    //     console.log(this.$store.state.userData);
+    //     const response = await fetch(`http://localhost:3000/update/${id}`, {
+    //       method: 'PATCH',
+    //       headers: {
+    //         'Content-Type': 'application/json'
+    //       },
+    //       body: JSON.stringify(this.$store.state.userData),
+    //     });
+    //     const data = await response.json();
+    //     console.log(data);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // },
   }
 };
 </script>
