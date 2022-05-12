@@ -4,11 +4,12 @@ export const state = {
       {
         name: "Door of Truth",
         id: 0,
-        section: 1,
-        position: 50,
-        margin: "50%",
-        widthInt: 50,
-        width: "50%",
+        section: 2,
+        position: 10,
+        margin: "10%",
+        widthInt: 45,
+        width: "45%",
+        bottom: "10%",
         img: "lv1_door.png",
         isInteractable: false,
         filter: null,
@@ -16,7 +17,7 @@ export const state = {
         puzzleType: 1,
         isLevelTransitionPuzzle: true,
         prompt:
-          "I live in the ocean, I live in your ear. You cannot hear me, but you see when I'm near.",
+          "Fast, slow, or not at all, moving magic measures (the mass of) stars. Glowing blue, for predators or prey, helps fireflies and anglerfish guide the way. What am I?",
         puzzleAnswer: "light",
         puzzleCompleted: false,
         puzzleAnsweredText:
@@ -85,8 +86,8 @@ export const state = {
         puzzleType: 3,
         puzzleCompleted: false,
         prompt: "It's a bright lantern. What could it be used for, though?",
-        puzzleAnswer: "paper",
-        puzzleAnsweredText: "i gave you a lantern scrub",
+        puzzleAnswer: "Blank Scroll",
+        puzzleAnsweredText: "secret message oooooooooooooooooo",
       },
       {
         name: "Painting of Some Dude",

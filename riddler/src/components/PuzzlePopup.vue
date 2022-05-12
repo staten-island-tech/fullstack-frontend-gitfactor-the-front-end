@@ -14,6 +14,7 @@ v-on:keyup.enter="checkAnswerClick"
     </div>
     <div class="questionPrompt" v-else>
         <slot name="puzzle-text"></slot>
+        <slot name="puzzle-img"></slot>
     <input type="text" class="puzzle-answer"
     v-model="puzzleInput" :maxlength="puzzleInputMaxLength" :disabled="puzzleInputDisabled" v-show="puzzleInputVisibility">
        <div class="selected-item-div" v-show="selectedItemDiv" >

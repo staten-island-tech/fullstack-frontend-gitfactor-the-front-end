@@ -80,17 +80,7 @@
             {{ $store.state.userData.currentItem.prompt }}
           </template>
         </ItemPopup>
-      </div>
-    </div>
-
-      <div class="mobile-button-container">
-        <button @mousedown="leftMove()" @mouseup="reset()" class="mobile-button">&lt;</button>
-        <button @click="onEnter()" class="mobile-button">Z</button>
-        <button @mousedown="rightMove()" @mouseup="reset()" class="mobile-button">&gt;</button>
-      </div>
-    </main>
-
-    <PuzzlePopup  
+           <PuzzlePopup  
         @turn-off="closePuzzlePopup" 
         @reset-visibility="makeThePuzzleFinallyWork"
         @refocus-on-puzzle="openPuzzlePopup"
@@ -110,14 +100,27 @@
           <div class="puzzle-text-div">
             <h1 class="puzzle-name">{{$store.state.userData.currentItem.name}}</h1>
           <h2 class="puzzle-prompt">{{$store.state.userData.currentItem.prompt}}</h2>
-          </div>
-          
+          </div>          
           
         </template>
+         <template v-slot:puzzle-img>
+            <img class="itempopup-img" style="width: 12.5%" :src="require(`@/assets/${$store.state.userData.currentItem.img}`)" :alt="$store.state.userData.currentItem.name"/>
+          </template>
         <template v-slot:puzzle-correct-text>
           <p class="puzzle-correct-info">{{$store.state.userData.currentItem.puzzleAnsweredText}}</p>
         </template>
         </PuzzlePopup>
+      </div>
+    </div>
+
+      <div class="mobile-button-container">
+        <button @mousedown="leftMove()" @mouseup="reset()" class="mobile-button">&lt;</button>
+        <button @click="onEnter()" class="mobile-button">Z</button>
+        <button @mousedown="rightMove()" @mouseup="reset()" class="mobile-button">&gt;</button>
+      </div>
+    </main>
+
+ 
 
     <Inventory @clicked-item="selectedInventoryItemName">
        <button v-if="$store.state.userData.level === 2" @click="flashlight()" class="flashlight"></button>
