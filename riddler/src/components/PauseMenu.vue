@@ -6,7 +6,7 @@
       <h2 class="pause-title">Pause Menu</h2>
       <div class="pause-button-box">
       <button @click="$emit('instruction')" >Instruction Manual</button>
-       <button>Save & Resume</button>
+       <button>Save Progress</button>
         <button>Save & Exit</button>
           <button @click="$emit('setting')">Settings</button>
           </div>

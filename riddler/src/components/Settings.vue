@@ -6,9 +6,6 @@
       <h2 class="pause-title settings-title">Settings</h2>
       <div class="pause-button-box settings-box">
 
-      <!-- <button>Music Volume</button> -->
-       <!-- <button>Sound Effect Volume</button> -->
-
     <!-- sliders go here! -->
     <div class="slider-and-label">
         <h2 class="slider-label">Music Volume:</h2>
