@@ -246,6 +246,15 @@ props: {
     margin: 5rem 1rem;
     width: 25rem;
   }
+  button {
+        background-color: var(--highlight-color);
+    font-size: var(--h4);
+    font-weight: 700;
+    padding: 1.5rem 2rem;
+    border: none;
+    border-radius: 1rem;
+    color: var(--background-color);
+  }
   .puzzle-btn {
     background-color: var(--highlight-color);
     color: var(--background-color);
