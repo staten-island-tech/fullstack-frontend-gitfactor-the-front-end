@@ -16,8 +16,14 @@
      <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
 </div>
 </div>
+
+   <div class="slider-and-label">
+        <h2 class="slider-label">Brightness:</h2>
+<div class="slidecontainer">
+     <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+</div>
+</div>
 <h3 class="volume"></h3>
-        <button>Brightness</button>
            <button>Restart Game</button>
           <button>Delete Account</button>
           </div>
