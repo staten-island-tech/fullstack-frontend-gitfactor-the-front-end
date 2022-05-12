@@ -26,41 +26,28 @@ export default {
       userdata: this.$auth.user,
     }
   },
-  mounted() {
+  created() {
     // this.callApi();
     this.getData();
   },
   
   methods: {
-    // async callApi() {
-    //     const token = await this.$auth.getTokenSilently();
-    //   try {
-    //     const response = await fetch("http://localhost:3000/authorized", {
-    //       headers: {
-    //         Authorization: `Bearer ${token}`,
-    //       },
-    //     });
-    //     const data = await response.json();
-    //     console.log(data);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // },
     async getData() {
-      // const id = this.userdata.sub.replace("auth0|", "");
+      const userId = this.userdata.sub.replace("auth0|", "");
       try {
         const token = await this.$auth.getTokenSilently();
-
-        const response = await fetch(`http://localhost:3000/api/index`, {
+        console.log(token)
+        const response = await fetch(`http://localhost:3000/api/index/${userId}`, {
           method: 'POST',
           headers: {
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
-          // body: JSON.stringify(this.$store.state.userData),
+          body: JSON.stringify(this.$store.state.userData),
         });
         const data = await response.json();
         console.log(data);
-        // this.$store.commit('updateState', data);
+        this.$store.commit('updateState', data);
         this.isLoggedIn = true;
       } catch (error) {
         console.log(error);
