@@ -10,9 +10,11 @@
        <!-- <button>Sound Effect Volume</button> -->
 
     <!-- sliders go here! -->
-        <h2 class="slider-label">Music Volume</h2>
+    <div class="slider-and-label">
+        <h2 class="slider-label">Music Volume:</h2>
 <div class="slidecontainer">
      <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+</div>
 </div>
 <h3 class="volume"></h3>
         <button>Brightness</button>
@@ -38,6 +40,11 @@ methods: {
 .settings-box button{
     font-size: 2rem;
 }
+.slider-and-label{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 .slider-label{
     font-size: 2rem;
     color: black;
@@ -48,6 +55,7 @@ methods: {
 
 /* The slider itself */
 .slider {
+  margin-left: 1rem;
   -webkit-appearance: none;  /* Override default CSS styles */
   appearance: none;
   width: 100%; /* Full-width */
