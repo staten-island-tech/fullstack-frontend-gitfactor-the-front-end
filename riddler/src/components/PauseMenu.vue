@@ -19,15 +19,6 @@
 export default {
 name: "PauseMenu", 
 props: ["isPauseOpen"],
-components: {
-  // Instructions
-},
-data() {
-    return {
-    }
-}, 
-methods: {
-}
 }
 </script>
 

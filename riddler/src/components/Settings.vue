@@ -9,9 +9,12 @@
     <!-- sliders go here! -->
     <div class="slider-and-label">
         <h2 class="slider-label">Music Volume:</h2>
-<div class="slidecontainer">
-     <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
-</div>
+<!-- <div class="slidecontainer" >
+     <input  type="range" min="1" max="100" value="50" class="slider slider1" id="myRange">
+</div> -->
+<v-slider max="100"
+  min="0" class="v-slider"></v-slider>
+<h3 class="volumeTest"></h3>
 </div>
 
    <div class="slider-and-label">
@@ -31,7 +34,15 @@
 export default {
 name: "Settings", 
 methods: {
-
+// volumeValue(){
+//   const slider1 = document.getElementsByClassName(".slider1");
+//   let val = document.getElementsByClassName(".volumeTest");
+//   val.innerHTML = slider1.value;
+//   console.log(slider1.value)
+// },
+// changeVolume(){
+//   this.val.innerHTML = this.value
+// }
 },
 }
 </script>
@@ -55,7 +66,10 @@ methods: {
 .slidecontainer {
   width: 20%; /* Width of the outside container */
 }
-
+.v-slider{
+  width: 100%;
+    background: #04AA6D; 
+}
 /* The slider itself */
 .slider {
   margin-left: 1rem;
