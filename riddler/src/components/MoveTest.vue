@@ -1,7 +1,7 @@
 <template>
 
   <div class="game-page" :key="$store.state.userData.level">
-    <button @click="levelAdd" class="mobile-button">l+ratio</button>
+    <button @click="openTransitionPopup" class="mobile-button">l+ratio</button>
     <button @click="levelMinus" class="mobile-button">l-1</button>
 
     <div class="level-and-hearts">
@@ -219,9 +219,9 @@ export default {
     }
   },
   methods: {  
-    openTransitionPopup(){
+  /*   openTransitionPopup(){
       console.log('opening the transition thingie');
-    },  
+    },  */ 
     enablePlayerMovement() {
       this.$refs.playerMove.focus();  
       console.log('done');    
@@ -471,7 +471,7 @@ export default {
       };
 
     },
-    levelAdd() {
+    openTransitionPopup() {
       this.$store.commit('incrementLevel');
       console.log(this.$store.state.userData.level);
       this.getUserData();

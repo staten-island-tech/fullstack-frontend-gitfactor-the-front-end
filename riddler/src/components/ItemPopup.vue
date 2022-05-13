@@ -43,7 +43,7 @@ export default {
     z-index: 1;
     overflow: scroll;
   }
-  .item-popup button {
+  .item-popup button { 
     background-color: var(--highlight-color);
     font-size: var(--h4);
     font-weight: 700;

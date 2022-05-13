@@ -15,14 +15,14 @@ v-on:keyup.enter="checkAnswerClick"
     <div class="questionPrompt" v-else>
         <slot name="puzzle-text"></slot>
         <slot name="puzzle-img"></slot>
-    <input type="text" class="puzzle-answer"
-    v-model="puzzleInput" :maxlength="puzzleInputMaxLength" :disabled="puzzleInputDisabled" v-show="puzzleInputVisibility">
-       <div class="selected-item-div" v-show="selectedItemDiv" >
+        <input type="text" class="puzzle-answer"
+        v-model="puzzleInput" :maxlength="puzzleInputMaxLength" :disabled="puzzleInputDisabled" v-show="puzzleInputVisibility">
+        <div class="selected-item-div" v-show="selectedItemDiv" >
         <h2 >selected:{{inventoryItem}}</h2>  
-    </div>
-    <button v-on:click="checkAnswerClick" class="puzzle-submit-button" >enter</button>
-     <button class="puzzleClearButton" @click="clearInputClick"> clear </button>
-    <div class="keypad-button-div" v-for="value in puzzle2ButtonArray" :key="value.id" v-show="puzzleButtonVisibility">
+        </div>
+        <button v-on:click="checkAnswerClick" class="puzzle-submit-button" >enter</button>
+        <button class="puzzleClearButton" @click="clearInputClick"> clear </button>
+     <div class="keypad-button-div" v-for="value in puzzle2ButtonArray"  :key="value.id" v-show="puzzleButtonVisibility">
     
        <button @click="puzzle2ButtonClick(value.value)" class="puzzle-button" >{{value.value}}</button> 
        
@@ -54,7 +54,7 @@ props: {
     },
 
     data() {
-        return{  //to do: section change string, answered value "working", and puzzle 3 (halfway there)
+        return{ 
     puzzleInput: "" , 
     isDisabled: false,
     puzzleInputMaxLength: 10,
@@ -139,7 +139,8 @@ props: {
         levelTransition(){
             if(this.isLevelTransitionPuzzle === true){
             console.log("door opened trying to go to next level");
-           //this.$emit('next-level');
+            this.$emit('turn-off');
+           this.$emit('next-level');
             }
         },
         loseHeart() { // move to component 
@@ -231,6 +232,9 @@ props: {
     display:none;
 }
 
+.puzzle-answer {
+    margin: 0;
+}
 .puzzleQuestionLine {
     font-size: 2rem;
 }

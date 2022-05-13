@@ -104,8 +104,32 @@ export const state = {
         itemType: "object",
         prompt:
           "It's a painting of some guy who seems important. If only vampires studied human history!",
-        puzzleAnsweredText: "its edison yo",
       },
+      //Level 2
+      /*
+      {
+        name: "Oven",
+        id: 6,
+        section: 1/2/3,
+        position: Number,
+        margin: "(position)%",
+        width: "(widthInt)%",
+        width: Number,
+        bottom: "x%",
+        img: ".png",
+        isInteractable: false,
+        isLevelTransitionPuzzle: false,
+        filter: null,
+        itemType: "puzzle",
+        puzzleCompleted: false,
+        puzzleType: 3,
+        prompt: "There seems to be no power",
+        puzzleAnswer: "Battery",
+        puzzleCompleted: false,
+        puzzleAnsweredText: " you seen the glass panel of the oven condensate and there is something written there ",
+      },
+      */
+
       // {
       //   name: "",
       //   id: 5,
@@ -186,8 +210,10 @@ Puzzle:
   itemType: "puzzle",
   puzzleCompleted: false,
   puzzleType: 1/2/3,
+  isLevelTransitionPuzzle: true/false,
   prompt: "",
   puzzleAnswer: "",
+  puzzleCompleted: false,
   puzzleAnsweredText: "some random text ",
 },
 */
