@@ -21,7 +21,7 @@ export const mutations = {
   decrementLevel(state) {
     state.level--;
   },
-  resetLevel(state) {
+  resetData(state) {
     while (state.level > 1) {
       state.level--;
     }
