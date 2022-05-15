@@ -33,6 +33,8 @@ export default {
 </script>
 
 <style scoped>
+@import "../assets/global.css";
+
   .inventory-container {
     background-color: #4c3188;
     text-align: right;
@@ -56,6 +58,8 @@ export default {
   }
   .inventory img {
     height: 7rem;
+    width: 7rem;
+    object-fit: contain;
     margin: .5rem;
     background-color: #deceff;
     padding: .5rem;
