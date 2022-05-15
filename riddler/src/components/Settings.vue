@@ -9,12 +9,10 @@
     <!-- sliders go here! -->
     <div class="slider-and-label">
         <h2 class="slider-label">Music Volume:</h2>
-<!-- <div class="slidecontainer" >
-     <input  type="range" min="1" max="100" value="50" class="slider slider1" id="myRange">
-</div> -->
-<v-slider max="100"
-  min="0" class="v-slider"></v-slider>
-<h3 class="volumeTest"></h3>
+ <div class="slidecontainer" >
+     <input @click="volumeLog()" type="range" min="1" max="100" value="50" class="slider slider1" id="myRange">
+</div> 
+<h3 class="volumeTest">Hello</h3>
 </div>
 
    <div class="slider-and-label">
@@ -34,20 +32,21 @@
 export default {
 name: "Settings", 
 methods: {
-// volumeValue(){
-//   const slider1 = document.getElementsByClassName(".slider1");
-//   let val = document.getElementsByClassName(".volumeTest");
-//   val.innerHTML = slider1.value;
-//   console.log(slider1.value)
-// },
-// changeVolume(){
-//   this.val.innerHTML = this.value
-// }
+volumeLog(){
+  const volumeSlider = document.querySelector(".slider1")
+  const volumeLabel = document.querySelector(".volumeTest")
+  volumeLabel.innerHTML = volumeSlider.value;
+}
 },
 }
 </script>
 
 <style>
+.volumeTest{
+  font-size: 2rem;
+  color: black;
+  margin-left: 2rem;
+}
 .settings-title{
     font-size: 3.5rem;
 }
