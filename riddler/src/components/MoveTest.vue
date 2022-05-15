@@ -1,5 +1,8 @@
 <template>
-  <div class="game-page">
+
+  <div class="game-page" :key="$store.state.userData.level">
+    <button @click="levelAdd" class="mobile-button">l+ratio</button>
+    <button @click="levelMinus" class="mobile-button">l-1</button>
 
     <div class="level-and-hearts">
       <div class="pause-container">
@@ -8,8 +11,25 @@
       <h1>Lvl. {{ $store.state.userData.level }}</h1>
       <HeartBar />
     </div>
+      <h2>Lv. {{ $store.state.userData.level }}</h2>
+      <HeartBar />
+    </div>
+
+    <div v-if="$store.state.userData.level === 2" class="battery-meter">
+      <h2>{{ $store.state.userData.battery }}%</h2>
+      <div class="charge-container">
+        <div class="charge" :style="{ width: batteryPercentage }"></div>
+      </div>
+    </div>
+    
     <div class="game-and-inventory">
-      <main class="game-contents">
+    <main class="game-contents" >
+      <div class="audio-container">
+        <audio id="audio-bgm" :src="require(`@/assets/audio/bgm/${currentOST}.mp3`)"></audio>
+        <audio id="walk-sfx" :src="require(`@/assets/audio/sfx/walkstep.mp3`)"></audio>
+      </div>
+
+    <div class="game-overlay">
       <div
         class="game-container"
         id="game-viewport"
@@ -17,14 +37,13 @@
         @keydown.left="leftMove()"
         @keyup="reset()"
         @keydown.z="onEnter()"
-        
       >
        <PauseMenu @closePause="closePM()" @instruction="instructionHandle()"
        @setting="settingHandler()" v-if="isPauseOpen"/> 
        <Instructions @closeInstruc="closeInstrucHandler()" v-if="instruction"/> 
        <Settings @closeSetting="closeSettingHandler()" v-if="setting"/>
         <img
-          :src="require(`@/assets/environment/lv1/${currentLocation.img}`)"
+          :src="require(`@/assets/environment/lv1/${currentLocationImg}`)"
           class="bg-img"
         />
         <div class="player" :style="cssProps" tabindex="-1" ref="playerMove">
@@ -36,10 +55,10 @@
         <img
           v-for="item in gameItems"
           :src="require(`@/assets/${item.img}`)"
-          :style="{ left: item.margin, filter: item.filter }"
+          :style="{ left: item.margin, width: item.width, bottom: item.bottom, filter: item.filter }"
           :alt="item"
           :key="item.key"
-          :id="item.section"
+          :class="'section' + item.section"
           class="item hide"
         />
 
@@ -47,26 +66,44 @@
           <img
             :src="require(`@/assets/sprites/${player.dialogueSprite}`)"
             class="player-avatar-dialogue"
+            id="player-dialogue-sprite"
           />
           <img
             :src="require(`@/assets/sprites/${npcDialogueSprite}`)"
             class="npc-avatar-dialogue"
             id="npc-dialogue-sprite"
           />
-          <p class="textbox-title">{{ this.currentItem.dialogue[this.textCount].name }}</p>
-          <p class="textbox-test typing-class">{{ this.currentItem.dialogue[this.textCount].text }}</p>
+          <p class="textbox-title">{{ this.$store.state.userData.currentItem.dialogue[this.textCount].name }}</p>
+          <p class="textbox-test typing-class">{{ this.$store.state.userData.currentItem.dialogue[this.textCount].text }}</p>
         </div>
         
-        <item-popup @itemAdded="addToInventory()" v-if="itemPopup" @closePopup="closeItemPopup()" :item="currentItem" v-on:turnoff="turnOff">
+        <ItemPopup @itemAdded="addToInventory()" v-if="itemPopup" @closePopup="closeItemPopup()" :item="currentItem" 
+        ref="itemPopupBox">
+          <template v-slot:item-name>
+            {{ $store.state.userData.currentItem.name }}
+          </template>
           <template v-slot:item-img>
-            <img class="itempopup-img" :src="require(`@/assets/${currentItem.img}`)" :alt="currentItem.name"/>
+            <img class="itempopup-img" style="width: 12.5%" :src="require(`@/assets/${$store.state.userData.currentItem.img}`)" :alt="$store.state.userData.currentItem.name"/>
           </template>
           <template v-slot:item-text>
-            {{ currentItem.prompt }}
+            {{ $store.state.userData.currentItem.prompt }}
           </template>
-        </item-popup>
-      
+        </ItemPopup>
+
+        <PuzzlePopup  
+          @turn-off="closePuzzlePopup" 
+          :puzzleAnswer="emittedPuzzleAnswer"
+          v-if="puzzlePopupVisilibility" 
+          
+          :puzzleType ="emittedPuzzleType"
+          ref="puzzlePopupBox"
+          >
+          <template v-slot:puzzle-text>
+            {{$store.state.userData.currentItem.prompt}}
+          </template>
+        </PuzzlePopup>
       </div>
+    </div>
 
       <div class="mobile-button-container">
         <button @mousedown="leftMove()" @mouseup="reset()" class="mobile-button">&lt;</button>
@@ -74,10 +111,11 @@
         <button @mousedown="rightMove()" @mouseup="reset()" class="mobile-button">&gt;</button>
       </div>
     </main>
+    
+    <button v-if="$store.state.userData.level === 2" @click="flashlight()" class="flashlight"></button>
 
     <Inventory />
-
-  </div>      
+  </div>   
 
   </div>
 </template>
@@ -92,12 +130,14 @@ import ItemPopup from "./ItemPopup.vue";
 import PauseMenu from "./PauseMenu.vue";
 import Instructions from './Instructions.vue';
 import Settings from "./Settings.vue"
+import PuzzlePopup from "./PuzzlePopup.vue"; 
+
 
 export default {
   name: "MoveTest",
   components: {
     HeartBar, Inventory, ItemPopup, PauseMenu,
-    Instructions, Settings
+    Instructions, Settings, PuzzlePopup
   },
   created() {
     this.getUserData();
@@ -106,7 +146,7 @@ export default {
   mounted() {
     this.unhideItem();
     this.enablePlayerMovement();
-    
+    this.checkLevel();
   },
   data() {
     return {
@@ -116,25 +156,39 @@ export default {
         right: "walk-right.gif",
         dialogueSprite: "sprite_dialogue_player.png",
       },
-      playerAvatar: "idle-left.gif",
+      playerAvatar: "idle-right.gif",
       npcDialogueSprite: "sprite_dialogue_riddl.png",
-      leftValue: null,
-      currentLevel: null,
-      playerLocation: [
+      locations: [
         {
-          level: [
-            { id: 1, img: "bg_1_a.png" },
-            { id: 2, img: "bg_1_b.png" },
-            { id: 3, img: "bg_1_c.png" },
-          ],
+          assets: 
+            [
+              { id: 1, img: "bg_1_a.png", ost:"lv01" },
+              { id: 2, img: "bg_1_b.png", ost:"lv01" },
+              { id: 3, img: "bg_1_c.png", ost:"lv01" },
+            ],
+        },
+        {
+          assets:             [
+              { id: 1, img: "bg_2_a.png", ost:"lv02" },
+              { id: 2, img: "bg_2_b.png", ost:"lv02" },
+              { id: 3, img: "bg_2_c.png", ost:"lv02" },
+            ],
+        },
+        {
+          assets:             [
+              { id: 1, img: "bg_2_a.png", ost:"lv02" },
+              { id: 2, img: "bg_2_b.png", ost:"lv02" },
+              { id: 3, img: "bg_2_c.png", ost:"lv02" },
+            ],
         },
       ],
-      currentLocation: {
-        section: null,
-        img: "",
-      },
+      enteredOnObject: false,
+      emittedPuzzleAnswer: "", 
+      
+      emittedPuzzleType: null,
+      currentLocationImg: "",
       gameItems: null,
-      currentItem: null,
+      currentOST: "lv01",
       itemPopup: false,
       txtbx: false,
       textCount: -1,
@@ -143,165 +197,299 @@ export default {
       instruction: false,
       setting: false,
       enteredOnObject: false,
+      puzzlePopupVisilibility: false,
+      isFlashlightOn: false,
     };
   },
+
   computed: {
     cssProps() {
       return {
-        '--leftVar': (this.leftValue) + "%",
+        '--leftVar': (this.$store.state.userData.leftValue) + "%",
       }
     },
+    batteryPercentage() {
+      return this.$store.state.userData.battery + "%";
+    }
   },
-  methods: {  
+  methods: {
     enablePlayerMovement() {
       this.$refs.playerMove.focus();  
       console.log('done');    
     },
     getUserData() {
-      this.leftValue = this.$store.state.userData.leftValue;
-      this.currentLevel = this.$store.state.userData.level;
-      this.currentLocation.section = this.$store.state.userData.section;
-      this.currentLocation.img = this.playerLocation[this.currentLevel - 1].level[this.currentLocation.section - 1].img;
+      this.currentLocationImg = this.locations[this.$store.state.userData.level - 1].assets[this.$store.state.userData.section - 1].img;
       this.gameItems = this.$store.state.gameItems.gameItems[this.$store.state.userData.level - 1];
-      // NEXT STEP: for each item in this.$store.userData.inventory, filter currentLevelItems for item.id, if true then pop item from gameItems
     },
-    leftMove() {
+    checkLevel() {
+      if (this.$store.state.userData.level === 1) {
+        console.log("level 1");
+          document.querySelector(".game-overlay").classList.add("game-overlay");
+      } 
+      if (this.$store.state.userData.level === 2) {
+        console.log("level 2");
+        setTimeout(() => {
+          document.querySelector(".game-overlay").classList.add("dark");
+
+        }, 0)      
+      } 
+      if (this.$store.state.userData.level === 3) {
+        console.log("level 3");
+        setTimeout(() => {
+          document.querySelector(".game-overlay").classList.add("fog");
+        }, 0)      
+      }
+    },
+    leftMove(e){
+      this.playWalkSfx();
       this.player.idle = "idle-left.gif";
+      if(this.enteredOnObject && e.key === "ArrowLeft"){
+        e.preventDefault();
+      }
+      else{
       setTimeout(() => {
-
-        if (this.leftValue <= 1.5) {
-          if (this.currentLocation.section > 1) {
-            this.sectionChangeAnim();                      
-          }
-        };
-
-        if (this.leftValue > 0) {
-          this.leftValue -= 1.5;
+        
+        if (this.$store.state.userData.leftValue > 0) {
+          this.$store.state.userData.leftValue -= 1.5;
         } else {
-          if (this.currentLocation.section > 1) {
-            this.leftValue = 1;
-            this.sectionChange();
-            this.currentLocation.section = this.currentLocation.section - 1;
-            setTimeout(() => {
-             this.leftValue = 84;
-            }, 25);
+          if (this.$store.state.userData.section > 1) {
+            this.sectionChangeAnim();
+            this.$store.state.userData.section = this.$store.state.userData.section - 1;
           }
         }
         this.playerAvatar = this.player.left;
         this.itemInteract();
-      }, 250);
+      }, 150);
+      }
      
     },
-    rightMove() {
+    rightMove(e) {
       this.player.idle = "idle-right.gif";
+      if(this.enteredOnObject && e.key === "ArrowRight") {
+        e.preventDefault();
+      }
+      else{
       setTimeout(() => {
-        if (this.leftValue >= 83.5) {
-          if (this.currentLocation.section < 3) {
-            this.sectionChangeAnim();                      
+        
+        if (this.$store.state.userData.leftValue < 85) {
+          this.$store.state.userData.leftValue += 1.5;
+        }; 
+        if (this.$store.state.userData.section < 3 && this.$store.state.userData.leftValue > 83) {
+            this.sectionChangeAnim();
+            this.$store.state.userData.section = this.$store.state.userData.section + 1;                   
           }
-        };
-        if (this.leftValue <= 85) {
-          this.leftValue += 1.5;
-        } else {
-          if (this.currentLocation.section < 3) {
-            this.leftValue = 1;
-            this.currentLocation.section = this.currentLocation.section + 1;
-            setTimeout(() => {
-            this.sectionChange();
-             this.leftValue = 1;
-            }, 250);
-                        
-          }
-        }
         this.playerAvatar = this.player.right;
         this.itemInteract();
-
-        this.playerAvatar = this.player.right;
-        this.itemInteract();
-      }, 250);
-    },
-    reset() {
-      setTimeout(() => {
-        this.playerAvatar = this.player.idle;
-      }, 250);
-      this.itemInteract();
-    },
-    sectionChange() {
-      setTimeout(() => {
-        console.log(this.currentLocation);
-        this.currentLocation.img = this.playerLocation[this.currentLevel - 1].level[this.currentLocation.section - 1].img;
-        this.unhideItem();
-      }, 300);
-        var gsapTes = gsap.to(".game-container", {
-          delay: .2, 
-          backgroundColor: "rgba(16, 1, 22, 0)",
-          ease: "power2.inOut"
-        });
-        console.log(gsapTes);
-    },
-    sectionChangeAnim() {
-      var gsapTest = gsap.to(".game-container", {
-       backgroundColor: "rgba(16, 1, 22, 1)",
-       duration:0.25});
-      console.log(gsapTest);
-    },
-    unhideItem() {
-      const overworldItems = document.getElementsByClassName("item");
-      for (let item of overworldItems) {
-        if (this.currentLocation.section == item.id) {
-          item.classList.remove("hide");
-        } else {
-          item.classList.add("hide");
-        }
+      }, 150);
       }
     },
+   
+    reset() {
+      this.stopWalkSfx();
+      setTimeout(() => {
+      this.playerAvatar = this.player.idleRight;
+      this.playerAvatar = this.player.idle;
+      }, 250);
+       this.itemInteract();
+      },
+    sectionChange() {
+      setTimeout(() => {
+        if (this.$store.state.userData.leftValue >= 83) {
+          this.$store.state.userData.leftValue = 1.5;
+        } else {this.$store.state.userData.leftValue = 80;}
+      }, 10);
+      
+      setTimeout(() => {
+        this.currentLocationImg = this.locations[this.$store.state.userData.level - 1].assets[this.$store.state.userData.section - 1].img;
+        this.currentOST = this.locations[this.$store.state.userData.level - 1].assets[this.$store.state.userData.section - 1].ost;
+        this.unhideItem();
+        this.playAudio();
+      }, 300);
+    },
+    levelChange() {
+      setTimeout(() => {
+        this.$store.state.userData.leftValue = 40;
+        this.currentLocationImg = this.locations[this.$store.state.userData.level - 1].assets[this.$store.state.userData.section - 1].img;
+        this.currentOST = this.locations[this.$store.state.userData.level - 1].assets[this.$store.state.userData.section - 1].ost;
+        this.unhideItem();
+        this.playAudio();
+      }, 300);
+    },
+    sectionChangeAnim() {
+      var transition = gsap.fromTo(".game-container", {
+       backgroundColor: "rgba(16, 1, 22, 1)",
+       duration:0.1}, {
+       delay: .2, 
+       duration: .3,
+       backgroundColor: "rgba(16, 1, 22, 0)",
+       ease: "power2.inOut"});
+       transition.play;
+       this.sectionChange();
+    },
+    unhideItem() {
+      document.querySelectorAll('.item').forEach(el => el.classList.add("hide"));
+      document.querySelectorAll('.section' + this.$store.state.userData.section).forEach(el => el.classList.remove("hide"));
+
+      //maybe :class="item.section" then select current section's class and remove
+    },
+    playAudio(){
+      const audio = document.getElementById("audio-bgm");
+      audio.volume = .25;
+      setTimeout(() => {
+        audio.play();
+        audio.loop = true;
+      }, 200);
+      this.itemInteract();
+
+    },
+    playWalkSfx(){
+      const audio = document.getElementById("walk-sfx");
+      audio.loop = true;
+      audio.play();
+    },
+    stopWalkSfx(){
+      const audio = document.getElementById("walk-sfx");
+      audio.pause();
+      audio.currentTime = 60;
+    },
     itemInteract() {
-      this.currentItem = null;
+      this.$store.state.userData.currentItem = null;
       this.gameItems.forEach((item) => {
-        const offset = item.position - this.leftValue;
-        if ((item.section === this.currentLocation.section) && (Math.abs(offset) <= 10 || (offset >= -10 && offset < 10))) { //checks if right section and distance from left and right of the item
+        const itemLeft = item.position;
+        const itemRight = item.position + item.widthInt;
+        if ((item.section === this.$store.state.userData.section) && ((this.$store.state.userData.leftValue + 8) >= itemLeft && (this.$store.state.userData.leftValue + 10) <= itemRight)) { //checks if avatar is in range of item
             item.isInteractable = true;
-            this.currentItem = item;
-            item.filter = "sepia(55%)";
+            this.$store.state.userData.currentItem = item;
+            console.log('in range');
+            item.filter = "brightness(55%)";
         } else {
           item.isInteractable = false;
           item.filter = null;
         }
       });
     },
+  
     onEnter() {
-      if (this.currentItem) {
+      if (this.$store.state.userData.currentItem) {
         this.enteredOnObject = true;
-        if (this.currentItem.itemType === "object") {              
+        if (this.$store.state.userData.currentItem.itemType === "object") {              
         this.itemPopup = true;
-        
-        } else if (this.currentItem.itemType === "character") {              
+          setTimeout(() => {   
+            this.openItemPopup();  
+          }, 10);
+
+        } else if (this.$store.state.userData.currentItem.itemType === "character") {              
           this.txtbxShow();
-        }
+
+        } else if (this.$store.state.userData.currentItem.itemType === "puzzle") {        
+      
+            this.puzzlePopupVisilibility = true;
+            console.log(this.puzzlePopupVisilibility);
+            this.emittedPuzzleAnswer = this.$store.state.userData.currentItem.puzzleAnswer;
+           
+            this.emittedPuzzleType = this.$store.state.userData.currentItem.puzzleType;
+            setTimeout(() => {   
+              this.openPuzzlePopup();  
+            }, 10);
+              if (this.currentItem.puzzleType === 1){
+                console.log('this is type 1');
+              }
+              else if (this.currentItem.puzzleType === 2){
+                console.log('this is type 2');
+              }
+              else if (this.currentItem.puzzleType === 3){
+                console.log('this is type 3'); 
+              }
+          }
       }
     },
     addToInventory() {
-      this.gameItems.splice(this.currentItem.id, 1);
-      this.$store.state.userData.inventory.push(this.currentItem);
+      const selectedItem = this.gameItems.findIndex(item => item.id === this.$store.state.userData.currentItem.id);
+      this.gameItems.splice(selectedItem, 1);
+      this.$store.state.userData.inventory.push(this.$store.state.userData.currentItem);
       this.closeItemPopup();
+    },
+    openPuzzlePopup() {
+      this.$refs.puzzlePopupBox.$el.focus();// this not working
+    },
+    openItemPopup() {
+      this.$refs.itemPopupBox.$el.focus();
     },
     closeItemPopup() {
       this.itemPopup = false;
+        this.enteredOnObject = false;
+      this.enablePlayerMovement();
     },
+    closePuzzlePopup() { 
+      this.enteredOnObject = false;
+      this.puzzlePopupVisilibility = false;
+      this.enablePlayerMovement();
+    },
+  
     txtbxShow() {
+      const playerTxtSprite = document.getElementById("player-dialogue-sprite");
+      const npcTxtSprite = document.getElementById("npc-dialogue-sprite");
+      
       this.textCount += 1;
-      if (this.textCount < this.currentItem.dialogue.length) {
+      if (this.textCount < this.$store.state.userData.currentItem.dialogue.length) {
         this.txtbx = true;
-        if (this.currentItem.dialogue[this.textCount].isAntagonist) {
+        if (this.$store.state.userData.currentItem.dialogue[this.textCount].isAntagonist) {
           this.mainAnt = true;
         } else {
           this.mainAnt = false;
         }
-        this.npcDialogueSprite = this.currentItem.dialogueSprite;
+
+        this.npcDialogueSprite = this.$store.state.userData.currentItem.dialogueSprite;
+
+      if (this.mainAnt == true) {
+        playerTxtSprite.classList.add("avatar-dialogue-unfocus");
+        npcTxtSprite.classList.remove("avatar-dialogue-unfocus");
+      } else {
+        npcTxtSprite.classList.add("avatar-dialogue-unfocus");
+        playerTxtSprite.classList.remove("avatar-dialogue-unfocus");
+      }
+
       } else {
         this.txtbx = false;
         this.enteredOnObject = false;
         this.textCount = -1;
+      };
+
+    },
+    levelAdd() {
+      this.$store.commit('incrementLevel');
+      console.log(this.$store.state.userData.level);
+      this.getUserData();
+      this.levelChange();
+      setTimeout(()=> {this.$store.state.userData.leftValue = 40;}, 250);
+      this.checkLevel();
+    },
+    levelMinus() {
+      this.$store.commit('decrementLevel');
+      console.log(this.$store.state.userData.level);
+      this.getUserData();
+      this.levelChange();    
+      this.checkLevel();
+    },
+    flashlight() {
+      if (!this.isFlashlightOn) {
+        alert("Use this flashlight at your own risk. If the battery runs out, you will be lost in the dark forever! Muahahahaha!!")
+        this.isFlashlightOn = true;
+        document.querySelector(".game-overlay").style.filter = "brightness(1)";
+        const intervalId = setInterval(() => { 
+          if (this.isFlashlightOn) {
+            if (this.$store.state.userData.battery === 0) {
+              clearInterval(intervalId);
+              this.isFlashlightOn = false;
+              document.querySelector(".game-overlay").style.filter = "brightness(.1)";
+            } else {
+              this.$store.state.userData.battery = this.$store.state.userData.battery - 1;
+            }
+          }
+        }, 2000);
+      } else {
+        this.isFlashlightOn = false;
+        document.querySelector(".game-overlay").style.filter = "brightness(.1)";
       }
     },
     openPause(){
@@ -327,8 +515,13 @@ export default {
 </script>
 
 <style scoped>
+@import "../assets/global.css";
+
 h1 {
   text-align: left;
+}
+h2 {
+  font-size: var(--h4);
 }
 .game-page {
   margin: auto;
@@ -344,17 +537,21 @@ h1 {
   flex-direction: column;
   align-items: center;
 }
+.game-overlay {
+  overflow: hidden;
+  border-radius: 1.5rem;
+}
 .game-container {
   overflow: hidden;
   position: relative;
-  width: 60vw;
-  height: 30vw; 
-  margin-bottom: 2.5rem;
+  width: 66vw;
+  height: 33vw; 
   border: .3rem solid;
   border-radius: 1.5rem;
   transition: all .2s;
 }
-.level-and-hearts h1 {
+.level-and-hearts h2 {
+  font-size: var(--h3);
   margin-bottom: .5rem;
 }
 .pause-icon{
@@ -365,16 +562,18 @@ h1 {
   text-align: right;
 }
 .player {
-  width: 100%;
-  height: 100%;
+  width: inherit;
+  height: inherit;
 }
 .player-avatar {
-  width: 17.5%;
+  width: 20%;
+  z-index: -1;
   display: flex;
   position: absolute;
   bottom: 10%;
   left: var(--leftVar);
 }
+
 .player-avatar-dialogue {
   width: 70%;
   right: -20%;
@@ -385,8 +584,16 @@ h1 {
   left: -17%;
   bottom: -40vw;
 }
+
+.avatar-dialogue-unfocus {
+  filter: brightness(50%);
+}
+
 .hide {
   display: none;
+}
+.mobile-button-container {
+  margin-top: 2.5rem;
 }
 .mobile-button {
   font-size: 4rem;
@@ -430,22 +637,83 @@ h1 {
   left: -20%;
 }
 
-h1 {
-  font-size: 2rem;
-}
-
-img {
+.item {
   z-index: -2;
   position: absolute;
-  bottom: 10%;
-  /* left: 25%; this is represented in the item.position property*/
-  width: 20%;
-  border-radius: 3rem;
 }
+
 .item-popup img {
   position: unset;
-  margin-bottom: 5rem;
+  margin-bottom: 3rem;
 }
+
+.flashlight {
+  background-color: #fff200;
+  height: 5rem;
+  width: 5rem;
+  margin: 2rem;
+  border-radius: 5rem;
+}
+.battery-meter {
+  margin-bottom: 1rem;
+}
+.charge-container {
+  overflow: hidden;
+  width: 15rem;
+  background-color: var(--purple);
+  margin-top: .5rem;
+  border-radius: .5rem;
+}
+.charge {
+  background-color: #fff200;
+  height: 2.5rem;
+}
+.dark {
+  filter: brightness(.1);
+}
+
+.fog {
+  position: relative;
+}
+.fog:before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.6;
+  background-image: url("../assets/bubbles.png");
+  animation: fogFade 20s ease-in-out infinite;
+}
+    @keyframes fogFade {
+      0% {
+        filter: brightness(0%);
+      }
+      20% {
+        filter: brightness(70%);
+      }
+      30% {
+        filter: brightness(90%);
+      }
+      40% {
+        filter: brightness(95%);
+      }
+      50% {
+        filter: brightness(100%);
+      }
+      60% {
+        filter: brightness(40%);
+      }
+      70% {
+        filter: brightness(70%);
+      }
+      100% {
+        filter: brightness(0%);
+      }
+    }
+
 
 @media only screen and (max-width: 768px) {
   .game-and-inventory {
