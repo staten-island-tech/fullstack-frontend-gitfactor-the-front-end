@@ -1,11 +1,5 @@
 <template>
-  <div class="item-popup"
-  tabindex="-1"
-  v-on:keyup.esc="$emit('closePopup')"
-  v-on:keyup.enter="$emit('itemAdded')">
-    <h4>
-      <slot name="item-name"></slot>
-    </h4>
+  <div class="item-popup">
     <button @click="$emit('closePopup')" class="close-btn">X</button>
     <slot name="item-img"></slot>
     <p>
@@ -27,8 +21,6 @@ export default {
 </script>
 
 <style scoped>
-@import "../assets/global.css";
-
   .item-popup {
     position: absolute;
     top: 0;
@@ -38,33 +30,33 @@ export default {
     padding: 5rem;
     margin: 2rem;
     border-radius: 1.5rem;
-    border: solid var(--highlight-color) .3rem;
-    background-color: var(--background-color);
+    background-color: #deceff;
     z-index: 1;
     overflow: scroll;
   }
   .item-popup button {
-    background-color: var(--highlight-color);
-    font-size: var(--h4);
-    font-weight: 700;
-    padding: 1.5rem 2rem;
+    background-color: #fff;
+    font-size: 2rem;
+    padding: 1rem 2rem;
     border: none;
-    border-radius: 1rem;
-    color: var(--background-color);
+    border-radius: 1.5rem;
   }
   .item-popup .close-btn {
     position: absolute;
     top: 2rem;
     right: 2rem;
-    background-color: unset;
-    color: var(--highlight-color);
   }
   .item-popup .add-btn {
     margin-top: 5rem;
   }
   .item-popup p {
-    color: var(--highlight-color);
-    font-size: var(--h4);
-    line-height: 1.5;
+    color: #000;
+    font-size: 2rem;
+    text-align: left;
+    font-weight: 700;
+  }
+  img {
+    position: absolute;
+    top: 0;
   }
 </style>

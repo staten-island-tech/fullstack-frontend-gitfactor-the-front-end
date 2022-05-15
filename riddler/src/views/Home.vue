@@ -1,9 +1,10 @@
 <template>
-  <div class="background">
+  <div>
     <div class="home" v-if="isLoggedIn">
       <MoveTest class="game"/>
       <div class="solid"></div>
     </div>
+    <div class="pagebg"></div>
   </div>
 </template>
 
@@ -47,18 +48,27 @@ export default {
 </script>
 
 <style scoped>
-@import "../assets/global.css";
 
 .player {
     position: relative;
     top: 0%;
 }
-.background {
+
+.solid {
   position: absolute;
   z-index: -10;
+  top: 0%;
   width: 100%;
-  min-height: 100%;
-  height: fit-content;
-  background-color: var(--background-color);
+  height: 100%;
+  background-color: #0d0752;
 }
+.pagebg {
+  position: absolute;
+  z-index: -10;
+  top: 0%;
+  width: 100%;
+  height: 100%;
+  background-color: #1f1227;
+}
+
 </style>
