@@ -1,5 +1,5 @@
 <template>
-
+<div>
   <div class="game-page" :key="$store.state.userData.level">
     <button @click="levelAdd" class="mobile-button">l+ratio</button>
     <button @click="levelMinus" class="mobile-button">l-1</button>
