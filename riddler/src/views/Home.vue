@@ -8,7 +8,6 @@
 </template>
 
 <script>
-
 import MoveTest from "@/components/MoveTest.vue";
 
 export default {
@@ -19,7 +18,7 @@ export default {
   data() {
     return {
       isLoggedIn: false,
-    }
+    };
   },
   mounted() {
     this.getData();
@@ -30,13 +29,13 @@ export default {
         const response = await fetch("http://localhost:3000/");
         const data = await response.json();
         console.log(data);
-        this.$store.commit('updateState', data);
+        this.$store.commit("updateState", data);
         this.isLoggedIn = true;
       } catch (error) {
         console.log(error);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -44,8 +43,8 @@ export default {
 @import "../assets/global.css";
 
 .player {
-    position: relative;
-    top: 0%;
+  position: relative;
+  top: 0%;
 }
 .background {
   position: absolute;
