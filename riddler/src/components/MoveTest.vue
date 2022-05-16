@@ -17,7 +17,7 @@
         </div>
 
       <div class="more-shit">
-        <div :style="{ border: `.3rem solid var(--${$store.state.userData.currentItem.dialogue[this.textCount].color})` }" v-if="textbox" class="textbox">
+        <div :style="{ border: `.3rem solid var(--${$store.state.userData.currentItem.dialogue[textCount].color})` }" v-if="textbox" class="textbox">
           <img
             :src="require(`@/assets/sprites/${player.dialogueSprite}`)"
             :style="playerDialogueSprite"
@@ -30,8 +30,8 @@
             class="npc-avatar-dialogue"
             id="npc-dialogue-sprite"
           />
-          <p :style="{ color: `var(--${$store.state.userData.currentItem.dialogue[this.textCount].color})` }" class="textbox-title">{{ this.$store.state.userData.currentItem.dialogue[this.textCount].name }}</p>
-          <p class="textbox-test typing-class">{{ this.$store.state.userData.currentItem.dialogue[this.textCount].text }}</p>
+          <p :style="{ color: `var(--${$store.state.userData.currentItem.dialogue[textCount].color})` }" class="textbox-title">{{ $store.state.userData.currentItem.dialogue[textCount].name }}</p>
+          <p class="textbox-test typing-class">{{ $store.state.userData.currentItem.dialogue[textCount].text }}</p>
         </div>
             
         <ItemPopup @itemAdded="addToInventory()" v-if="itemPopup" @closePopup="closeItemPopup()" :item="currentItem" 
@@ -210,21 +210,23 @@ export default {
       this.gameItems = this.$store.state.gameItems.gameItems[this.$store.state.userData.level - 1];
     },
     checkLevel() {
+      const gameOverlay = document.querySelector(".game-overlay");
       if (this.$store.state.userData.level === 1) {
         console.log("level 1");
-          document.querySelector(".game-overlay").classList.add("game-overlay");
+        this.itemInteract();
+
       } 
       if (this.$store.state.userData.level === 2) {
         console.log("level 2");
         setTimeout(() => {
-          document.querySelector(".game-overlay").classList.add("dark");
+          gameOverlay.classList.add("dark");
 
         }, 0)      
       } 
       if (this.$store.state.userData.level === 3) {
         console.log("level 3");
         setTimeout(() => {
-          document.querySelector(".game-overlay").classList.add("fog");
+          gameOverlay.classList.add("fog");
         }, 0)      
       }
     },
@@ -413,8 +415,7 @@ export default {
       this.puzzlePopupVisilibility = false;
       this.enablePlayerMovement();
     },
-  
-    textboxShow() {
+      textboxShow() {
       this.textbox = true;
       this.textCount += 1;
       
@@ -543,6 +544,30 @@ img {
   overflow: hidden;
   border-radius: 1.5rem;
 }
+/* .game-start {
+  animation: fadeIn 8s forwards;
+}
+  @keyframes fadeIn {
+    0% {
+      filter: brightness(0);
+    }
+    20% {
+      filter: brightness(0);
+    }
+    40% {
+      filter: brightness(.6);
+    }
+    50% {
+      filter: brightness(.3);
+    }
+    60% {
+      filter: brightness(.6);
+    }
+    80% {
+      filter: brightness(1);
+    }
+  } */
+
 .game-container {
   overflow: hidden;
   position: relative;
