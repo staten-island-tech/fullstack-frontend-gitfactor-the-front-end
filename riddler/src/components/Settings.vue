@@ -10,15 +10,15 @@
     <div class="slider-and-label">
         <h2 class="slider-label">Music Volume:</h2>
  <div class="slidecontainer" >
-     <input @click="volumeLog()" type="range" min="1" max="100" value="50" class="slider slider1" id="myRange">
+     <input @click="volumeLog() & $emit('volumeChange')"  type="range" min="1" max="100" value="50" class="slider slider1" id="myRange">
 </div> 
-<h3 class="volumeTest">Hello</h3>
+<h3 class="volumeTest"></h3>
 </div>
 
    <div class="slider-and-label">
         <h2 class="slider-label">Brightness:</h2>
 <div class="slidecontainer">
-     <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+     <input type="range" min="0" max="100" value="50" class="slider" id="myRange">
 </div>
 </div>
 <h3 class="volume"></h3>

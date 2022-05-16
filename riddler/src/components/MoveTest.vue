@@ -41,7 +41,7 @@
        <PauseMenu @closePause="closePM()" @instruction="instructionHandle()"
        @setting="settingHandler()" v-if="isPauseOpen"/> 
        <Instructions @closeInstruc="closeInstrucHandler()" v-if="instruction"/> 
-       <Settings @closeSetting="closeSettingHandler()" v-if="setting"/>
+       <Settings @closeSetting="closeSettingHandler()" v-if="setting" @volumeChange="volumeChangeHandler()"/>
         <img
           :src="require(`@/assets/environment/lv1/${currentLocationImg}`)"
           class="bg-img"
@@ -182,9 +182,7 @@ export default {
             ],
         },
       ],
-      enteredOnObject: false,
       emittedPuzzleAnswer: "", 
-      
       emittedPuzzleType: null,
       currentLocationImg: "",
       gameItems: null,
@@ -509,6 +507,10 @@ export default {
   },
   closeSettingHandler(){
     this.setting = false;
+  }, 
+  volumeChangeHandler(){
+    const audio = document.getElementById("audio-bgm");
+    audio.volume = 0
   }
   },
 };
