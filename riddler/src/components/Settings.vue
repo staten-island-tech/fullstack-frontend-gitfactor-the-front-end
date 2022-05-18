@@ -10,7 +10,7 @@
     <div class="slider-and-label">
         <h2 class="slider-label">Music Volume:</h2>
  <div class="slidecontainer" >
-     <input @click="volumeLog() & $emit('volumeChange', 'volumeVal')"  type="range" min="1" max="100" value="50" class="slider slider1" id="myRange">
+     <input @click="volumeLog()"  type="range" min="1" max="100" value="50" class="slider slider1" id="myRange">
 </div> 
 <h3 class="volumeTest"></h3>
 </div>
@@ -31,12 +31,14 @@
 <script>
 export default {
 name: "Settings", 
+ expose: ['volumeLog'],
 methods: {
 volumeLog(){
   const volumeSlider = document.querySelector(".slider1")
   const volumeLabel = document.querySelector(".volumeTest")
   volumeLabel.innerHTML = volumeSlider.value;
   let volumeVal = volumeSlider.value;
+   this.$emit('volumeLog', volumeVal);
   console.log(volumeVal)
 }
 },

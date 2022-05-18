@@ -41,7 +41,7 @@
        <PauseMenu @closePause="closePM()" @instruction="instructionHandle()"
        @setting="settingHandler()" v-if="isPauseOpen"/> 
        <Instructions @closeInstruc="closeInstrucHandler()" v-if="instruction"/> 
-       <Settings @closeSetting="closeSettingHandler()" v-if="setting" @volumeChange="volumeChangeHandler()"/>
+       <Settings @closeSetting="closeSettingHandler()" v-if="setting" @volumeLog="volumeChangeHandler()" ref="settings"/>
         <img
           :src="require(`@/assets/environment/lv1/${currentLocationImg}`)"
           class="bg-img"
@@ -147,6 +147,7 @@ export default {
     this.unhideItem();
     this.enablePlayerMovement();
     this.checkLevel();
+    // this.$refs.settings;
   },
   data() {
     return {
@@ -197,6 +198,7 @@ export default {
       enteredOnObject: false,
       puzzlePopupVisilibility: false,
       isFlashlightOn: false,
+      // volumeVal: this.$refs.volumeVal,
     };
   },
 
@@ -508,9 +510,12 @@ export default {
   closeSettingHandler(){
     this.setting = false;
   }, 
-  volumeChangeHandler(){
-    const audio = document.getElementById("audio-bgm");
-    audio.volume = 0
+  volumeChangeHandler(volumeVal){
+    // const audio = document.getElementById("audio-bgm");
+    console.log(this.$refs.volumeVal)
+    console.log(this.volumeVal)
+    console.log(volumeVal)
+    // continues to be undefined
   }
   },
 };
