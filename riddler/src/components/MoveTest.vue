@@ -406,8 +406,10 @@ export default {
       this.$refs.itemPopupBox.$el.focus();
     },
     openTransitionPopup() {
-      this.$refs.transitionPopupBox.prepEndGame();
-      setTimeout(()=>{document.getElementById("tr-popup").classList.remove("hide");},50);
+/*       this.$refs.transitionPopupBox.prepEndGame();
+      setTimeout(()=>{document.getElementById("tr-popup").classList.remove("hide");},50); */
+      this.levelAdd();
+      this.unhideItem();
       
     },
     nextLevel() {

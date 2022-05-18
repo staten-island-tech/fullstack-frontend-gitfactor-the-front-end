@@ -1,5 +1,5 @@
 <template>
-  <div class="transition-popup" :key="titleText" 
+  <div class="transition-popup hide" :key="titleText" 
     tabindex="-1">
       <h2>{{titleText}}</h2>
 

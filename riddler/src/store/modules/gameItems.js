@@ -95,7 +95,8 @@ export const state = {
         isInteractable: false,
         filter: null,
         itemType: "object",
-        prompt: "It's a painting of some guy who seems important. If only vampires studied human history!"
+        prompt:
+          "It's a painting of some guy who seems important. If only vampires studied human history!",
       },
       // {
       //   name: "",
@@ -114,12 +115,12 @@ export const state = {
       {
         name: "Door of Truth",
         id: 0,
-        section: 1,
+        section: 2,
         position: 50,
         margin: "50%",
         widthInt: 50,
         width: "50%",
-        img: "lv1_door.png",
+        img: "lv2_door.png",
         isInteractable: false,
         filter: null,
         itemType: "puzzle",
