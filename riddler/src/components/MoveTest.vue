@@ -174,9 +174,9 @@ export default {
         },
         {
           assets:             [
-              { id: 1, img: "bg_2_a.png", ost:"lv02" },
-              { id: 2, img: "bg_2_b.png", ost:"lv02" },
-              { id: 3, img: "bg_2_c.png", ost:"lv02" },
+              { id: 1, img: "bg_3_a.png", ost:"lv02" },
+              { id: 2, img: "bg_3_b.png", ost:"lv02" },
+              { id: 3, img: "bg_3_c.png", ost:"lv02" },
             ],
         },
       ],
