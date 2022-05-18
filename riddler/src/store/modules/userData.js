@@ -1,9 +1,9 @@
 export const state = {  
-  level: null,
-  section: null,
-  leftValue: null,
-  lifeCount: null,
-  currentItem: null,
+  level: 1,
+  section: 2,
+  leftValue: 30,
+  lifeCount: 5,
+  currentItem: {},
   inventory: [],
 }
 

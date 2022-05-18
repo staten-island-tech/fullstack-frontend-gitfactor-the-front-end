@@ -4,10 +4,8 @@
     <MoveTest class="game" />
     <div class="solid"></div>
   </div>
-  <!-- <div class="pagebg"></div>
-    <button @click="addNewUser()">New user</button>
-    <button @click="authorize()">poop</button>
-    <button @click="updateData(userdata.sub)">Update</button> -->
+  <div class="pagebg"></div>
+    <button @click="updateData()">Update</button>
 </div>
 </template>
 
@@ -27,7 +25,6 @@ export default {
     }
   },
   created() {
-    // this.callApi();
     this.getData();
   },
   
@@ -36,40 +33,40 @@ export default {
       const userId = this.userdata.sub.replace("auth0|", "");
       try {
         const token = await this.$auth.getTokenSilently();
-        console.log(token)
         const response = await fetch(`http://localhost:3000/api/index/${userId}`, {
-          method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify(this.$store.state.userData),
         });
         const data = await response.json();
-        console.log(data);
-        this.$store.commit('updateState', data);
+        if (Object.prototype.hasOwnProperty.call(data, "leftValue")) { //checks if user already logged in 
+          this.$store.commit('updateState', data);
+        } else {
+          this.updateData();
+          this.$store.commit('updateState', data);
+        }
         this.isLoggedIn = true;
       } catch (error) {
         console.log(error);
       }
     },
-    // async updateData(id) {
-    //   try {
-    //     console.log(id);
-    //     console.log(this.$store.state.userData);
-    //     const response = await fetch(`http://localhost:3000/update/${id}`, {
-    //       method: 'PATCH',
-    //       headers: {
-    //         'Content-Type': 'application/json'
-    //       },
-    //       body: JSON.stringify(this.$store.state.userData),
-    //     });
-    //     const data = await response.json();
-    //     console.log(data);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // },
+    async updateData() {
+      const userId = this.userdata.sub.replace("auth0|", "");
+      try {
+        const response = await fetch(`http://localhost:3000/api/index/update/${userId}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(this.$store.state.userData),
+        });
+        const data = await response.json();
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    },
   }
 };
 </script>
