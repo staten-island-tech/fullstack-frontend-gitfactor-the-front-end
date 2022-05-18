@@ -18,8 +18,7 @@ export default {
     },
     methods: {
         itemDetails(item) {
-            console.log(item);
-            alert(`This item is a ${item.name}. Check your console for more information.`);
+            alert(`This item is a ${item.name}.`);
         },
         toggleInventory() {
           this.isInventoryOpen = !this.isInventoryOpen;
@@ -34,6 +33,8 @@ export default {
 </script>
 
 <style scoped>
+@import "../assets/global.css";
+
   .inventory-container {
     background-color: #4c3188;
     text-align: right;
@@ -57,6 +58,8 @@ export default {
   }
   .inventory img {
     height: 7rem;
+    width: 7rem;
+    object-fit: contain;
     margin: .5rem;
     background-color: #deceff;
     padding: .5rem;

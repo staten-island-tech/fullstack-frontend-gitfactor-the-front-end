@@ -1,8 +1,9 @@
 <template>
-<div>
-  <div class="home" v-if="isLoggedIn">
-    <MoveTest class="game" />
-    <div class="solid"></div>
+  <div class="background">
+    <div class="home" v-if="isLoggedIn">
+      <MoveTest class="game" />
+      <div class="solid"></div>
+    </div>
   </div>
   <div class="pagebg"></div>
     <button @click="updateData()">Update</button>
@@ -72,27 +73,18 @@ export default {
 </script>
 
 <style scoped>
+@import "../assets/global.css";
 
 .player {
     position: relative;
     top: 0%;
 }
-
-.solid {
+.background {
   position: absolute;
   z-index: -10;
-  top: 0%;
   width: 100%;
-  height: 100%;
-  background-color: #0d0752;
+  min-height: 100%;
+  height: fit-content;
+  background-color: var(--background-color);
 }
-.pagebg {
-  position: absolute;
-  z-index: -10;
-  top: 0%;
-  width: 100%;
-  height: 100%;
-  background-color: #1f1227;
-}
-
 </style>

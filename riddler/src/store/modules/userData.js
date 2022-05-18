@@ -3,9 +3,10 @@ export const state = {
   section: 2,
   leftValue: 30,
   lifeCount: 5,
-  currentItem: {},
+  currentItem: null,
   inventory: [],
-}
+  battery: 100,
+};
 
 export const mutations = {
   incrementLives(state) {
@@ -14,6 +15,12 @@ export const mutations = {
   decrementLives(state) {
     state.lifeCount--;
   },
+  incrementLevel(state) {
+    state.level++;
+  },
+  decrementLevel(state) {
+    state.level--;
+  },
   updateState(state, newState) {
     state.level = newState.level;
     state.section = newState.section;
@@ -21,6 +28,6 @@ export const mutations = {
     state.lifeCount = newState.lifeCount;
     state.currentItem = newState.currentItem;
     state.inventory = newState.inventory;
-    console.log(state);
+    state.battery = newState.battery;
   },
-}
+};
