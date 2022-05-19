@@ -2,13 +2,26 @@
   /* colors */
   --darkest-purple: #1f1227;
   --dark-purple: #2b0d47;
+  --purple: #543472;
+  --light-purple: #dec5f6;
+
+  /* character colors */
+  --green: #00ff00;
+  --orange: #ff6f00;
+
+  /* --darkest-purple: #24153f;
+  --dark-purple: #371c72;
   --purple: #4c3188;
-  --light-purple: #deceff;
+  --light-purple: #deceff; */
+
 
   /* intentions */
   --background-color: var(--darkest-purple);
   --highlight-color: var(--light-purple);
   --popup-color: var(--dark-purple);
+
+  --protagonist: var(--orange);
+  --riddler: var(--green);
 
   /* font size */
   --title-font: "Mystery Quest", cursive;

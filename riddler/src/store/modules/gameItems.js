@@ -69,8 +69,8 @@ export const state = {
         name: "Bright Lantern",
         id: 4,
         section: 1,
-        position: 35,
-        margin: "35%",
+        position: 20,
+        margin: "20%",
         widthInt: 20,
         width: "20%",
         bottom: "18%",
@@ -83,7 +83,98 @@ export const state = {
         puzzleAnswer: "paper",
       },
       {
-        name: "Painting of Some Dude",
+        name: "Painting",
+        id: 5,
+        section: 1,
+        position: 60,
+        margin: "60%",
+        widthInt: 19,
+        width: "19%",
+        bottom: "55%",
+        img: "lv1_painting.png",
+        isInteractable: false,
+        filter: null,
+        itemType: "object",
+        prompt: "It's a painting of some guy who seems important. If only vampires studied human history!"
+      },
+      {
+        name: "Riddler",
+        id: 6,
+        section: 1,
+        position: 80,
+        margin: "80%",
+        widthInt: 20,
+        width: "20%",
+        bottom: "5%",
+        img: "sprites/sprite_dialogue_riddl.png",
+        isInteractable: false,
+        filter: null,
+        itemType: "character",
+        dialogueSprite: "sprite_dialogue_riddl.png",
+        dialogue: [
+          {
+            name: "Riddler",
+            text: "Frick",
+            color: "riddler"
+          },
+          {
+            name: "Me",
+            text: "Frick",
+            color: "protagonist"
+          },
+          {
+            name: "Riddler",
+            text: "Frick",
+            color: "riddler"
+          },
+          {
+            name: "Me",
+            text: "Frick",
+            color: "protagonist"
+          },
+        ],
+      },
+      {
+        name: "Riddler",
+        id: 6,
+        section: 1,
+        position: 30,
+        margin: "30%",
+        widthInt: 20,
+        width: "20%",
+        bottom: "5%",
+        img: "sprites/sprite_dialogue_riddl.png",
+        isInteractable: false,
+        filter: null,
+        itemType: "character",
+        dialogueSprite: "sprite_dialogue_riddl.png",
+        dialogue: [
+          {
+            name: "???",
+            text: "Frick",
+            color: "riddler"
+          },
+          {
+            name: "Me",
+            text: "Frick",
+            color: "protagonist"
+          },
+          {
+            name: "???",
+            text: "Frick",
+            color: "riddler"
+          },
+          {
+            name: "Me",
+            text: "Frick",
+            color: "protagonist"
+          },
+        ],
+      },
+    ],
+    [
+      {
+        name: "Painting",
         id: 5,
         section: 1,
         position: 60,
@@ -98,36 +189,22 @@ export const state = {
         prompt: "It's a painting of some guy who seems important. If only vampires studied human history!"
       },
       // {
-      //   name: "",
-      //   id: 5,
-      //   section: 1/2/3,
-      //   position: (0, 100),
-      //   margin: "(position)%",
-      //   img: ".png",
+      //   name: "Door of Truth",
+      //   id: 0,
+      //   section: 1,
+      //   position: 50,
+      //   margin: "50%",
+      //   widthInt: 50,
+      //   width: "50%",
+      //   img: "lv1_door.png",
       //   isInteractable: false,
       //   filter: null,
-      //   itemType: "object",
-      //   prompt: "",
+      //   itemType: "puzzle",
+      //   puzzleType: 1,
+      //   prompt:
+      //     "I live in the ocean, I live in your ear. You cannot hear me, but you see when I'm near.",
+      //   puzzleAnswer: "light",
       // },
-    ],
-    [
-      {
-        name: "Door of Truth",
-        id: 0,
-        section: 1,
-        position: 50,
-        margin: "50%",
-        widthInt: 50,
-        width: "50%",
-        img: "lv1_door.png",
-        isInteractable: false,
-        filter: null,
-        itemType: "puzzle",
-        puzzleType: 1,
-        prompt:
-          "I live in the ocean, I live in your ear. You cannot hear me, but you see when I'm near.",
-        puzzleAnswer: "light",
-      },
     ],
     // []  level 3
   ],
@@ -144,7 +221,7 @@ Object:
   position: (0, 100),
   margin: "(position)%",
   width: "(widthInt)%",
-  width: Number,
+  widthInt: Number,
   bottom: "x%",
   img: ".png",
   isInteractable: false,
@@ -161,7 +238,7 @@ Character:
   position: 0,
   margin: "(position)%",
   width: "(widthInt)%",
-  width: Number,
+  widthInt: Number,
   bottom: "x%",
   img: ".png",
   isInteractable: false,
@@ -170,9 +247,9 @@ Character:
   dialogueSprite: ".png",
   dialogue: [
     {
-      text: "",
       name: "",
-      isAntagonist: Boolean,
+      text: "",
+      color: "CSS CP",
     },
     {},
   ],
@@ -186,7 +263,7 @@ Puzzle:
   position: Number,
   margin: "(position)%",
   width: "(widthInt)%",
-  width: Number,
+  widthInt: Number,
   bottom: "x%",
   img: ".png",
   isInteractable: false,

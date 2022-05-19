@@ -36,7 +36,7 @@ export default {
 @import "../assets/global.css";
 
   .inventory-container {
-    background-color: #4c3188;
+    background-color: var(--purple);
     text-align: right;
     height: fit-content;
     padding: 1rem;
