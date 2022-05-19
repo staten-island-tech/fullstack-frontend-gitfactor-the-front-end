@@ -31,16 +31,26 @@
 <script>
 export default {
 name: "Settings", 
- expose: ['volumeLog'],
+data(){
+  return{
+    passingVolVal: '',
+  }
+},
 methods: {
 volumeLog(){
   const volumeSlider = document.querySelector(".slider1")
   const volumeLabel = document.querySelector(".volumeTest")
   volumeLabel.innerHTML = volumeSlider.value;
-  let volumeVal = volumeSlider.value;
-   this.$emit('volumeLog', volumeVal);
-  console.log(volumeVal)
+  this.passingVolVal = volumeSlider.value;
+  alert(this.passingVolVal)
+  this.$emit('emitVol', this.passingVolVal)
+  //  this.$emit('volumeLog', volumeVal);
+  // alert(volumeVal)
+  // this.$emit('sendVol', volumeVal)
 }
+// volPas(volumeVal){
+//    this.$emit('volumeLog', volumeVal)
+// }
 },
 }
 </script>
