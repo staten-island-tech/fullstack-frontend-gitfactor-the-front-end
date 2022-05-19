@@ -45,7 +45,6 @@ export default {
           this.$store.commit('updateState', data);
         } else {
           this.updateData();
-          this.$store.commit('updateState', data);
         }
         this.isLoggedIn = true;
       } catch (error) {
@@ -63,7 +62,8 @@ export default {
           body: JSON.stringify(this.$store.state.userData),
         });
         const data = await response.json();
-        console.log(data);
+        console.log("updated data:" + data);
+        this.$store.commit('updateState', data);
       } catch (error) {
         console.log(error);
       }
