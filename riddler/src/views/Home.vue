@@ -2,12 +2,11 @@
   <div class="background">
     <div class="home" v-if="isLoggedIn">
       <MoveTest class="game" />
+      <button @click="updateData()">Update</button>
       <div class="solid"></div>
     </div>
   </div>
   <div class="pagebg"></div>
-    <button @click="updateData()">Update</button>
-</div>
 </template>
 
 <script>
@@ -41,6 +40,7 @@ export default {
           },
         });
         const data = await response.json();
+        console.log(data)
         if (Object.prototype.hasOwnProperty.call(data, "leftValue")) { //checks if user already logged in 
           this.$store.commit('updateState', data);
         } else {
