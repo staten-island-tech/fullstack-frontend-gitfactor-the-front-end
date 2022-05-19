@@ -215,43 +215,46 @@ export default {
       const gameOverlay = document.querySelector(".game-overlay");
       if (this.$store.state.userData.level === 1) {
         console.log("level 1");
-        gameOverlay.classList.add("game-overlay");
-        document.querySelector(".main").classList.add("game-start");
-        this.enteredOnObject = true;
         setTimeout(() => {
-          this.playAudio();
-          if (this.$store.state.userData.isIntro) {
-          alert("You hear a broken transmission over an intercom.");
-          this.gameItems.unshift(
-            {
-              intro: true,
-              name: "Riddler",
-              id: 6,
-              section: 2,
-              position: 50,
-              margin: "50%",
-              widthInt: 20,
-              width: "20%",
-              bottom: "5%",
-              img: "sprites/sprite_dialogue_riddl.png",
-              isInteractable: false,
-              filter: null,
-              itemType: "character",
-              dialogueSprite: "sprite_dialogue_riddl.png",
-              dialogue: levelOneIntro,
-            },
-          );
+          document.querySelector(".main").classList.add("game-start");
+        }, 0) 
+        if (this.$store.state.userData.isIntro) {
+          this.enteredOnObject = true;
+          setTimeout(() => {
+            this.playAudio();
+            alert("You hear a broken transmission over an intercom.");
+            this.gameItems.unshift(
+              {
+                intro: true,
+                name: "Riddler",
+                id: 6,
+                section: 2,
+                position: 50,
+                margin: "50%",
+                widthInt: 20,
+                width: "20%",
+                bottom: "5%",
+                img: "sprites/sprite_dialogue_riddl.png",
+                isInteractable: false,
+                filter: null,
+                itemType: "character",
+                dialogueSprite: "sprite_dialogue_riddl.png",
+                dialogue: levelOneIntro,
+              },
+            );
           this.itemInteract();
           this.onEnter();
-          }
-        }, 7000);
+          }, 7000);
+        } else {
+          this.playAudio();
+        }
       } 
       if (this.$store.state.userData.level === 2) {
         console.log("level 2");
         setTimeout(() => {
           gameOverlay.classList.add("dark");
-
         }, 0)      
+        console.log(gameOverlay.classList)
       } 
       if (this.$store.state.userData.level === 3) {
         console.log("level 3");
@@ -261,6 +264,7 @@ export default {
       }
     },
     leftMove(e){
+      this.playAudio();
       this.playWalkSfx();
       this.player.idle = "idle-left.gif";
       if(this.enteredOnObject && e.key === "ArrowLeft"){
@@ -284,6 +288,7 @@ export default {
      
     },
     rightMove(e) {
+      this.playAudio();
       this.player.idle = "idle-right.gif";
       if(this.enteredOnObject && e.key === "ArrowRight") {
         e.preventDefault();
@@ -500,7 +505,7 @@ export default {
         this.textbox = false;
         this.enteredOnObject = false;
         this.textCount = -1;
-        this.isIntro = false;
+        this.$store.state.userData.isIntro = false;
       };
     },
     levelAdd() {

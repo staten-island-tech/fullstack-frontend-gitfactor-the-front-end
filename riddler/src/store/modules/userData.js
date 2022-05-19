@@ -1,4 +1,4 @@
-export const state = {  
+export const state = {
   level: 1,
   section: 2,
   leftValue: 50,
@@ -23,12 +23,9 @@ export const mutations = {
     state.level--;
   },
   updateState(state, newState) {
-    state.level = newState.level;
-    state.section = newState.section;
-    state.leftValue = newState.leftValue;
-    state.lifeCount = newState.lifeCount;
-    state.currentItem = newState.currentItem;
-    state.inventory = newState.inventory;
-    state.battery = newState.battery;
+    const updates = Object.keys(state);
+    updates.forEach(update => {
+      state[update] = newState[update]; //user's information = updated information
+    });
   },
 };

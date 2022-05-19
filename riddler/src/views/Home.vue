@@ -41,10 +41,12 @@ export default {
         });
         const data = await response.json();
         console.log(data)
-        if (Object.prototype.hasOwnProperty.call(data, "leftValue")) { //checks if user already logged in 
+        if (Object.prototype.hasOwnProperty.call(data, "isIntro")) { //checks if user already logged in 
           this.$store.commit('updateState', data);
+          console.log("logging in")
         } else {
           this.updateData();
+          console.log("registering")
         }
         this.isLoggedIn = true;
       } catch (error) {
@@ -53,6 +55,7 @@ export default {
     },
     async updateData() {
       const userId = this.userdata.sub.replace("auth0|", "");
+      console.log(this.$store.state.userData)
       try {
         const response = await fetch(`http://localhost:3000/api/index/update/${userId}`, {
           method: 'PATCH',
@@ -62,7 +65,7 @@ export default {
           body: JSON.stringify(this.$store.state.userData),
         });
         const data = await response.json();
-        console.log("updated data:" + data);
+        console.log(data);
         this.$store.commit('updateState', data);
       } catch (error) {
         console.log(error);
