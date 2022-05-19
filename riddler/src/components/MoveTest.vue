@@ -688,8 +688,8 @@ h2 {
 .hide {
   display: none;
 }
-.mobile-button-container {
-  margin-top: 2.5rem;
+.mobile-button-container {   
+  margin-top: 2.5rem; /*vue touch events */
 }
 .mobile-button {
   font-size: 4rem;

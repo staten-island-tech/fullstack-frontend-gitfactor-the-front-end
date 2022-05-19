@@ -119,7 +119,7 @@ export const state = {
         isInteractable: false,
         isLevelTransitionPuzzle: true,
         filter: null,
-        itemType: "puzzle",
+        itemType: "puzzle", 
         puzzleCompleted: false,
         puzzleType: 1,
         prompt: "I move, slowly but surely. Back and forth. Yet with my slow pace, over time I change the face of the world. What am I?",
