@@ -16,7 +16,7 @@
           <audio id="walk-sfx" :src="require(`@/assets/audio/sfx/walkstep.mp3`)"></audio>
         </div>
 
-      <div class="more-shit">
+      <div class="main">
         <div :style="{ border: `.3rem solid var(--${$store.state.userData.currentItem.dialogue[textCount].color})` }" v-if="textbox" class="textbox">
           <img
             :src="require(`@/assets/sprites/${player.dialogueSprite}`)"
@@ -31,7 +31,7 @@
             id="npc-dialogue-sprite"
           />
           <p :style="{ color: `var(--${$store.state.userData.currentItem.dialogue[textCount].color})` }" class="textbox-title">{{ $store.state.userData.currentItem.dialogue[textCount].name }}</p>
-          <p class="textbox-test typing-class">{{ $store.state.userData.currentItem.dialogue[textCount].text }}</p>
+          <p class="textbox-text typing-class">{{ $store.state.userData.currentItem.dialogue[textCount].text }}</p>
         </div>
             
         <ItemPopup @itemAdded="addToInventory()" v-if="itemPopup" @closePopup="closeItemPopup()" :item="currentItem" 
@@ -124,7 +124,7 @@ import HeartBar from "./HeartBar.vue";
 import Inventory from "./Inventory.vue";
 import ItemPopup from "./ItemPopup.vue";
 import PuzzlePopup from "./PuzzlePopup.vue"; 
-
+import {levelOneIntro} from "../dialogue"
 
 export default {
   name: "MoveTest",
@@ -133,11 +133,11 @@ export default {
   },
   created() {
     this.getUserData();
-    this.sectionChange();
   },
   mounted() {
     this.unhideItem();
     this.enablePlayerMovement();
+    this.itemInteract();
     this.checkLevel();
   },
   data() {
@@ -208,13 +208,43 @@ export default {
     getUserData() {
       this.currentLocationImg = this.locations[this.$store.state.userData.level - 1].assets[this.$store.state.userData.section - 1].img;
       this.gameItems = this.$store.state.gameItems.gameItems[this.$store.state.userData.level - 1];
+      this.currentOST = this.locations[this.$store.state.userData.level - 1].assets[this.$store.state.userData.section - 1].ost;
+      this.unhideItem();
     },
     checkLevel() {
       const gameOverlay = document.querySelector(".game-overlay");
       if (this.$store.state.userData.level === 1) {
         console.log("level 1");
-        this.itemInteract();
-
+        gameOverlay.classList.add("game-overlay");
+        document.querySelector(".main").classList.add("game-start");
+        this.enteredOnObject = true;
+        setTimeout(() => {
+          this.playAudio();
+          if (this.$store.state.userData.isIntro) {
+          alert("You hear a broken transmission over an intercom.");
+          this.gameItems.unshift(
+            {
+              intro: true,
+              name: "Riddler",
+              id: 6,
+              section: 2,
+              position: 50,
+              margin: "50%",
+              widthInt: 20,
+              width: "20%",
+              bottom: "5%",
+              img: "sprites/sprite_dialogue_riddl.png",
+              isInteractable: false,
+              filter: null,
+              itemType: "character",
+              dialogueSprite: "sprite_dialogue_riddl.png",
+              dialogue: levelOneIntro,
+            },
+          );
+          this.itemInteract();
+          this.onEnter();
+          }
+        }, 7000);
       } 
       if (this.$store.state.userData.level === 2) {
         console.log("level 2");
@@ -370,7 +400,7 @@ export default {
 
         } else if (this.$store.state.userData.currentItem.itemType === "character") {              
           this.textboxShow();
-
+          
         } else if (this.$store.state.userData.currentItem.itemType === "puzzle") {        
       
             this.puzzlePopupVisilibility = true;
@@ -415,9 +445,10 @@ export default {
       this.puzzlePopupVisilibility = false;
       this.enablePlayerMovement();
     },
-      textboxShow() {
+    textboxShow() {
       this.textbox = true;
       this.textCount += 1;
+          this.playAudio();
       
       if (this.textCount < this.$store.state.userData.currentItem.dialogue.length) {
         document.querySelector(".bg-img").style.filter = "brightness(0.3)";
@@ -428,13 +459,13 @@ export default {
           });
         if (this.$store.state.userData.currentItem.dialogue[0].name === "???") {
           if (this.textCount % 2 === 0) {
-              this.playerDialogueSprite = "filter: brightness(.5)";
-              this.npcDialogueSprite = "filter: brightness(0.05)";
-            } else {
-              this.playerDialogueSprite = "none";
-              this.npcDialogueSprite = "filter: brightness(0.05)";
-            }
+            this.playerDialogueSprite = "filter: brightness(.5)";
+            this.npcDialogueSprite = "filter: brightness(0.05)";
+          } else {
+            this.playerDialogueSprite = "none";
+            this.npcDialogueSprite = "filter: brightness(0.05)";
           }
+        }
         else {
           if (this.$store.state.userData.currentItem.dialogue[0].name !== "Me") {
             if (this.textCount % 2 === 0) {
@@ -462,9 +493,14 @@ export default {
           Array.from(items).forEach((item) => {
             item.style.visibility = 'visible';
           });
+        if (this.gameItems[0].intro) {
+          console.log(this.gameItems[0].intro);
+          this.gameItems.splice(0, 1);
+        }
         this.textbox = false;
         this.enteredOnObject = false;
         this.textCount = -1;
+        this.isIntro = false;
       };
     },
     levelAdd() {
@@ -535,7 +571,7 @@ img {
   flex-direction: column;
   align-items: center;
 }
-.more-shit {
+.main {
   overflow: hidden;
   border-radius: 1.5rem;
   position: relative;
@@ -544,7 +580,7 @@ img {
   overflow: hidden;
   border-radius: 1.5rem;
 }
-/* .game-start {
+.game-start {
   animation: fadeIn 8s forwards;
 }
   @keyframes fadeIn {
@@ -566,7 +602,7 @@ img {
     80% {
       filter: brightness(1);
     }
-  } */
+  }
 
 .game-container {
   overflow: hidden;
@@ -637,15 +673,18 @@ img {
   padding-top: 1rem;
   border-radius: 1rem;
 }
-.textbox-test,
+.textbox-text,
 .textbox-title {
   color: #f4ebff;
-  font-size: 2rem;
+  font-size: var(--h4);
   text-align: left;
   margin-top: 0.5rem;
 }
 .textbox-title {
   font-size: 2.5rem;
+}
+.textbox-text {
+  line-height: 1.4;
 }
 
 .bg-img {

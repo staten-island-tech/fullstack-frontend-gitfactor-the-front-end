@@ -1,11 +1,12 @@
 export const state = {  
   level: 1,
   section: 2,
-  leftValue: 30,
+  leftValue: 50,
   lifeCount: 5,
   currentItem: null,
   inventory: [],
   battery: 100,
+  isIntro: true,
 };
 
 export const mutations = {

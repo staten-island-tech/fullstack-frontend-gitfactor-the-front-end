@@ -1,6 +1,6 @@
 export const state = {
   gameItems: [
-    [
+    [ 
       {
         name: "Door of Truth",
         id: 0,
@@ -15,8 +15,7 @@ export const state = {
         filter: null,
         itemType: "puzzle",
         puzzleType: 1,
-        prompt:
-          "I live in the ocean, I live in your ear. You cannot hear me, but you see when I'm near.",
+        prompt: "You can follow me into the past. Agent of vision, yet faster than the eye can see. What am I?",
         puzzleAnswer: "light",
       },
       {
@@ -96,80 +95,6 @@ export const state = {
         filter: null,
         itemType: "object",
         prompt: "It's a painting of some guy who seems important. If only vampires studied human history!"
-      },
-      {
-        name: "Riddler",
-        id: 6,
-        section: 1,
-        position: 80,
-        margin: "80%",
-        widthInt: 20,
-        width: "20%",
-        bottom: "5%",
-        img: "sprites/sprite_dialogue_riddl.png",
-        isInteractable: false,
-        filter: null,
-        itemType: "character",
-        dialogueSprite: "sprite_dialogue_riddl.png",
-        dialogue: [
-          {
-            name: "Riddler",
-            text: "Frick",
-            color: "riddler"
-          },
-          {
-            name: "Me",
-            text: "Frick",
-            color: "protagonist"
-          },
-          {
-            name: "Riddler",
-            text: "Frick",
-            color: "riddler"
-          },
-          {
-            name: "Me",
-            text: "Frick",
-            color: "protagonist"
-          },
-        ],
-      },
-      {
-        name: "Riddler",
-        id: 6,
-        section: 1,
-        position: 30,
-        margin: "30%",
-        widthInt: 20,
-        width: "20%",
-        bottom: "5%",
-        img: "sprites/sprite_dialogue_riddl.png",
-        isInteractable: false,
-        filter: null,
-        itemType: "character",
-        dialogueSprite: "sprite_dialogue_riddl.png",
-        dialogue: [
-          {
-            name: "???",
-            text: "Frick",
-            color: "riddler"
-          },
-          {
-            name: "Me",
-            text: "Frick",
-            color: "protagonist"
-          },
-          {
-            name: "???",
-            text: "Frick",
-            color: "riddler"
-          },
-          {
-            name: "Me",
-            text: "Frick",
-            color: "protagonist"
-          },
-        ],
       },
     ],
     [
