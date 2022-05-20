@@ -3,40 +3,56 @@
     class="popup-container"
     tabindex="-1"
     v-if="puzzleVisibilityFunction()"
-    v-on:keyup.esc="closePuzzleClick"
-    v-on:keyup.enter="checkAnswerClick"
+    @keyup.esc="closePuzzleClick"
+    @keyup.enter="checkAnswerClick"
   >
-    <button v-on:click="closePuzzleClick" class="close-puzzle-button">x</button>
-    <div class="promptAnsweredText" v-if="puzzlePromptAnswered">
-      <h2>correct!</h2>
-      <slot name="puzzle-correct-text"></slot>
+    <button @click="closePuzzleClick" class="close-puzzle-button">x</button>
+    <div class="solved-text" v-if="puzzlePromptAnswered">
+      <h3>Solved!</h3>
+      <p>
+        <slot name="puzzle-correct-text"></slot>
+      </p>
     </div>
-    <div class="questionPrompt" v-else>
-      <slot name="puzzle-text"></slot>
-      <slot name="puzzle-img"></slot>
-      <input
-        type="text"
-        class="puzzle-answer"
-        v-model="puzzleInput"
-        :maxlength="puzzleInputMaxLength"
-        :disabled="puzzleInputDisabled"
-        v-show="puzzleInputVisibility"
-      />
-      <div class="selected-item-div" v-show="selectedItemDiv">
-        <h2>selected:{{ inventoryItem }}</h2>
-      </div>
-      <button v-on:click="checkAnswerClick" class="puzzle-submit-button">
-        enter
-      </button>
-      <button class="puzzleClearButton" @click="clearInputClick">clear</button>
 
+    <div class="questionPrompt" v-else>
+      <h3>
+        <slot name="puzzle-name"></slot>
+      </h3>
+      <slot name="puzzle-img"></slot>
+      <h4>
+        <slot name="puzzle-text"></slot>
+      </h4>
+
+      <div class="selected-item-div" v-show="selectedItemDiv">
+        <h5>Click on an inventory item to select it as your answer.</h5>
+        <div class="select-item-options">
+          <div class="selected-item">
+            <img :src="require(`@/assets/${inventoryItem.img}`)" v-if="inventoryItem"/>
+            <p v-else>?</p>
+          </div>
+          <button @click="checkAnswerClick" class="puzzle-submit-btn" :disabled="!inventoryItem">Enter</button>
+        </div>
+      </div>
+      
+      <button class="puzzle-clear-btn" @click="clearInputClick" v-show="puzzleInputVisibility">Clear</button>
+        <input
+          type="text"
+          class="puzzle-answer"
+          v-model="puzzleInput"
+          :maxlength="puzzleInputMaxLength"
+          :disabled="puzzleInputDisabled"
+          v-show="puzzleInputVisibility"
+          placeholder="Solve the puzzle"
+        />
+      <button @click="checkAnswerClick" class="puzzle-submit-btn" v-show="puzzleInputVisibility">Enter</button>
+      
       <div
         class="keypad-button-div"
         v-for="value in puzzle2ButtonArray"
         :key="value.id"
         v-show="puzzleButtonVisibility"
       >
-        <button @click="puzzle2ButtonClick(value.value)" class="puzzle-button">
+        <button @click="puzzle2ButtonClick(value.value)" class="keypad-button">
           {{ value.value }}
         </button>
       </div>
@@ -53,14 +69,13 @@ export default {
     "refocus-on-puzzle",
     "next-level",
   ],
-
   props: {
     puzzleVisibility: Boolean,
     puzzlePrompt: String,
     puzzleAnswer: String,
     puzzleType: Number,
     isPromptAnswered: Boolean,
-    inventoryItem: String,
+    inventoryItem: Object,
     isLevelTransitionPuzzle: Boolean,
     puzzle2ButtonArray: Array,
   },
@@ -80,7 +95,6 @@ export default {
       buttonValues: [],
     };
   },
-
   methods: {
     puzzleVisibilityFunction() {
       if (this.puzzleVisibility === true) {
@@ -115,6 +129,7 @@ export default {
           console.log("puzzle 3");
           this.puzzleButtonVisibility = false;
           this.puzzleInput = this.inventoryItem;
+          console.log(this.inventoryItem);
           this.selectedItemDiv = true;
           this.puzzleInputDisabled = true;
           this.puzzleInputVisibility = false;
@@ -122,11 +137,8 @@ export default {
       }
     },
     checkAnswerClick() {
-      const puzzleAnswerInput = this.puzzleInput.trim().toLowerCase();
-      console.log(puzzleAnswerInput);
-
       if (this.puzzleType === 3) {
-        if (this.inventoryItem === this.puzzleAnswer) {
+        if (this.inventoryItem.name === this.puzzleAnswer) {
           console.log("puzzle 3 answered correctly");
           this.$store.state.userData.currentItem.puzzleCompleted = true;
           this.puzzlePromptAnswered = true;
@@ -138,6 +150,9 @@ export default {
         }
       } 
       else {
+        const puzzleAnswerInput = this.puzzleInput.trim().toLowerCase();
+        console.log(puzzleAnswerInput);
+
         if (puzzleAnswerInput === this.puzzleAnswer) {
           this.puzzleInput = "";
           console.log("puzzle answered correctly");
@@ -166,7 +181,7 @@ export default {
     },
     clearInputClick() {
       console.log("trying to clear");
-      this.puzzleInput = "";
+      this.puzzleInput = null;
     },
     levelTransition() {
       if (this.isLevelTransitionPuzzle === true) {
@@ -185,14 +200,12 @@ export default {
 <style scoped>
 @import "../assets/global.css";
 
-button {
-  background-color: var(--highlight-color);
-  font-size: var(--h4);
-  font-weight: 700;
-  padding: 1.5rem 2rem;
-  border: none;
-  border-radius: 1rem;
-  color: var(--background-color);
+button:disabled {
+  cursor: default;
+  background-color: #6f627b;
+}
+button:disabled:hover {
+  filter: brightness(1);
 }
 .popup-container {
   position: absolute;
@@ -203,10 +216,17 @@ button {
   padding: 5rem;
   margin: 2rem;
   border-radius: 1.5rem;
-  border: solid var(--highlight-color) 0.3rem;
+  border: solid var(--highlight-color) .3rem;
   background-color: var(--background-color);
   z-index: 1;
   overflow: scroll;
+}
+.popup-container p {
+  font-size: var(--h4);
+  text-align: left;
+}
+.solved-text p {
+  margin-top: 1rem;
 }
 .close-puzzle-button {
   font-size: var(--h4);
@@ -220,28 +240,55 @@ button {
 .invisible {
   display: none;
 }
-.puzzle-answer {
-  margin: 0;
-}
-.puzzleQuestionLine {
-  font-size: 2rem;
-}
-.puzzle-btn, input {
-  margin: 5rem 1rem;
-  width: 25rem;
+
+.puzzle-submit-btn, .puzzle-clear-btn, input {
   font-size: var(--h4);
   font-weight: 700;
   padding: 0.6rem 1.2rem;
   border: none;
   border-radius: 0.5rem;
-  margin-top: 5rem;
 }
-.puzzle-btn {
+input {
+  margin: 5rem 1.5rem;
+  width: 30rem;
+}
+.puzzle-submit-btn {
   background-color: var(--highlight-color);
   color: var(--background-color);
 }
-.puzzleClearButton {
+.puzzle-clear-btn {
   background-color: #f9e3e3;
   color: #ad2020;
+}
+
+.selected-item-div {
+  margin-top: 1rem;
+}
+.select-item-options {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+}
+.selected-item {
+  display: flex;
+  height: fit-content;
+  width: fit-content;
+  min-width: 10rem;
+  min-height: 10rem;
+  background-color: var(--purple);
+  border-radius: 1rem;
+  margin-right: 2rem;
+}
+.selected-item p {
+  margin: auto;
+  font-size: var(--h1);
+}
+.selected-item img {
+  height: 10rem;
+  width: 10rem;
+  padding: .5rem;
+  object-fit: contain;
 }
 </style>

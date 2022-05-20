@@ -46,47 +46,34 @@
           </template>
         </ItemPopup>
 
-                    <PuzzlePopup
-              @turn-off="closePuzzlePopup"
-              @reset-visibility="puzzleVisibilityValueReset"
-              @refocus-on-puzzle="openPuzzlePopup"
-              @next-level="openTransitionPopup"
+        <PuzzlePopup
+          @turn-off="closePuzzlePopup()"
+          @reset-visibility="puzzleVisibilityValueReset()"
+          @refocus-on-puzzle="openPuzzlePopup()"
+          @next-level="levelAdd()"
 
-              :puzzleAnswer="emittedPuzzleAnswer"
-              :puzzleVisibility="puzzlePopupVisibility"
-              :isPromptAnswered="puzzleQuestionCompleted"
-              :inventoryItem="selectedInventoryItem"
-              :puzzleType="emittedPuzzleType"
-              :isLevelTransitionPuzzle="isLevelTransitionPuzzleValue"
-              :puzzle2ButtonArray="puzzle2ButtonChoices"
-              ref="puzzlePopupBox"
-            >
-              <template v-slot:puzzle-text>
-                <div class="puzzle-text-div">
-                  <h1 class="puzzle-name">
-                    {{ $store.state.userData.currentItem.name }}
-                  </h1>
-                  <h2 class="puzzle-prompt">
-                    {{ $store.state.userData.currentItem.prompt }}
-                  </h2>
-                </div>
-              </template>
-              <template v-slot:puzzle-img>
-                <img
-                  class="itempopup-img"
-                  style="width: 12.5%"
-                  :src="
-                    require(`@/assets/${$store.state.userData.currentItem.img}`)
-                  "
-                  :alt="$store.state.userData.currentItem.name"
-                />
-              </template>
-              <template v-slot:puzzle-correct-text>
-                <p class="puzzle-correct-info">
-                  {{ $store.state.userData.currentItem.puzzleAnsweredText }}
-                </p>
-              </template>
-            </PuzzlePopup>
+          :puzzleAnswer="emittedPuzzleAnswer"
+          :puzzleVisibility="puzzlePopupVisibility"
+          :isPromptAnswered="puzzleQuestionCompleted"
+          :inventoryItem="selectedInventoryItem"
+          :puzzleType="emittedPuzzleType"
+          :isLevelTransitionPuzzle="isLevelTransitionPuzzleValue"
+          :puzzle2ButtonArray="puzzle2ButtonChoices"
+          ref="puzzlePopupBox"
+        >
+          <template v-slot:puzzle-name>
+                {{ $store.state.userData.currentItem.name }}
+          </template>
+          <template v-slot:puzzle-text>
+                {{ $store.state.userData.currentItem.prompt }}
+          </template>
+          <template v-slot:puzzle-img>
+            <img :src="require(`@/assets/${$store.state.userData.currentItem.img}`)" class="puzzlepopup-img" style="width: 15%; position: unset; margin: 1rem;" :alt="$store.state.userData.currentItem.name" />
+          </template>
+          <template v-slot:puzzle-correct-text>
+              {{ $store.state.userData.currentItem.puzzleAnsweredText }}
+          </template>
+        </PuzzlePopup>
 
 
         <div v-if="$store.state.userData.level === 2" class="battery-meter">
@@ -137,7 +124,7 @@
     </div>
   </main>
     
-  <Inventory @clicked-item="selectedInventoryItemName"  v-if="$store.state.userData.inventory[0]">
+  <Inventory @clickedItem="selectInventoryItem" v-if="$store.state.userData.inventory[0]">
     <button
       v-if="$store.state.userData.level === 2"
       @click="flashlight()"
@@ -222,8 +209,7 @@ export default {
       npcDialogueSprite: null,
       textCount: -1,
       puzzlePopupVisibility: false,
-      selectedInventoryItem: "",
-      selectedInventoryItemId: 0,
+      selectedInventoryItem: null,
       isLevelTransitionPuzzleValue: null,
       puzzle2ButtonChoices: [],
       isFlashlightOn: false,
@@ -243,8 +229,13 @@ export default {
     getUserData() {
       this.currentLocationImg = this.locations[this.$store.state.userData.level - 1].assets[this.$store.state.userData.section - 1].img;
       this.gameItems = this.$store.state.gameItems.gameItems[this.$store.state.userData.level - 1];
+      this.$store.state.userData.inventory.forEach(inventoryItem => { //removes items already in inventory from game items
+        const duplicate = this.gameItems.findIndex(gameItem => gameItem.id === inventoryItem.id);
+        this.gameItems.splice(duplicate, 1);
+      }); 
       this.currentOST = this.locations[this.$store.state.userData.level - 1].assets[this.$store.state.userData.section - 1].ost;
       this.unhideItem();
+      console.log(this.gameItems)
     },
     checkLevel() {
       const gameOverlay = document.querySelector(".game-overlay");
@@ -470,10 +461,9 @@ export default {
         }
       }
     },
-    selectedInventoryItemName(name, id) {
-      this.selectedInventoryItem = name;
-      console.log(name);
-      this.selectedInventoryItemId = id;
+    selectInventoryItem(item) {
+      console.log(item)
+      this.selectedInventoryItem = item;
     },
     addToInventory() {
       const selectedItem = this.gameItems.findIndex(
@@ -561,11 +551,12 @@ export default {
         this.$store.state.userData.isIntro = false;
       };
     },
-    openTransitionPopup() {
+    levelAdd() {
       this.$store.commit("incrementLevel");
       console.log(this.$store.state.userData.level);
       this.$emit("gameEvent");
     },
+    
     levelMinus() {
       this.$store.commit("decrementLevel");
       console.log(this.$store.state.userData.level);

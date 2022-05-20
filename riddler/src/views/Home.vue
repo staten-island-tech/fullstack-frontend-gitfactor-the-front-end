@@ -2,7 +2,7 @@
   <div class="background">
     <div class="home" v-if="isLoggedIn">
       <MoveTest @gameEvent="updateData()" class="game" />
-      <button class="btn secondary" @click="update()">Save</button>
+      <button class="btn secondary" @click="updateData()">Save</button>
       <button class="btn secondary" @click="logout()">Save and Quit</button>
       <div class="solid"></div>
     </div>

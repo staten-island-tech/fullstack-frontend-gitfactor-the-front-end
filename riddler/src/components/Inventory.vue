@@ -20,7 +20,8 @@ export default {
     methods: {
         itemDetails(item) {
             alert(`This item is a ${item.name}.`); 
-            this.$emit('clickedItem', item.name, item.id);
+            this.$emit('clickedItem', item);
+            console.log("selected in inventory:" + item.name)
         },
         toggleInventory() {
           this.isInventoryOpen = !this.isInventoryOpen;
@@ -63,7 +64,7 @@ export default {
     width: 7rem;
     object-fit: contain;
     margin: .5rem;
-    background-color: #deceff;
+    background-color: var(--highlight-color);
     padding: .5rem;
     border-radius: 1rem;
     cursor: pointer;
