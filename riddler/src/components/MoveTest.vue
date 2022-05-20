@@ -1,7 +1,6 @@
 <template>
-
   <div class="game-page" :key="$store.state.userData.level">
-    <button @click="levelAdd" class="mobile-button">l+ratio</button>
+    <button @click="openTransitionPopup" class="mobile-button">l+ratio</button>
     <button @click="levelMinus" class="mobile-button">l-1</button>
 
     <div class="level-and-hearts">
@@ -47,18 +46,47 @@
           </template>
         </ItemPopup>
 
-        <PuzzlePopup  
-          @turn-off="closePuzzlePopup" 
-          :puzzleAnswer="emittedPuzzleAnswer"
-          v-if="puzzlePopupVisilibility" 
-          
-          :puzzleType ="emittedPuzzleType"
-          ref="puzzlePopupBox"
-          >
-          <template v-slot:puzzle-text>
-            {{$store.state.userData.currentItem.prompt}}
-          </template>
-        </PuzzlePopup>
+                    <PuzzlePopup
+              @turn-off="closePuzzlePopup"
+              @reset-visibility="puzzleVisibilityValueReset"
+              @refocus-on-puzzle="openPuzzlePopup"
+              @next-level="openTransitionPopup"
+
+              :puzzleAnswer="emittedPuzzleAnswer"
+              :puzzleVisibility="puzzlePopupVisibility"
+              :isPromptAnswered="puzzleQuestionCompleted"
+              :inventoryItem="selectedInventoryItem"
+              :puzzleType="emittedPuzzleType"
+              :isLevelTransitionPuzzle="isLevelTransitionPuzzleValue"
+              :puzzle2ButtonArray="puzzle2ButtonChoices"
+              ref="puzzlePopupBox"
+            >
+              <template v-slot:puzzle-text>
+                <div class="puzzle-text-div">
+                  <h1 class="puzzle-name">
+                    {{ $store.state.userData.currentItem.name }}
+                  </h1>
+                  <h2 class="puzzle-prompt">
+                    {{ $store.state.userData.currentItem.prompt }}
+                  </h2>
+                </div>
+              </template>
+              <template v-slot:puzzle-img>
+                <img
+                  class="itempopup-img"
+                  style="width: 12.5%"
+                  :src="
+                    require(`@/assets/${$store.state.userData.currentItem.img}`)
+                  "
+                  :alt="$store.state.userData.currentItem.name"
+                />
+              </template>
+              <template v-slot:puzzle-correct-text>
+                <p class="puzzle-correct-info">
+                  {{ $store.state.userData.currentItem.puzzleAnsweredText }}
+                </p>
+              </template>
+            </PuzzlePopup>
 
 
         <div v-if="$store.state.userData.level === 2" class="battery-meter">
@@ -109,7 +137,13 @@
     </div>
   </main>
     
-  <Inventory v-if="$store.state.userData.inventory[0]"/>
+  <Inventory @clicked-item="selectedInventoryItemName"  v-if="$store.state.userData.inventory[0]">
+    <button
+      v-if="$store.state.userData.level === 2"
+      @click="flashlight()"
+      class="flashlight"
+    ></button>
+  </Inventory>
 
   </div>   
 
@@ -129,7 +163,10 @@ import {levelOneIntro} from "../dialogue"
 export default {
   name: "MoveTest",
   components: {
-    HeartBar, Inventory, ItemPopup, PuzzlePopup
+    HeartBar,
+    Inventory,
+    ItemPopup,
+    PuzzlePopup,
   },
   created() {
     this.getUserData();
@@ -151,31 +188,30 @@ export default {
       playerAvatar: "idle-right.gif",
       locations: [
         {
-          assets: 
-            [
-              { id: 1, img: "bg_1_a.png", ost:"lv01" },
-              { id: 2, img: "bg_1_b.png", ost:"lv01" },
-              { id: 3, img: "bg_1_c.png", ost:"lv01" },
-            ],
+          assets: [
+            { id: 1, img: "bg_1_a.png", ost: "lv01" },
+            { id: 2, img: "bg_1_b.png", ost: "lv01" },
+            { id: 3, img: "bg_1_c.png", ost: "lv01" },
+          ],
         },
         {
-          assets:             [
-              { id: 1, img: "bg_2_a.png", ost:"lv02" },
-              { id: 2, img: "bg_2_b.png", ost:"lv02" },
-              { id: 3, img: "bg_2_c.png", ost:"lv02" },
-            ],
+          assets: [
+            { id: 1, img: "bg_2_a.png", ost: "lv02" },
+            { id: 2, img: "bg_2_b.png", ost: "lv02" },
+            { id: 3, img: "bg_2_c.png", ost: "lv02" },
+          ],
         },
         {
-          assets:             [
-              { id: 1, img: "bg_2_a.png", ost:"lv02" },
-              { id: 2, img: "bg_2_b.png", ost:"lv02" },
-              { id: 3, img: "bg_2_c.png", ost:"lv02" },
-            ],
+          assets: [
+            { id: 1, img: "bg_2_a.png", ost: "lv02" },
+            { id: 2, img: "bg_2_b.png", ost: "lv02" },
+            { id: 3, img: "bg_2_c.png", ost: "lv02" },
+          ],
         },
       ],
       enteredOnObject: false,
-      emittedPuzzleAnswer: "", 
-      
+      emittedPuzzleAnswer: "",
+      puzzleQuestionCompleted: null,
       emittedPuzzleType: null,
       currentLocationImg: "",
       gameItems: null,
@@ -185,26 +221,25 @@ export default {
       playerDialogueSprite: null,
       npcDialogueSprite: null,
       textCount: -1,
-      puzzlePopupVisilibility: false,
+      puzzlePopupVisibility: false,
+      selectedInventoryItem: "",
+      selectedInventoryItemId: 0,
+      isLevelTransitionPuzzleValue: null,
+      puzzle2ButtonChoices: [],
       isFlashlightOn: false,
     };
   },
-
   computed: {
     cssProps() {
       return {
-        '--leftVar': (this.$store.state.userData.leftValue) + "%",
-      }
+        "--leftVar": this.$store.state.userData.leftValue + "%",
+      };
     },
     batteryPercentage() {
       return this.$store.state.userData.battery + "%";
-    }
+    },
   },
   methods: {
-    enablePlayerMovement() {
-      this.$refs.playerMove.focus();  
-      console.log('done');    
-    },
     getUserData() {
       this.currentLocationImg = this.locations[this.$store.state.userData.level - 1].assets[this.$store.state.userData.section - 1].img;
       this.gameItems = this.$store.state.gameItems.gameItems[this.$store.state.userData.level - 1];
@@ -267,107 +302,116 @@ export default {
         }, 0)      
       }
     },
+    enablePlayerMovement() {
+      this.$refs.playerMove.focus();
+    },
     leftMove(e){
       this.playAudio();
       this.playWalkSfx();
       this.player.idle = "idle-left.gif";
-      if(this.enteredOnObject && e.key === "ArrowLeft"){
+      if (this.enteredOnObject && e.key === "ArrowLeft") {
         e.preventDefault();
-      }
-      else{
-      setTimeout(() => {
-        
-        if (this.$store.state.userData.leftValue > 0) {
-          this.$store.state.userData.leftValue -= 1.5;
-        } else {
-          if (this.$store.state.userData.section > 1) {
-            this.sectionChangeAnim();
-            this.$store.state.userData.section = this.$store.state.userData.section - 1;
+      } else {
+        setTimeout(() => {
+          if (this.$store.state.userData.leftValue > 0) {
+            this.$store.state.userData.leftValue -= 1.5;
+          } else {
+            if (this.$store.state.userData.section > 1) {
+              this.sectionChangeAnim();
+              this.$store.state.userData.section =
+                this.$store.state.userData.section - 1;
+            }
           }
-        }
-        this.playerAvatar = this.player.left;
-        this.itemInteract();
-      }, 150);
+          this.playerAvatar = this.player.left;
+          this.itemInteract();
+        }, 150);
       }
-     
     },
     rightMove(e) {
       this.playAudio();
       this.player.idle = "idle-right.gif";
-      if(this.enteredOnObject && e.key === "ArrowRight") {
+      if (this.enteredOnObject && e.key === "ArrowRight") {
         e.preventDefault();
-      }
-      else{
-      setTimeout(() => {
-        
-        if (this.$store.state.userData.leftValue < 85) {
-          this.$store.state.userData.leftValue += 1.5;
-        }; 
-        if (this.$store.state.userData.section < 3 && this.$store.state.userData.leftValue > 83) {
-            this.sectionChangeAnim();
-            this.$store.state.userData.section = this.$store.state.userData.section + 1;                   
+      } else {
+        setTimeout(() => {
+          if (this.$store.state.userData.leftValue < 85) {
+            this.$store.state.userData.leftValue += 1.5;
           }
-        this.playerAvatar = this.player.right;
-        this.itemInteract();
-      }, 150);
+          if (
+            this.$store.state.userData.section < 3 &&
+            this.$store.state.userData.leftValue > 83
+          ) {
+            this.sectionChangeAnim();
+            this.$store.state.userData.section =
+              this.$store.state.userData.section + 1;
+          }
+          this.playerAvatar = this.player.right;
+          this.itemInteract();
+        }, 150);
       }
     },
-   
     reset() {
       this.stopWalkSfx();
       setTimeout(() => {
-      this.playerAvatar = this.player.idleRight;
-      this.playerAvatar = this.player.idle;
+        this.playerAvatar = this.player.idleRight;
+        this.playerAvatar = this.player.idle;
       }, 250);
-       this.itemInteract();
-      },
+      this.itemInteract();
+    },
     sectionChange() {
       setTimeout(() => {
         if (this.$store.state.userData.leftValue >= 83) {
           this.$store.state.userData.leftValue = 1.5;
-        } else {this.$store.state.userData.leftValue = 80;}
+        } else {
+          this.$store.state.userData.leftValue = 80;
+        }
       }, 10);
-      
+
       setTimeout(() => {
-        this.currentLocationImg = this.locations[this.$store.state.userData.level - 1].assets[this.$store.state.userData.section - 1].img;
-        this.currentOST = this.locations[this.$store.state.userData.level - 1].assets[this.$store.state.userData.section - 1].ost;
+        this.currentLocationImg =
+          this.locations[this.$store.state.userData.level - 1].assets[
+            this.$store.state.userData.section - 1
+          ].img;
+        this.currentOST =
+          this.locations[this.$store.state.userData.level - 1].assets[
+            this.$store.state.userData.section - 1
+          ].ost;
         this.unhideItem();
         this.playAudio();
       }, 300);
     },
     sectionChangeAnim() {
-      var transition = gsap.fromTo(".game-container", {
-       backgroundColor: "rgba(16, 1, 22, 1)",
-       duration:0.1}, {
-       delay: .2, 
-       duration: .3,
-       backgroundColor: "rgba(16, 1, 22, 0)",
-       ease: "power2.inOut"});
-       transition.play;
-       this.sectionChange();
+      var transition = gsap.fromTo(
+        ".game-container",
+        {
+          backgroundColor: "rgba(16, 1, 22, 1)",
+          duration: 0.1,
+        },
+        {
+          delay: 0.2,
+          duration: 0.3,
+          backgroundColor: "rgba(16, 1, 22, 0)",
+          ease: "power2.inOut",
+        }
+      );
+      transition.play;
+      this.sectionChange();
     },
-    unhideItem() {
-      document.querySelectorAll('.item').forEach(el => el.classList.add("hide"));
-      document.querySelectorAll('.section' + this.$store.state.userData.section).forEach(el => el.classList.remove("hide"));
-
-      //maybe :class="item.section" then select current section's class and remove
-    },
-    playAudio(){
+    playAudio() {
       const audio = document.getElementById("audio-bgm");
-      audio.volume = .25;
+      audio.volume = 0.25;
       setTimeout(() => {
         audio.play();
         audio.loop = true;
       }, 200);
       this.itemInteract();
-
     },
-    playWalkSfx(){
+    playWalkSfx() {
       const audio = document.getElementById("walk-sfx");
       audio.loop = true;
       audio.play();
     },
-    stopWalkSfx(){
+    stopWalkSfx() {
       const audio = document.getElementById("walk-sfx");
       audio.pause();
       audio.currentTime = 60;
@@ -377,72 +421,87 @@ export default {
       this.gameItems.forEach((item) => {
         const itemLeft = item.position;
         const itemRight = item.position + item.widthInt;
-        if ((item.section === this.$store.state.userData.section) && ((this.$store.state.userData.leftValue + 8) >= itemLeft && (this.$store.state.userData.leftValue + 10) <= itemRight)) { //checks if avatar is in range of item
-            item.isInteractable = true;
-            this.$store.state.userData.currentItem = item;
-            console.log('in range');
-            item.filter = "brightness(55%)";
+        if (
+          item.section === this.$store.state.userData.section &&
+          this.$store.state.userData.leftValue + 8 >= itemLeft &&
+          this.$store.state.userData.leftValue + 10 <= itemRight
+        ) {
+          //checks if avatar is in range of item
+          item.isInteractable = true;
+          this.$store.state.userData.currentItem = item;
+          console.log("in range");
+          item.filter = "brightness(55%)";
         } else {
           item.isInteractable = false;
           item.filter = null;
         }
       });
     },
-  
+    unhideItem() {
+      document
+        .querySelectorAll(".item")
+        .forEach((el) => el.classList.add("hide"));
+      document
+        .querySelectorAll(".section" + this.$store.state.userData.section)
+        .forEach((el) => el.classList.remove("hide"));
+
+      //maybe :class="item.section" then select current section's class and remove
+    },
     onEnter() {
       if (this.$store.state.userData.currentItem) {
         this.enteredOnObject = true;
-        if (this.$store.state.userData.currentItem.itemType === "object") {              
-        this.itemPopup = true;
-          setTimeout(() => {   
-            this.openItemPopup();  
+        if (this.$store.state.userData.currentItem.itemType === "object") {
+          this.itemPopup = true;
+          setTimeout(() => {
+            this.openItemPopup();
           }, 10);
-
-        } else if (this.$store.state.userData.currentItem.itemType === "character") {              
-          this.textboxShow();
-          
-        } else if (this.$store.state.userData.currentItem.itemType === "puzzle") {        
-      
-            this.puzzlePopupVisilibility = true;
-            console.log(this.puzzlePopupVisilibility);
-            this.emittedPuzzleAnswer = this.$store.state.userData.currentItem.puzzleAnswer;
-           
-            this.emittedPuzzleType = this.$store.state.userData.currentItem.puzzleType;
-            setTimeout(() => {   
-              this.openPuzzlePopup();  
-            }, 10);
-              if (this.currentItem.puzzleType === 1){
-                console.log('this is type 1');
-              }
-              else if (this.currentItem.puzzleType === 2){
-                console.log('this is type 2');
-              }
-              else if (this.currentItem.puzzleType === 3){
-                console.log('this is type 3'); 
-              }
-          }
+        } else if (this.$store.state.userData.currentItem.itemType === "character") {
+          this.txtbxShow();
+        } else if (this.$store.state.userData.currentItem.itemType === "puzzle") {
+          this.puzzlePopupVisibility = true;
+          this.emittedPuzzleAnswer = this.$store.state.userData.currentItem.puzzleAnswer;
+          this.emittedPuzzleType = this.$store.state.userData.currentItem.puzzleType;
+          this.puzzleQuestionCompleted = this.$store.state.userData.currentItem.puzzleCompleted;
+          this.isLevelTransitionPuzzleValue = this.$store.state.userData.currentItem.isLevelTransitionPuzzle;
+          this.puzzle2ButtonChoices = this.$store.state.userData.currentItem.buttonChoices;
+          setTimeout(() => {
+            this.openPuzzlePopup();
+          }, 10);
+        }
       }
     },
+    selectedInventoryItemName(name, id) {
+      this.selectedInventoryItem = name;
+      console.log(name);
+      this.selectedInventoryItemId = id;
+    },
     addToInventory() {
-      const selectedItem = this.gameItems.findIndex(item => item.id === this.$store.state.userData.currentItem.id);
+      const selectedItem = this.gameItems.findIndex(
+        (item) => item.id === this.$store.state.userData.currentItem.id
+      );
       this.gameItems.splice(selectedItem, 1);
-      this.$store.state.userData.inventory.push(this.$store.state.userData.currentItem);
+      this.$store.state.userData.inventory.push(
+        this.$store.state.userData.currentItem
+      );
       this.closeItemPopup();
     },
+    puzzleVisibilityValueReset() {
+      this.puzzlePopupVisibility = null;
+    },
     openPuzzlePopup() {
-      this.$refs.puzzlePopupBox.$el.focus();// this not working
+      this.$refs.puzzlePopupBox.$el.focus();
+    },
+    closePuzzlePopup() {
+      this.enteredOnObject = false;
+      this.puzzlePopupVisibility = false;
+      this.enablePlayerMovement();
     },
     openItemPopup() {
       this.$refs.itemPopupBox.$el.focus();
     },
     closeItemPopup() {
       this.itemPopup = false;
-        this.enteredOnObject = false;
-      this.enablePlayerMovement();
-    },
-    closePuzzlePopup() { 
       this.enteredOnObject = false;
-      this.puzzlePopupVisilibility = false;
       this.enablePlayerMovement();
     },
     textboxShow() {
@@ -485,7 +544,6 @@ export default {
             }
           }
         }
-        
       } else {
         document.querySelector(".bg-img").style.filter = "brightness(1)";
         document.querySelector(".player-avatar").style.display = "block";
@@ -503,29 +561,33 @@ export default {
         this.$store.state.userData.isIntro = false;
       };
     },
-    levelAdd() {
-      this.$store.commit('incrementLevel');
+    openTransitionPopup() {
+      this.$store.commit("incrementLevel");
       console.log(this.$store.state.userData.level);
       this.$emit("gameEvent");
     },
     levelMinus() {
-      this.$store.commit('decrementLevel');
+      this.$store.commit("decrementLevel");
       console.log(this.$store.state.userData.level);
       this.$emit("gameEvent");
     },
     flashlight() {
       if (!this.isFlashlightOn) {
-        alert("Use this flashlight at your own risk. If the battery runs out, you will be lost in the dark forever! Muahahahaha!!")
+        alert(
+          "Use this flashlight at your own risk. If the battery runs out, you will be lost in the dark forever! Muahahahaha!!"
+        );
         this.isFlashlightOn = true;
         document.querySelector(".game-overlay").style.filter = "brightness(1)";
-        const intervalId = setInterval(() => { 
+        const intervalId = setInterval(() => {
           if (this.isFlashlightOn) {
             if (this.$store.state.userData.battery === 0) {
               clearInterval(intervalId);
               this.isFlashlightOn = false;
-              document.querySelector(".game-overlay").style.filter = "brightness(.1)";
+              document.querySelector(".game-overlay").style.filter =
+                "brightness(.1)";
             } else {
-              this.$store.state.userData.battery = this.$store.state.userData.battery - 1;
+              this.$store.state.userData.battery =
+                this.$store.state.userData.battery - 1;
             }
           }
         }, 2000);
@@ -617,14 +679,14 @@ img {
   overflow: hidden;
   position: relative;
   width: 66vw;
-  height: 33vw; 
-  border: .3rem solid;
+  height: 33vw;
+  border: 0.3rem solid;
   border-radius: 1.5rem;
-  transition: all .2s;
+  transition: all 0.2s;
 }
 .level-and-hearts h2 {
   font-size: var(--h3);
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 }
 .player {
   width: inherit;
@@ -650,29 +712,27 @@ img {
   bottom: -45vw;
   z-index: -1;
 }
-.npc-avatar-dialogue {
-  width: 70%;
-  left: -15%;
-  bottom: -45vw;
-  z-index: -1;
-}
 .hide {
   display: none;
 }
-.mobile-button-container {
-  margin-top: 2.5rem;
+.mobile-button-container {   
+  margin-top: 2.5rem; /*vue touch events */
 }
 .mobile-button {
   font-size: 4rem;
   background-color: #766696;
   color: #deceff;
   border-radius: 50%;
-  border: #deceff solid 0.3rem ;
+  border: #deceff solid 0.3rem;
   height: 7.5rem;
   width: 7.5rem;
   margin: 1rem;
 }
-.textbox {  
+.textbox {
+  border: #a60bbb 1rem solid;
+  background-color: #0e0b2b;
+  width: 100%;
+  min-height: 15%;
   position: absolute;
   bottom: 0;
   background-color: #0e0b2b;
@@ -695,7 +755,6 @@ img {
 .textbox-text {
   line-height: 1.4;
 }
-
 .bg-img {
   width: 130%;
   z-index: -5;
@@ -703,12 +762,10 @@ img {
   bottom: 0;
   left: -20%;
 }
-
 .item-popup img {
   position: unset;
   margin-bottom: 3rem;
 }
-
 .flashlight {
   position: absolute;
   right: 5%;
@@ -731,17 +788,16 @@ img {
   overflow: hidden;
   width: 15rem;
   background-color: var(--purple);
-  margin-top: .5rem;
-  border-radius: .5rem;
+  margin-top: 0.5rem;
+  border-radius: 0.5rem;
 }
 .charge {
   background-color: #fff200;
   height: 2.5rem;
 }
 .dark {
-  filter: brightness(.1);
+  filter: brightness(0.1);
 }
-
 .fog {
   position: relative;
 }
@@ -757,33 +813,33 @@ img {
   background-image: url("../assets/bubbles.png");
   animation: fogFade 20s ease-in-out infinite;
 }
-    @keyframes fogFade {
-      0% {
-        filter: brightness(0%);
-      }
-      20% {
-        filter: brightness(70%);
-      }
-      30% {
-        filter: brightness(90%);
-      }
-      40% {
-        filter: brightness(95%);
-      }
-      50% {
-        filter: brightness(100%);
-      }
-      60% {
-        filter: brightness(40%);
-      }
-      70% {
-        filter: brightness(70%);
-      }
-      100% {
-        filter: brightness(0%);
-      }
-    }
 
+@keyframes fogFade {
+  0% {
+    filter: brightness(0%);
+  }
+  20% {
+    filter: brightness(70%);
+  }
+  30% {
+    filter: brightness(90%);
+  }
+  40% {
+    filter: brightness(95%);
+  }
+  50% {
+    filter: brightness(100%);
+  }
+  60% {
+    filter: brightness(40%);
+  }
+  70% {
+    filter: brightness(70%);
+  }
+  100% {
+    filter: brightness(0%);
+  }
+}
 
 @media only screen and (max-width: 768px) {
   .game-and-inventory {
@@ -804,5 +860,4 @@ img {
     bottom: -55vw;
   }
 }
-
 </style>

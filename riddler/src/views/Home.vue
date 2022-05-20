@@ -11,7 +11,6 @@
 </template>
 
 <script>
-
 import MoveTest from "@/components/MoveTest.vue";
 
 export default {
@@ -103,8 +102,8 @@ export default {
   color: white;
 }
 .player {
-    position: relative;
-    top: 0%;
+  position: relative;
+  top: 0%;
 }
 .background {
   position: absolute;
