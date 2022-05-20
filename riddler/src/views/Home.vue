@@ -1,8 +1,9 @@
 <template>
   <div class="background">
     <div class="home" v-if="isLoggedIn">
-      <MoveTest class="game" />
-      <button @click="updateData()">Update</button>
+      <MoveTest @gameEvent="updateData()" class="game" />
+      <button class="btn secondary" @click="update()">Save</button>
+      <button class="btn secondary" @click="logout()">Save and Quit</button>
       <div class="solid"></div>
     </div>
   </div>
@@ -27,8 +28,13 @@ export default {
   created() {
     this.getData();
   },
-  
   methods: {
+    logout() {
+      this.updateData();
+      this.$auth.logout({
+        returnTo: window.location.origin
+      });
+    },
     async getData() {
       const userId = this.userdata.sub.replace("auth0|", "");
       try {
@@ -67,6 +73,7 @@ export default {
         const data = await response.json();
         console.log(data);
         this.$store.commit('updateState', data);
+        window.location.reload();
       } catch (error) {
         console.log(error);
       }
@@ -77,7 +84,24 @@ export default {
 
 <style scoped>
 @import "../assets/global.css";
+.btn {
+  padding: .8rem 1.2rem;
+  margin-top: 2rem;
+  margin-left: 2rem;
+  font-size: 1.4rem;
+  font-weight: 400;
+  line-height: 1.5;
+  border: none;
+  cursor: pointer;
+  min-width: 10rem;
+  border-radius: .4rem;
+  font-weight: bold;
+}
 
+.btn-secondary {
+  background: #aaa;
+  color: white;
+}
 .player {
     position: relative;
     top: 0%;

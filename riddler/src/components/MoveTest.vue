@@ -215,10 +215,10 @@ export default {
       const gameOverlay = document.querySelector(".game-overlay");
       if (this.$store.state.userData.level === 1) {
         console.log("level 1");
-        setTimeout(() => {
-          document.querySelector(".main").classList.add("game-start");
-        }, 0) 
         if (this.$store.state.userData.isIntro) {
+          setTimeout(() => {
+            document.querySelector(".main").classList.add("game-intro");
+          }, 0) 
           this.enteredOnObject = true;
           setTimeout(() => {
             this.playAudio();
@@ -246,6 +246,9 @@ export default {
           this.onEnter();
           }, 7000);
         } else {
+          setTimeout(() => {
+            document.querySelector(".main").classList.add("game-start");
+          }, 0) 
           this.playAudio();
         }
       } 
@@ -259,6 +262,7 @@ export default {
       if (this.$store.state.userData.level === 3) {
         console.log("level 3");
         setTimeout(() => {
+          document.querySelector(".main").classList.add("game-start");
           gameOverlay.classList.add("fog");
         }, 0)      
       }
@@ -325,15 +329,6 @@ export default {
       }, 10);
       
       setTimeout(() => {
-        this.currentLocationImg = this.locations[this.$store.state.userData.level - 1].assets[this.$store.state.userData.section - 1].img;
-        this.currentOST = this.locations[this.$store.state.userData.level - 1].assets[this.$store.state.userData.section - 1].ost;
-        this.unhideItem();
-        this.playAudio();
-      }, 300);
-    },
-    levelChange() {
-      setTimeout(() => {
-        this.$store.state.userData.leftValue = 40;
         this.currentLocationImg = this.locations[this.$store.state.userData.level - 1].assets[this.$store.state.userData.section - 1].img;
         this.currentOST = this.locations[this.$store.state.userData.level - 1].assets[this.$store.state.userData.section - 1].ost;
         this.unhideItem();
@@ -511,17 +506,12 @@ export default {
     levelAdd() {
       this.$store.commit('incrementLevel');
       console.log(this.$store.state.userData.level);
-      this.getUserData();
-      this.levelChange();
-      setTimeout(()=> {this.$store.state.userData.leftValue = 40;}, 250);
-      this.checkLevel();
+      this.$emit("gameEvent");
     },
     levelMinus() {
       this.$store.commit('decrementLevel');
       console.log(this.$store.state.userData.level);
-      this.getUserData();
-      this.levelChange();    
-      this.checkLevel();
+      this.$emit("gameEvent");
     },
     flashlight() {
       if (!this.isFlashlightOn) {
@@ -585,7 +575,7 @@ img {
   overflow: hidden;
   border-radius: 1.5rem;
 }
-.game-start {
+.game-intro {
   animation: fadeIn 8s forwards;
 }
   @keyframes fadeIn {
@@ -605,6 +595,20 @@ img {
       filter: brightness(.6);
     }
     80% {
+      filter: brightness(1);
+    }
+  }
+.game-start {
+  animation: fadeIn 3s forwards;
+}
+  @keyframes fadeIn {
+    0% {
+      filter: brightness(0);
+    }
+    20% {
+      filter: brightness(0);
+    }
+    100% {
       filter: brightness(1);
     }
   }
