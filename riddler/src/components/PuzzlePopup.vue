@@ -51,7 +51,6 @@ export default {
     "turn-off",
     "reset-visibility",
     "refocus-on-puzzle",
-    "delete-item",
     "next-level",
   ],
 
@@ -132,7 +131,6 @@ export default {
           this.$store.state.userData.currentItem.puzzleCompleted = true;
           this.puzzlePromptAnswered = true;
           this.$emit("refocus-on-puzzle");
-          this.$emit("delete-item");
           this.levelTransition();
         } 
         else {
