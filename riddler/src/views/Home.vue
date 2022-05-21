@@ -46,7 +46,7 @@ export default {
         });
         const data = await response.json();
         console.log(data)
-        if (Object.prototype.hasOwnProperty.call(data, "isIntro")) { //checks if user already logged in 
+        if (Object.prototype.hasOwnProperty.call(data, "solvedPuzzles")) { //checks if user already logged in 
           this.$store.commit('updateState', data);
           console.log("logging in")
         } else {
@@ -73,6 +73,7 @@ export default {
         console.log(data);
         this.$store.commit('updateState', data);
         window.location.reload();
+        alert("Your progress has been saved.");
       } catch (error) {
         console.log(error);
       }

@@ -1,6 +1,6 @@
 <template>
   <div class="game-page" :key="$store.state.userData.level">
-    <button @click="openTransitionPopup" class="mobile-button">l+ratio</button>
+    <button @click="levelAdd" class="mobile-button">l+ratio</button>
     <button @click="levelMinus" class="mobile-button">l-1</button>
 
     <div class="level-and-hearts">
@@ -51,10 +51,11 @@
           @reset-visibility="puzzleVisibilityValueReset()"
           @refocus-on-puzzle="openPuzzlePopup()"
           @next-level="levelAdd()"
+          @level-fail="$emit('gameEvent')"
 
           :puzzleAnswer="emittedPuzzleAnswer"
           :puzzleVisibility="puzzlePopupVisibility"
-          :isPromptAnswered="puzzleQuestionCompleted"
+          :isPromptAnswered="isPuzzleQuestionCompleted"
           :inventoryItem="selectedInventoryItem"
           :puzzleType="emittedPuzzleType"
           :isLevelTransitionPuzzle="isLevelTransitionPuzzleValue"
@@ -198,7 +199,7 @@ export default {
       ],
       enteredOnObject: false,
       emittedPuzzleAnswer: "",
-      puzzleQuestionCompleted: null,
+      isPuzzleQuestionCompleted: null,
       emittedPuzzleType: null,
       currentLocationImg: "",
       gameItems: null,
@@ -232,6 +233,11 @@ export default {
       this.$store.state.userData.inventory.forEach(inventoryItem => { //removes items already in inventory from game items
         const duplicate = this.gameItems.findIndex(gameItem => gameItem.id === inventoryItem.id);
         this.gameItems.splice(duplicate, 1);
+      }); 
+      this.$store.state.userData.solvedPuzzles.forEach(() => { //marks previously solved puzzles as solved
+        const solved = this.gameItems.findIndex(gameItem => gameItem.id === 4);
+        console.log(solved)
+        this.gameItems[solved].isPuzzleCompleted = true;
       }); 
       this.currentOST = this.locations[this.$store.state.userData.level - 1].assets[this.$store.state.userData.section - 1].ost;
       this.unhideItem();
@@ -447,12 +453,12 @@ export default {
             this.openItemPopup();
           }, 10);
         } else if (this.$store.state.userData.currentItem.itemType === "character") {
-          this.txtbxShow();
+          this.textboxShow();
         } else if (this.$store.state.userData.currentItem.itemType === "puzzle") {
           this.puzzlePopupVisibility = true;
           this.emittedPuzzleAnswer = this.$store.state.userData.currentItem.puzzleAnswer;
           this.emittedPuzzleType = this.$store.state.userData.currentItem.puzzleType;
-          this.puzzleQuestionCompleted = this.$store.state.userData.currentItem.puzzleCompleted;
+          this.isPuzzleQuestionCompleted = this.$store.state.userData.currentItem.isPuzzleCompleted;
           this.isLevelTransitionPuzzleValue = this.$store.state.userData.currentItem.isLevelTransitionPuzzle;
           this.puzzle2ButtonChoices = this.$store.state.userData.currentItem.buttonChoices;
           setTimeout(() => {
@@ -554,6 +560,15 @@ export default {
     levelAdd() {
       this.$store.commit("incrementLevel");
       console.log(this.$store.state.userData.level);
+      //reset vuex state
+      this.$store.state.userData.section = 2;
+      this.$store.state.userData.leftValue = 50;
+      this.$store.state.userData.lifeCount = 5;
+      this.$store.state.userData.currentItem = null;
+      this.$store.state.userData.inventory = [];
+      this.$store.state.userData.isIntro = true;
+      this.$store.state.userData.solvedPuzzles = [2];
+
       this.$emit("gameEvent");
     },
     
@@ -629,9 +644,9 @@ img {
   border-radius: 1.5rem;
 }
 .game-intro {
-  animation: fadeIn 8s forwards;
+  animation: awaken 8s forwards;
 }
-  @keyframes fadeIn {
+  @keyframes awaken {
     0% {
       filter: brightness(0);
     }
@@ -696,13 +711,19 @@ img {
   z-index: -3;
 }
 
-.player-avatar-dialogue,
-.npc-avatar-dialogue {
+.player-avatar-dialogue {
   width: 70%;
   right: -15%;
   bottom: -45vw;
   z-index: -1;
 }
+.npc-avatar-dialogue {
+  width: 70%;
+  left: -15%;
+  bottom: -45vw;
+  z-index: -1;
+}
+
 .hide {
   display: none;
 }

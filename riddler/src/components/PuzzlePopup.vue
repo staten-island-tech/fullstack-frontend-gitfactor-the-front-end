@@ -116,15 +116,15 @@ export default {
           this.puzzleInputDisabled = false;
           this.selectedItemDiv = false;
           this.puzzleInputVisibility = true;
-          //this.selectedInventoryItemVisibility = false;
+
         } else if (this.puzzleType === 2) {
           console.log("puzzle 2");
-
           this.puzzleButtonVisibility = true;
           this.puzzleInputDisabled = true;
           this.selectedItemDiv = false;
           this.puzzleInputVisibility = true;
           this.puzzleInputMaxLength = 4;
+
         } else if (this.puzzleType === 3) {
           console.log("puzzle 3");
           this.puzzleButtonVisibility = false;
@@ -141,6 +141,8 @@ export default {
         if (this.inventoryItem.name === this.puzzleAnswer) {
           console.log("puzzle 3 answered correctly");
           this.$store.state.userData.currentItem.puzzleCompleted = true;
+          const solvedPuzzle = this.$store.state.userData.currentItem;
+          this.$store.state.userData.solvedPuzzles.push(solvedPuzzle); //tracks solved puzzles so they will stay solved on re-login
           this.puzzlePromptAnswered = true;
           this.$emit("refocus-on-puzzle");
           this.levelTransition();
@@ -192,6 +194,17 @@ export default {
     },
     loseHeart() {
       this.$store.commit("decrementLives");
+      if(this.$store.state.userData.lifeCount < 0) {
+        alert("'Muahaha! You have failed!', you hear over the intercom. Everything turns to black.");
+        this.$store.state.userData.section = 2;
+        this.$store.state.userData.leftValue = 50;
+        this.$store.state.userData.lifeCount = 5;
+        this.$store.state.userData.currentItem = null;
+        this.$store.state.userData.inventory = [];
+        this.$store.state.userData.isIntro = true;
+        this.$store.state.userData.solvedPuzzles = [2];
+        this.$emit("level-fail");
+      }
     },
   },
 };

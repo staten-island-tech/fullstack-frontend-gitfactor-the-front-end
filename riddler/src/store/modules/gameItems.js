@@ -15,12 +15,12 @@ export const state = {
         filter: null,
         itemType: "puzzle",
         puzzleType: 1,
-        isLevelTransitionPuzzle: true,
         prompt: "You can follow me into the past. Agent of vision, yet faster than the eye can see. What am I?",
+        isLevelTransitionPuzzle: true,
         puzzleAnswer: "light",
-        puzzleCompleted: false,
+        isPuzzleCompleted: false,
         puzzleAnsweredText:
-          "some random text or info that needs to be inserted 1",
+          "MUAHAHA TIME FOR ROUND 2",
       },
       {
         name: "Blank Scroll",
@@ -309,13 +309,12 @@ Puzzle:
   isInteractable: false,
   filter: null,
   itemType: "puzzle",
-  puzzleCompleted: false,
   puzzleType: 1/2/3,
-  isLevelTransitionPuzzle: true/false,
-  prompt: "",
-  buttonChoices:[],
+  prompt: "pre-solve text",
+  isLevelTransitionPuzzle: true/false, //not required
+  buttonChoices: [], //not required
   puzzleAnswer: "",
-  puzzleCompleted: false,
-  puzzleAnsweredText: "some random text ",
+  isPuzzleCompleted: false, 
+  puzzleAnsweredText: "post-solve text",
 },
 */

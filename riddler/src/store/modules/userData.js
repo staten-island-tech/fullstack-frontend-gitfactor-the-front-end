@@ -7,6 +7,7 @@ export const state = {
   inventory: [],
   battery: 100,
   isIntro: true,
+  solvedPuzzles: []
 };
 
 export const mutations = {
