@@ -9,7 +9,7 @@
       </div>
       <div v-if="$auth.isAuthenticated.value" @click="logout">
         <p class="welcome">
-          Welcome to the Riddler's Tower, <strong>{{ userdata.name }}</strong> >:)
+          Muahaha! Welcome to the Riddler's Tower, <strong>{{ userdata.nickname }}</strong>!
         </p>
       </div>
     </div>
