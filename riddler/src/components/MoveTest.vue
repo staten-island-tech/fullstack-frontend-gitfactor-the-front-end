@@ -514,8 +514,8 @@ export default {
     // const audio = document.getElementById("audio-bgm");
     // console.log(this.$refs.volumeVal)
     // console.log(this.volumeVal)
+        console.log(value)
     this.fromSettings = value;
-    console.log(this.fromSettings)
     // continues to be undefined
   }
   },
