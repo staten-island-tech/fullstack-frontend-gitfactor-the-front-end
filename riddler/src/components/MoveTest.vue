@@ -426,7 +426,6 @@ export default {
           //checks if avatar is in range of item
           item.isInteractable = true;
           this.$store.state.userData.currentItem = item;
-          console.log("in range");
           item.filter = "brightness(55%)";
         } else {
           item.isInteractable = false;
