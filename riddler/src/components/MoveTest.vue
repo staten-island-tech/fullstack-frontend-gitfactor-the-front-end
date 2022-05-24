@@ -236,7 +236,6 @@ export default {
       }); 
       this.$store.state.userData.solvedPuzzles.forEach(() => { //marks previously solved puzzles as solved
         const solved = this.gameItems.findIndex(gameItem => gameItem.id === 4);
-        console.log(solved)
         this.gameItems[solved].isPuzzleCompleted = true;
       }); 
       this.currentOST = this.locations[this.$store.state.userData.level - 1].assets[this.$store.state.userData.section - 1].ost;
@@ -566,7 +565,7 @@ export default {
       this.$store.state.userData.currentItem = null;
       this.$store.state.userData.inventory = [];
       this.$store.state.userData.isIntro = true;
-      this.$store.state.userData.solvedPuzzles = [2];
+      this.$store.state.userData.solvedPuzzles = [];
 
       this.$emit("gameEvent");
     },
