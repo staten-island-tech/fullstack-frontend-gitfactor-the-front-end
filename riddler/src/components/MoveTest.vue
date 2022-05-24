@@ -8,11 +8,9 @@
       <div class="pause-container">
             <font-awesome-icon @click="openPause" class="pause-icon" icon="pause" />
             </div>
-      <h1>Lvl. {{ $store.state.userData.level }}</h1>
+                  <h2>Lv. {{ $store.state.userData.level }}</h2>
       <HeartBar />
     </div>
-      <h2>Lv. {{ $store.state.userData.level }}</h2>
-      <HeartBar />
     </div>
 
     <div v-if="$store.state.userData.level === 2" class="battery-meter">
@@ -41,7 +39,7 @@
        <PauseMenu @closePause="closePM()" @instruction="instructionHandle()"
        @setting="settingHandler()" v-if="isPauseOpen"/> 
        <Instructions @closeInstruc="closeInstrucHandler()" v-if="instruction"/> 
-       <Settings @closeSetting="closeSettingHandler()" v-if="setting" @emitVol="volumeChangeHandler()"/>
+       <Settings @closeSetting="closeSettingHandler()" v-if="setting" @emitVol="volumeChangeHandler"/>
         <img
           :src="require(`@/assets/environment/lv1/${currentLocationImg}`)"
           class="bg-img"
@@ -511,12 +509,9 @@ export default {
     this.setting = false;
   }, 
   volumeChangeHandler(value){
-    // const audio = document.getElementById("audio-bgm");
-    // console.log(this.$refs.volumeVal)
-    // console.log(this.volumeVal)
-        console.log(value)
     this.fromSettings = value;
-    // continues to be undefined
+    const audio = document.getElementById("audio-bgm");
+    audio.volume = (this.fromSettings/100);
   }
   },
 };
@@ -558,6 +553,9 @@ h2 {
   border-radius: 1.5rem;
   transition: all .2s;
 }
+.level-and-hearts {
+  width: 80vw;
+}
 .level-and-hearts h2 {
   font-size: var(--h3);
   margin-bottom: .5rem;
@@ -567,6 +565,7 @@ h2 {
         color:  #deceff;
 }
 .pause-container{
+  width: 100%;
   text-align: right;
 }
 .player {

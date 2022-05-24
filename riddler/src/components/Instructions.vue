@@ -25,6 +25,9 @@ You can use items in conjunction with other items to find hints. For instance, s
 Each floor has a riddle and a hint. The hints are hidden somewhere in the room. While the hints aren’t essential to solving the riddler, they’re certainly helpful.
 </p>
 <p>
+Finally, if you feel like you can't move, click within the game screen to free yourself from stagnation.
+</p>
+<p>
 My Tower awaits, and we are hungry...
 </p>
 </div>
