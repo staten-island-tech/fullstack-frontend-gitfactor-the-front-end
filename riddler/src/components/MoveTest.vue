@@ -77,13 +77,13 @@
         </PuzzlePopup>
 
 
-        <div v-if="$store.state.userData.level === 2" class="battery-meter">
+        <div v-if="$store.state.userData.level === 2 && !$store.state.userData.isIntro" class="battery-meter">
           <h2>{{ $store.state.userData.battery }}%</h2>
           <div class="charge-container">
             <div class="charge" :style="{ width: batteryPercentage }"></div>
           </div>
         </div>
-        <button v-if="$store.state.userData.level === 2" @click="flashlight()" class="flashlight"></button>
+        <button v-if="$store.state.userData.level === 2 && !$store.state.userData.isIntro" @click="flashlight()" class="flashlight"></button>
 
         <div class="game-overlay">
           <div
@@ -146,7 +146,9 @@ import HeartBar from "./HeartBar.vue";
 import Inventory from "./Inventory.vue";
 import ItemPopup from "./ItemPopup.vue";
 import PuzzlePopup from "./PuzzlePopup.vue"; 
-import {levelOneIntro} from "../dialogue"
+import {levelOneIntro} from "../dialogue";
+import {levelTwoIntro} from "../dialogue";
+
 
 export default {
   name: "MoveTest",
@@ -258,7 +260,7 @@ export default {
               {
                 intro: true,
                 name: "Riddler",
-                id: 6,
+                id: -1,
                 section: 2,
                 position: 50,
                 margin: "50%",
@@ -284,11 +286,35 @@ export default {
         }
       } 
       if (this.$store.state.userData.level === 2) {
-        console.log("level 2");
-        setTimeout(() => {
-          gameOverlay.classList.add("dark");
-        }, 0)      
-        console.log(gameOverlay.classList)
+        console.log("level 2");   
+        if (this.$store.state.userData.isIntro) {
+          this.enteredOnObject = true;
+          this.playAudio();
+          alert("You hear a broken transmission over an intercom.");
+          this.gameItems.unshift(
+            {
+              intro: true,
+              name: "Riddler",
+              id: -2,
+              section: 2,
+              position: 50,
+              margin: "50%",
+              widthInt: 20,
+              width: "20%",
+              bottom: "5%",
+              img: "sprites/sprite_dialogue_riddl.png",
+              isInteractable: false,
+              filter: null,
+              itemType: "character",
+              dialogueSprite: "sprite_dialogue_riddl.png",
+              dialogue: levelTwoIntro,
+            },
+          );
+          this.itemInteract();
+          this.onEnter();
+        } else {
+          this.playAudio();
+        }
       } 
       if (this.$store.state.userData.level === 3) {
         console.log("level 3");
@@ -549,6 +575,9 @@ export default {
           console.log(this.gameItems[0].intro);
           this.gameItems.splice(0, 1);
         }
+        if (this.$store.state.userData.level === 2) {
+          document.querySelector(".game-overlay").classList.add("dark");
+        } 
         this.textbox = false;
         this.enteredOnObject = false;
         this.textCount = -1;

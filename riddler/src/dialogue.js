@@ -50,8 +50,46 @@ export const levelOneIntro = [
     color: "protagonist"
   },
   {
-    name: "???",
+    name: "Riddler",
     text: "Hahaha. Muahahaha! I am the Riddler, the Riddler on the Roof! And I'll be the one to eat your soul!",
     color: "riddler"
   },
+]
+
+export const levelTwoIntro = [
+  {
+    name: "Riddler",
+    text: "Ha! So you made it past the first level of my tower. Beginner's luck!",
+    color: "riddler"
+  },
+  {
+    name: "Me",
+    text: "Well what happens now?",
+    color: "protagonist"
+  },
+  {
+    name: "Riddler",
+    text: "Muahaha! 'Light' was indeed the answer to the first level's riddle, and for this level, you'll have to do without it! Well, that is if you let your flashlight battery run out!",
+    color: "riddler"
+  },
+  {
+    name: "Me",
+    text: "What do you mean?",
+    color: "protagonist"
+  },
+  {
+    name: "Riddler",
+    text: "Wow, I really gotta explain it to you like a 3-year old, huh? Well, witty-bitty baby has a button. When press button, baby's flashlight turn on. Baby can see good and baby happy, but battery go down, down, down. And when battery go to zero, baby is in the scary dark forever.",
+    color: "riddler"
+  },
+  {
+    name: "Me",
+    text: "Oh, snap.",
+    color: "protagonist"
+  },
+  {
+    name: "Riddler",
+    text: "Good luck! Muahaha!",
+    color: "riddler"
+  }
 ]
