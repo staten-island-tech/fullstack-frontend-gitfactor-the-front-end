@@ -125,10 +125,11 @@
     </div>
   </main>
     
-  <Inventory @clickedItem="selectInventoryItem" v-if="$store.state.userData.inventory[0]">
+  <Inventory @clickedItem="selectInventoryItem" v-if="$store.state.userData.inventory[0]" @enablePlayerOnClick="enablePlayerMovement()">
     <button
       v-if="$store.state.userData.level === 2"
       @click="flashlight()"
+      
       class="flashlight"
     ></button>
   </Inventory>
@@ -626,9 +627,11 @@ export default {
             }
           }
         }, 2000);
+        this.enablePlayerMovement();
       } else {
         this.isFlashlightOn = false;
         document.querySelector(".game-overlay").style.filter = "brightness(.1)";
+        this.enablePlayerMovement();
       }
     },
   },

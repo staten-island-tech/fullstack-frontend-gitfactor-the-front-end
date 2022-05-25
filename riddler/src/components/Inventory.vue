@@ -10,7 +10,7 @@
 <script>
 export default {
     name: "Inventory",
-    emits: ["clickedItem", ],
+    emits: ["clickedItem", "enablePlayerOnClick"],
     data() {
       return {
         isInventoryOpen: true,
@@ -25,10 +25,13 @@ export default {
         },
         toggleInventory() {
           this.isInventoryOpen = !this.isInventoryOpen;
+          this.$emit("enablePlayerOnClick");
           if (this.inventoryStatus === "–") {
             this.inventoryStatus = "+";
+            
           } else {
             this.inventoryStatus = "–";
+            
           }
         }
     }
