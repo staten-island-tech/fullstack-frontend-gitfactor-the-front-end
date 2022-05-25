@@ -214,7 +214,7 @@ export default {
       puzzlePopupVisibility: false,
       selectedInventoryItem: null,
       isLevelTransitionPuzzleValue: null,
-      puzzle2ButtonChoices: [],
+      puzzle2ButtonChoices: null,
       isFlashlightOn: false,
     };
   },
@@ -262,8 +262,8 @@ export default {
                 name: "Riddler",
                 id: -1,
                 section: 2,
-                position: 50,
-                margin: "50%",
+                position: 45,
+                margin: "45%",
                 widthInt: 20,
                 width: "20%",
                 bottom: "5%",
@@ -297,8 +297,8 @@ export default {
               name: "Riddler",
               id: -2,
               section: 2,
-              position: 50,
-              margin: "50%",
+              position: 45,
+              margin: "45%",
               widthInt: 20,
               width: "20%",
               bottom: "5%",
@@ -313,6 +313,7 @@ export default {
           this.itemInteract();
           this.onEnter();
         } else {
+          document.querySelector(".game-overlay").classList.add("dark");
           this.playAudio();
         }
       } 
@@ -351,6 +352,7 @@ export default {
     },
     rightMove(e) {
       this.playAudio();
+      this.playWalkSfx();
       this.player.idle = "idle-right.gif";
       if (this.enteredOnObject && e.key === "ArrowRight") {
         e.preventDefault();
@@ -589,7 +591,7 @@ export default {
       console.log(this.$store.state.userData.level);
       //reset vuex state
       this.$store.state.userData.section = 2;
-      this.$store.state.userData.leftValue = 50;
+      this.$store.state.userData.leftValue = 45;
       this.$store.state.userData.lifeCount = 5;
       this.$store.state.userData.currentItem = null;
       this.$store.state.userData.inventory = [];

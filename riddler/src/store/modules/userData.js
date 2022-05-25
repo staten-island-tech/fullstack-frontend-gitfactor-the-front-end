@@ -1,7 +1,7 @@
 export const state = {
   level: 1,
   section: 2,
-  leftValue: 50,
+  leftValue: 45,
   lifeCount: 5,
   currentItem: null,
   inventory: [],
