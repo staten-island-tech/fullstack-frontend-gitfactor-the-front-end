@@ -39,7 +39,7 @@
        <PauseMenu @closePause="closePM()" @instruction="instructionHandle()"
        @setting="settingHandler()" v-if="isPauseOpen"/> 
        <Instructions @closeInstruc="closeInstrucHandler()" v-if="instruction"/> 
-       <Settings @closeSetting="closeSettingHandler()" v-if="setting" @emitVol="volumeChangeHandler"/>
+       <Settings @closeSetting="closeSettingHandler()" v-if="setting" @emitVol="volumeChangeHandler" @emitVol2="SFXChange"/>
         <img
           :src="require(`@/assets/environment/lv1/${currentLocationImg}`)"
           class="bg-img"
@@ -197,6 +197,7 @@ export default {
       puzzlePopupVisilibility: false,
       isFlashlightOn: false,
       fromSettings: '',
+      fromSettingsTwo: '',
     };
   },
 
@@ -512,6 +513,11 @@ export default {
     this.fromSettings = value;
     const audio = document.getElementById("audio-bgm");
     audio.volume = (this.fromSettings/100);
+  },
+  SFXChange(value){
+    this.fromSettingsTwo = value;
+      const audioSFX = document.getElementById("walk-sfx");
+      audioSFX.volume = (this.fromSettingsTwo/100)
   }
   },
 };

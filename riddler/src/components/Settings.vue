@@ -10,7 +10,13 @@
     <div class="slider-and-label">
         <h2 class="slider-label">Music Volume:</h2>
  <div class="slidecontainer" >
-     <input @click="volumeLog()"  type="range" min="1" max="100" value="50" class="slider slider1" id="myRange">
+     <input @click="volumeLog()"  type="range" min="0" max="100" value="50" class="slider slider1" id="myRange">
+</div> 
+</div>
+    <div class="slider-and-label">
+        <h2 class="slider-label">SFX Volume:</h2>
+ <div class="slidecontainer" >
+     <input @click="volumeLog2()"  type="range" min="0" max="100" value="50" class="slider slider2" id="myRange">
 </div> 
 </div>
 <h3 class="volume"></h3>
@@ -26,6 +32,7 @@ name: "Settings",
 data(){
   return{
     passingVolVal: '',
+    passingSFXVal: '',
   }
 },
 methods: {
@@ -33,7 +40,12 @@ volumeLog(){
   const volumeSlider = document.querySelector(".slider1")
   this.passingVolVal = volumeSlider.value;
   this.$emit('emitVol', this.passingVolVal)
-}
+}, 
+volumeLog2(){
+  const volumeSlider = document.querySelector(".slider2")
+  this.passingSFXVal = volumeSlider.value;
+  this.$emit('emitVol2', this.passingSFXVal)
+}, 
 },
 }
 </script>
