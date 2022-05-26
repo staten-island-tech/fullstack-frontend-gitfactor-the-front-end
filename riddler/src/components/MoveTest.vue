@@ -79,6 +79,10 @@
           </template>
         </PuzzlePopup>
 
+      <PauseMenu @closePause="closePM()" @instruction="instructionHandle()"
+       @setting="settingHandler()" v-if="isPauseOpen"/> 
+       <Instructions @closeInstruc="closeInstrucHandler()" v-if="instruction"/> 
+       <Settings @closeSetting="closeSettingHandler()" v-if="setting" @emitVol="volumeChangeHandler" @emitVol2="SFXChange"/>
 
         <div v-if="$store.state.userData.level === 2 && !$store.state.userData.isIntro" class="battery-meter">
           <h2>{{ $store.state.userData.battery }}%</h2>
@@ -86,7 +90,7 @@
             <div class="charge" :style="{ width: batteryPercentage }"></div>
           </div>
         </div>
-        <button v-if="$store.state.userData.level === 2 && !$store.state.userData.isIntro" @click="flashlight()" class="flashlight-btn"></button>
+        <font-awesome-icon v-if="$store.state.userData.level === 2 && !$store.state.userData.isIntro" @click="flashlight()" class="flashlight-btn" icon="power-off"></font-awesome-icon>
 
         <div class="game-overlay">
           <div
@@ -97,10 +101,6 @@
             @keyup="reset()"
             @keydown.z="onEnter()"
         >
-      <PauseMenu @closePause="closePM()" @instruction="instructionHandle()"
-       @setting="settingHandler()" v-if="isPauseOpen"/> 
-       <Instructions @closeInstruc="closeInstrucHandler()" v-if="instruction"/> 
-       <Settings @closeSetting="closeSettingHandler()" v-if="setting" @emitVol="volumeChangeHandler" @emitVol2="SFXChange"/>
           <img
             :src="require(`@/assets/environment/lv1/${currentLocationImg}`)"
             class="bg-img"
@@ -633,33 +633,36 @@ export default {
         this.enablePlayerMovement();
       }
     },
-    openPause(){
-      this.isPauseOpen = true;
-    },
-  closePM(){
+  openPause() {
+    this.isFlashlightOn = false;
+    document.querySelector(".game-overlay").style.filter = "brightness(.1)";
+    this.isPauseOpen = true;
+  },
+  closePM() {
     this.isPauseOpen = false;
+    this.enablePlayerMovement();
   }, 
-  instructionHandle(){
+  instructionHandle() {
     this.instruction = true;
   },
-  closeInstrucHandler(){
+  closeInstrucHandler() {
     this.instruction = false;
   }, 
-  settingHandler(){
+  settingHandler() {
     this.setting = true;
   },
-  closeSettingHandler(){
+  closeSettingHandler() {
     this.setting = false;
   }, 
-  volumeChangeHandler(value){
+  volumeChangeHandler(value) {
     this.fromSettings = value;
     const audio = document.getElementById("audio-bgm");
-    audio.volume = (this.fromSettings/100);
+    audio.volume = (this.fromSettings / 100);
   },
-  SFXChange(value){
+  SFXChange(value) {
     this.fromSettingsTwo = value;
-      const audioSFX = document.getElementById("walk-sfx");
-      audioSFX.volume = (this.fromSettingsTwo/100)
+    const audioSFX = document.getElementById("walk-sfx");
+    audioSFX.volume = (this.fromSettingsTwo / 100)
   }
   },
 };
@@ -855,9 +858,10 @@ img {
   position: absolute;
   top: calc(8rem + 5%);
   left: 5%;
+  font-size: var(--h3);
+  padding: .75rem;
+  color: var(--purple);
   background-color: #fff200;
-  height: 5rem;
-  width: 5rem;
   border-radius: 5rem;
   z-index: 1;
 }

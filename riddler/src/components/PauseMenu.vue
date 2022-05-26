@@ -5,7 +5,7 @@
     </div>
     <h2 class="pause-title">Pause Menu</h2>
     <div class="pause-button-box">
-      <button @click="$emit('instruction')" >Instruction Manual</button>
+      <button @click="$emit('instruction')">Instruction Manual</button>
       <button @click="updateData()">Save</button>
       <button @click="logout()">Save and Quit</button>
       <button @click="$emit('setting')">Settings</button>
@@ -64,6 +64,7 @@ export default {
     width: 100%;
     height: 100%;
     background-color: var(--purple);
+    z-index: 3;
   }
   .pause-title {
     color: var(--highlight-color);

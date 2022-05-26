@@ -1,14 +1,14 @@
 :root {
   /* colors */
-  --darkest-purple: #1f1227;
+  --darkest-purple: #271731;
   --dark-purple: #2b0d47;
   --purple: #543472;
   --light-purple: #dec5f6;
   --lightest-purple: #f1e1ff;
 
   /* character colors */
-  --violet: #cc00ff;
-  --red: #ff0062;
+  --violet: #d83bff;
+  --red: #ff3d87;
 
   /* --darkest-purple: #24153f;
   --dark-purple: #371c72;
@@ -81,6 +81,10 @@ button, input, svg {
   cursor: default;
 }
 button:hover {
+  filter: brightness(80%);
+  transition: all .15s;
+}
+svg:hover {
   filter: brightness(80%);
   transition: all .15s;
 }
