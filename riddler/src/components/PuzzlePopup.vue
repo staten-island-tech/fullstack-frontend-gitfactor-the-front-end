@@ -48,12 +48,13 @@
       
       <div
         class="keypad-button-div"
-        v-for="value in puzzle2ButtonArray"
-        :key="value.id"
         v-show="puzzleButtonVisibility"
       >
-        <button @click="puzzle2ButtonClick(value.value)" class="keypad-button">
-          {{ value.value }}
+        <button
+        @click="puzzle2ButtonClick(value)"
+        v-for="value in puzzle2ButtonArray"
+        :key="value" class="keypad-button">
+          {{ value }}
         </button>
       </div>
     </div>
@@ -120,10 +121,10 @@ export default {
         } else if (this.puzzleType === 2) {
           console.log("puzzle 2");
           this.puzzleButtonVisibility = true;
-          this.puzzleInputDisabled = true;
+          this.puzzleInputDisabled = false;
           this.selectedItemDiv = false;
           this.puzzleInputVisibility = true;
-          this.puzzleInputMaxLength = 4;
+          this.puzzleInputMaxLength = 10;
 
         } else if (this.puzzleType === 3) {
           console.log("puzzle 3");
@@ -183,7 +184,7 @@ export default {
     },
     clearInputClick() {
       console.log("trying to clear");
-      this.puzzleInput = null;
+      this.puzzleInput = "";
     },
     levelTransition() {
       if (this.isLevelTransitionPuzzle === true) {
@@ -242,10 +243,12 @@ button:disabled:hover {
   margin-top: 1rem;
 }
 .close-puzzle-button {
-  font-size: var(--h4);
   position: absolute;
   top: 2rem;
   right: 2rem;
+  font-size: var(--h4);
+  font-weight: 700;
+  padding: 1.5rem 2rem;
   border: none;
   background-color: unset;
   color: var(--highlight-color);
@@ -303,5 +306,23 @@ input {
   width: 10rem;
   padding: .5rem;
   object-fit: contain;
+}
+.keypad-button-div {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+.keypad-button {
+  font-size: var(--h3);
+  font-weight: 500;
+  width: 4.5rem;
+  height: 4.5rem;
+  margin: .45rem;
+  color: var(--lightest-purple);
+  background-color: var(--purple);
+  border: .1rem solid var(--lightest-purple);
+  border-radius: .5rem;
 }
 </style>
