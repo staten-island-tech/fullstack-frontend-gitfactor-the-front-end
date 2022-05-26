@@ -40,7 +40,7 @@ export default {
       const userId = this.userdata.sub.replace("auth0|", "");
       try {
         const token = await this.$auth.getTokenSilently();
-        const response = await fetch(`http://riddler-on-the-roof.onrender.com/api/index/${userId}`, {
+        const response = await fetch(`http://localhost:3000/api/index/${userId}`, {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
@@ -63,7 +63,7 @@ export default {
       const userId = this.userdata.sub.replace("auth0|", "");
       console.log(this.$store.state.userData)
       try {
-        const response = await fetch(`http://riddler-on-the-roof.onrender.com/api/index/update/${userId}`, {
+        const response = await fetch(`http://localhost:3000/api/index/update/${userId}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
