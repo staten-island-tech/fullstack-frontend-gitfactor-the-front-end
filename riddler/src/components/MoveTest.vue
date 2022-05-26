@@ -4,7 +4,10 @@
     <button @click="levelMinus" class="mobile-button">l-1</button>
 
     <div class="level-and-hearts">
-      <h2>Lv. {{ $store.state.userData.level }}</h2>
+      <div class="pause-container">
+            <font-awesome-icon @click="openPause" class="pause-icon" icon="pause" />
+            </div>
+                  <h2>Lv. {{ $store.state.userData.level }}</h2>
       <HeartBar />
     </div>
     
@@ -94,6 +97,10 @@
             @keyup="reset()"
             @keydown.z="onEnter()"
         >
+      <PauseMenu @closePause="closePM()" @instruction="instructionHandle()"
+       @setting="settingHandler()" v-if="isPauseOpen"/> 
+       <Instructions @closeInstruc="closeInstrucHandler()" v-if="instruction"/> 
+       <Settings @closeSetting="closeSettingHandler()" v-if="setting" @emitVol="volumeChangeHandler" @emitVol2="SFXChange"/>
           <img
             :src="require(`@/assets/environment/lv1/${currentLocationImg}`)"
             class="bg-img"
@@ -139,6 +146,9 @@ gsap.config;
 import HeartBar from "./HeartBar.vue";
 import Inventory from "./Inventory.vue";
 import ItemPopup from "./ItemPopup.vue";
+import PauseMenu from "./PauseMenu.vue";
+import Instructions from './Instructions.vue';
+import Settings from "./Settings.vue"
 import PuzzlePopup from "./PuzzlePopup.vue"; 
 import {levelOneIntro} from "../dialogue";
 import {levelTwoIntro} from "../dialogue";
@@ -147,10 +157,8 @@ import {levelTwoIntro} from "../dialogue";
 export default {
   name: "MoveTest",
   components: {
-    HeartBar,
-    Inventory,
-    ItemPopup,
-    PuzzlePopup,
+    HeartBar, Inventory, ItemPopup, PauseMenu,
+    Instructions, Settings, PuzzlePopup
   },
   created() {
     this.getUserData();
@@ -160,6 +168,7 @@ export default {
     this.enablePlayerMovement();
     this.itemInteract();
     this.checkLevel();
+    // this.$refs.settings;
   },
   data() {
     return {
@@ -209,7 +218,12 @@ export default {
       selectedInventoryItem: null,
       isLevelTransitionPuzzleValue: null,
       puzzle2ButtonChoices: null,
+      isPauseOpen: false,
+      instruction: false,
+      setting: false,
       isFlashlightOn: false,
+      fromSettings: '',
+      fromSettingsTwo: '',
     };
   },
   computed: {
@@ -619,6 +633,34 @@ export default {
         this.enablePlayerMovement();
       }
     },
+    openPause(){
+      this.isPauseOpen = true;
+    },
+  closePM(){
+    this.isPauseOpen = false;
+  }, 
+  instructionHandle(){
+    this.instruction = true;
+  },
+  closeInstrucHandler(){
+    this.instruction = false;
+  }, 
+  settingHandler(){
+    this.setting = true;
+  },
+  closeSettingHandler(){
+    this.setting = false;
+  }, 
+  volumeChangeHandler(value){
+    this.fromSettings = value;
+    const audio = document.getElementById("audio-bgm");
+    audio.volume = (this.fromSettings/100);
+  },
+  SFXChange(value){
+    this.fromSettingsTwo = value;
+      const audioSFX = document.getElementById("walk-sfx");
+      audioSFX.volume = (this.fromSettingsTwo/100)
+  }
   },
 };
 </script>
@@ -707,9 +749,20 @@ img {
   border-radius: 1.5rem;
   transition: all 0.2s;
 }
+.level-and-hearts {
+  width: 80vw;
+}
 .level-and-hearts h2 {
   font-size: var(--h3);
   margin-bottom: 0.5rem;
+}
+.pause-icon{
+    font-size: 4rem;
+        color:  #deceff;
+}
+.pause-container{
+  width: 100%;
+  text-align: right;
 }
 .player {
   width: inherit;
