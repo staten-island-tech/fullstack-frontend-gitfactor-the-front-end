@@ -597,12 +597,14 @@ export default {
       this.$store.state.userData.solvedPuzzles = [];
 
       this.$emit("gameEvent");
+      this.unhideItem();
     },
     
     levelMinus() {
       this.$store.commit("decrementLevel");
       console.log(this.$store.state.userData.level);
       this.$emit("gameEvent");
+      this.unhideItem();
     },
     flashlight() {
       if (!this.isFlashlightOn) {
