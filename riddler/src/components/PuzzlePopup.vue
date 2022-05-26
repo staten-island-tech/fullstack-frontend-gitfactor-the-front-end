@@ -243,10 +243,12 @@ button:disabled:hover {
   margin-top: 1rem;
 }
 .close-puzzle-button {
-  font-size: var(--h4);
   position: absolute;
   top: 2rem;
   right: 2rem;
+  font-size: var(--h4);
+  font-weight: 700;
+  padding: 1.5rem 2rem;
   border: none;
   background-color: unset;
   color: var(--highlight-color);

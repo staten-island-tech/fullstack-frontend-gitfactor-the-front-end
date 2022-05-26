@@ -83,7 +83,7 @@
             <div class="charge" :style="{ width: batteryPercentage }"></div>
           </div>
         </div>
-        <button v-if="$store.state.userData.level === 2 && !$store.state.userData.isIntro" @click="flashlight()" class="flashlight"></button>
+        <button v-if="$store.state.userData.level === 2 && !$store.state.userData.isIntro" @click="flashlight()" class="flashlight-btn"></button>
 
         <div class="game-overlay">
           <div
@@ -125,14 +125,7 @@
     </div>
   </main>
     
-  <Inventory @clickedItem="selectInventoryItem" v-if="$store.state.userData.inventory[0]" @enablePlayerOnClick="enablePlayerMovement()">
-    <button
-      v-if="$store.state.userData.level === 2"
-      @click="flashlight()"
-      
-      class="flashlight"
-    ></button>
-  </Inventory>
+  <Inventory @clickedItem="selectInventoryItem" v-if="$store.state.userData.inventory[0]" @enablePlayerOnClick="enablePlayerMovement()" />
 
   </div>   
 
@@ -539,34 +532,24 @@ export default {
           Array.from(items).forEach((item) => {
             item.style.visibility = "hidden";
           });
-        if (this.$store.state.userData.currentItem.dialogue[0].name === "???") {
-          if (this.textCount % 2 === 0) {
+          if (this.$store.state.userData.currentItem.dialogue[this.textCount].name === "???") {
             this.playerDialogueSprite = "filter: brightness(.5)";
             this.npcDialogueSprite = "filter: brightness(0.05)";
-          } else {
+          } 
+          else if (this.$store.state.userData.currentItem.dialogue[this.textCount].name !== "Me") {
+            this.playerDialogueSprite = "filter: brightness(.5)";
+            this.npcDialogueSprite = "none";
+          }
+          else if (this.$store.state.userData.currentItem.dialogue[this.textCount].name === "Me"
+          && this.$store.state.userData.currentItem.dialogue[0].name === "???") {
             this.playerDialogueSprite = "none";
-            this.npcDialogueSprite = "filter: brightness(0.05)";
+            this.npcDialogueSprite = "filter: brightness(.05)";
           }
-        }
-        else {
-          if (this.$store.state.userData.currentItem.dialogue[0].name !== "Me") {
-            if (this.textCount % 2 === 0) {
-              this.playerDialogueSprite = "filter: brightness(.5)";
-              this.npcDialogueSprite = "none";
-            } else {
-              this.playerDialogueSprite = "none";
-              this.npcDialogueSprite = "filter: brightness(.5)";
-            }
-          } else {
-              if (this.textCount % 2 === 0) {
-              this.npcDialogueSprite = "filter: brightness(.5)";
-              this.playerDialogueSprite = "none";
-            } else {
-              this.npcDialogueSprite = "none";
-              this.playerDialogueSprite = "filter: brightness(.5)";
-            }
+          else if (this.$store.state.userData.currentItem.dialogue[this.textCount].name === "Me") {
+            this.playerDialogueSprite = "none";
+            this.npcDialogueSprite = "filter: brightness(.5)";
           }
-        }
+
       } else {
         document.querySelector(".bg-img").style.filter = "brightness(1)";
         document.querySelector(".player-avatar").style.display = "block";
@@ -810,21 +793,20 @@ img {
   position: unset;
   margin-bottom: 3rem;
 }
-.flashlight {
+.flashlight-btn {
   position: absolute;
-  right: 5%;
-  top: 7%;
+  top: calc(8rem + 5%);
+  left: 5%;
   background-color: #fff200;
   height: 5rem;
   width: 5rem;
-  margin: 2rem;
   border-radius: 5rem;
   z-index: 1;
 }
 .battery-meter {
   position: absolute;
-  left: 5%;
   top: 7%;
+  left: 5%;
   margin-bottom: 1rem;
   z-index: 2;
 }

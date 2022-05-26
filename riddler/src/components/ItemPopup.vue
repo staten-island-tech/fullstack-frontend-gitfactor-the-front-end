@@ -40,7 +40,7 @@ export default {
     border-radius: 1.5rem;
     border: solid var(--highlight-color) .3rem;
     background-color: var(--background-color);
-    z-index: 2;
+    z-index: 1;
     overflow: scroll;
   }
   .item-popup button { 
