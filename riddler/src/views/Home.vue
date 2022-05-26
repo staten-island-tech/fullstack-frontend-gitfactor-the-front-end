@@ -2,8 +2,6 @@
   <div class="background">
     <div class="home" v-if="isLoggedIn">
       <MoveTest @gameEvent="updateData()" class="game" />
-      <button class="btn secondary" @click="updateData()">Save</button>
-      <button class="btn secondary" @click="logout()">Save and Quit</button>
       <div class="solid"></div>
     </div>
   </div>
@@ -28,12 +26,6 @@ export default {
     this.getData();
   },
   methods: {
-    logout() {
-      this.updateData();
-      this.$auth.logout({
-        returnTo: window.location.origin
-      });
-    },
     async getData() {
       const userId = this.userdata.sub.replace("auth0|", "");
       try {

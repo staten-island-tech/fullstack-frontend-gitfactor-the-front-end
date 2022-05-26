@@ -3,12 +3,12 @@
     <button @click="levelAdd" class="mobile-button">l+ratio</button>
     <button @click="levelMinus" class="mobile-button">l-1</button>
 
-    <div class="level-and-hearts">
-      <div class="pause-container">
-            <font-awesome-icon @click="openPause" class="pause-icon" icon="pause" />
-            </div>
-                  <h2>Lv. {{ $store.state.userData.level }}</h2>
-      <HeartBar />
+    <div class="level-and-hearts">      
+      <div>
+        <h2>Lv. {{ $store.state.userData.level }}</h2>
+        <HeartBar />
+      </div>
+      <font-awesome-icon @click="openPause" class="pause-icon" icon="pause" />
     </div>
     
     <div class="game-and-inventory">
@@ -750,15 +750,18 @@ img {
   transition: all 0.2s;
 }
 .level-and-hearts {
-  width: 80vw;
+  width: 66vw;
+  display: flex;
+  justify-content: space-between;
 }
 .level-and-hearts h2 {
   font-size: var(--h3);
   margin-bottom: 0.5rem;
 }
 .pause-icon{
-    font-size: 4rem;
-        color:  #deceff;
+  font-size: var(--h2);
+  color: var(--highlight-color);
+  margin-top: 2rem;
 }
 .pause-container{
   width: 100%;
@@ -930,6 +933,9 @@ img {
     width: 80vw;
     height: 40vw;
     margin-right: 0;
+  }
+  .level-and-hearts {
+    width: 80vw;
   }
   .game-contents {
     margin-bottom: 5rem;

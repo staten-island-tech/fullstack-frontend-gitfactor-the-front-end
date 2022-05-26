@@ -6,7 +6,7 @@
     @keyup.esc="closePuzzleClick"
     @keyup.enter="checkAnswerClick"
   >
-    <button @click="closePuzzleClick" class="close-puzzle-button">x</button>
+    <font-awesome-icon @click="closePuzzleClick" icon="x" class="close-puzzle-button"/>
     <div class="solved-text" v-if="puzzlePromptAnswered">
       <h3>Solved!</h3>
       <p>
