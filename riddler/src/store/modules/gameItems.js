@@ -1,6 +1,6 @@
 export const state = {
   gameItems: [
-    [ 
+    [
       {
         name: "Door of Truth",
         id: 0,
@@ -15,12 +15,12 @@ export const state = {
         filter: null,
         itemType: "puzzle",
         puzzleType: 1,
-        prompt: "You can follow me into the past. Agent of vision, yet faster than the eye can see. What am I?",
+        prompt:
+          "You can follow me into the past. Agent of vision, yet faster than the eye can see. What am I?",
         isLevelTransitionPuzzle: true,
         puzzleAnswer: "light",
         isPuzzleCompleted: false,
-        puzzleAnsweredText:
-          "MUAHAHA TIME FOR ROUND 2",
+        puzzleAnsweredText: "MUAHAHA TIME FOR ROUND 2",
       },
       {
         name: "Blank Scroll",
@@ -86,7 +86,8 @@ export const state = {
         puzzleCompleted: false,
         prompt: "It's a bright lantern. What could it be used for, though?",
         puzzleAnswer: "Blank Scroll",
-        puzzleAnsweredText: "Nice catch! When held up to the light of the lantern, the secret message written in lemon juice on the scroll revealed itself! It reads: 'A commonality between every item. That is where the answer lies.'",
+        puzzleAnsweredText:
+          "Nice catch! When held up to the light of the lantern, the secret message written in lemon juice on the scroll revealed itself! It reads: 'A commonality between every item. That is where the answer lies.'",
       },
       {
         name: "Painting",
@@ -101,12 +102,13 @@ export const state = {
         isInteractable: false,
         filter: null,
         itemType: "object",
-        prompt: "It's a painting of some guy who seems important. If only vampires studied human history!"
+        prompt:
+          "It's a painting of some guy who seems important. If only vampires studied human history!",
       },
     ],
     [
       //Level 2
-     {
+      {
         name: "Dark Door of Truth",
         id: 6,
         section: 2,
@@ -120,12 +122,12 @@ export const state = {
         filter: null,
         itemType: "puzzle",
         puzzleType: 1,
-        prompt: "I move, slowly but surely. Back and forth. Yet with my slow pace, over time I change the face of the world. What am I?",
+        prompt:
+          "I move, slowly but surely. Back and forth. Yet with my slow pace, over time I change the face of the world. What am I?",
         isLevelTransitionPuzzle: true,
         puzzleAnswer: "ocean",
         isPuzzleCompleted: false,
-        puzzleAnsweredText:
-          "MUAHAHA TIME FOR ROUND 3",
+        puzzleAnsweredText: "MUAHAHA TIME FOR ROUND 3",
       },
       {
         name: "Monitor",
@@ -143,10 +145,37 @@ export const state = {
         itemType: "puzzle",
         puzzleType: 2,
         prompt: "Enter the correct answer using the keypad.",
-        buttonChoices: ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','T','U','V','W','X','Y','Z'],
+        buttonChoices: [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y",
+          "Z",
+        ],
         puzzleAnswer: "riddler",
         puzzleCompleted: false,
-        puzzleAnsweredText: "From where each item begins is where you shall find an end.",
+        puzzleAnsweredText:
+          "From where each item begins is where you shall find an end.",
       },
       {
         name: "Ocarina",
@@ -161,7 +190,8 @@ export const state = {
         isInteractable: false,
         filter: null,
         itemType: "object",
-        prompt: "Oh, what a pretty ocarina. If you look closely, you see that each hole is marked with the note it plays and a number. They read '1A', '2B', '3C', and so on. I'm sure it makes a beautiful sound."
+        prompt:
+          "Oh, what a pretty ocarina. If you look closely, you see that each hole is marked with the note it plays and a number. They read '1A', '2B', '3C', and so on. I'm sure it makes a beautiful sound.",
       },
       {
         name: "Camera",
@@ -176,7 +206,8 @@ export const state = {
         isInteractable: false,
         filter: null,
         itemType: "object",
-        prompt: "A pretty cool, old-fashioned looking camera. Oh, and there are photos on the ground right next to it. No way, is that the Riddler as a child? He looks so innocent! He's just sitting at a desk in a classroom. Aw, he looks kinda sad. Arghhh but he gets no sympathy from me.",
+        prompt:
+          "A pretty cool, old-fashioned looking camera. Oh, and there are photos on the ground right next to it. No way, is that the Riddler as a child? He looks so innocent! He's just sitting at a desk in a classroom. Aw, he looks kinda sad. Arghhh but he gets no sympathy from me.",
       },
       {
         name: "Envelope",
@@ -191,7 +222,8 @@ export const state = {
         isInteractable: false,
         filter: null,
         itemType: "object",
-        prompt: "You open the glossy wax seal, but there's nothing inside the envelope. Inscribed on the inside of the envelope, however, are the numbers '18 9 44 12 5 18'.",
+        prompt:
+          "You open the glossy wax seal, but there's nothing inside the envelope. Inscribed on the inside of the envelope, however, are the numbers '18 9 44 12 5 18'.",
       },
       {
         name: "AA batteries",
@@ -221,11 +253,35 @@ export const state = {
         isInteractable: false,
         filter: null,
         itemType: "object",
-        prompt: "A classic marble notebook. All the pages are blank, but the cover reads: 'Name: The Riddler / Class: Algebra 1'. Oh, there are some doodles, too. Never knew the Riddler was an artist...",
+        prompt:
+          "A classic marble notebook. All the pages are blank, but the cover reads: 'Name: The Riddler / Class: Algebra 1'. Oh, there are some doodles, too. Never knew the Riddler was an artist...",
       },
     ],
 
-    // []  level 3
+    [
+      //level 3
+      {
+        name: "Bubbly Door of Truth",
+        id: 13,
+        section: 2,
+        position: 9,
+        margin: "9%",
+        widthInt: 40,
+        width: "40%",
+        bottom: "7%",
+        img: "lv3_door.png",
+        isInteractable: false,
+        filter: null,
+        itemType: "puzzle",
+        puzzleType: 1,
+        prompt:
+          "I move, slowly but surely. Back and forth. Yet with my slow pace, over time I change the face of the world. What am I?",
+        isLevelTransitionPuzzle: true,
+        puzzleAnswer: "ocean",
+        isPuzzleCompleted: false,
+        puzzleAnsweredText: "MUAHAHA TIME FOR ROUND 3",
+      },
+    ],
   ],
 };
 
