@@ -1,5 +1,4 @@
 <template>
-  <div>
   <div class="background">
     <div class="home" v-if="isLoggedIn">
       <MoveTest @gameEvent="updateData()" class="game" />
@@ -9,7 +8,6 @@
     </div>
   </div>
   <div class="pagebg"></div>
-  </div>
 </template>
 
 <script>
