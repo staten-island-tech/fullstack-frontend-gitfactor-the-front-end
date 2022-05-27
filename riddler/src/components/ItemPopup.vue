@@ -6,7 +6,7 @@
     <h3>
       <slot name="item-name"></slot>
     </h3>
-    <button @click="$emit('closePopup')" class="close-btn">X</button>
+    <font-awesome-icon @click="$emit('closePopup')" icon="x" class="close-btn"/>
     <slot name="item-img"></slot>
     <p>
       <slot name="item-text"></slot>
@@ -54,8 +54,9 @@ export default {
   }
   .item-popup .close-btn {
     position: absolute;
-    top: 2rem;
-    right: 2rem;
+    font-size: var(--h4);
+    top: 3rem;
+    right: 3rem;
     background-color: unset;
     color: var(--highlight-color);
   }

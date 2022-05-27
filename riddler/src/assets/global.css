@@ -1,14 +1,14 @@
 :root {
   /* colors */
-  --darkest-purple: #1f1227;
+  --darkest-purple: #271731;
   --dark-purple: #2b0d47;
   --purple: #543472;
   --light-purple: #dec5f6;
   --lightest-purple: #f1e1ff;
 
   /* character colors */
-  --green: #00ff00;
-  --orange: #ff6f00;
+  --violet: #d83bff;
+  --red: #ff3d87;
 
   /* --darkest-purple: #24153f;
   --dark-purple: #371c72;
@@ -21,8 +21,8 @@
   --highlight-color: var(--light-purple);
   --popup-color: var(--dark-purple);
 
-  --protagonist: var(--orange);
-  --riddler: var(--green);
+  --protagonist: var(--red);
+  --riddler: var(--violet);
 
   /* font size */
   --title-font: "Mystery Quest", cursive;
@@ -63,7 +63,9 @@ h2, h3, h4, h5, h6, p {
   font-family: var(--text-font);
   line-height: 1.4;
 }
-
+strong {
+  font-weight: 700;
+}
 *, html, body {
   font-size: 62.5%;
   padding: 0;
@@ -72,10 +74,17 @@ h2, h3, h4, h5, h6, p {
   font-family: var(--text-font);
   font-weight: 600;
 }
-button, input {
+button, input, svg {
   cursor: pointer;
 }
+.no-click {
+  cursor: default;
+}
 button:hover {
+  filter: brightness(80%);
+  transition: all .15s;
+}
+svg:hover {
   filter: brightness(80%);
   transition: all .15s;
 }

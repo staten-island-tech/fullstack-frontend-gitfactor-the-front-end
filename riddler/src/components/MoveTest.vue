@@ -3,9 +3,12 @@
     <button @click="levelAdd" class="mobile-button">l+ratio</button>
     <button @click="levelMinus" class="mobile-button">l-1</button>
 
-    <div class="level-and-hearts">
-      <h2>Lv. {{ $store.state.userData.level }}</h2>
-      <HeartBar />
+    <div class="level-and-hearts">      
+      <div>
+        <h2>Lv. {{ $store.state.userData.level }}</h2>
+        <HeartBar />
+      </div>
+      <font-awesome-icon @click="openPause" class="pause-icon" icon="pause" />
     </div>
     
     <div class="game-and-inventory">
@@ -76,6 +79,10 @@
           </template>
         </PuzzlePopup>
 
+      <PauseMenu @closePause="closePM()" @instruction="instructionHandle()"
+       @setting="settingHandler()" v-if="isPauseOpen"/> 
+       <Instructions @closeInstruc="closeInstrucHandler()" v-if="instruction"/> 
+       <Settings @closeSetting="closeSettingHandler()" v-if="setting" @emitVol="volumeChangeHandler" @emitVol2="SFXChange"/>
 
         <div v-if="$store.state.userData.level === 2 && !$store.state.userData.isIntro" class="battery-meter">
           <h2>{{ $store.state.userData.battery }}%</h2>
@@ -83,7 +90,7 @@
             <div class="charge" :style="{ width: batteryPercentage }"></div>
           </div>
         </div>
-        <button v-if="$store.state.userData.level === 2 && !$store.state.userData.isIntro" @click="flashlight()" class="flashlight-btn"></button>
+        <font-awesome-icon v-if="$store.state.userData.level === 2 && !$store.state.userData.isIntro" @click="flashlight()" class="flashlight-btn" icon="power-off"></font-awesome-icon>
 
         <div class="game-overlay">
           <div
@@ -139,6 +146,9 @@ gsap.config;
 import HeartBar from "./HeartBar.vue";
 import Inventory from "./Inventory.vue";
 import ItemPopup from "./ItemPopup.vue";
+import PauseMenu from "./PauseMenu.vue";
+import Instructions from './Instructions.vue';
+import Settings from "./Settings.vue"
 import PuzzlePopup from "./PuzzlePopup.vue"; 
 import {levelOneIntro} from "../dialogue";
 import {levelTwoIntro} from "../dialogue";
@@ -147,10 +157,8 @@ import {levelTwoIntro} from "../dialogue";
 export default {
   name: "MoveTest",
   components: {
-    HeartBar,
-    Inventory,
-    ItemPopup,
-    PuzzlePopup,
+    HeartBar, Inventory, ItemPopup, PauseMenu,
+    Instructions, Settings, PuzzlePopup
   },
   created() {
     this.getUserData();
@@ -160,6 +168,7 @@ export default {
     this.enablePlayerMovement();
     this.itemInteract();
     this.checkLevel();
+    // this.$refs.settings;
   },
   data() {
     return {
@@ -209,7 +218,12 @@ export default {
       selectedInventoryItem: null,
       isLevelTransitionPuzzleValue: null,
       puzzle2ButtonChoices: null,
+      isPauseOpen: false,
+      instruction: false,
+      setting: false,
       isFlashlightOn: false,
+      fromSettings: '',
+      fromSettingsTwo: '',
     };
   },
   computed: {
@@ -619,6 +633,37 @@ export default {
         this.enablePlayerMovement();
       }
     },
+  openPause() {
+    this.isFlashlightOn = false;
+    document.querySelector(".game-overlay").style.filter = "brightness(.1)";
+    this.isPauseOpen = true;
+  },
+  closePM() {
+    this.isPauseOpen = false;
+    this.enablePlayerMovement();
+  }, 
+  instructionHandle() {
+    this.instruction = true;
+  },
+  closeInstrucHandler() {
+    this.instruction = false;
+  }, 
+  settingHandler() {
+    this.setting = true;
+  },
+  closeSettingHandler() {
+    this.setting = false;
+  }, 
+  volumeChangeHandler(value) {
+    this.fromSettings = value;
+    const audio = document.getElementById("audio-bgm");
+    audio.volume = (this.fromSettings / 100);
+  },
+  SFXChange(value) {
+    this.fromSettingsTwo = value;
+    const audioSFX = document.getElementById("walk-sfx");
+    audioSFX.volume = (this.fromSettingsTwo / 100)
+  }
   },
 };
 </script>
@@ -707,9 +752,23 @@ img {
   border-radius: 1.5rem;
   transition: all 0.2s;
 }
+.level-and-hearts {
+  width: 66vw;
+  display: flex;
+  justify-content: space-between;
+}
 .level-and-hearts h2 {
   font-size: var(--h3);
   margin-bottom: 0.5rem;
+}
+.pause-icon{
+  font-size: var(--h2);
+  color: var(--highlight-color);
+  margin-top: 2rem;
+}
+.pause-container{
+  width: 100%;
+  text-align: right;
 }
 .player {
   width: inherit;
@@ -799,9 +858,10 @@ img {
   position: absolute;
   top: calc(8rem + 5%);
   left: 5%;
+  font-size: var(--h3);
+  padding: .75rem;
+  color: var(--purple);
   background-color: #fff200;
-  height: 5rem;
-  width: 5rem;
   border-radius: 5rem;
   z-index: 1;
 }
@@ -877,6 +937,9 @@ img {
     width: 80vw;
     height: 40vw;
     margin-right: 0;
+  }
+  .level-and-hearts {
+    width: 80vw;
   }
   .game-contents {
     margin-bottom: 5rem;
