@@ -275,11 +275,11 @@ export default {
                 widthInt: 20,
                 width: "20%",
                 bottom: "5%",
-                img: "sprites/sprite_dialogue_riddl.png",
+                img: "sprites/sprite_dialogue_spookyriddl.png",
                 isInteractable: false,
                 filter: null,
                 itemType: "character",
-                dialogueSprite: "sprite_dialogue_riddl.png",
+                dialogueSprite: "sprite_dialogue_spookyriddl.png",
                 dialogue: levelOneIntro,
               },
             );
@@ -310,11 +310,11 @@ export default {
               widthInt: 20,
               width: "20%",
               bottom: "5%",
-              img: "sprites/sprite_dialogue_riddl.png",
+              img: "sprites/sprite_dialogue_spookyriddl.png",
               isInteractable: false,
               filter: null,
               itemType: "character",
-              dialogueSprite: "sprite_dialogue_riddl.png",
+              dialogueSprite: "sprite_dialogue_spookyriddl.png",
               dialogue: levelTwoIntro,
             },
           );
@@ -634,8 +634,10 @@ export default {
       }
     },
   openPause() {
-    this.isFlashlightOn = false;
-    document.querySelector(".game-overlay").style.filter = "brightness(.1)";
+    if (this.$store.state.userData.level === 2) {
+      this.isFlashlightOn = false;
+      document.querySelector(".game-overlay").style.filter = "brightness(.1)";
+    }
     this.isPauseOpen = true;
   },
   closePM() {
