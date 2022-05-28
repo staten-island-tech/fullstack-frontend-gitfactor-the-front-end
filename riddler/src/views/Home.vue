@@ -63,7 +63,7 @@ export default {
         const data = await response.json();
         console.log(data);
         this.$store.commit('updateState', data);
-        window.location.reload();
+        window.location.reload(); //reloads the page after saving (needed to load new level)
         alert("Your progress has been saved.");
       } catch (error) {
         console.log(error);

@@ -634,8 +634,10 @@ export default {
       }
     },
   openPause() {
-    this.isFlashlightOn = false;
-    document.querySelector(".game-overlay").style.filter = "brightness(.1)";
+    if (this.$store.state.userData.level === 2) {
+      this.isFlashlightOn = false;
+      document.querySelector(".game-overlay").style.filter = "brightness(.1)";
+    }
     this.isPauseOpen = true;
   },
   closePM() {
