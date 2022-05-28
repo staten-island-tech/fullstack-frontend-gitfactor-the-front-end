@@ -126,9 +126,13 @@
     </div>
 
     <div class="mobile-button-container">
-      <button @mousedown="leftMove()" @mouseup="reset()" class="mobile-button">&lt;</button>
+      <button @mousedown="leftMove()" @mouseup="reset()" class="mobile-button">
+        <font-awesome-icon icon="caret-left" />
+      </button>
       <button @click="onEnter()" class="mobile-button">Z</button>
-      <button @mousedown="rightMove()" @mouseup="reset()" class="mobile-button">&gt;</button>
+      <button @mousedown="rightMove()" @mouseup="reset()" class="mobile-button">
+        <font-awesome-icon icon="caret-right" />
+      </button>
     </div>
   </main>
     
