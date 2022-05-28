@@ -129,7 +129,9 @@
       <button @mousedown="leftMove()" @mouseup="reset()" class="mobile-button">
         <font-awesome-icon icon="caret-left" />
       </button>
-      <button @click="onEnter()" class="mobile-button">Z</button>
+      <button @click="onEnter()" class="mobile-button">
+        <font-awesome-icon icon="z" />
+      </button>
       <button @mousedown="rightMove()" @mouseup="reset()" class="mobile-button">
         <font-awesome-icon icon="caret-right" />
       </button>
@@ -603,7 +605,6 @@ export default {
       this.$emit("gameEvent");
       this.unhideItem();
     },
-    
     levelMinus() {
       this.$store.commit("decrementLevel");
       console.log(this.$store.state.userData.level);
@@ -822,6 +823,9 @@ img {
   width: 7.5rem;
   margin: 1rem;
 }
+.mobile-button svg {
+  font-size: var(--h2);
+}
 .textbox {
   border: #a60bbb 1rem solid;
   background-color: #0e0b2b;
@@ -862,8 +866,8 @@ img {
 }
 .flashlight-btn {
   position: absolute;
-  top: calc(8rem + 5%);
-  left: 5%;
+  top: 10%;
+  left: calc(5% + 17rem);
   font-size: var(--h3);
   padding: .75rem;
   color: var(--purple);

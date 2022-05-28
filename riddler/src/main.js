@@ -28,8 +28,8 @@ app.component("font-awesome-icon", FontAwesomeIcon);
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 /* import specific icons */
-import { faPause, faX, faHeart, faPowerOff, faCaretLeft, faCaretRight } from "@fortawesome/free-solid-svg-icons";
+import { faPause, faX, faHeart, faPowerOff, faCaretLeft, faCaretRight, faZ } from "@fortawesome/free-solid-svg-icons";
 /* import font awesome icon component */
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 /* add icons to the library */
-library.add(faPause, faX, faHeart, faPowerOff, faCaretLeft, faCaretRight);
+library.add(faPause, faX, faHeart, faPowerOff, faCaretLeft, faCaretRight, faZ);
