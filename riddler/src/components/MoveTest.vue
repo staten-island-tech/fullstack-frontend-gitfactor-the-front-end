@@ -55,7 +55,6 @@
           @refocus-on-puzzle="openPuzzlePopup()"
           @next-level="levelAdd()"
           @level-fail="$emit('gameEvent')"
-
           :puzzleAnswer="emittedPuzzleAnswer"
           :puzzleVisibility="puzzlePopupVisibility"
           :isPromptAnswered="isPuzzleQuestionCompleted"
@@ -156,8 +155,7 @@ import PauseMenu from "./PauseMenu.vue";
 import Instructions from './Instructions.vue';
 import Settings from "./Settings.vue"
 import PuzzlePopup from "./PuzzlePopup.vue"; 
-import {levelOneIntro} from "../dialogue";
-import {levelTwoIntro} from "../dialogue";
+import {levelOneIntro, levelTwoIntro, levelFail, levelFailedAgain} from "../dialogue";
 
 
 export default {
@@ -260,83 +258,136 @@ export default {
     },
     checkLevel() {
       const gameOverlay = document.querySelector(".game-overlay");
-      if (this.$store.state.userData.level === 1) {
-        console.log("level 1");
-        if (this.$store.state.userData.isIntro) {
-          setTimeout(() => {
-            document.querySelector(".main").classList.add("game-intro");
-          }, 0) 
-          this.enteredOnObject = true;
-          setTimeout(() => {
-            this.playAudio();
-            alert("You hear a broken transmission over an intercom.");
-            this.gameItems.unshift(
-              {
-                intro: true,
-                name: "Riddler",
-                id: -1,
-                section: 2,
-                position: 45,
-                margin: "45%",
-                widthInt: 20,
-                width: "20%",
-                bottom: "5%",
-                img: "sprites/sprite_dialogue_spookyriddl.png",
-                isInteractable: false,
-                filter: null,
-                itemType: "character",
-                dialogueSprite: "sprite_dialogue_spookyriddl.png",
-                dialogue: levelOneIntro,
-              },
-            );
-          this.itemInteract();
-          this.onEnter();
-          }, 7000);
-        } else {
-          setTimeout(() => {
-            document.querySelector(".main").classList.add("game-start");
-          }, 0) 
-          this.playAudio();
-        }
-      } 
-      if (this.$store.state.userData.level === 2) {
-        console.log("level 2");   
-        if (this.$store.state.userData.isIntro) {
-          this.enteredOnObject = true;
-          this.playAudio();
-          alert("You hear a broken transmission over an intercom.");
-          this.gameItems.unshift(
-            {
-              intro: true,
-              name: "Riddler",
-              id: -2,
-              section: 2,
-              position: 45,
-              margin: "45%",
-              widthInt: 20,
-              width: "20%",
-              bottom: "5%",
-              img: "sprites/sprite_dialogue_spookyriddl.png",
-              isInteractable: false,
-              filter: null,
-              itemType: "character",
-              dialogueSprite: "sprite_dialogue_spookyriddl.png",
-              dialogue: levelTwoIntro,
-            },
-          );
-          this.itemInteract();
-          this.onEnter();
-        } else {
-          document.querySelector(".game-overlay").classList.add("dark");
-          this.playAudio();
-        }
-      } 
-      if (this.$store.state.userData.level === 3) {
-        console.log("level 3");
-        setTimeout(() => {
-          document.querySelector(".main").classList.add("game-start");
-          gameOverlay.classList.add("fog");
-        }, 0)      
+
+      if (this.$store.state.userData.lifeCount === 0 && this.$store.state.userData.failedLevel === false) {
+        this.$store.state.userData.lifeCount = 5;
+        this.$store.state.userData.failedLevel = true;
+        this.playAudio();
+        alert("You hear a broken transmission over an intercom.");
+        this.gameItems.unshift(
+          {
+            intro: true,
+            name: "Riddler",
+            id: -1,
+            section: 2,
+            position: 45,
+            margin: "45%",
+            widthInt: 20,
+            width: "20%",
+            bottom: "5%",
+            img: "sprites/sprite_dialogue_spookyriddl.png",
+            isInteractable: false,
+            filter: null,
+            itemType: "character",
+            dialogueSprite: "sprite_dialogue_spookyriddl.png",
+            dialogue: levelFail
+          },
+        );
+        this.itemInteract();
+        this.onEnter();
+      } else if (this.$store.state.userData.lifeCount === 0 && this.$store.state.userData.failedLevel === true) {
+        this.$store.state.userData.lifeCount = 5;
+        this.playAudio();
+        this.gameItems.unshift(
+          {
+            intro: true,
+            name: "Riddler",
+            id: -1,
+            section: 2,
+            position: 45,
+            margin: "45%",
+            widthInt: 20,
+            width: "20%",
+            bottom: "5%",
+            img: "sprites/sprite_dialogue_spookyriddl.png",
+            isInteractable: false,
+            filter: null,
+            itemType: "character",
+            dialogueSprite: "sprite_dialogue_spookyriddl.png",
+            dialogue: levelFailedAgain
+          },
+        );
+        this.itemInteract();
+        this.onEnter();
+      } else {
+          if (this.$store.state.userData.level === 1) {
+            console.log("level 1");
+            if (this.$store.state.userData.isIntro) {
+              setTimeout(() => {
+                document.querySelector(".main").classList.add("game-intro");
+              }, 0) 
+              this.enteredOnObject = true;
+              setTimeout(() => {
+                this.playAudio();
+                alert("You hear a broken transmission over an intercom.");
+                this.gameItems.unshift(
+                  {
+                    intro: true,
+                    name: "Riddler",
+                    id: -1,
+                    section: 2,
+                    position: 45,
+                    margin: "45%",
+                    widthInt: 20,
+                    width: "20%",
+                    bottom: "5%",
+                    img: "sprites/sprite_dialogue_spookyriddl.png",
+                    isInteractable: false,
+                    filter: null,
+                    itemType: "character",
+                    dialogueSprite: "sprite_dialogue_spookyriddl.png",
+                    dialogue: levelOneIntro,
+                  },
+                );
+              this.itemInteract();
+              this.onEnter();
+              }, 7000);
+            } else {
+              setTimeout(() => {
+                document.querySelector(".main").classList.add("game-start");
+              }, 0) 
+              this.playAudio();
+            }
+          } 
+          if (this.$store.state.userData.level === 2) {
+            console.log("level 2");   
+            if (this.$store.state.userData.isIntro) {
+              this.enteredOnObject = true;
+              this.playAudio();
+              alert("You hear a broken transmission over an intercom.");
+              this.gameItems.unshift(
+                {
+                  intro: true,
+                  name: "Riddler",
+                  id: -2,
+                  section: 2,
+                  position: 45,
+                  margin: "45%",
+                  widthInt: 20,
+                  width: "20%",
+                  bottom: "5%",
+                  img: "sprites/sprite_dialogue_spookyriddl.png",
+                  isInteractable: false,
+                  filter: null,
+                  itemType: "character",
+                  dialogueSprite: "sprite_dialogue_spookyriddl.png",
+                  dialogue: levelTwoIntro,
+                },
+              );
+              this.itemInteract();
+              this.onEnter();
+            } else {
+              document.querySelector(".game-overlay").classList.add("dark");
+              this.playAudio();
+            }
+          } 
+          if (this.$store.state.userData.level === 3) {
+            console.log("level 3");
+            setTimeout(() => {
+              document.querySelector(".main").classList.add("game-start");
+              gameOverlay.classList.add("fog");
+            }, 0)      
+          }
       }
     },
     enablePlayerMovement() {
@@ -554,7 +605,7 @@ export default {
           });
           if (this.$store.state.userData.currentItem.dialogue[this.textCount].name === "???") {
             this.playerDialogueSprite = "filter: brightness(.5)";
-            this.npcDialogueSprite = "filter: brightness(0.05)";
+            this.npcDialogueSprite = "filter: brightness(0.2)";
           } 
           else if (this.$store.state.userData.currentItem.dialogue[this.textCount].name !== "Me") {
             this.playerDialogueSprite = "filter: brightness(.5)";

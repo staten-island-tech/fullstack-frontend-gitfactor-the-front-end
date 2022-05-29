@@ -9,7 +9,7 @@
         Muahaha! It is I, the Riddler, with some tips and tricks for you!
       </p>
       <p>
-        1. Each floor has a tantalizing riddle for you to solve. Once you are confident in your answer, head to the door so you can move on to the next level. Maybe one day, you'll be able to escape (don't count on it). If you think you're a smart cookie, it's possible to solve the Door of Truth's riddle without looking around the floor for clues first. <strong>But if you guess wrong, you lose 1 soul. You can see your remaining souls on the screen, and when you lose all of them, well, you don't want to know.</strong>
+        1. Each floor has a tantalizing riddle for you to solve. Once you are confident in your answer, head to the door so you can move on to the next level. Maybe one day, you'll be able to escape (don't count on it). If you think you're a smart cookie, it's possible to solve the Door of Truth's riddle without looking around the floor for clues first. <strong>But if you guess wrong, you lose 1 soul point. You can see your remaining soul points on the screen, and when you lose all of them, well, you don't want to know.</strong>
       </p>
       <p>
         2. Use your <strong>arrow keys</strong> to move left or right. If you are on a mobile device, use click the corresponding buttons on the screen instead.
@@ -33,12 +33,19 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 @import "../assets/global.css";
 
 .pause-menu {
   overflow: scroll;
-  padding: 1rem;
+  padding: 2rem;
+}
+.x-icon {
+  position: absolute;
+  top: 3rem;
+  right: 3rem;
+  font-size: var(--h4);
+  color: var(--highlight-color);
 }
 .instruction-title {
   margin-bottom: 1rem;

@@ -18,7 +18,7 @@ export default {
     margin-bottom: 1rem;
   }
   section svg {
-    height: 2.25rem;
+    font-size: 2.25rem;
     margin-right: .5rem;
     color: red;
   }

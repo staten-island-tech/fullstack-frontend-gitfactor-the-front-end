@@ -195,15 +195,13 @@ export default {
     },
     loseHeart() {
       this.$store.commit("decrementLives");
-      if(this.$store.state.userData.lifeCount < 0) {
-        alert("'Muahaha! You have failed!', you hear over the intercom. Everything turns to black.");
+      if(this.$store.state.userData.lifeCount === 0) {
+        //lifeCount is restored in checkLevel()
         this.$store.state.userData.section = 2;
-        this.$store.state.userData.leftValue = 50;
-        this.$store.state.userData.lifeCount = 5;
+        this.$store.state.userData.leftValue = 45;
         this.$store.state.userData.currentItem = null;
         this.$store.state.userData.inventory = [];
-        this.$store.state.userData.isIntro = true;
-        this.$store.state.userData.solvedPuzzles = [2];
+        this.$store.state.userData.solvedPuzzles = [];
         this.$emit("level-fail");
       }
     },

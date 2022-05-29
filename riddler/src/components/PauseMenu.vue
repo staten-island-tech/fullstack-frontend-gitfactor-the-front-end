@@ -3,7 +3,7 @@
     <div class="icon-div">
       <font-awesome-icon @click="$emit('closePause')" icon="x" class="x-icon"/>
     </div>
-    <h2 class="pause-title">Pause Menu</h2>
+    <h2 class="pause-title">Menu</h2>
     <div class="pause-button-box">
       <button @click="$emit('instruction')">Instruction Manual</button>
       <button @click="updateData()">Save</button>
