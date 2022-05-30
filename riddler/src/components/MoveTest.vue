@@ -597,7 +597,7 @@ export default {
           this.playAudio();
       
       if (this.textCount < this.$store.state.userData.currentItem.dialogue.length) {
-        document.querySelector(".bg-img").style.filter = "brightness(0.3)";
+        document.querySelector(".bg-img").style.filter = "brightness(0.5)";
         document.querySelector(".player-avatar").style.display = "none";
         const items = document.querySelectorAll(".item");
           Array.from(items).forEach((item) => {
