@@ -36,7 +36,7 @@ export const state = {
         filter: null,
         itemType: "object",
         prompt:
-          "Hmm... It looks like a mysterious scroll, but it's completely blank! It's bound together with a string of twine and has a faint scent of citrus.",
+          "Hmm... It looks like a mysterious scroll, but it's completely blank! Made of a very pale-colored parchment, the scroll is bound together with a string of twine and has a faint scent of citrus.",
       },
       {
         name: "Shiny Prism",
@@ -101,7 +101,7 @@ export const state = {
         isInteractable: false,
         filter: null,
         itemType: "object",
-        prompt: "It's a painting of some guy who seems important. If only vampires studied human history!"
+        prompt: "It's a painting of some guy who seems important, but it's hard to tell who it is! If only vampires studied human history! Upon closer inspection, it is dated 'February 1847.' "
       },
     ],
     [
@@ -181,9 +181,9 @@ export const state = {
       {
         name: "Envelope",
         id: 10,
-        section: 3,
-        position: 70,
-        margin: "70%",
+        section: 1,
+        position: 30,
+        margin: "30%",
         widthInt: 10,
         width: "10%",
         bottom: "9%",
@@ -211,9 +211,9 @@ export const state = {
       {
         name: "Notebook",
         id: 12,
-        section: 1,
-        position: 30,
-        margin: "30%",
+        section: 3,
+        position: 70,
+        margin: "70%",
         widthInt: 14,
         width: "14%",
         bottom: "6%",

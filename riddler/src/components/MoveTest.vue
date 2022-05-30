@@ -359,7 +359,7 @@ export default {
                 {
                   intro: true,
                   name: "Riddler",
-                  id: -2,
+                  id: -1,
                   section: 2,
                   position: 45,
                   margin: "45%",
@@ -567,6 +567,7 @@ export default {
         (item) => item.id === this.$store.state.userData.currentItem.id
       );
       this.gameItems.splice(selectedItem, 1);
+
       this.$store.state.userData.inventory.push(
         this.$store.state.userData.currentItem
       );
@@ -659,6 +660,14 @@ export default {
     levelMinus() {
       this.$store.commit("decrementLevel");
       console.log(this.$store.state.userData.level);
+
+      this.$store.state.userData.section = 2;
+      this.$store.state.userData.leftValue = 45;
+      this.$store.state.userData.lifeCount = 5;
+      this.$store.state.userData.currentItem = null;
+      this.$store.state.userData.inventory = [];
+      this.$store.state.userData.isIntro = true;
+      this.$store.state.userData.solvedPuzzles = [];
       this.$emit("gameEvent");
       this.unhideItem();
     },
