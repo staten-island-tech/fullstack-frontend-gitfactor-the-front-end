@@ -233,8 +233,7 @@ button:disabled:hover {
   z-index: 1;
   overflow: scroll;
 }
-.popup-container p {
-  font-size: var(--h4);
+.popup-container h4 {
   text-align: left;
 }
 .solved-text p {

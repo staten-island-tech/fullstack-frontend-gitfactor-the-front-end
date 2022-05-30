@@ -142,11 +142,11 @@ export const state = {
         filter: null,
         itemType: "puzzle",
         puzzleType: 2,
-        prompt: "Enter the correct answer using the keypad.",
+        prompt: "This monitor seems like it could have useful information on it, but it's protected by a password. What could the password be? Enter it using the keypad below.",
         buttonChoices: ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','T','U','V','W','X','Y','Z'],
         puzzleAnswer: "riddler",
         puzzleCompleted: false,
-        puzzleAnsweredText: "From where each item begins is where you shall find an end.",
+        puzzleAnsweredText: "Nice! I'm in! The monitor displays a message: 'From where each item begins is where you shall find an end.'",
       },
       {
         name: "Ocarina",

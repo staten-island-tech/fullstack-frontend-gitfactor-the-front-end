@@ -510,12 +510,11 @@ export default {
       this.gameItems.forEach((item) => {
         const itemLeft = item.position;
         const itemRight = item.position + item.widthInt;
-        if (
+        if ( //checks if avatar is in range of item
           item.section === this.$store.state.userData.section &&
           this.$store.state.userData.leftValue + 8 >= itemLeft &&
           this.$store.state.userData.leftValue + 10 <= itemRight
-        ) {
-          //checks if avatar is in range of item
+        ) { 
           item.isInteractable = true;
           this.$store.state.userData.currentItem = item;
           item.filter = "brightness(55%)";
@@ -566,11 +565,11 @@ export default {
       const selectedItem = this.gameItems.findIndex(
         (item) => item.id === this.$store.state.userData.currentItem.id
       );
-      this.gameItems.splice(selectedItem, 1);
-
       this.$store.state.userData.inventory.push(
         this.$store.state.userData.currentItem
       );
+      this.gameItems.splice(selectedItem, 1);
+
       this.closeItemPopup();
     },
     puzzleVisibilityValueReset() {
