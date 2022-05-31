@@ -1,5 +1,6 @@
 <template>
   <div class="background">
+<PageLoader v-show="isLoading"/>
     <div class="home" v-if="isLoggedIn">
       <MoveTest @gameEvent="updateData()" class="game" />
       <div class="solid"></div>
@@ -10,14 +11,16 @@
 
 <script>
 import MoveTest from "@/components/MoveTest.vue";
+import PageLoader from "@/components/PageLoader.vue";
 
 export default {
   name: "Home",
   components: {
-    MoveTest
+    MoveTest, PageLoader
   },
   data() {
     return {
+      isLoading: false,
       isLoggedIn: false,
       userdata: this.$auth.user,
     }
@@ -28,6 +31,7 @@ export default {
   methods: {
     async getData() {
       const userId = this.userdata.sub.replace("auth0|", "");
+      this.isLoading = true;
       try {
         const token = await this.$auth.getTokenSilently();
         const response = await fetch(`http://localhost:3000/api/index/${userId}`, {
@@ -45,7 +49,12 @@ export default {
           this.updateData();
           console.log("registering")
         }
-        this.isLoggedIn = true;
+        setTimeout(() => {
+          this.isLoading = false;
+        }, 5000);
+        setTimeout(() => {
+          this.isLoggedIn = true;
+        }, 5000);
       } catch (error) {
         console.log(error);
       }
