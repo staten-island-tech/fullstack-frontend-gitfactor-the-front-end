@@ -34,6 +34,9 @@
           />
           <p :style="{ color: `var(--${$store.state.userData.currentItem.dialogue[textCount].color})` }" class="textbox-title">{{ $store.state.userData.currentItem.dialogue[textCount].name }}</p>
           <p class="textbox-text typing-class">{{ $store.state.userData.currentItem.dialogue[textCount].text }}</p>
+          <div class="bck-bttn-container">
+            <button @click="goBack" class="back-button">Go Back</button>
+          </div>
         </div>
             
         <ItemPopup @itemAdded="addToInventory()" v-if="itemPopup" @closePopup="closeItemPopup()" :item="currentItem" 
@@ -641,6 +644,12 @@ export default {
         this.$store.state.userData.isIntro = false;
       };
     },
+    goBack(){
+      // this.textCount = (this.textCount - 1);
+      // console.log(this.textCount)
+      console.log("pressed!")
+      alert("pressed")
+    },
     levelAdd() {
       this.$store.commit("incrementLevel");
       console.log(this.$store.state.userData.level);
@@ -918,6 +927,19 @@ img {
   position: absolute;
   bottom: 0;
   left: -20%;
+}
+.bck-bttn-container{
+  width: 100%;
+}
+.back-button{
+  width: 20%;
+    font-size: 2.5rem;
+    margin: 1rem;
+    padding: 1rem;
+    background-color: var(--highlight-color);
+    color: black;
+    border: black 0.05rem solid;
+    border-radius: 0.5rem;
 }
 .item-popup img {
   position: unset;
