@@ -18,6 +18,7 @@
           <audio id="walk-sfx" :src="require(`@/assets/audio/sfx/walkstep.mp3`)"></audio>
         </div>
 
+          
       <div class="main">
         <div :style="{ border: `.3rem solid var(--${$store.state.userData.currentItem.dialogue[textCount].color})` }" v-if="textbox" class="textbox">
           <img
@@ -32,11 +33,9 @@
             class="npc-avatar-dialogue"
             id="npc-dialogue-sprite"
           />
+            <font-awesome-icon @click="textBack()" icon="caret-left" class="back-button" :disabled="this.textCount <= 0"/>
           <p :style="{ color: `var(--${$store.state.userData.currentItem.dialogue[textCount].color})` }" class="textbox-title">{{ $store.state.userData.currentItem.dialogue[textCount].name }}</p>
           <p class="textbox-text typing-class">{{ $store.state.userData.currentItem.dialogue[textCount].text }}</p>
-          <div class="bck-bttn-container">
-            <button @click="goBack" class="back-button">Go Back</button>
-          </div>
         </div>
             
         <ItemPopup @itemAdded="addToInventory()" v-if="itemPopup" @closePopup="closeItemPopup()" :item="currentItem" 
@@ -644,11 +643,8 @@ export default {
         this.$store.state.userData.isIntro = false;
       };
     },
-    goBack(){
-      // this.textCount = (this.textCount - 1);
-      // console.log(this.textCount)
-      console.log("pressed!")
-      alert("pressed")
+    textBack(){
+       this.textCount = (this.textCount - 1);
     },
     levelAdd() {
       this.$store.commit("incrementLevel");
@@ -928,11 +924,11 @@ img {
   bottom: 0;
   left: -20%;
 }
-.bck-bttn-container{
-  width: 100%;
-}
 .back-button{
-  width: 20%;
+  position: absolute;
+  bottom: 0;
+  z-index: 5;
+  width: 2rem;
     font-size: 2.5rem;
     margin: 1rem;
     padding: 1rem;
@@ -940,6 +936,13 @@ img {
     color: black;
     border: black 0.05rem solid;
     border-radius: 0.5rem;
+}
+.back-button:disabled {
+  cursor: default;
+  background-color: #6f627b;
+}
+.back-button:disabled:hover {
+  filter: brightness(1);
 }
 .item-popup img {
   position: unset;
