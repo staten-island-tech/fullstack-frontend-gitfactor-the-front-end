@@ -131,8 +131,8 @@ export const state = {
         name: "Monitor",
         id: 7,
         section: 2,
-        position: 65,
-        margin: "65%",
+        position: 55,
+        margin: "55%",
         widthInt: 30,
         width: "30%",
         bottom: "14%",
@@ -154,14 +154,14 @@ export const state = {
         section: 3,
         position: 22,
         margin: "22%",
-        widthInt: 10,
-        width: "10%",
+        widthInt: 11,
+        width: "11%",
         bottom: "12%",
         img: "lv2_ocarina.png",
         isInteractable: false,
         filter: null,
         itemType: "object",
-        prompt: "Oh, what a pretty ocarina. It has 7 holes, and if you look closely, you see that each hole is marked with the note it plays and a number. They read '1A', '2B', '3C', and so on. I'm sure it makes a beautiful sound."
+        prompt: "Oh, what a pretty ocarina. It has 7 holes, and each hole is marked with the note it plays and a number. They read '1A', '2B', '3C', and so on. I'm sure it makes a beautiful sound!"
       },
       {
         name: "Camera",
@@ -176,7 +176,7 @@ export const state = {
         isInteractable: false,
         filter: null,
         itemType: "object",
-        prompt: "A pretty cool, old-fashioned looking camera. Oh, and there are photos on the ground right next to it. No way, is that the Riddler as a child? He looks so innocent! He's just sitting at a desk in a classroom. Aw, he looks kinda sad. Arghhh but he gets no sympathy from me.",
+        prompt: "A pretty cool, old-fashioned looking camera. Oh, and there are photos on the ground right next to it. No way, is that the Riddler as a child? He looks so innocent! He's just sitting at a desk in a classroom. Aw, he looks kinda sad. But he gets no sympathy from me!",
       },
       {
         name: "Envelope",
@@ -194,7 +194,7 @@ export const state = {
         prompt: "You open the glossy wax seal, but there's nothing inside the envelope. Inscribed on the inside of the envelope, however, are the numbers '18 9 44 12 5 18'.",
       },
       {
-        name: "AA batteries",
+        name: "AA Batteries",
         id: 11,
         section: 1,
         position: 10,
@@ -206,7 +206,7 @@ export const state = {
         isInteractable: false,
         filter: null,
         itemType: "object",
-        prompt: "Nice find! I think I can recharge my flashlight with these!",
+        prompt: "Great! Batteries to charge my flashlight! Lemme just pop them in here...oh no. The flashlight uses AAA's. Darn.",
       },
       {
         name: "Notebook",
@@ -244,7 +244,7 @@ export const state = {
         buttonChoices: ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','T','U','V','W','X','Y','Z'],
         puzzleAnswer: "riddler",
         puzzleCompleted: false,
-        puzzleAnsweredText: "Nice! I'm in! The monitor displays a message: 'From where each item begins is where you shall find an end.'",
+        puzzleAnsweredText: "Nice! I'm in! The monitor displays a message: 'From the start of each item is where you shall find an end.'",
       },
     ]
   ],

@@ -550,8 +550,6 @@ export default {
       document
         .querySelectorAll(".section" + this.$store.state.userData.section)
         .forEach((el) => el.classList.remove("hide"));
-
-      //maybe :class="item.section" then select current section's class and remove
     },
     onEnter() {
       if (this.$store.state.userData.currentItem) {
@@ -683,6 +681,7 @@ export default {
       this.$store.state.userData.lifeCount = 5;
       this.$store.state.userData.currentItem = null;
       this.$store.state.userData.inventory = [];
+      this.$store.state.userData.battery = 100;
       this.$store.state.userData.isIntro = true;
       this.$store.state.userData.solvedPuzzles = [];
 
@@ -699,6 +698,7 @@ export default {
       this.$store.state.userData.currentItem = null;
       this.$store.state.userData.inventory = [];
       this.$store.state.userData.isIntro = true;
+      this.$store.state.userData.battery = 100;
       this.$store.state.userData.solvedPuzzles = [];
       this.$emit("gameEvent");
       this.unhideItem();
@@ -1003,7 +1003,7 @@ img {
 
 @keyframes fogFade {
   0% {
-    opacity: 0%;
+    opacity: 10%;
   }
   20% {
     opacity: 70%;
@@ -1018,13 +1018,13 @@ img {
     opacity: 100%;
   }
   60% {
-    opacity: 40%;
+    opacity: 50%;
   }
   70% {
     opacity: 70%;
   }
   100% {
-    opacity: 0%;
+    opacity: 10%;
   }
 }
 

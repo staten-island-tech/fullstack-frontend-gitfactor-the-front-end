@@ -200,6 +200,7 @@ export default {
         this.$store.state.userData.leftValue = 45;
         this.$store.state.userData.currentItem = null;
         this.$store.state.userData.inventory = [];
+        this.$store.state.userData.battery = 100;
         this.$store.state.userData.solvedPuzzles = [];
         this.$emit("level-fail");
       }
