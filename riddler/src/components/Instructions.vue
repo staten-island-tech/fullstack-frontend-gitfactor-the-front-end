@@ -40,13 +40,6 @@ export default {
   overflow: scroll;
   padding: 2rem;
 }
-.x-icon {
-  position: absolute;
-  top: 3rem;
-  right: 3rem;
-  font-size: var(--h4);
-  color: var(--highlight-color);
-}
 .instruction-title {
   margin-bottom: 1rem;
   font-size: 3rem;
