@@ -101,7 +101,7 @@
             @keydown.right="rightMove()"
             @keydown.left="leftMove()"
             @keyup="reset()"
-            @keydown.z="onEnter()"
+            @keyup.z="onEnter()"
         >
           <img
             :src="require(`@/assets/environment/lv1/${currentLocationImg}`)"
