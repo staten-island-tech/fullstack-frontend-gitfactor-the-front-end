@@ -33,7 +33,10 @@
             class="npc-avatar-dialogue"
             id="npc-dialogue-sprite"
           />
-            <font-awesome-icon @click="textBack()" icon="caret-left" class="back-button" :disabled="this.textCount <= 0"/>
+          <div class="text-button-icons" v-if="textbox && !isPauseOpen">
+            <font-awesome-icon @click="textBack()" icon="caret-left" class="back-button" v-if="textCount > 0"/>
+            <font-awesome-icon @click="onEnter()" class="back-button forward-button" icon="caret-right" />
+            </div>
           <p :style="{ color: `var(--${$store.state.userData.currentItem.dialogue[textCount].color})` }" class="textbox-title">{{ $store.state.userData.currentItem.dialogue[textCount].name }}</p>
           <p class="textbox-text typing-class">{{ $store.state.userData.currentItem.dialogue[textCount].text }}</p>
         </div>
@@ -924,18 +927,27 @@ img {
   bottom: 0;
   left: -20%;
 }
-.back-button{
-  position: absolute;
+.text-button-icons{
+  display: block;
+    position: absolute;
   bottom: 0;
-  z-index: 5;
+    right: 0;
+      z-index: 5;
+}
+.back-button{
+  left: 1;
   width: 2rem;
+  height: 1.5rem;
     font-size: 2.5rem;
-    margin: 1rem;
+    margin: .5rem;
     padding: 1rem;
     background-color: var(--highlight-color);
     color: black;
     border: black 0.05rem solid;
-    border-radius: 0.5rem;
+    border-radius: 1.5rem;
+}
+.forward{
+  left: 3;
 }
 .back-button:disabled {
   cursor: default;
