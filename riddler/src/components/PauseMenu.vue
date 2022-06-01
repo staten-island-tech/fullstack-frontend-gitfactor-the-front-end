@@ -58,6 +58,7 @@ export default {
 @import "../assets/global.css";
 
   .pause-menu {
+    overflow: scroll;
     position: absolute;
     top: 0;
     text-align: center;

@@ -130,9 +130,9 @@ export const state = {
       {
         name: "Monitor",
         id: 7,
-        section: 3,
-        position: 22,
-        margin: "22%",
+        section: 2,
+        position: 65,
+        margin: "65%",
         widthInt: 30,
         width: "30%",
         bottom: "14%",
@@ -151,12 +151,12 @@ export const state = {
       {
         name: "Ocarina",
         id: 8,
-        section: 2,
-        position: 65,
-        margin: "65%",
-        widthInt: 12,
-        width: "12%",
-        bottom: "10%",
+        section: 3,
+        position: 22,
+        margin: "22%",
+        widthInt: 10,
+        width: "10%",
+        bottom: "12%",
         img: "lv2_ocarina.png",
         isInteractable: false,
         filter: null,
@@ -224,8 +224,29 @@ export const state = {
         prompt: "A classic marble notebook. All the pages are blank, but the cover reads: 'Name: The Riddler / Class: Algebra 1'. Oh, there are some doodles, too. Never knew the Riddler was an artist...",
       },
     ],
-
-    // []  level 3
+    [
+      {
+        name: "Monitor",
+        id: 7,
+        section: 2,
+        position: 65,
+        margin: "65%",
+        widthInt: 30,
+        width: "30%",
+        bottom: "14%",
+        img: "lv2_monitor.png",
+        isInteractable: false,
+        isLevelTransitionPuzzle: false,
+        filter: null,
+        itemType: "puzzle",
+        puzzleType: 2,
+        prompt: "This monitor seems like it could have useful information on it, but it's protected by a password. What could the password be? Enter it using the keypad below.",
+        buttonChoices: ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','T','U','V','W','X','Y','Z'],
+        puzzleAnswer: "riddler",
+        puzzleCompleted: false,
+        puzzleAnsweredText: "Nice! I'm in! The monitor displays a message: 'From where each item begins is where you shall find an end.'",
+      },
+    ]
   ],
 };
 

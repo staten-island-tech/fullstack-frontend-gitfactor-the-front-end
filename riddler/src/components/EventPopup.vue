@@ -25,7 +25,8 @@ export default {
   -webkit-transform: translate(-50%,-50%);
   font-size: var(--h4);
   width: 50rem;
-  height: 20rem;
+  min-height: 20rem;
+  max-height: 30rem;
   padding: 2rem;
   margin: auto;
   border-radius: 1.5rem;
