@@ -254,7 +254,6 @@ export default {
       }); 
       this.currentOST = this.locations[this.$store.state.userData.level - 1].assets[this.$store.state.userData.section - 1].ost;
       this.unhideItem();
-      console.log(this.gameItems)
     },
     checkLevel() {
       const gameOverlay = document.querySelector(".game-overlay");
@@ -388,6 +387,9 @@ export default {
               gameOverlay.classList.add("fog");
             }, 0)      
           }
+
+      this.$emit('doneLoading'); //shuts off loading screen
+
       }
     },
     enablePlayerMovement() {

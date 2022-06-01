@@ -2,7 +2,7 @@
   <div class="background">
 <PageLoader v-show="isLoading"/>
     <div class="home" v-if="isLoggedIn">
-      <MoveTest @gameEvent="updateData()" class="game" />
+      <MoveTest @gameEvent="updateData()" @doneLoading="isLoading = false" class="game" />
       <div class="solid"></div>
     </div>
   </div>
@@ -49,12 +49,7 @@ export default {
           this.updateData();
           console.log("registering")
         }
-        setTimeout(() => {
-          this.isLoading = false;
-        }, 5000);
-        setTimeout(() => {
-          this.isLoggedIn = true;
-        }, 5000);
+        this.isLoggedIn = true;
       } catch (error) {
         console.log(error);
       }
