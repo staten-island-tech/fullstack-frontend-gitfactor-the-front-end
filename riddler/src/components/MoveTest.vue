@@ -1,5 +1,6 @@
 <template>
   <div class="game-page" :key="$store.state.userData.level">
+
     <button @click="levelAdd" class="mobile-button">l+ratio</button>
     <button @click="levelMinus" class="mobile-button">l-1</button>
 
@@ -35,7 +36,9 @@
           <p :style="{ color: `var(--${$store.state.userData.currentItem.dialogue[textCount].color})` }" class="textbox-title">{{ $store.state.userData.currentItem.dialogue[textCount].name }}</p>
           <p class="textbox-text typing-class">{{ $store.state.userData.currentItem.dialogue[textCount].text }}</p>
         </div>
-            
+        
+        <EventPopup :eventText="eventMessage" @closeEventClick="closeEventPopup()" v-if="eventMessage" ref="eventPopupBox"/>
+        
         <ItemPopup @itemAdded="addToInventory()" v-if="itemPopup" @closePopup="closeItemPopup()" :item="currentItem" 
         ref="itemPopupBox">
           <template v-slot:item-name>
@@ -98,7 +101,7 @@
             @keydown.right="rightMove()"
             @keydown.left="leftMove()"
             @keyup="reset()"
-            @keydown.z="onEnter()"
+            @keyup.z="onEnter()"
         >
           <img
             :src="require(`@/assets/environment/lv1/${currentLocationImg}`)"
@@ -155,6 +158,7 @@ import PauseMenu from "./PauseMenu.vue";
 import Instructions from './Instructions.vue';
 import Settings from "./Settings.vue"
 import PuzzlePopup from "./PuzzlePopup.vue"; 
+import EventPopup from './EventPopup.vue';
 import {levelOneIntro, levelTwoIntro, levelFail, levelFailedAgain} from "../dialogue";
 
 
@@ -162,7 +166,8 @@ export default {
   name: "MoveTest",
   components: {
     HeartBar, Inventory, ItemPopup, PauseMenu,
-    Instructions, Settings, PuzzlePopup
+    Instructions, Settings, PuzzlePopup,
+    EventPopup
   },
   created() {
     this.getUserData();
@@ -205,6 +210,7 @@ export default {
           ],
         },
       ],
+      eventMessage: null,
       enteredOnObject: false,
       emittedPuzzleAnswer: "",
       isPuzzleQuestionCompleted: null,
@@ -261,7 +267,10 @@ export default {
         this.$store.state.userData.lifeCount = 5;
         this.$store.state.userData.failedLevel = true;
         this.playAudio();
-        alert("You hear a broken transmission over an intercom.");
+        this.eventMessage = "You hear a transmission over the intercom.";
+        setTimeout(() => {
+          this.openEventPopup();
+        }, 10);
         this.gameItems.unshift(
           {
             intro: true,
@@ -286,6 +295,10 @@ export default {
       } else if (this.$store.state.userData.lifeCount === 0 && this.$store.state.userData.failedLevel === true) {
         this.$store.state.userData.lifeCount = 5;
         this.playAudio();
+        this.eventMessage = "You hear a transmission over the intercom.";
+        setTimeout(() => {
+          this.openEventPopup();
+        }, 10);
         this.gameItems.unshift(
           {
             intro: true,
@@ -317,7 +330,10 @@ export default {
               this.enteredOnObject = true;
               setTimeout(() => {
                 this.playAudio();
-                alert("You hear a broken transmission over an intercom.");
+                this.eventMessage = "You hear a broken transmission over an intercom.";
+                setTimeout(() => {
+                  this.openEventPopup();
+                }, 10);
                 this.gameItems.unshift(
                   {
                     intro: true,
@@ -352,7 +368,10 @@ export default {
             if (this.$store.state.userData.isIntro) {
               this.enteredOnObject = true;
               this.playAudio();
-              alert("You hear a broken transmission over an intercom.");
+              this.eventMessage = "You hear a transmission over the intercom.";
+              setTimeout(() => {
+                this.openEventPopup();
+              }, 10);
               this.gameItems.unshift(
                 {
                   intro: true,
@@ -533,8 +552,6 @@ export default {
       document
         .querySelectorAll(".section" + this.$store.state.userData.section)
         .forEach((el) => el.classList.remove("hide"));
-
-      //maybe :class="item.section" then select current section's class and remove
     },
     onEnter() {
       if (this.$store.state.userData.currentItem) {
@@ -560,7 +577,10 @@ export default {
       }
     },
     selectInventoryItem(item) {
-      console.log(item)
+      this.eventMessage = `You have selected ${item.name}. Its description goes as such: "${item.prompt}"`;
+        setTimeout(() => {
+          this.openEventPopup();
+        }, 10);
       this.selectedInventoryItem = item;
     },
     addToInventory() {
@@ -571,8 +591,11 @@ export default {
         this.$store.state.userData.currentItem
       );
       this.gameItems.splice(selectedItem, 1);
-
+      
       this.closeItemPopup();
+        setTimeout(() => {
+          this.unhideItem();
+        }, 0);
     },
     puzzleVisibilityValueReset() {
       this.puzzlePopupVisibility = null;
@@ -593,10 +616,18 @@ export default {
       this.enteredOnObject = false;
       this.enablePlayerMovement();
     },
+    openEventPopup() {
+      this.$refs.eventPopupBox.$el.focus();
+    },
+    closeEventPopup() {
+      this.eventMessage = null;
+      this.enteredOnObject = false;
+      this.enablePlayerMovement();
+    },
     textboxShow() {
       this.textbox = true;
       this.textCount += 1;
-          this.playAudio();
+      this.playAudio();
       
       if (this.textCount < this.$store.state.userData.currentItem.dialogue.length) {
         document.querySelector(".bg-img").style.filter = "brightness(0.5)";
@@ -652,6 +683,7 @@ export default {
       this.$store.state.userData.lifeCount = 5;
       this.$store.state.userData.currentItem = null;
       this.$store.state.userData.inventory = [];
+      this.$store.state.userData.battery = 100;
       this.$store.state.userData.isIntro = true;
       this.$store.state.userData.solvedPuzzles = [];
 
@@ -668,15 +700,13 @@ export default {
       this.$store.state.userData.currentItem = null;
       this.$store.state.userData.inventory = [];
       this.$store.state.userData.isIntro = true;
+      this.$store.state.userData.battery = 100;
       this.$store.state.userData.solvedPuzzles = [];
       this.$emit("gameEvent");
       this.unhideItem();
     },
     flashlight() {
       if (!this.isFlashlightOn) {
-        alert(
-          "Use this flashlight at your own risk. If the battery runs out, you will be lost in the dark forever! Muahahahaha!!"
-        );
         this.isFlashlightOn = true;
         document.querySelector(".game-overlay").style.filter = "brightness(1)";
         const intervalId = setInterval(() => {
@@ -687,8 +717,7 @@ export default {
               document.querySelector(".game-overlay").style.filter =
                 "brightness(.1)";
             } else {
-              this.$store.state.userData.battery =
-                this.$store.state.userData.battery - 1;
+              this.$store.state.userData.battery--;
             }
           }
         }, 2000);
@@ -700,7 +729,7 @@ export default {
       }
     },
   openPause() {
-    if (this.$store.state.userData.level === 2) {
+    if (this.$store.state.userData.level === 2 && !this.$store.state.userData.isIntro) {
       this.isFlashlightOn = false;
       document.querySelector(".game-overlay").style.filter = "brightness(.1)";
     }
@@ -970,33 +999,34 @@ img {
   height: 100%;
   opacity: 0.6;
   background-image: url("../assets/bubbles.png");
+  background-size: contain;
   animation: fogFade 20s ease-in-out infinite;
 }
 
 @keyframes fogFade {
   0% {
-    filter: brightness(0%);
+    opacity: 10%;
   }
   20% {
-    filter: brightness(70%);
+    opacity: 70%;
   }
   30% {
-    filter: brightness(90%);
+    opacity: 90%;
   }
   40% {
-    filter: brightness(95%);
+    opacity: 95%;
   }
   50% {
-    filter: brightness(100%);
+    opacity: 100%;
   }
   60% {
-    filter: brightness(40%);
+    opacity: 50%;
   }
   70% {
-    filter: brightness(70%);
+    opacity: 70%;
   }
   100% {
-    filter: brightness(0%);
+    opacity: 10%;
   }
 }
 

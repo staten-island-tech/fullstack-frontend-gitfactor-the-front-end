@@ -6,7 +6,7 @@
     <h2 class="pause-title">Menu</h2>
     <div class="pause-button-box">
       <button @click="$emit('instruction')">Instruction Manual</button>
-      <button @click="updateData()">Save</button>
+      <button @click="updateData()">Save Progress</button>
       <button @click="logout()">Save and Quit</button>
       <button @click="$emit('setting')">Settings</button>
     </div>
@@ -58,6 +58,7 @@ export default {
 @import "../assets/global.css";
 
   .pause-menu {
+    overflow: scroll;
     position: absolute;
     top: 0;
     text-align: center;
@@ -76,7 +77,7 @@ export default {
     padding-top: 3rem;
   }
   .x-icon {
-    position: absolute;
+    position: fixed;
     top: 3rem;
     right: 3rem;
     font-size: var(--h4);

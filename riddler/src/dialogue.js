@@ -147,7 +147,7 @@ export const levelFail = [
   },
   {
     name: "Riddler",
-    text: "HAHA VERY CLEVER! I'm sure you're feeling pretty damn good about yourself right now, but don't get too cocky! It appears that you aren't an unworthwile enemy for me, and so I'll do everything in my power to destroy you!",
+    text: "HAHA VERY CLEVER! I'm sure you're feeling pretty damn good about yourself right now, but don't get too cocky! It appears that you aren't an unworthwhile enemy for me, and so I'll do everything in my power to destroy you!",
     color: "riddler"
   },
   {
@@ -171,7 +171,12 @@ export const levelFail = [
 export const levelFailedAgain = [
   {
     name: "Riddler",
-    text: "Wow, you lost all your soul points again? I guess you'll just keep taking advantage of your OP vampire infinite soul point hack...loser.",
+    text: "Wow, you lost all your soul points again? I guess you'll just keep taking advantage of your OP vampire infinite soul point cheat code...",
+    color: "riddler"
+  },
+  {
+    name: "Riddler",
+    text: "Loser.",
     color: "riddler"
   },
 ]

@@ -24,7 +24,6 @@
       </h4>
 
       <div class="selected-item-div" v-show="selectedItemDiv">
-        <h5>Click on an inventory item to select it as your answer.</h5>
         <div class="select-item-options">
           <div class="selected-item">
             <img :src="require(`@/assets/${inventoryItem.img}`)" v-if="inventoryItem"/>
@@ -44,7 +43,7 @@
           v-show="puzzleInputVisibility"
           placeholder="Solve the puzzle"
         />
-      <button @click="checkAnswerClick" class="puzzle-submit-btn" v-show="puzzleInputVisibility">Enter</button>
+      <button @click="checkAnswerClick" class="puzzle-submit-btn" v-show="puzzleInputVisibility" :disabled="!puzzleInput">Enter</button>
       
       <div
         class="keypad-button-div"
@@ -201,6 +200,7 @@ export default {
         this.$store.state.userData.leftValue = 45;
         this.$store.state.userData.currentItem = null;
         this.$store.state.userData.inventory = [];
+        this.$store.state.userData.battery = 100;
         this.$store.state.userData.solvedPuzzles = [];
         this.$emit("level-fail");
       }
@@ -237,6 +237,8 @@ button:disabled:hover {
   text-align: left;
 }
 .solved-text p {
+  text-align: left;
+  font-size: var(--h4);
   margin-top: 1rem;
 }
 .close-puzzle-button {
