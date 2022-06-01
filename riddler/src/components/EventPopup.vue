@@ -1,5 +1,5 @@
 <template>
-  <div class="event-popup">
+  <div class="event-popup" tabindex="-1">
     <font-awesome-icon @click="$emit('closeEventClick')" icon="x" class="close-event-button"/>
     <p>{{ eventText }}</p>
   </div>
