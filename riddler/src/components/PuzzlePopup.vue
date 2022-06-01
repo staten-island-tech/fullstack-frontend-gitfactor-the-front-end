@@ -43,7 +43,7 @@
           v-show="puzzleInputVisibility"
           placeholder="Solve the puzzle"
         />
-      <button @click="checkAnswerClick" class="puzzle-submit-btn" v-show="puzzleInputVisibility">Enter</button>
+      <button @click="checkAnswerClick" class="puzzle-submit-btn" v-show="puzzleInputVisibility" :disabled="!puzzleInput">Enter</button>
       
       <div
         class="keypad-button-div"

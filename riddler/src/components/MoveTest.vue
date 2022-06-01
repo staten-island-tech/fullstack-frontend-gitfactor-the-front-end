@@ -1,5 +1,8 @@
 <template>
   <div class="game-page" :key="$store.state.userData.level">
+
+    <EventPopup :eventText="eventMessage" @closeEventClick="closeEventPopup()" v-if="eventMessage" ref="eventPopupBox"/>
+
     <button @click="levelAdd" class="mobile-button">l+ratio</button>
     <button @click="levelMinus" class="mobile-button">l-1</button>
 
@@ -155,6 +158,7 @@ import PauseMenu from "./PauseMenu.vue";
 import Instructions from './Instructions.vue';
 import Settings from "./Settings.vue"
 import PuzzlePopup from "./PuzzlePopup.vue"; 
+import EventPopup from './EventPopup.vue';
 import {levelOneIntro, levelTwoIntro, levelFail, levelFailedAgain} from "../dialogue";
 
 
@@ -162,7 +166,8 @@ export default {
   name: "MoveTest",
   components: {
     HeartBar, Inventory, ItemPopup, PauseMenu,
-    Instructions, Settings, PuzzlePopup
+    Instructions, Settings, PuzzlePopup,
+    EventPopup
   },
   created() {
     this.getUserData();
@@ -206,6 +211,7 @@ export default {
           ],
         },
       ],
+      eventMessage: null,
       enteredOnObject: false,
       emittedPuzzleAnswer: "",
       isPuzzleQuestionCompleted: null,
@@ -263,7 +269,10 @@ export default {
         this.$store.state.userData.lifeCount = 5;
         this.$store.state.userData.failedLevel = true;
         this.playAudio();
-        alert("You hear a broken transmission over an intercom.");
+        this.eventMessage = "You hear a broken transmission over an intercom.";
+        setTimeout(() => {
+          this.openEventPopup();
+        }, 10);
         this.gameItems.unshift(
           {
             intro: true,
@@ -319,7 +328,10 @@ export default {
               this.enteredOnObject = true;
               setTimeout(() => {
                 this.playAudio();
-                alert("You hear a broken transmission over an intercom.");
+                this.eventMessage = "You hear a broken transmission over an intercom.";
+                setTimeout(() => {
+                  this.openEventPopup();
+                }, 10);
                 this.gameItems.unshift(
                   {
                     intro: true,
@@ -354,7 +366,10 @@ export default {
             if (this.$store.state.userData.isIntro) {
               this.enteredOnObject = true;
               this.playAudio();
-              alert("You hear a broken transmission over an intercom.");
+              this.eventMessage = "You hear a broken transmission over an intercom.";
+              setTimeout(() => {
+                this.openEventPopup();
+              }, 10);
               this.gameItems.unshift(
                 {
                   intro: true,
@@ -591,6 +606,14 @@ export default {
       this.enteredOnObject = false;
       this.enablePlayerMovement();
     },
+    openEventPopup() {
+      this.$refs.eventPopupBox.$el.focus();
+    },
+    closeEventPopup() {
+      this.eventMessage = null;
+      this.enteredOnObject = false;
+      this.enablePlayerMovement();
+    },
     textboxShow() {
       this.textbox = true;
       this.textCount += 1;
@@ -672,9 +695,10 @@ export default {
     },
     flashlight() {
       if (!this.isFlashlightOn) {
-        alert(
-          "Use this flashlight at your own risk. If the battery runs out, you will be lost in the dark forever! Muahahahaha!!"
-        );
+        this.eventMessage = "Use this flashlight at your own risk. If the battery runs out, you will be lost in the dark forever! Muahahahaha!!";
+        setTimeout(() => {
+            this.openItemPopup();
+        }, 10);
         this.isFlashlightOn = true;
         document.querySelector(".game-overlay").style.filter = "brightness(1)";
         const intervalId = setInterval(() => {
