@@ -20,7 +20,7 @@ export default {
   },
   data() {
     return {
-      isLoading: false,
+      isLoading: true,
       isLoggedIn: false,
       userdata: this.$auth.user,
     }
@@ -31,7 +31,6 @@ export default {
   methods: {
     async getData() {
       const userId = this.userdata.sub.replace("auth0|", "");
-      this.isLoading = true;
       try {
         const token = await this.$auth.getTokenSilently();
         const response = await fetch(`http://localhost:3000/api/index/${userId}`, {
