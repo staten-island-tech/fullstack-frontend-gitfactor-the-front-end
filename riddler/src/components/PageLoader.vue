@@ -16,10 +16,11 @@ export default {
 @import "../assets/global.css";
 
   div {
-    width: 100vw;
-    height: 100vh;
+    position: absolute;
+    width: 100%;
+    height: 100%;
     background-color: var(--darkest-purple);
-    z-index: 999;
+    z-index: 100;
   }
   img {
     width: 10%;

@@ -172,7 +172,6 @@ export default {
     this.enablePlayerMovement();
     this.itemInteract();
     this.checkLevel();
-    // this.$refs.settings;
   },
   data() {
     return {
@@ -388,8 +387,9 @@ export default {
             }, 0)      
           }
 
-      this.$emit('doneLoading'); //shuts off loading screen
-
+      setTimeout(() => {
+        this.$emit('doneLoading'); //shuts off loading screen
+      }, 2000);
       }
     },
     enablePlayerMovement() {
