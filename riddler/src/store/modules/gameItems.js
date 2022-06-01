@@ -26,8 +26,8 @@ export const state = {
         name: "Blank Scroll",
         id: 1,
         section: 2,
-        position: 60,
-        margin: "60%",
+        position: 65,
+        margin: "65%",
         widthInt: 12,
         width: "12%",
         bottom: "10%",
@@ -84,7 +84,7 @@ export const state = {
         puzzleType: 3,
         isLevelTransitionPuzzle: false,
         puzzleCompleted: false,
-        prompt: "It's a bright lantern. What could it be used for, though?",
+        prompt: "It's a lantern with a bright flame. What could it be used for, though? Click on an item in your inventory to select it as your answer.",
         puzzleAnswer: "Blank Scroll",
         puzzleAnsweredText: "Nice catch! When held up to the light of the lantern, the secret message written in lemon juice on the scroll revealed itself! It reads: 'A commonality between every item. That is where the answer lies.'",
       },
@@ -105,7 +105,7 @@ export const state = {
       },
     ],
     [
-      //Level 2
+      //Level 2 — DO NOT CHANGE THE SECTIONS THEY ARE IN
      {
         name: "Dark Door of Truth",
         id: 6,
@@ -130,9 +130,9 @@ export const state = {
       {
         name: "Monitor",
         id: 7,
-        section: 2,
-        position: 55,
-        margin: "55%",
+        section: 3,
+        position: 22,
+        margin: "22%",
         widthInt: 30,
         width: "30%",
         bottom: "14%",
@@ -151,9 +151,9 @@ export const state = {
       {
         name: "Ocarina",
         id: 8,
-        section: 3,
-        position: 25,
-        margin: "25%",
+        section: 2,
+        position: 65,
+        margin: "65%",
         widthInt: 12,
         width: "12%",
         bottom: "10%",
@@ -161,7 +161,7 @@ export const state = {
         isInteractable: false,
         filter: null,
         itemType: "object",
-        prompt: "Oh, what a pretty ocarina. If you look closely, you see that each hole is marked with the note it plays and a number. They read '1A', '2B', '3C', and so on. I'm sure it makes a beautiful sound."
+        prompt: "Oh, what a pretty ocarina. It has 7 holes, and if you look closely, you see that each hole is marked with the note it plays and a number. They read '1A', '2B', '3C', and so on. I'm sure it makes a beautiful sound."
       },
       {
         name: "Camera",
@@ -212,8 +212,8 @@ export const state = {
         name: "Notebook",
         id: 12,
         section: 3,
-        position: 70,
-        margin: "70%",
+        position: 67,
+        margin: "67%",
         widthInt: 14,
         width: "14%",
         bottom: "6%",

@@ -569,7 +569,7 @@ export default {
         this.$store.state.userData.currentItem
       );
       this.gameItems.splice(selectedItem, 1);
-
+      
       this.closeItemPopup();
     },
     puzzleVisibilityValueReset() {

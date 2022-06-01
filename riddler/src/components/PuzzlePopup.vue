@@ -24,7 +24,6 @@
       </h4>
 
       <div class="selected-item-div" v-show="selectedItemDiv">
-        <h5>Click on an inventory item to select it as your answer.</h5>
         <div class="select-item-options">
           <div class="selected-item">
             <img :src="require(`@/assets/${inventoryItem.img}`)" v-if="inventoryItem"/>
@@ -237,6 +236,8 @@ button:disabled:hover {
   text-align: left;
 }
 .solved-text p {
+  text-align: left;
+  font-size: var(--h4);
   margin-top: 1rem;
 }
 .close-puzzle-button {
