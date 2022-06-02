@@ -248,7 +248,7 @@ export default {
       instruction: false,
       setting: false,
       isFlashlightOn: false,
-      fromSettings: "",
+      fromSettings: "25",
       fromSettingsTwo: "",
     };
   },
@@ -572,7 +572,7 @@ export default {
     },
     playAudio() {
       const audio = document.getElementById("audio-bgm");
-      audio.volume = 0.25;
+      audio.volume = this.fromSettings / 100;
       setTimeout(() => {
         audio.play();
         audio.loop = true;
