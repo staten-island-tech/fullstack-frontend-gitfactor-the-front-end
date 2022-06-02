@@ -21,6 +21,7 @@ export const state = {
         isPuzzleCompleted: false,
         puzzleAnsweredText:
           "MUAHAHA TIME FOR ROUND 2",
+        
       },
       {
         name: "Blank Scroll",
@@ -37,6 +38,8 @@ export const state = {
         itemType: "object",
         prompt:
           "Hmm... It looks like a mysterious scroll, but it's completely blank! Made of a very pale-colored parchment, the scroll is bound together with a string of twine and has a faint scent of citrus.",
+        chosenItemTextCorrect:"this is the correct item cuz i said so (scroll)", 
+        chosenItemTextFalse: " bro how did you come to this conclusion... you must be guessing (scroll)",
       },
       {
         name: "Shiny Prism",
@@ -52,6 +55,8 @@ export const state = {
         filter: null,
         itemType: "object",
         prompt: "It's a triangular glass prism. So pretty and shiny!",
+        chosenItemTextCorrect:"this is the correct item cuz i said so (prism)", 
+        chosenItemTextFalse: " bro how did you come to this conclusion... you must be guessing (prism)",
       },
       {
         name: "Large Feather",
@@ -67,6 +72,8 @@ export const state = {
         filter: null,
         itemType: "object",
         prompt: "A large yet unexpectedly lightweight feather with beautiful blue hues. I wonder what kind of bird it came from.",
+        chosenItemTextCorrect:"this is the correct item cuz i said so (scroll)", 
+        chosenItemTextFalse: " bro how did you come to this conclusion... you must be guessing (scroll)",
       },
       {
         name: "Bright Lantern",
@@ -87,8 +94,7 @@ export const state = {
         prompt: "It's a lantern with a bright flame. What could it be used for, though? Click on an item in your inventory to select it as your answer.",
         puzzleAnswer: "Blank Scroll",
         puzzleAnsweredText: "Nice catch! When held up to the light of the lantern, the secret message written in lemon juice on the scroll revealed itself! It reads: 'A commonality between every item. That is where the answer lies.'",
-        chosenItemTextCorrect:"this is the correct item cuz i said so (L)", 
-        chosenItemTextFalse: " bro how did you come to this conclusion... you must be guessing (L)",
+        
       },
       {
         name: "Painting",
@@ -103,7 +109,9 @@ export const state = {
         isInteractable: false,
         filter: null,
         itemType: "object",
-        prompt: "It's a painting, dated 'February 1847', of some guy who seems important, but it's hard to tell who it is. If only vampires studied human history!"
+        prompt: "It's a painting, dated 'February 1847', of some guy who seems important, but it's hard to tell who it is. If only vampires studied human history!",
+        chosenItemTextCorrect:"this is the correct item cuz i said so (painting)", 
+        chosenItemTextFalse: " bro how did you come to this conclusion... you must be guessing (painting)",
       },
     ],
     [
