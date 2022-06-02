@@ -24,7 +24,6 @@
       </h4>
 
       <div class="selected-item-div" v-show="selectedItemDiv">
-        <h5>Click on an inventory item to select it as your answer.</h5>
         <div class="select-item-options">
           <div class="selected-item">
             <img :src="require(`@/assets/${inventoryItem.img}`)" v-if="inventoryItem"/>
@@ -44,7 +43,7 @@
           v-show="puzzleInputVisibility"
           placeholder="Solve the puzzle"
         />
-      <button @click="checkAnswerClick" class="puzzle-submit-btn" v-show="puzzleInputVisibility">Enter</button>
+      <button @click="checkAnswerClick" class="puzzle-submit-btn" v-show="puzzleInputVisibility" :disabled="!puzzleInput">Enter</button>
       
       <div
         class="keypad-button-div"
@@ -195,15 +194,14 @@ export default {
     },
     loseHeart() {
       this.$store.commit("decrementLives");
-      if(this.$store.state.userData.lifeCount < 0) {
-        alert("'Muahaha! You have failed!', you hear over the intercom. Everything turns to black.");
+      if(this.$store.state.userData.lifeCount === 0) {
+        //lifeCount is restored in checkLevel()
         this.$store.state.userData.section = 2;
-        this.$store.state.userData.leftValue = 50;
-        this.$store.state.userData.lifeCount = 5;
+        this.$store.state.userData.leftValue = 45;
         this.$store.state.userData.currentItem = null;
         this.$store.state.userData.inventory = [];
-        this.$store.state.userData.isIntro = true;
-        this.$store.state.userData.solvedPuzzles = [2];
+        this.$store.state.userData.battery = 100;
+        this.$store.state.userData.solvedPuzzles = [];
         this.$emit("level-fail");
       }
     },
@@ -235,11 +233,12 @@ button:disabled:hover {
   z-index: 1;
   overflow: scroll;
 }
-.popup-container p {
-  font-size: var(--h4);
+.popup-container h4 {
   text-align: left;
 }
 .solved-text p {
+  text-align: left;
+  font-size: var(--h4);
   margin-top: 1rem;
 }
 .close-puzzle-button {

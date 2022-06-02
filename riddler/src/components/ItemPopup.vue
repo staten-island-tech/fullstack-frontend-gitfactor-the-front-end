@@ -64,6 +64,7 @@ export default {
     margin-top: 5rem;
   }
   .item-popup p {
+    text-align: left;
     color: var(--highlight-color);
     font-size: var(--h4);
     line-height: 1.5;

@@ -39,6 +39,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Mystery+Quest&display=swap');
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@600;700&display=swap");
 
+*, html, body {
+  font-size: 62.5%;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: var(--text-font);
+  font-weight: 600;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+div:focus {
+  outline: none;
+}
 h1 {
   font-size: var(--h1);
   font-family: var(--title-font);
@@ -66,13 +79,10 @@ h2, h3, h4, h5, h6, p {
 strong {
   font-weight: 700;
 }
-*, html, body {
-  font-size: 62.5%;
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-  font-family: var(--text-font);
-  font-weight: 600;
+
+body::-webkit-scrollbar { /* WebKit */
+  width: 0;
+  height: 0;
 }
 button, input, svg {
   cursor: pointer;

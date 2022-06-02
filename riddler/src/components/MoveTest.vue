@@ -1,5 +1,6 @@
 <template>
   <div class="game-page" :key="$store.state.userData.level">
+
     <button @click="levelAdd" class="mobile-button">l+ratio</button>
     <button @click="levelMinus" class="mobile-button">l-1</button>
 
@@ -35,7 +36,9 @@
           <p :style="{ color: `var(--${$store.state.userData.currentItem.dialogue[textCount].color})` }" class="textbox-title">{{ $store.state.userData.currentItem.dialogue[textCount].name }}</p>
           <p class="textbox-text typing-class">{{ $store.state.userData.currentItem.dialogue[textCount].text }}</p>
         </div>
-            
+        
+        <EventPopup :eventText="eventMessage" @closeEventClick="closeEventPopup()" v-if="eventMessage" ref="eventPopupBox"/>
+        
         <ItemPopup @itemAdded="addToInventory()" v-if="itemPopup" @closePopup="closeItemPopup()" :item="currentItem" 
         ref="itemPopupBox">
           <template v-slot:item-name>
@@ -55,7 +58,6 @@
           @refocus-on-puzzle="openPuzzlePopup()"
           @next-level="levelAdd()"
           @level-fail="$emit('gameEvent')"
-
           :puzzleAnswer="emittedPuzzleAnswer"
           :puzzleVisibility="puzzlePopupVisibility"
           :isPromptAnswered="isPuzzleQuestionCompleted"
@@ -99,7 +101,7 @@
             @keydown.right="rightMove()"
             @keydown.left="leftMove()"
             @keyup="reset()"
-            @keydown.z="onEnter()"
+            @keyup.z="onEnter()"
         >
           <img
             :src="require(`@/assets/environment/lv1/${currentLocationImg}`)"
@@ -126,9 +128,15 @@
     </div>
 
     <div class="mobile-button-container">
-      <button @mousedown="leftMove()" @mouseup="reset()" class="mobile-button">&lt;</button>
-      <button @click="onEnter()" class="mobile-button">Z</button>
-      <button @mousedown="rightMove()" @mouseup="reset()" class="mobile-button">&gt;</button>
+      <button @mousedown="leftMove()" @mouseup="reset()" class="mobile-button">
+        <font-awesome-icon icon="caret-left" />
+      </button>
+      <button @click="onEnter()" class="mobile-button">
+        <font-awesome-icon icon="z" />
+      </button>
+      <button @mousedown="rightMove()" @mouseup="reset()" class="mobile-button">
+        <font-awesome-icon icon="caret-right" />
+      </button>
     </div>
   </main>
     
@@ -150,15 +158,16 @@ import PauseMenu from "./PauseMenu.vue";
 import Instructions from './Instructions.vue';
 import Settings from "./Settings.vue"
 import PuzzlePopup from "./PuzzlePopup.vue"; 
-import {levelOneIntro} from "../dialogue";
-import {levelTwoIntro} from "../dialogue";
+import EventPopup from './EventPopup.vue';
+import {levelOneIntro, levelTwoIntro, levelFail, levelFailedAgain} from "../dialogue";
 
 
 export default {
   name: "MoveTest",
   components: {
     HeartBar, Inventory, ItemPopup, PauseMenu,
-    Instructions, Settings, PuzzlePopup
+    Instructions, Settings, PuzzlePopup,
+    EventPopup
   },
   created() {
     this.getUserData();
@@ -202,6 +211,7 @@ export default {
           ],
         },
       ],
+      eventMessage: null,
       enteredOnObject: false,
       emittedPuzzleAnswer: "",
       isPuzzleQuestionCompleted: null,
@@ -254,83 +264,149 @@ export default {
     },
     checkLevel() {
       const gameOverlay = document.querySelector(".game-overlay");
-      if (this.$store.state.userData.level === 1) {
-        console.log("level 1");
-        if (this.$store.state.userData.isIntro) {
-          setTimeout(() => {
-            document.querySelector(".main").classList.add("game-intro");
-          }, 0) 
-          this.enteredOnObject = true;
-          setTimeout(() => {
-            this.playAudio();
-            alert("You hear a broken transmission over an intercom.");
-            this.gameItems.unshift(
-              {
-                intro: true,
-                name: "Riddler",
-                id: -1,
-                section: 2,
-                position: 45,
-                margin: "45%",
-                widthInt: 20,
-                width: "20%",
-                bottom: "5%",
-                img: "sprites/sprite_dialogue_spookyriddl.png",
-                isInteractable: false,
-                filter: null,
-                itemType: "character",
-                dialogueSprite: "sprite_dialogue_spookyriddl.png",
-                dialogue: levelOneIntro,
-              },
-            );
-          this.itemInteract();
-          this.onEnter();
-          }, 7000);
-        } else {
-          setTimeout(() => {
-            document.querySelector(".main").classList.add("game-start");
-          }, 0) 
-          this.playAudio();
-        }
-      } 
-      if (this.$store.state.userData.level === 2) {
-        console.log("level 2");   
-        if (this.$store.state.userData.isIntro) {
-          this.enteredOnObject = true;
-          this.playAudio();
-          alert("You hear a broken transmission over an intercom.");
-          this.gameItems.unshift(
-            {
-              intro: true,
-              name: "Riddler",
-              id: -2,
-              section: 2,
-              position: 45,
-              margin: "45%",
-              widthInt: 20,
-              width: "20%",
-              bottom: "5%",
-              img: "sprites/sprite_dialogue_spookyriddl.png",
-              isInteractable: false,
-              filter: null,
-              itemType: "character",
-              dialogueSprite: "sprite_dialogue_spookyriddl.png",
-              dialogue: levelTwoIntro,
-            },
-          );
-          this.itemInteract();
-          this.onEnter();
-        } else {
-          document.querySelector(".game-overlay").classList.add("dark");
-          this.playAudio();
-        }
-      } 
-      if (this.$store.state.userData.level === 3) {
-        console.log("level 3");
+
+      if (this.$store.state.userData.lifeCount === 0 && this.$store.state.userData.failedLevel === false) {
+        this.$store.state.userData.lifeCount = 5;
+        this.$store.state.userData.failedLevel = true;
+        this.playAudio();
+        this.eventMessage = "You hear a transmission over the intercom.";
         setTimeout(() => {
-          document.querySelector(".main").classList.add("game-start");
-          gameOverlay.classList.add("fog");
-        }, 0)      
+          this.openEventPopup();
+        }, 10);
+        this.gameItems.unshift(
+          {
+            intro: true,
+            name: "Riddler",
+            id: -1,
+            section: 2,
+            position: 45,
+            margin: "45%",
+            widthInt: 20,
+            width: "20%",
+            bottom: "5%",
+            img: "sprites/sprite_dialogue_spookyriddl.png",
+            isInteractable: false,
+            filter: null,
+            itemType: "character",
+            dialogueSprite: "sprite_dialogue_spookyriddl.png",
+            dialogue: levelFail
+          },
+        );
+        this.itemInteract();
+        this.onEnter();
+      } else if (this.$store.state.userData.lifeCount === 0 && this.$store.state.userData.failedLevel === true) {
+        this.$store.state.userData.lifeCount = 5;
+        this.playAudio();
+        this.eventMessage = "You hear a transmission over the intercom.";
+        setTimeout(() => {
+          this.openEventPopup();
+        }, 10);
+        this.gameItems.unshift(
+          {
+            intro: true,
+            name: "Riddler",
+            id: -1,
+            section: 2,
+            position: 45,
+            margin: "45%",
+            widthInt: 20,
+            width: "20%",
+            bottom: "5%",
+            img: "sprites/sprite_dialogue_spookyriddl.png",
+            isInteractable: false,
+            filter: null,
+            itemType: "character",
+            dialogueSprite: "sprite_dialogue_spookyriddl.png",
+            dialogue: levelFailedAgain
+          },
+        );
+        this.itemInteract();
+        this.onEnter();
+      } else {
+          if (this.$store.state.userData.level === 1) {
+            console.log("level 1");
+            if (this.$store.state.userData.isIntro) {
+              setTimeout(() => {
+                document.querySelector(".main").classList.add("game-intro");
+              }, 0) 
+              this.enteredOnObject = true;
+              setTimeout(() => {
+                this.playAudio();
+                this.eventMessage = "You hear a broken transmission over an intercom.";
+                setTimeout(() => {
+                  this.openEventPopup();
+                }, 10);
+                this.gameItems.unshift(
+                  {
+                    intro: true,
+                    name: "Riddler",
+                    id: -1,
+                    section: 2,
+                    position: 45,
+                    margin: "45%",
+                    widthInt: 20,
+                    width: "20%",
+                    bottom: "5%",
+                    img: "sprites/sprite_dialogue_spookyriddl.png",
+                    isInteractable: false,
+                    filter: null,
+                    itemType: "character",
+                    dialogueSprite: "sprite_dialogue_spookyriddl.png",
+                    dialogue: levelOneIntro,
+                  },
+                );
+              this.itemInteract();
+              this.onEnter();
+              }, 7000);
+            } else {
+              setTimeout(() => {
+                document.querySelector(".main").classList.add("game-start");
+              }, 0) 
+              this.playAudio();
+            }
+          } 
+          if (this.$store.state.userData.level === 2) {
+            console.log("level 2");   
+            if (this.$store.state.userData.isIntro) {
+              this.enteredOnObject = true;
+              this.playAudio();
+              this.eventMessage = "You hear a transmission over the intercom.";
+              setTimeout(() => {
+                this.openEventPopup();
+              }, 10);
+              this.gameItems.unshift(
+                {
+                  intro: true,
+                  name: "Riddler",
+                  id: -1,
+                  section: 2,
+                  position: 45,
+                  margin: "45%",
+                  widthInt: 20,
+                  width: "20%",
+                  bottom: "5%",
+                  img: "sprites/sprite_dialogue_spookyriddl.png",
+                  isInteractable: false,
+                  filter: null,
+                  itemType: "character",
+                  dialogueSprite: "sprite_dialogue_spookyriddl.png",
+                  dialogue: levelTwoIntro,
+                },
+              );
+              this.itemInteract();
+              this.onEnter();
+            } else {
+              document.querySelector(".game-overlay").classList.add("dark");
+              this.playAudio();
+            }
+          } 
+          if (this.$store.state.userData.level === 3) {
+            console.log("level 3");
+            setTimeout(() => {
+              document.querySelector(".main").classList.add("game-start");
+              gameOverlay.classList.add("fog");
+            }, 0)      
+          }
       }
     },
     enablePlayerMovement() {
@@ -453,12 +529,11 @@ export default {
       this.gameItems.forEach((item) => {
         const itemLeft = item.position;
         const itemRight = item.position + item.widthInt;
-        if (
+        if ( //checks if avatar is in range of item
           item.section === this.$store.state.userData.section &&
           this.$store.state.userData.leftValue + 8 >= itemLeft &&
           this.$store.state.userData.leftValue + 10 <= itemRight
-        ) {
-          //checks if avatar is in range of item
+        ) { 
           item.isInteractable = true;
           this.$store.state.userData.currentItem = item;
           item.filter = "brightness(55%)";
@@ -475,8 +550,6 @@ export default {
       document
         .querySelectorAll(".section" + this.$store.state.userData.section)
         .forEach((el) => el.classList.remove("hide"));
-
-      //maybe :class="item.section" then select current section's class and remove
     },
     onEnter() {
       if (this.$store.state.userData.currentItem) {
@@ -502,18 +575,25 @@ export default {
       }
     },
     selectInventoryItem(item) {
-      console.log(item)
+      this.eventMessage = `You have selected ${item.name}. Its description goes as such: "${item.prompt}"`;
+        setTimeout(() => {
+          this.openEventPopup();
+        }, 10);
       this.selectedInventoryItem = item;
     },
     addToInventory() {
       const selectedItem = this.gameItems.findIndex(
         (item) => item.id === this.$store.state.userData.currentItem.id
       );
-      this.gameItems.splice(selectedItem, 1);
       this.$store.state.userData.inventory.push(
         this.$store.state.userData.currentItem
       );
+      this.gameItems.splice(selectedItem, 1);
+      
       this.closeItemPopup();
+        setTimeout(() => {
+          this.unhideItem();
+        }, 0);
     },
     puzzleVisibilityValueReset() {
       this.puzzlePopupVisibility = null;
@@ -534,13 +614,21 @@ export default {
       this.enteredOnObject = false;
       this.enablePlayerMovement();
     },
+    openEventPopup() {
+      this.$refs.eventPopupBox.$el.focus();
+    },
+    closeEventPopup() {
+      this.eventMessage = null;
+      this.enteredOnObject = false;
+      this.enablePlayerMovement();
+    },
     textboxShow() {
       this.textbox = true;
       this.textCount += 1;
-          this.playAudio();
+      this.playAudio();
       
       if (this.textCount < this.$store.state.userData.currentItem.dialogue.length) {
-        document.querySelector(".bg-img").style.filter = "brightness(0.3)";
+        document.querySelector(".bg-img").style.filter = "brightness(0.5)";
         document.querySelector(".player-avatar").style.display = "none";
         const items = document.querySelectorAll(".item");
           Array.from(items).forEach((item) => {
@@ -548,7 +636,7 @@ export default {
           });
           if (this.$store.state.userData.currentItem.dialogue[this.textCount].name === "???") {
             this.playerDialogueSprite = "filter: brightness(.5)";
-            this.npcDialogueSprite = "filter: brightness(0.05)";
+            this.npcDialogueSprite = "filter: brightness(0.2)";
           } 
           else if (this.$store.state.userData.currentItem.dialogue[this.textCount].name !== "Me") {
             this.playerDialogueSprite = "filter: brightness(.5)";
@@ -593,24 +681,30 @@ export default {
       this.$store.state.userData.lifeCount = 5;
       this.$store.state.userData.currentItem = null;
       this.$store.state.userData.inventory = [];
+      this.$store.state.userData.battery = 100;
       this.$store.state.userData.isIntro = true;
       this.$store.state.userData.solvedPuzzles = [];
 
       this.$emit("gameEvent");
       this.unhideItem();
     },
-    
     levelMinus() {
       this.$store.commit("decrementLevel");
       console.log(this.$store.state.userData.level);
+
+      this.$store.state.userData.section = 2;
+      this.$store.state.userData.leftValue = 45;
+      this.$store.state.userData.lifeCount = 5;
+      this.$store.state.userData.currentItem = null;
+      this.$store.state.userData.inventory = [];
+      this.$store.state.userData.isIntro = true;
+      this.$store.state.userData.battery = 100;
+      this.$store.state.userData.solvedPuzzles = [];
       this.$emit("gameEvent");
       this.unhideItem();
     },
     flashlight() {
       if (!this.isFlashlightOn) {
-        alert(
-          "Use this flashlight at your own risk. If the battery runs out, you will be lost in the dark forever! Muahahahaha!!"
-        );
         this.isFlashlightOn = true;
         document.querySelector(".game-overlay").style.filter = "brightness(1)";
         const intervalId = setInterval(() => {
@@ -621,8 +715,7 @@ export default {
               document.querySelector(".game-overlay").style.filter =
                 "brightness(.1)";
             } else {
-              this.$store.state.userData.battery =
-                this.$store.state.userData.battery - 1;
+              this.$store.state.userData.battery--;
             }
           }
         }, 2000);
@@ -634,7 +727,7 @@ export default {
       }
     },
   openPause() {
-    if (this.$store.state.userData.level === 2) {
+    if (this.$store.state.userData.level === 2 && !this.$store.state.userData.isIntro) {
       this.isFlashlightOn = false;
       document.querySelector(".game-overlay").style.filter = "brightness(.1)";
     }
@@ -818,6 +911,9 @@ img {
   width: 7.5rem;
   margin: 1rem;
 }
+.mobile-button svg {
+  font-size: var(--h2);
+}
 .textbox {
   border: #a60bbb 1rem solid;
   background-color: #0e0b2b;
@@ -858,8 +954,8 @@ img {
 }
 .flashlight-btn {
   position: absolute;
-  top: calc(8rem + 5%);
-  left: 5%;
+  top: 10%;
+  left: calc(5% + 17rem);
   font-size: var(--h3);
   padding: .75rem;
   color: var(--purple);
@@ -901,33 +997,34 @@ img {
   height: 100%;
   opacity: 0.6;
   background-image: url("../assets/bubbles.png");
+  background-size: contain;
   animation: fogFade 20s ease-in-out infinite;
 }
 
 @keyframes fogFade {
   0% {
-    filter: brightness(0%);
+    opacity: 10%;
   }
   20% {
-    filter: brightness(70%);
+    opacity: 70%;
   }
   30% {
-    filter: brightness(90%);
+    opacity: 90%;
   }
   40% {
-    filter: brightness(95%);
+    opacity: 95%;
   }
   50% {
-    filter: brightness(100%);
+    opacity: 100%;
   }
   60% {
-    filter: brightness(40%);
+    opacity: 50%;
   }
   70% {
-    filter: brightness(70%);
+    opacity: 70%;
   }
   100% {
-    filter: brightness(0%);
+    opacity: 10%;
   }
 }
 
