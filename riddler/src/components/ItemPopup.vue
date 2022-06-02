@@ -42,6 +42,7 @@ export default {
   background-color: var(--background-color);
   -ms-overflow-style: none;
   scrollbar-width: none;
+  z-index: 1;
 }
 
 .item-popup::-webkit-scrollbar {
