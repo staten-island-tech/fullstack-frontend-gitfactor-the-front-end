@@ -149,13 +149,13 @@ export default {
           this.puzzlePromptAnswered = true;
           this.$emit("refocus-on-puzzle"); //this might need to be removed cuz i want to refocus on teh alert thing
           this.levelTransition();
-          this.puzzle3ChosenItemText = this.$store.state.userData.inventory.chosenItemTextCorrect;
+          this.puzzle3ChosenItemText = this.inventoryItem.chosenItemTextCorrect;
           
           
         } 
         else {
           this.loseHeart();
-          this.puzzle3ChosenItemText = this.$store.state.userData.inventory.chosenItemTextFalse;
+          this.puzzle3ChosenItemText = this.inventoryItem.chosenItemTextFalse;
         }
         alert(this.puzzle3ChosenItemText);
       } 

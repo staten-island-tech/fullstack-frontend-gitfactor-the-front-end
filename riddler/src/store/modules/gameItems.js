@@ -72,8 +72,8 @@ export const state = {
         filter: null,
         itemType: "object",
         prompt: "A large yet unexpectedly lightweight feather with beautiful blue hues. I wonder what kind of bird it came from.",
-        chosenItemTextCorrect:"this is the correct item cuz i said so (scroll)", 
-        chosenItemTextFalse: " bro how did you come to this conclusion... you must be guessing (scroll)",
+        chosenItemTextCorrect:"this is the correct item cuz i said so (feather)", 
+        chosenItemTextFalse: " bro how did you come to this conclusion... you must be guessing (feather)",
       },
       {
         name: "Bright Lantern",
