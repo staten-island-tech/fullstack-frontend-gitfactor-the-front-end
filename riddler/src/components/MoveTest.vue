@@ -412,7 +412,7 @@ export default {
               }, 0) 
               this.playAudio();
               this.enteredOnObject = true; 
-              this.eventMessage = "You hear a broken transmission over an intercom.";
+              this.eventMessage = "You hear a faint, garbled transmission over the intercom.";
               setTimeout(() => {
                 this.openEventPopup();
               }, 10);
@@ -608,6 +608,9 @@ export default {
           }, 10);
         }
       }
+    setTimeout(() => {
+      this.unhideItem();
+    }, 0);
     },
     selectInventoryItem(item) {
       this.eventMessage = `You have selected ${item.name}. Its description goes as such: "${item.prompt}"`;

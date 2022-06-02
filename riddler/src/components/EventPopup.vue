@@ -37,6 +37,7 @@ export default {
   overflow: scroll;
 }
 .event-popup p {
+  text-align: left;
   font-size: var(--h4);
   color: var(--background-color);
   margin-top: 3rem;

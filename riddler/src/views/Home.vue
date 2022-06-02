@@ -1,5 +1,6 @@
 <template>
   <div class="background">
+    <EventPopup @closeEventClick="nextLevel()" :eventText="eventMessage" v-if="eventMessage"/>
     <div class="home" v-if="isLoggedIn">
       <MoveTest @gameEvent="updateData()" class="game" />
       <div class="solid"></div>
@@ -10,16 +11,18 @@
 
 <script>
 import MoveTest from "@/components/MoveTest.vue";
+import EventPopup from '../components/EventPopup.vue';
 
 export default {
   name: "Home",
   components: {
-    MoveTest
+    MoveTest, EventPopup
   },
   data() {
     return {
       isLoggedIn: false,
       userdata: this.$auth.user,
+      eventMessage: null,
     }
   },
   created() {
@@ -64,12 +67,14 @@ export default {
         const data = await response.json();
         console.log(data);
         this.$store.commit('updateState', data);
-        window.location.reload(); //reloads the page after saving (needed to load new level)
-        alert("Your progress has been saved.");
+        this.eventMessage = "Your progress has been saved.";
       } catch (error) {
         console.log(error);
       }
     },
+    nextLevel() {
+      window.location.reload();
+    }
   }
 };
 </script>
