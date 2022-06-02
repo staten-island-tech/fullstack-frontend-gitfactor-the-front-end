@@ -944,7 +944,7 @@ img {
     background-color: var(--highlight-color);
     color: black;
     border: black 0.05rem solid;
-    border-radius: 1.5rem;
+    border-radius: 0.7rem;
 }
 .forward{
   left: 3;
