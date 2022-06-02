@@ -99,5 +99,4 @@ export default {
     border: black 0.05rem solid;
     border-radius: 0.5rem;
   }
-  
 </style>

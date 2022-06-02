@@ -119,5 +119,13 @@ export default {
   background: var(--protagonist); /* Green background */
   cursor: pointer; /* Cursor on hover */
 }
-
+@media only screen and (max-width: 450px){
+  .settings-title{
+    font-size: 2rem;
+  }
+.slider-label{
+  font-size: 1.5rem;
+  margin-top: 0.75rem;
+}
+}
 </style>
