@@ -18,6 +18,7 @@ export default {
 @import "../assets/global.css";
 
 .event-popup {
+  overflow: scroll;
   position: absolute;
   left: 50%;
   top: 50%;
@@ -35,7 +36,6 @@ export default {
   background-color: var(--highlight-color);
   box-shadow: 0 0.5rem 1rem 0.2rem var(--background-color);
   z-index: 10;
-  overflow: scroll;
 
   /*scrollbar removing*/
   -ms-overflow-style: none;

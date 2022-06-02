@@ -58,6 +58,7 @@
           @refocus-on-puzzle="openPuzzlePopup()"
           @next-level="levelAdd()"
           @level-fail="$emit('gameEvent')"
+          @foundHat="getUserData()"
           :puzzleAnswer="emittedPuzzleAnswer"
           :puzzleVisibility="puzzlePopupVisibility"
           :isPromptAnswered="isPuzzleQuestionCompleted"
@@ -280,13 +281,39 @@ export default {
         );
         this.gameItems.splice(duplicate, 1);
       });
-      this.$store.state.userData.solvedPuzzles.forEach(() => {
+      this.$store.state.userData.solvedPuzzles.forEach((solvedPuzzle) => {
         //marks previously solved puzzles as solved
         const solved = this.gameItems.findIndex(
-          (gameItem) => gameItem.id === 4
+          (gameItem) => gameItem.id === solvedPuzzle.id
         );
         this.gameItems[solved].isPuzzleCompleted = true;
       });
+
+      if (this.$store.state.userData.level === 3 && this.$store.state.userData.solvedPuzzles[0]) {
+        console.log("found winter")
+        this.$store.state.gameItems.gameItems[2].push({ //pushes to level 3 array
+          name: "Ghost of Winter",
+          id: 22,
+          section: 2,
+          position: 50,
+          margin: "50%",
+          widthInt: 20,
+          width: "20%",
+          bottom: "0%",
+          img: "sprites/lv3_winter.png",
+          isInteractable: false,
+          filter: null,
+          itemType: "character",
+          dialogueSprite: "lv3_winter.png",
+          dialogue: [
+            {
+              name: "Ghost of Winter",
+              text: "Talk to me bebe",
+              color: "winter",
+            },
+          ],
+        });
+      }
       this.currentOST =
         this.locations[this.$store.state.userData.level - 1].assets[
           this.$store.state.userData.section - 1
@@ -1136,28 +1163,28 @@ img {
 
 @keyframes fogFade {
   0% {
-    opacity: 10%;
+    opacity: 20%;
   }
   20% {
-    opacity: 50%;
-  }
-  30% {
     opacity: 60%;
   }
+  30% {
+    opacity: 70%;
+  }
   40% {
-    opacity: 75%;
+    opacity: 85%;
   }
   50% {
-    opacity: 80%;
+    opacity: 90%;
   }
   60% {
-    opacity: 30%;
+    opacity: 40%;
   }
   70% {
-    opacity: 50%;
+    opacity: 60%;
   }
   100% {
-    opacity: 10%;
+    opacity: 20%;
   }
 }
 

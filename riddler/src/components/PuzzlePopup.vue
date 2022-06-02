@@ -139,6 +139,24 @@ export default {
           this.puzzlePromptAnswered = true;
           this.$emit("refocus-on-puzzle");
           this.levelTransition();
+          if (this.puzzleAnswer === "Fish Food") {
+            this.$store.state.userData.inventory.push({
+              name: "Fish in a Hat",
+              id: 21,
+              section: 3,
+              position: 60,
+              margin: "60%",
+              widthInt: 15,
+              width: "15%",
+              bottom: "10%",
+              img: "lv3_fish.png",
+              isInteractable: false,
+              filter: null,
+              itemType: "object",
+              prompt: "A friendly fish wearing a comically small hat.",
+            });
+            this.$emit('foundHat');
+          }
         } else {
           this.loseHeart();
         }
@@ -210,6 +228,7 @@ button:disabled:hover {
   filter: brightness(1);
 }
 .popup-container {
+  overflow: scroll;
   position: absolute;
   top: 0;
   text-align: center;
@@ -221,7 +240,6 @@ button:disabled:hover {
   border: solid var(--highlight-color) 0.3rem;
   background-color: var(--background-color);
   z-index: 1;
-  overflow: scroll;
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
