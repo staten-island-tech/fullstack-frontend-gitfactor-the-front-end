@@ -3,13 +3,13 @@
 </template>
 
 <script>
-import Login from "../src/components/LoginComponent.vue"
+import Login from "../src/components/LoginComponent.vue";
 
 export default {
   components: {
     Login,
-  }
-}
+  },
+};
 </script>
 
 <style>
@@ -24,7 +24,8 @@ export default {
   height: 100vh;
   background-color: #1f1227;
 }
-.welcome, .welcome strong {
+.welcome,
+.welcome strong {
   display: inline;
   font-size: 2rem;
 }
@@ -32,7 +33,7 @@ export default {
   font-weight: 700;
 }
 .btn {
-  padding: .8rem 1.2rem;
+  padding: 0.8rem 1.2rem;
   margin-top: 2rem;
   margin-left: 2rem;
   font-size: 1.4rem;
@@ -41,7 +42,7 @@ export default {
   border: none;
   cursor: pointer;
   min-width: 10rem;
-  border-radius: .4rem;
+  border-radius: 0.4rem;
   font-weight: bold;
 }
 

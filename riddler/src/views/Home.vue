@@ -1,6 +1,7 @@
 <template>
   <div class="background">
 <PageLoader v-show="isLoading"/>
+    <EventPopup @closeEventClick="nextLevel()" :eventText="eventMessage" v-if="eventMessage"/>
     <div class="home" v-if="isLoggedIn">
       <MoveTest @gameEvent="updateData()" @doneLoading="isLoading = false" class="game" />
       <div class="solid"></div>
@@ -12,17 +13,19 @@
 <script>
 import MoveTest from "@/components/MoveTest.vue";
 import PageLoader from "@/components/PageLoader.vue";
+import EventPopup from '../components/EventPopup.vue';
 
 export default {
   name: "Home",
   components: {
-    MoveTest, PageLoader
+    MoveTest, PageLoader, EventPopup
   },
   data() {
     return {
       isLoading: true,
       isLoggedIn: false,
       userdata: this.$auth.user,
+      eventMessage: null,
     }
   },
   created() {
@@ -67,12 +70,14 @@ export default {
         const data = await response.json();
         console.log(data);
         this.$store.commit('updateState', data);
-        window.location.reload(); //reloads the page after saving (needed to load new level)
-        alert("Your progress has been saved.");
+        this.eventMessage = "Your progress has been saved.";
       } catch (error) {
         console.log(error);
       }
     },
+    nextLevel() {
+      window.location.reload();
+    }
   }
 };
 </script>
