@@ -9,9 +9,9 @@
 export default {
   name: "EventPopup",
   props: {
-    eventText: String
+    eventText: String,
   },
-}
+};
 </script>
 
 <style scoped>
@@ -21,8 +21,8 @@ export default {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%,-50%);
-  -webkit-transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
   font-size: var(--h4);
   width: 50rem;
   min-height: 20rem;
@@ -30,12 +30,21 @@ export default {
   padding: 2rem;
   margin: auto;
   border-radius: 1.5rem;
-  border: solid var(--background-color) .3rem;
+  border: solid var(--background-color) 0.3rem;
   background-color: var(--highlight-color);
-  box-shadow: 0 .5rem 1rem .2rem var(--background-color);
+  box-shadow: 0 0.5rem 1rem 0.2rem var(--background-color);
   z-index: 3;
   overflow: scroll;
+
+  /*scrollbar removing*/
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
+
+.event-popup::-webkit-scrollbar {
+  display: none;
+}
+
 .event-popup p {
   font-size: var(--h4);
   color: var(--background-color);
@@ -43,8 +52,8 @@ export default {
 }
 .close-event-button {
   position: absolute;
-  top: .5rem;
-  right: .5rem;
+  top: 0.5rem;
+  right: 0.5rem;
   font-size: var(--h4);
   font-weight: 700;
   margin-left: 100%;
