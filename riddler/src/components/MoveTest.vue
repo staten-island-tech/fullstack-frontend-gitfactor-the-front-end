@@ -159,7 +159,7 @@ import Instructions from './Instructions.vue';
 import Settings from "./Settings.vue"
 import PuzzlePopup from "./PuzzlePopup.vue"; 
 import EventPopup from './EventPopup.vue';
-import {levelOneIntro, levelTwoIntro, levelFail, levelFailedAgain} from "../dialogue";
+import {levelOneIntro, levelTwoIntro, levelThreeIntro, levelFail, levelFailedAgain} from "../dialogue";
 
 
 export default {
@@ -177,7 +177,6 @@ export default {
     this.enablePlayerMovement();
     this.itemInteract();
     this.checkLevel();
-    // this.$refs.settings;
   },
   data() {
     return {
@@ -273,6 +272,7 @@ export default {
         setTimeout(() => {
           this.openEventPopup();
         }, 10);
+        this.enteredOnObject = true;
         this.gameItems.unshift(
           {
             intro: true,
@@ -301,6 +301,7 @@ export default {
         setTimeout(() => {
           this.openEventPopup();
         }, 10);
+        this.enteredOnObject = true;
         this.gameItems.unshift(
           {
             intro: true,
@@ -329,13 +330,13 @@ export default {
               setTimeout(() => {
                 document.querySelector(".main").classList.add("game-intro");
               }, 0) 
-              this.enteredOnObject = true;
+                this.enteredOnObject = true; 
               setTimeout(() => {
                 this.playAudio();
                 this.eventMessage = "You hear a broken transmission over an intercom.";
                 setTimeout(() => {
                   this.openEventPopup();
-                }, 10);
+                }, 10);  
                 this.gameItems.unshift(
                   {
                     intro: true,
@@ -368,8 +369,8 @@ export default {
           if (this.$store.state.userData.level === 2) {
             console.log("level 2");   
             if (this.$store.state.userData.isIntro) {
-              this.enteredOnObject = true;
               this.playAudio();
+              this.enteredOnObject = true; 
               this.eventMessage = "You hear a transmission over the intercom.";
               setTimeout(() => {
                 this.openEventPopup();
@@ -396,16 +397,50 @@ export default {
               this.itemInteract();
               this.onEnter();
             } else {
-              document.querySelector(".game-overlay").classList.add("dark");
+              setTimeout(() => {
+                document.querySelector(".main").classList.add("game-start");
+                document.querySelector(".game-overlay").classList.add("dark");
+              }, 0) 
               this.playAudio();
             }
           } 
           if (this.$store.state.userData.level === 3) {
-            console.log("level 3");
-            setTimeout(() => {
-              document.querySelector(".main").classList.add("game-start");
-              gameOverlay.classList.add("fog");
-            }, 0)      
+            console.log("level 3");     
+            if (this.$store.state.userData.isIntro) {
+              setTimeout(() => {
+                document.querySelector(".main").classList.add("game-intro");
+              }, 0) 
+              this.playAudio();
+              this.enteredOnObject = true; 
+              this.eventMessage = "You hear a broken transmission over an intercom.";
+              setTimeout(() => {
+                this.openEventPopup();
+              }, 10);
+              this.gameItems.unshift(
+                {
+                  intro: true,
+                  name: "Riddler",
+                  id: -1,
+                  section: 2,
+                  position: 45,
+                  margin: "45%",
+                  widthInt: 20,
+                  width: "20%",
+                  bottom: "5%",
+                  img: "sprites/sprite_dialogue_spookyriddl.png",
+                  isInteractable: false,
+                  filter: null,
+                  itemType: "character",
+                  dialogueSprite: "sprite_dialogue_spookyriddl.png",
+                  dialogue: levelThreeIntro,
+                },
+              );
+              this.itemInteract();
+              this.onEnter();
+            } 
+            document.querySelector(".main").classList.add("game-start");
+            gameOverlay.classList.add("fog");
+            this.playAudio();
           }
       }
     },
@@ -413,12 +448,12 @@ export default {
       this.$refs.playerMove.focus();
     },
     leftMove(e){
-      this.playAudio();
-      this.playWalkSfx();
       this.player.idle = "idle-left.gif";
       if (this.enteredOnObject && e.key === "ArrowLeft") {
         e.preventDefault();
       } else {
+          this.playAudio();
+          this.playWalkSfx();
         setTimeout(() => {
           if (this.$store.state.userData.leftValue > 0) {
             this.$store.state.userData.leftValue -= 1.5;
@@ -435,12 +470,12 @@ export default {
       }
     },
     rightMove(e) {
-      this.playAudio();
-      this.playWalkSfx();
       this.player.idle = "idle-right.gif";
       if (this.enteredOnObject && e.key === "ArrowRight") {
         e.preventDefault();
       } else {
+          this.playAudio();
+          this.playWalkSfx();
         setTimeout(() => {
           if (this.$store.state.userData.leftValue < 85) {
             this.$store.state.userData.leftValue += 1.5;
@@ -619,7 +654,6 @@ export default {
     },
     closeEventPopup() {
       this.eventMessage = null;
-      this.enteredOnObject = false;
       this.enablePlayerMovement();
     },
     textboxShow() {
