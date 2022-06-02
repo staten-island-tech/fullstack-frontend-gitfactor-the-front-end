@@ -104,6 +104,24 @@ export const levelTwoIntro = [
   }
 ]
 
+export const levelThreeIntro = [
+  {
+    name: "Riddler",
+    text: "MuAhaHaha. . .sO yOu DiDn'T dO tOo BaD wItHoUt. . . . .A lOt oF oCeAn WaTeR. . . . . .lOsErRrRr. . . . . .",
+    color: "riddler"
+  },
+  {
+    name: "Me",
+    text: "Is he for real with this?",
+    color: "protagonist"
+  },
+  {
+    name: "Riddler",
+    text: "Gobble gobble gobble.",
+    color: "riddler"
+  },
+]
+
 export const levelFail = [
   {
     name: "Riddler",
