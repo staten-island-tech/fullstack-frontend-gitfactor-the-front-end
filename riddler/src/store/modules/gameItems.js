@@ -87,6 +87,8 @@ export const state = {
         prompt: "It's a lantern with a bright flame. What could it be used for, though? Click on an item in your inventory to select it as your answer.",
         puzzleAnswer: "Blank Scroll",
         puzzleAnsweredText: "Nice catch! When held up to the light of the lantern, the secret message written in lemon juice on the scroll revealed itself! It reads: 'A commonality between every item. That is where the answer lies.'",
+        chosenItemTextCorrect:"this is the correct item cuz i said so (L)", 
+        chosenItemTextFalse: " bro how did you come to this conclusion... you must be guessing (L)",
       },
       {
         name: "Painting",

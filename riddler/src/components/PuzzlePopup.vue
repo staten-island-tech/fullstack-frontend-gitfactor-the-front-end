@@ -92,6 +92,8 @@ export default {
 
       puzzlePromptAnswered: null, //give each puzzle a string value
 
+      puzzle3ChosenItemText:"",
+
       buttonValues: [],
     };
   },
@@ -138,18 +140,23 @@ export default {
     },
     checkAnswerClick() {
       if (this.puzzleType === 3) {
+        //change the visibility of the div but i cant find it rn....
         if (this.inventoryItem.name === this.puzzleAnswer) {
           console.log("puzzle 3 answered correctly");
           this.$store.state.userData.currentItem.puzzleCompleted = true;
           const solvedPuzzle = this.$store.state.userData.currentItem;
           this.$store.state.userData.solvedPuzzles.push(solvedPuzzle); //tracks solved puzzles so they will stay solved on re-login
           this.puzzlePromptAnswered = true;
-          this.$emit("refocus-on-puzzle");
+          this.$emit("refocus-on-puzzle"); //this might need to be removed cuz i want to refocus on teh alert thing
           this.levelTransition();
+          this.puzzle3ChosenItemText = this.$store.state.userData.currentItem.chosenItemTextCorrect;
+          
         } 
         else {
           this.loseHeart();
+          this.puzzle3ChosenItemText = this.$store.state.userData.currentItem.chosenItemTextFalse;
         }
+        alert(this.puzzle3ChosenItemText);
       } 
       else {
         const puzzleAnswerInput = this.puzzleInput.trim().toLowerCase();
