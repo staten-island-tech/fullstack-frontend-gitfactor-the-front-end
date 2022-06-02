@@ -163,6 +163,7 @@ import {
   levelOneIntro,
   levelTwoIntro,
   levelThreeIntro,
+  levelFourIntro,
   levelFail,
   levelFailedAgain,
 } from "../dialogue";
@@ -470,6 +471,44 @@ export default {
           }
           document.querySelector(".main").classList.add("game-start");
           gameOverlay.classList.add("fog");
+          this.playAudio();
+        }
+
+        if (this.$store.state.userData.level === 4) {
+          console.log("level 4");
+          if (this.$store.state.userData.isIntro) {
+            setTimeout(() => {
+              document.querySelector(".main").classList.add("game-intro");
+            }, 0);
+            this.playAudio();
+            this.enteredOnObject = true;
+            this.eventMessage =
+              "You hear a broken transmission over an intercom...? No, it's just someone trying to sound like one.";
+            setTimeout(() => {
+              this.openEventPopup();
+            }, 10);
+            this.gameItems.unshift({
+              intro: true,
+              name: "Riddler",
+              id: -1,
+              section: 2,
+              position: 45,
+              margin: "45%",
+              widthInt: 20,
+              width: "20%",
+              bottom: "5%",
+              img: "sprites/sprite_dialogue_riddl.png",
+              isInteractable: false,
+              filter: null,
+              itemType: "character",
+              dialogueSprite: "sprite_dialogue_riddl.png",
+              dialogue: levelFourIntro,
+            });
+            this.itemInteract();
+            this.onEnter();
+          }
+          document.querySelector(".main").classList.add("game-start");
+
           this.playAudio();
         }
       }
