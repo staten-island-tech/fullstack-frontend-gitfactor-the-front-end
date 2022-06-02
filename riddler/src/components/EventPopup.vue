@@ -24,7 +24,8 @@ export default {
   transform: translate(-50%, -50%);
   -webkit-transform: translate(-50%, -50%);
   font-size: var(--h4);
-  width: 50rem;
+  max-width: 50rem;
+  min-width: 40rem;
   min-height: 20rem;
   max-height: 30rem;
   padding: 2rem;
@@ -33,7 +34,7 @@ export default {
   border: solid var(--background-color) 0.3rem;
   background-color: var(--highlight-color);
   box-shadow: 0 0.5rem 1rem 0.2rem var(--background-color);
-  z-index: 3;
+  z-index: 10;
   overflow: scroll;
 
   /*scrollbar removing*/

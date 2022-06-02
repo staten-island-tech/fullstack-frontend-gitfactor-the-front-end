@@ -58,12 +58,13 @@ export default {
     },
     async updateData() {
       const userId = this.userdata.sub.replace("auth0|", "");
-      console.log(this.$store.state.userData)
       try {
+        const token = await this.$auth.getTokenSilently();
         const response = await fetch(`http://localhost:3000/api/index/update/${userId}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(this.$store.state.userData),
         });

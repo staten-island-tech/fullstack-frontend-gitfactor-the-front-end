@@ -1,4 +1,5 @@
 <template>
+  <EventPopup @closeEventClick="nextLevel()" :eventText="eventMessage" v-if="eventMessage"/>
   <div class="pause-menu">
     <div class="icon-div">
       <font-awesome-icon @click="$emit('closePause')" icon="x" class="x-icon"/>
@@ -14,37 +15,41 @@
 </template>
 
 <script>
+import EventPopup from './EventPopup.vue';
+
 export default {
   name: "PauseMenu",
   props: ["isPauseOpen"],
+  components: { EventPopup },
   data() {
     return {
       userdata: this.$auth.user,
+      eventMessage: null,
     };
   },
   methods: {
     async updateData() {
       const userId = this.userdata.sub.replace("auth0|", "");
-      console.log(this.$store.state.userData);
       try {
-        const response = await fetch(
-          `http://localhost:3000/api/index/update/${userId}`,
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(this.$store.state.userData),
-          }
-        );
+        const token = await this.$auth.getTokenSilently();
+        const response = await fetch(`http://localhost:3000/api/index/update/${userId}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(this.$store.state.userData),
+        });
         const data = await response.json();
         console.log(data);
-        this.$store.commit("updateState", data);
-        window.location.reload();
-        alert("Your progress has been saved.");
+        this.$store.commit('updateState', data);
+        this.eventMessage = "Your progress has been saved.";
       } catch (error) {
         console.log(error);
       }
+    },
+    nextLevel() {
+      window.location.reload();
     },
     logout() {
       this.updateData();

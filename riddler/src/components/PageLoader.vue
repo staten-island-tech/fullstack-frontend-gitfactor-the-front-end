@@ -1,7 +1,7 @@
 <template>
   <div>
-    <img src="../assets/sprites/walk-right.gif" />
-    <img src="../assets/lv1_door.png" />
+    <img class="loading-prot" src="../assets/sprites/walk-right.gif" />
+    <img class="loading-door" src="../assets/lv1_door.png" />
     <h2 class="loading">Loading the Tower</h2>
   </div>
 </template>
@@ -22,13 +22,16 @@ export default {
     background-color: var(--darkest-purple);
     z-index: 100;
   }
-  img {
+  .loading-prot {
     width: 10%;
   }
+  .loading-door {
+    width: 20%;
+  }
+
   .loading {
     font-size: 3rem;
   }
-
   .loading:after {
     overflow: hidden;
     display: inline-block;
@@ -44,10 +47,18 @@ export default {
       width: 3rem;    
     }
   }
-
   @-webkit-keyframes ellipsis {
     to {
       width: 3rem;    
+    }
+  }
+
+  @media only screen and (max-width: 768px) {
+    .loading-prot {
+      width: 15%;
+    }
+    .loading-door {
+      width: 30%;
     }
   }
 </style>

@@ -444,7 +444,7 @@ export default {
             this.playAudio();
             this.enteredOnObject = true;
             this.eventMessage =
-              "You hear a broken transmission over an intercom.";
+              "You hear a faint, garbled transmission over an intercom.";
             setTimeout(() => {
               this.openEventPopup();
             }, 10);
@@ -1007,7 +1007,7 @@ img {
   z-index: -2;
   display: flex;
   position: absolute;
-  bottom: 10%;
+  bottom: 6%;
   left: var(--leftVar);
 }
 
@@ -1139,22 +1139,22 @@ img {
     opacity: 10%;
   }
   20% {
-    opacity: 70%;
-  }
-  30% {
-    opacity: 90%;
-  }
-  40% {
-    opacity: 95%;
-  }
-  50% {
-    opacity: 100%;
-  }
-  60% {
     opacity: 50%;
   }
+  30% {
+    opacity: 60%;
+  }
+  40% {
+    opacity: 75%;
+  }
+  50% {
+    opacity: 80%;
+  }
+  60% {
+    opacity: 30%;
+  }
   70% {
-    opacity: 70%;
+    opacity: 50%;
   }
   100% {
     opacity: 10%;
