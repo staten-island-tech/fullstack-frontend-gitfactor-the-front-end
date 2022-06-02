@@ -1,6 +1,6 @@
 export const state = {
   gameItems: [
-    [ 
+    [
       {
         name: "Door of Truth",
         id: 0,
@@ -15,7 +15,8 @@ export const state = {
         filter: null,
         itemType: "puzzle",
         puzzleType: 1,
-        prompt: "You can follow me into the past. Agent of vision, yet faster than the eye can see. What am I?",
+        prompt:
+          "You can follow me into the past. Agent of vision, yet faster than the eye can see. What am I?",
         isLevelTransitionPuzzle: true,
         puzzleAnswer: "light",
         isPuzzleCompleted: false,
@@ -64,7 +65,8 @@ export const state = {
         isInteractable: false,
         filter: null,
         itemType: "object",
-        prompt: "A large yet unexpectedly lightweight feather with beautiful blue hues. I wonder what kind of bird it came from.",
+        prompt:
+          "A large yet unexpectedly lightweight feather with beautiful blue hues. I wonder what kind of bird it came from.",
       },
       {
         name: "Bright Lantern",
@@ -82,9 +84,11 @@ export const state = {
         puzzleType: 3,
         isLevelTransitionPuzzle: false,
         puzzleCompleted: false,
-        prompt: "It's a lantern with a bright flame. What could it be used for, though? Click on an item in your inventory to select it as your answer.",
+        prompt:
+          "It's a lantern with a bright flame. What could it be used for, though? Click on an item in your inventory to select it as your answer.",
         puzzleAnswer: "Blank Scroll",
-        puzzleAnsweredText: "Nice catch! When held up to the light of the lantern, the secret message written in lemon juice on the scroll revealed itself! It reads: 'A commonality between every item. That is where the answer lies.'",
+        puzzleAnsweredText:
+          "Nice catch! When held up to the light of the lantern, the secret message written in lemon juice on the scroll revealed itself! It reads: 'A commonality between every item. That is where the answer lies.'",
       },
       {
         name: "Painting",
@@ -99,12 +103,13 @@ export const state = {
         isInteractable: false,
         filter: null,
         itemType: "object",
-        prompt: "It's a painting, dated 'February 1847', of some guy who seems important, but it's hard to tell who it is. If only vampires studied human history!"
+        prompt:
+          "It's a painting, dated 'February 1847', of some guy who seems important, but it's hard to tell who it is. If only vampires studied human history!",
       },
     ],
     [
       //Level 2 — DO NOT CHANGE THE SECTIONS THEY ARE IN
-     {
+      {
         name: "Dark Door of Truth",
         id: 6,
         section: 2,
@@ -118,7 +123,8 @@ export const state = {
         filter: null,
         itemType: "puzzle",
         puzzleType: 1,
-        prompt: "I move, slowly but surely. Back and forth. Yet with my slow pace, over time I change the face of the world. What am I?",
+        prompt:
+          "I move, slowly but surely. Back and forth. Yet with my slow pace, over time I change the face of the world. What am I?",
         isLevelTransitionPuzzle: true,
         puzzleAnswer: "ocean",
         isPuzzleCompleted: false,
@@ -138,11 +144,39 @@ export const state = {
         filter: null,
         itemType: "puzzle",
         puzzleType: 2,
-        prompt: "This monitor seems like it could have useful information on it, but it's protected by a password. What could the password be? Enter it using the keypad below.",
-        buttonChoices: ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','T','U','V','W','X','Y','Z'],
+        prompt:
+          "This monitor seems like it could have useful information on it, but it's protected by a password. What could the password be? Enter it using the keypad below.",
+        buttonChoices: [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y",
+          "Z",
+        ],
         puzzleAnswer: "riddler",
         puzzleCompleted: false,
-        puzzleAnsweredText: "Nice! I'm in! The monitor displays a message: 'From where each item begins is where you shall find an end.'",
+        puzzleAnsweredText:
+          "Nice! I'm in! The monitor displays a message: 'From where each item begins is where you shall find an end.'",
       },
       {
         name: "Ocarina",
@@ -157,7 +191,8 @@ export const state = {
         isInteractable: false,
         filter: null,
         itemType: "object",
-        prompt: "Oh, what a pretty ocarina. It has 7 holes, and each hole is marked with the note it plays and a number. They read '1A', '2B', '3C', and so on. I'm sure it makes a beautiful sound!"
+        prompt:
+          "Oh, what a pretty ocarina. It has 7 holes, and each hole is marked with the note it plays and a number. They read '1A', '2B', '3C', and so on. I'm sure it makes a beautiful sound!",
       },
       {
         name: "Camera",
@@ -172,7 +207,8 @@ export const state = {
         isInteractable: false,
         filter: null,
         itemType: "object",
-        prompt: "A pretty cool, old-fashioned looking camera. Oh, and there are photos on the ground right next to it. No way, is that the Riddler as a child? He looks so innocent! He's just sitting at a desk in a classroom. Aw, he looks kinda sad. But he gets no sympathy from me!",
+        prompt:
+          "A pretty cool, old-fashioned looking camera. Oh, and there are photos on the ground right next to it. No way, is that the Riddler as a child? He looks so innocent! He's just sitting at a desk in a classroom. Aw, he looks kinda sad. But he gets no sympathy from me!",
       },
       {
         name: "Envelope",
@@ -187,7 +223,8 @@ export const state = {
         isInteractable: false,
         filter: null,
         itemType: "object",
-        prompt: "You open the glossy wax seal, but there's nothing inside the envelope. Inscribed on the inside of the envelope, however, are the numbers '18 9 44 12 5 18'.",
+        prompt:
+          "You open the glossy wax seal, but there's nothing inside the envelope. Inscribed on the inside of the envelope, however, are the numbers '18 9 44 12 5 18'.",
       },
       {
         name: "AA Batteries",
@@ -202,7 +239,8 @@ export const state = {
         isInteractable: false,
         filter: null,
         itemType: "object",
-        prompt: "Great! Batteries to charge my flashlight! Lemme just pop them in here...oh no. The flashlight uses AAA's. Darn.",
+        prompt:
+          "Great! Batteries to charge my flashlight! Lemme just pop them in here...oh no. The flashlight uses AAA's. Darn.",
       },
       {
         name: "Notebook",
@@ -217,7 +255,8 @@ export const state = {
         isInteractable: false,
         filter: null,
         itemType: "object",
-        prompt: "A classic marble notebook. All the pages are blank, but the cover reads: 'Name: The Riddler / Class: Algebra 1'. Oh, there are some doodles, too. Never knew the Riddler was an artist...",
+        prompt:
+          "A classic marble notebook. All the pages are blank, but the cover reads: 'Name: The Riddler / Class: Algebra 1'. Oh, there are some doodles, too. Never knew the Riddler was an artist...",
       },
     ],
     [
@@ -387,7 +426,24 @@ export const state = {
       //     {},
       //   ],
       // },
-    ]
+    ],
+    [
+      {
+        name: "Spacial Door of Rifts",
+        id: 13,
+        section: 2,
+        position: 8,
+        margin: "8%",
+        widthInt: 45,
+        width: "45%",
+        bottom: "5%",
+        img: "lv4_door.png",
+        isInteractable: false,
+        filter: null,
+        itemType: "object",
+        prompt: "The door to the outside...?",
+      },
+    ],
   ],
 };
 
