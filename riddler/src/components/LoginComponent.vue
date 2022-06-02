@@ -36,7 +36,9 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
+@import "../assets/global.css";
+
 *,
 html,
 body {
@@ -53,8 +55,9 @@ body {
   color: #deceff;
 }
 h1 {
-  font-size: 5rem;
+  font-size: 6rem;
   padding-top: 2rem;
+  letter-spacing: .25rem;
 }
 button {
   cursor: pointer;
@@ -62,7 +65,7 @@ button {
 .login-page {
   height: 100vh;
   background-image: url("../assets/tower_CG.png");
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
@@ -87,15 +90,9 @@ button {
 }
 
 .btn-primary {
-  background: #b84169;
+  background: #d0326f;
   color: white;
 }
-
-.btn-secondary {
-  background: #aaa;
-  color: white;
-}
-
 @media only screen and (max-width: 768px) {
   *,
   html,
