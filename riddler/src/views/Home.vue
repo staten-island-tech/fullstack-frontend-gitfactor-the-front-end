@@ -1,7 +1,9 @@
 <template>
   <div class="background">
+<PageLoader v-show="isLoading"/>
+    <EventPopup @closeEventClick="nextLevel()" :eventText="eventMessage" v-if="eventMessage"/>
     <div class="home" v-if="isLoggedIn">
-      <MoveTest @gameEvent="updateData()" class="game" />
+      <MoveTest @gameEvent="updateData()" @doneLoading="isLoading = false" class="game" />
       <div class="solid"></div>
     </div>
   </div>
@@ -10,16 +12,20 @@
 
 <script>
 import MoveTest from "@/components/MoveTest.vue";
+import PageLoader from "@/components/PageLoader.vue";
+import EventPopup from '../components/EventPopup.vue';
 
 export default {
   name: "Home",
   components: {
-    MoveTest
+    MoveTest, PageLoader, EventPopup
   },
   data() {
     return {
+      isLoading: true,
       isLoggedIn: false,
       userdata: this.$auth.user,
+      eventMessage: null,
     }
   },
   created() {
@@ -52,48 +58,34 @@ export default {
     },
     async updateData() {
       const userId = this.userdata.sub.replace("auth0|", "");
-      console.log(this.$store.state.userData)
       try {
+        const token = await this.$auth.getTokenSilently();
         const response = await fetch(`http://localhost:3000/api/index/update/${userId}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(this.$store.state.userData),
         });
         const data = await response.json();
         console.log(data);
         this.$store.commit('updateState', data);
-        window.location.reload(); //reloads the page after saving (needed to load new level)
-        alert("Your progress has been saved.");
+        this.eventMessage = "Your progress has been saved.";
       } catch (error) {
         console.log(error);
       }
     },
+    nextLevel() {
+      window.location.reload();
+    }
   }
 };
 </script>
 
 <style scoped>
 @import "../assets/global.css";
-.btn {
-  padding: .8rem 1.2rem;
-  margin-top: 2rem;
-  margin-left: 2rem;
-  font-size: 1.4rem;
-  font-weight: 400;
-  line-height: 1.5;
-  border: none;
-  cursor: pointer;
-  min-width: 10rem;
-  border-radius: .4rem;
-  font-weight: bold;
-}
 
-.btn-secondary {
-  background: #aaa;
-  color: white;
-}
 .player {
   position: relative;
   top: 0%;

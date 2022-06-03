@@ -9,20 +9,24 @@
   /* character colors */
   --violet: #d83bff;
   --red: #ff3d87;
-
-  /* --darkest-purple: #24153f;
-  --dark-purple: #371c72;
-  --purple: #4c3188;
-  --light-purple: #deceff; */
-
+  --pink: #ff8bcb;
+  --yellow: #ffd65a;
+  --orange: #ff813d;
+  --blue: #5694ff;
 
   /* intentions */
   --background-color: var(--darkest-purple);
   --highlight-color: var(--light-purple);
   --popup-color: var(--dark-purple);
 
+  /* dialogue colors */
   --protagonist: var(--red);
   --riddler: var(--violet);
+  --spring: var(--pink);
+  --summer: var(--yellow);
+  --autumn: var(--orange);
+  --winter: var(--blue);
+  
 
   /* font size */
   --title-font: "Mystery Quest", cursive;
