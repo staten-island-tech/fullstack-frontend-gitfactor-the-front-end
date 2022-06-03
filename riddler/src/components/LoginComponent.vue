@@ -4,8 +4,10 @@
     <div v-if="!$auth.loading.value">
       
       <div v-if="!$auth.isAuthenticated.value"  class="login-page" @click="login">
-       <h1>Enter The Tower</h1>
-       <button @click="login()" class="btn btn-primary">Login</button>
+       <h1>Riddler on the Roof</h1>
+       <button @click="login()" class="btn btn-primary">
+         Enter the Tower <font-awesome-icon icon="caret-right" /><font-awesome-icon icon="caret-right" />
+       </button>
       </div>
       <div v-if="$auth.isAuthenticated.value" @click="logout">
         <p class="welcome">
@@ -39,31 +41,21 @@ export default {
 <style scoped>
 @import "../assets/global.css";
 
-*,
-html,
-body {
-  font-size: 62.5%;
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #deceff;
 }
 h1 {
-  font-size: 6rem;
-  padding-top: 2rem;
-  letter-spacing: .25rem;
-}
-button {
-  cursor: pointer;
+  font-size: 7rem;
+  font-weight: 400;
+  color: var(--highlight-color);
 }
 .login-page {
   height: 100vh;
+  padding-top: 5%;
+  text-align: center;
   background-image: url("../assets/tower_CG.png");
   background-size: cover;
   background-repeat: no-repeat;
@@ -76,17 +68,17 @@ button {
   font-size: 2rem;
 }
 .btn {
-  padding: 0.8rem 1.2rem;
+  padding: 0.8rem 2rem;
   margin-top: 2rem;
-  margin-left: 2rem;
-  font-size: 1.4rem;
-  font-weight: 400;
+  font-size: var(--h4);
+  font-weight: 600;
   line-height: 1.5;
+  letter-spacing: .05rem;
   border: none;
-  cursor: pointer;
-  min-width: 10rem;
   border-radius: 0.4rem;
-  font-weight: bold;
+}
+.btn svg {
+  font-size: var(--h5);
 }
 
 .btn-primary {

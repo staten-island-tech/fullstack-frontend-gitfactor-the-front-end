@@ -85,24 +85,7 @@ export default {
 
 <style scoped>
 @import "../assets/global.css";
-.btn {
-  padding: .8rem 1.2rem;
-  margin-top: 2rem;
-  margin-left: 2rem;
-  font-size: 1.4rem;
-  font-weight: 400;
-  line-height: 1.5;
-  border: none;
-  cursor: pointer;
-  min-width: 10rem;
-  border-radius: .4rem;
-  font-weight: bold;
-}
 
-.btn-secondary {
-  background: #aaa;
-  color: white;
-}
 .player {
   position: relative;
   top: 0%;
