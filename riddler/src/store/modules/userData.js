@@ -1,4 +1,5 @@
 export const state = {
+  username: "",
   level: 1,
   section: 2,
   leftValue: 45,

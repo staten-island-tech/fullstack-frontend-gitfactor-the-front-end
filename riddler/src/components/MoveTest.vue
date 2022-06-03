@@ -432,7 +432,7 @@ export default {
           if (this.$store.state.userData.isIntro) {
             this.playAudio();
             this.enteredOnObject = true;
-            this.eventMessage = "You hear a transmission over the intercom.";
+            this.eventMessage = "You hear a transmission over an intercom.";
             setTimeout(() => {
               this.openEventPopup();
             }, 10);
@@ -512,7 +512,7 @@ export default {
             this.playAudio();
             this.enteredOnObject = true;
             this.eventMessage =
-              "You hear a broken transmission over an intercom...? No, it's just someone trying to sound like one.";
+              "No transmission this time. You hear a familiar voice very clearly.";
             setTimeout(() => {
               this.openEventPopup();
             }, 10);
