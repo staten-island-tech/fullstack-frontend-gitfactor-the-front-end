@@ -348,6 +348,7 @@ export const state = {
         filter: null,
         itemType: "character",
         dialogueSprite: "lv3_spring.png",
+        spriteAlt: "A majestic ghost with pink flowers as hair.",
         dialogue: [
           {
             name: "Ghost of Spring",
@@ -370,6 +371,7 @@ export const state = {
         filter: null,
         itemType: "character",
         dialogueSprite: "lv3_summer.png",
+        spriteAlt: "A majestic ghost with yellow flowers as hair.",
         dialogue: [
           {
             name: "Ghost of Summer",
@@ -392,6 +394,7 @@ export const state = {
         filter: null,
         itemType: "character",
         dialogueSprite: "lv3_autumn.png",
+        spriteAlt: "A majestic ghost with orange flowers as hair.",
         dialogue: [
           {
             name: "Ghost of Autumn",
@@ -486,6 +489,7 @@ Character:
   filter: null,
   itemType: "character",
   dialogueSprite: ".png",
+  spriteAlt: "",
   dialogue: [
     {
       name: "",

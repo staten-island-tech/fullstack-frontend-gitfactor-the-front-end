@@ -26,14 +26,16 @@
             :style="playerDialogueSprite"
             class="player-avatar-dialogue"
             id="player-dialogue-sprite"
+            alt="A white-haired, red-eyed protagonist whom you play as."
           />
           <img
             :src="require(`@/assets/sprites/${$store.state.userData.currentItem.dialogueSprite}`)"
             :style="npcDialogueSprite"
             class="npc-avatar-dialogue"
             id="npc-dialogue-sprite"
+            :alt="$store.state.userData.currentItem.spriteAlt"
           />
-          <p :style="{ color: `var(--${$store.state.userData.currentItem.dialogue[textCount].color})` }" class="textbox-title">{{ $store.state.userData.currentItem.dialogue[textCount].name }}</p>
+          <h2 :style="{ color: `var(--${$store.state.userData.currentItem.dialogue[textCount].color})` }" class="textbox-title">{{ $store.state.userData.currentItem.dialogue[textCount].name }}</h2>
           <p class="textbox-text typing-class">{{ $store.state.userData.currentItem.dialogue[textCount].text }}</p>
         </div>
         
@@ -45,7 +47,7 @@
             {{ $store.state.userData.currentItem.name }}
           </template>
           <template v-slot:item-img>
-            <img class="itempopup-img" style="width: 12.5%" :src="require(`@/assets/${$store.state.userData.currentItem.img}`)" :alt="$store.state.userData.currentItem.name"/>
+            <img class="itempopup-img" style="width: 12.5%" :src="require(`@/assets/${$store.state.userData.currentItem.img}`)" :alt="$store.state.userData.currentItem.prompt"/>
           </template>
           <template v-slot:item-text>
             {{ $store.state.userData.currentItem.prompt }}
@@ -75,7 +77,7 @@
                 {{ $store.state.userData.currentItem.prompt }}
           </template>
           <template v-slot:puzzle-img>
-            <img :src="require(`@/assets/${$store.state.userData.currentItem.img}`)" class="puzzlepopup-img" style="width: 15%; position: unset; margin: 1rem;" :alt="$store.state.userData.currentItem.name" />
+            <img :src="require(`@/assets/${$store.state.userData.currentItem.img}`)" class="puzzlepopup-img" style="width: 15%; position: unset; margin: 1rem;" :alt="$store.state.userData.currentItem.prompt" />
           </template>
           <template v-slot:puzzle-correct-text>
               {{ $store.state.userData.currentItem.puzzleAnsweredText }}
@@ -112,6 +114,7 @@
             <img
               :src="require(`@/assets/sprites/${playerAvatar}`)"
               class="player-avatar"
+              alt="A white-haired, red-eyed protagonist whom you play as."
             />
           </div>
 
@@ -119,7 +122,7 @@
             v-for="item in gameItems"
             :src="require(`@/assets/${item.img}`)"
             :style="{ left: item.margin, width: item.width, bottom: item.bottom, filter: item.filter }"
-            :alt="item"
+            :alt="item.prompt ? item.prompt : item.spriteAlt"
             :key="item.key"
             :class="'section' + item.section"
             class="item hide"
@@ -345,6 +348,7 @@ export default {
           filter: null,
           itemType: "character",
           dialogueSprite: "sprite_dialogue_spookyriddl.png",
+          spriteAlt: "The dark silhouette of a spooky, mischievous character.",
           dialogue: levelFail,
         });
         this.itemInteract();
@@ -375,6 +379,7 @@ export default {
           filter: null,
           itemType: "character",
           dialogueSprite: "sprite_dialogue_spookyriddl.png",
+          spriteAlt: "The dark silhouette of a spooky, mischievous character.",
           dialogue: levelFailedAgain,
         });
         this.itemInteract();
@@ -409,6 +414,7 @@ export default {
                 filter: null,
                 itemType: "character",
                 dialogueSprite: "sprite_dialogue_spookyriddl.png",
+                spriteAlt: "The dark silhouette of a spooky, mischievous character.",
                 dialogue: levelOneIntro,
               });
               this.itemInteract();
@@ -445,6 +451,7 @@ export default {
               filter: null,
               itemType: "character",
               dialogueSprite: "sprite_dialogue_spookyriddl.png",
+              spriteAlt: "The dark silhouette of a spooky, mischievous character.",
               dialogue: levelTwoIntro,
             });
             this.itemInteract();
@@ -485,6 +492,7 @@ export default {
               filter: null,
               itemType: "character",
               dialogueSprite: "sprite_dialogue_spookyriddl.png",
+              spriteAlt: "The dark silhouette of a spooky, mischievous character.",
               dialogue: levelThreeIntro,
             });
             this.itemInteract();
@@ -523,6 +531,7 @@ export default {
               filter: null,
               itemType: "character",
               dialogueSprite: "sprite_dialogue_riddl.png",
+              spriteAlt: "The spooky silhouette from earlier is a purple-haired character with a top hat and purple suit.",
               dialogue: levelFourIntro,
             });
             this.itemInteract();
