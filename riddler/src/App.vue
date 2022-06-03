@@ -6,16 +6,6 @@
   <router-view />
 </template>
 
-<script>
-import Login from "../src/components/LoginComponent.vue";
-
-export default {
-  components: {
-    Login,
-  },
-};
-</script>
-
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -28,25 +18,8 @@ export default {
 #nav {
   padding: 30px;
 }
-.welcome,
-.welcome strong {
-  display: inline;
-  font-size: 2rem;
-}
-.welcome strong {
-  font-weight: 700;
-}
-.btn {
-  padding: 0.8rem 1.2rem;
-  margin-top: 2rem;
-  margin-left: 2rem;
-  font-size: 1.4rem;
-  font-weight: 400;
-  line-height: 1.5;
-  border: none;
-  cursor: pointer;
-  min-width: 10rem;
-  border-radius: 0.4rem;
+
+#nav a {
   font-weight: bold;
   color: #2c3e50;
 }
