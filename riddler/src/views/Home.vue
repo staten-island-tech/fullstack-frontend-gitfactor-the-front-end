@@ -1,8 +1,10 @@
 <template>
 <div>
   <div class="background">
+<PageLoader v-show="isLoading"/>
+    <EventPopup @closeEventClick="nextLevel()" :eventText="eventMessage" v-if="eventMessage"/>
     <div class="home" v-if="isLoggedIn">
-      <MoveTest @gameEvent="updateData()" class="game" />
+      <MoveTest @gameEvent="updateData()" @doneLoading="isLoading = false" class="game" />
       <div class="solid"></div>
     </div>
   </div>
@@ -12,16 +14,20 @@
 
 <script>
 import MoveTest from "@/components/MoveTest.vue";
+import PageLoader from "@/components/PageLoader.vue";
+import EventPopup from '../components/EventPopup.vue';
 
 export default {
   name: "Home",
   components: {
-    MoveTest
+    MoveTest, PageLoader, EventPopup
   },
   data() {
     return {
+      isLoading: true,
       isLoggedIn: false,
       userdata: this.$auth.user,
+      eventMessage: null,
     }
   },
   created() {
@@ -39,7 +45,8 @@ export default {
           },
         });
         const data = await response.json();
-        if (Object.prototype.hasOwnProperty.call(data, "battery")) { //checks if user already logged in 
+        console.log(data);
+        if (Object.prototype.hasOwnProperty.call(data, "failedLevel")) { //checks if user already logged in 
           this.$store.commit('updateState', data);
           console.log("logging in")
         } else {
@@ -53,24 +60,27 @@ export default {
     },
     async updateData() {
       const userId = this.userdata.sub.replace("auth0|", "");
-      console.log(this.$store.state.userData)
       try {
+        const token = await this.$auth.getTokenSilently();
         const response = await fetch(`https://riddler-on-the-roof.onrender.com/api/index/update/${userId}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(this.$store.state.userData),
         });
         const data = await response.json();
         console.log(data);
         this.$store.commit('updateState', data);
-        window.location.reload();
-        alert("Your progress has been saved.");
+        this.eventMessage = "Your progress has been saved.";
       } catch (error) {
         console.log(error);
       }
     },
+    nextLevel() {
+      window.location.reload();
+    }
   }
 };
 </script>

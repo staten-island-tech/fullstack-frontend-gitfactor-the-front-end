@@ -45,9 +45,16 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 @import "../assets/global.css";
 
+.x-icon {
+  position: absolute;
+  top: 3rem;
+  right: 3rem;
+  font-size: var(--h4);
+  color: var(--highlight-color);
+}
 .settings-title {
   font-size: 3.5rem;
 }

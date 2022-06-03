@@ -23,7 +23,7 @@
 
 <script>
 export default {
-  name: 'Login',
+  name: "Login",
   data() {
     return {
       userdata: this.$auth.user,
@@ -33,11 +33,15 @@ export default {
     login() {
       this.$auth.loginWithRedirect();
     },
-  }
-}
+  },
+};
 </script>
-<style>
-*, html, body {
+<style scoped>
+@import "../assets/global.css";
+
+*,
+html,
+body {
   font-size: 62.5%;
   padding: 0;
   margin: 0;
@@ -51,22 +55,28 @@ export default {
   color: #deceff;
 }
 h1 {
-  font-size: 5rem;
+  font-size: 6rem;
   padding-top: 2rem;
+  letter-spacing: .25rem;
 }
 button {
   cursor: pointer;
 }
 .login-page {
   height: 100vh;
-  background-color: #1f1227;
+  background-image: url("../assets/tower_CG.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
 }
-.welcome, .welcome strong {
+.welcome,
+.welcome strong {
   display: inline;
   font-size: 2rem;
 }
 .btn {
-  padding: .8rem 1.2rem;
+  padding: 0.8rem 1.2rem;
   margin-top: 2rem;
   margin-left: 2rem;
   font-size: 1.4rem;
@@ -75,22 +85,18 @@ button {
   border: none;
   cursor: pointer;
   min-width: 10rem;
-  border-radius: .4rem;
+  border-radius: 0.4rem;
   font-weight: bold;
 }
 
 .btn-primary {
-  background: #b84169;
+  background: #d0326f;
   color: white;
 }
-
-.btn-secondary {
-  background: #aaa;
-  color: white;
-}
-
 @media only screen and (max-width: 768px) {
-  *, html, body {
+  *,
+  html,
+  body {
     font-size: 45%;
   }
 }

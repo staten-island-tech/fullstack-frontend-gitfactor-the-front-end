@@ -24,7 +24,6 @@
       </h4>
 
       <div class="selected-item-div" v-show="selectedItemDiv">
-        <h5>Click on an inventory item to select it as your answer.</h5>
         <div class="select-item-options">
           <div class="selected-item">
             <img :src="require(`@/assets/${inventoryItem.img}`)" v-if="inventoryItem"/>
@@ -44,7 +43,7 @@
           v-show="puzzleInputVisibility"
           placeholder="Solve the puzzle"
         />
-      <button @click="checkAnswerClick" class="puzzle-submit-btn" v-show="puzzleInputVisibility">Enter</button>
+      <button @click="checkAnswerClick" class="puzzle-submit-btn" v-show="puzzleInputVisibility" :disabled="!puzzleInput">Enter</button>
       
       <div
         class="keypad-button-div"
@@ -64,12 +63,7 @@
 <script>
 export default {
   name: "PuzzlePopup",
-  emits: [
-    "turn-off",
-    "reset-visibility",
-    "refocus-on-puzzle",
-    "next-level",
-  ],
+  emits: ["turn-off", "reset-visibility", "refocus-on-puzzle", "next-level"],
   props: {
     puzzleVisibility: Boolean,
     puzzlePrompt: String,
@@ -117,7 +111,6 @@ export default {
           this.puzzleInputDisabled = false;
           this.selectedItemDiv = false;
           this.puzzleInputVisibility = true;
-
         } else if (this.puzzleType === 2) {
           console.log("puzzle 2");
           this.puzzleButtonVisibility = true;
@@ -125,7 +118,6 @@ export default {
           this.selectedItemDiv = false;
           this.puzzleInputVisibility = true;
           this.puzzleInputMaxLength = 10;
-
         } else if (this.puzzleType === 3) {
           console.log("puzzle 3");
           this.puzzleButtonVisibility = false;
@@ -147,12 +139,28 @@ export default {
           this.puzzlePromptAnswered = true;
           this.$emit("refocus-on-puzzle");
           this.levelTransition();
-        } 
-        else {
+          if (this.puzzleAnswer === "Fish Food") {
+            this.$store.state.userData.inventory.push({
+              name: "Fish in a Hat",
+              id: 21,
+              section: 3,
+              position: 60,
+              margin: "60%",
+              widthInt: 15,
+              width: "15%",
+              bottom: "10%",
+              img: "lv3_fish.png",
+              isInteractable: false,
+              filter: null,
+              itemType: "object",
+              prompt: "A friendly fish wearing a comically small hat.",
+            });
+            this.$emit('foundHat');
+          }
+        } else {
           this.loseHeart();
         }
-      } 
-      else {
+      } else {
         const puzzleAnswerInput = this.puzzleInput.trim().toLowerCase();
         console.log(puzzleAnswerInput);
 
@@ -163,8 +171,7 @@ export default {
           this.puzzlePromptAnswered = true;
           this.$emit("refocus-on-puzzle");
           this.levelTransition();
-        } 
-        else {
+        } else {
           console.log("taking away 1 heart");
           this.loseHeart();
           this.puzzleInput = "";
@@ -188,22 +195,21 @@ export default {
     },
     levelTransition() {
       if (this.isLevelTransitionPuzzle === true) {
-        console.log("door opened trying to go to next level");   //delete this later
+        console.log("door opened trying to go to next level"); //delete this later
         this.$emit("turn-off");
         this.$emit("next-level");
       }
     },
     loseHeart() {
       this.$store.commit("decrementLives");
-      if(this.$store.state.userData.lifeCount < 0) {
-        alert("'Muahaha! You have failed!', you hear over the intercom. Everything turns to black.");
+      if (this.$store.state.userData.lifeCount === 0) {
+        //lifeCount is restored in checkLevel()
         this.$store.state.userData.section = 2;
-        this.$store.state.userData.leftValue = 50;
-        this.$store.state.userData.lifeCount = 5;
+        this.$store.state.userData.leftValue = 45;
         this.$store.state.userData.currentItem = null;
         this.$store.state.userData.inventory = [];
-        this.$store.state.userData.isIntro = true;
-        this.$store.state.userData.solvedPuzzles = [2];
+        this.$store.state.userData.battery = 100;
+        this.$store.state.userData.solvedPuzzles = [];
         this.$emit("level-fail");
       }
     },
@@ -222,6 +228,7 @@ button:disabled:hover {
   filter: brightness(1);
 }
 .popup-container {
+  overflow: scroll;
   position: absolute;
   top: 0;
   text-align: center;
@@ -230,16 +237,22 @@ button:disabled:hover {
   padding: 5rem;
   margin: 2rem;
   border-radius: 1.5rem;
-  border: solid var(--highlight-color) .3rem;
+  border: solid var(--highlight-color) 0.3rem;
   background-color: var(--background-color);
   z-index: 1;
-  overflow: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
-.popup-container p {
-  font-size: var(--h4);
+
+.popup-container::-webkit-scrollbar {
+  display: none;
+}
+.popup-container h4 {
   text-align: left;
 }
 .solved-text p {
+  text-align: left;
+  font-size: var(--h4);
   margin-top: 1rem;
 }
 .close-puzzle-button {
@@ -257,7 +270,9 @@ button:disabled:hover {
   display: none;
 }
 
-.puzzle-submit-btn, .puzzle-clear-btn, input {
+.puzzle-submit-btn,
+.puzzle-clear-btn,
+input {
   font-size: var(--h4);
   font-weight: 700;
   padding: 0.6rem 1.2rem;
@@ -304,7 +319,7 @@ input {
 .selected-item img {
   height: 10rem;
   width: 10rem;
-  padding: .5rem;
+  padding: 0.5rem;
   object-fit: contain;
 }
 .keypad-button-div {
@@ -319,10 +334,10 @@ input {
   font-weight: 500;
   width: 4.5rem;
   height: 4.5rem;
-  margin: .45rem;
+  margin: 0.45rem;
   color: var(--lightest-purple);
   background-color: var(--purple);
-  border: .1rem solid var(--lightest-purple);
-  border-radius: .5rem;
+  border: 0.1rem solid var(--lightest-purple);
+  border-radius: 0.5rem;
 }
 </style>

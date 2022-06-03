@@ -19,7 +19,6 @@ export default {
     },
     methods: {
         itemDetails(item) {
-            alert(`You have selected ${item.name}. Its description goes as such: "${item.prompt}"`); 
             this.$emit('clickedItem', item);
             console.log("selected in inventory:" + item.name)
         },
