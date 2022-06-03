@@ -167,6 +167,7 @@ import {
   levelFourIntro,
   levelFail,
   levelFailedAgain,
+  winterDialogue
 } from "../dialogue";
 
 export default {
@@ -305,13 +306,7 @@ export default {
           filter: null,
           itemType: "character",
           dialogueSprite: "lv3_winter.png",
-          dialogue: [
-            {
-              name: "Ghost of Winter",
-              text: "Talk to me bebe",
-              color: "winter",
-            },
-          ],
+          dialogue: winterDialogue,
         });
       }
       this.currentOST =

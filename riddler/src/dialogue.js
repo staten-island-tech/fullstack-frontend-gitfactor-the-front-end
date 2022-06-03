@@ -224,3 +224,121 @@ export const levelFailedAgain = [
     color: "riddler",
   },
 ];
+
+export const winterDialogue = [
+  {
+    name: "Ghost of Winter",
+    text: "What is this? Why have I been summoned?",
+    color: "winter",
+  },
+  {
+    name: "Me",
+    text: "I'm not really sure, to be honest. I just found this hat and suddenly I felt your presence.",
+    color: "protagonist",
+  },
+  {
+    name: "Ghost of Winter",
+    text: "Oh, my. That really is it—the hat I couldn't find in time.",
+    color: "winter",
+  },
+  {
+    name: "Me",
+    text: "Winter, the other ghosts told me about a storm that happened in a village and I think I need to ask you about it.",
+    color: "protagonist",
+  },
+  {
+    name: "Ghost of Winter",
+    text: "What do you wish to know?",
+    color: "winter",
+  },
+  {
+    name: "Me",
+    text: "You're that meteorologist they talked about, right? Can you tell me about what happened to that little boy? The one who sat by the lighthouse, the one who made you reconsider using the machine.",
+    color: "protagonist",
+  },
+  {
+    name: "Ghost of Winter",
+    text: "Well, the storm ravaged the town. The trees, the flowers, our homes. But, remarkably, everyone in the village wasn't harmed. It all took a turn for the worse, though. As we thought it was all coming to an end, a large, dark cumulonimbus cloud began to travel closer to us. As it approached the lighthouse, it formed itself into the shape of a giant hand. Before any of us could do anything, it grabbed the boy and the lighthouse in one fell swoop.",
+    color: "winter",
+  },
+  {
+    name: "Me",
+    text: "By “us,” do you mean you and the other ghosts?",
+    color: "protagonist",
+  },
+  {
+    name: "Ghost of Winter",
+    text: "That's right. I and those three other brave villagers tried to pry the boy from the storm's grasp, but we were swallowed instead.",
+    color: "winter",
+  },
+  {
+    name: "Me",
+    text: "I'm sorry about that. I heard the boy was waiting for the ocean to return something he lost, and that's why he was waiting there everyday. Do you know what that thing he lost was?",
+    color: "protagonist",
+  },
+  {
+    name: "Ghost of Winter",
+    text: "Why, it was that hat of yours. It was the only thing that could've brought that boy away from the lighthouse. He sat there, day after day, because one day during a tower-climb game, his hat flew away into the ocean. He never participated in those games again.",
+    color: "winter",
+  },
+  {
+    name: "Me",
+    text: "So that boy let himself get eaten by the storm all for a stupid hat??",
+    color: "protagonist",
+  },
+  {
+    name: "Ghost of Winter",
+    text: "Yes, to you, it may be nothing but a 'stupid hat.' But it was the hat his mother gave him in her last moments alive. He wished to treasure it for the rest of his life, and yet he lost it the first day he wore it. No one in the village could bear forcing that boy away from the shore after that. It was too upsetting.",
+    color: "winter",
+  },
+  {
+    name: "Me",
+    text: "Oh my. I'm sorry for my rude comment earlier. I can see why the boy was so traumatized. And what happened to him in that storm cloud?",
+    color: "protagonist",
+  },
+  {
+    name: "Ghost of Winter",
+    text: "I don't know the details, but I have a guess. I believe that the storm took hold of the boy. Possessed him or something. Otherwise, he would've never trapped and played with the lives of innocent people like this.",
+    color: "winter",
+  },
+  {
+    name: "Me",
+    text: "Wait. What do you mean, “trapped”?? You aren't saying—",
+    color: "protagonist",
+  },
+  {
+    name: "Ghost of Winter",
+    text: "*Chuckles* Yes, I am. That 'Riddler' you keep hearing about. I'm sure he's that boy from the lighthouse.",
+    color: "winter",
+  },
+  {
+    name: "Me",
+    text: "No kidding. I have a lot to think about now... Then just answer one last question for me.",
+    color: "protagonist",
+  },
+  {
+    name: "Ghost of Winter",
+    text: "Shoot.",
+    color: "winter",
+  },
+  {
+    name: "Me",
+    text: "You meteorologists like to name natural disasters right? Well, what did you name that storm?",
+    color: "protagonist",
+  },
+  {
+    name: "Ghost of Winter",
+    text: "*Smiles* Funny enough, I never got to name it. I was too busy with my machine and trying to find that hat. But I think it's fitting to call it the 'Riddler's Tempest.'",
+    color: "winter",
+  },
+  {
+    name: "Me",
+    text: "Thank you so much, for everything.",
+    color: "protagonist",
+  },
+  {
+    name: "Ghost of Winter",
+    text: "No, thank you for helping me make peace with myself. Good luck with escaping. If possible, keep that poor, little boy in mind when you face the Riddler. He may be evil now, but he is good deep down.",
+    color: "winter",
+  },
+]
