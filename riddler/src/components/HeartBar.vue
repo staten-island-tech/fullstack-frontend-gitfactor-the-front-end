@@ -20,6 +20,9 @@ export default {
   section svg {
     font-size: 2.25rem;
     margin-right: .5rem;
-    color: red;
+    color: #ff0000;
+  }
+  section svg:hover {
+    filter: brightness(1);
   }
 </style>

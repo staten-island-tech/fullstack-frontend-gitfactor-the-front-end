@@ -117,14 +117,14 @@ export const levelThreeIntro = [
   },
   {
     name: "Riddler",
-    text: "blub blub blub.",
+    text: "Blub blub blub.",
     color: "riddler",
   },
 ];
 export const levelFourIntro = [
   {
     name: "Riddler",
-    text: "Well color me surprised, I didn't actually think you'd make it!",
+    text: "Well, color me surprised, I didn't actually think you'd make it!",
     color: "riddler",
   },
   {
@@ -172,12 +172,12 @@ export const levelFail = [
   },
   {
     name: "Riddler",
-    text: "You must be cheating or something! Once a human in my tower loses all their soul points, that's supposed to be the end of the line. And yet, somehow you got 5 more??",
+    text: "You must be cheating or something! Once a human in my tower loses all their soul points, that's supposed to be the end of the line. And yet, somehow you got 3 more??",
     color: "riddler",
   },
   {
     name: "Me",
-    text: "Oh, snap. I did get 5 more, you're right. I guess that's because I'm not a human.",
+    text: "Oh, snap. I did get 3 more, you're right. I guess that's because I'm not a human.",
     color: "protagonist",
   },
   {
@@ -258,7 +258,7 @@ export const winterDialogue = [
   },
   {
     name: "Ghost of Winter",
-    text: "Well, the storm ravaged the town. The trees, the flowers, our homes. But, remarkably, everyone in the village wasn't harmed. It all took a turn for the worse, though. As we thought it was all coming to an end, a large, dark cumulonimbus cloud began to travel closer to us. As it approached the lighthouse, it formed itself into the shape of a giant hand. Before any of us could do anything, it grabbed the boy and the lighthouse in one fell swoop.",
+    text: "Well, the storm ravaged the town. The trees, the flowers, our homes. But, remarkably, everyone in the village wasn't harmed. It all took a turn for the worse, though. As we thought it was all coming to an end, a large, dark cumulonimbus cloud began to travel closer to us. As it approached the lighthouse, it formed itself into the shape of a giant hand. Before any of us could do anything, it grabbed the boy, the lighthouse, even part of the ocean in one fell swoop.",
     color: "winter",
   },
   {

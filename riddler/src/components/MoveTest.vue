@@ -6,7 +6,9 @@
 
     <div class="level-and-hearts">      
       <div>
-        <h2>Lv. {{ $store.state.userData.level }}</h2>
+        <h2 v-if="$store.state.userData.level === 4">Roof</h2>
+        <h2 v-else-if="$store.state.userData.level === 5">Epilogue</h2>
+        <h2 v-else>Lv. {{ $store.state.userData.level }}</h2>
         <HeartBar />
       </div>
       <font-awesome-icon @click="openPause" class="pause-icon" icon="pause" />
@@ -135,7 +137,7 @@
       <button @mousedown="leftMove()" @mouseup="reset()" class="mobile-button">
         <font-awesome-icon icon="caret-left" />
       </button>
-      <button @click="onEnter()" class="mobile-button">
+      <button @mouseup="onEnter()" class="mobile-button">
         <font-awesome-icon icon="z" />
       </button>
       <button @mousedown="rightMove()" @mouseup="reset()" class="mobile-button">
@@ -292,6 +294,10 @@ export default {
         );
         this.gameItems[solved].isPuzzleCompleted = true;
       });
+      this.currentOST =
+        this.locations[this.$store.state.userData.level - 1].assets[
+          this.$store.state.userData.section - 1
+        ].ost;
 
       if (this.$store.state.userData.level === 3 && this.$store.state.userData.solvedPuzzles[0]) {
         console.log("found winter")
@@ -312,10 +318,6 @@ export default {
           dialogue: winterDialogue,
         });
       }
-      this.currentOST =
-        this.locations[this.$store.state.userData.level - 1].assets[
-          this.$store.state.userData.section - 1
-        ].ost;
       this.unhideItem();
     },
     checkLevel() {
@@ -757,6 +759,13 @@ export default {
       this.enteredOnObject = false;
       this.puzzlePopupVisibility = false;
       this.enablePlayerMovement();
+        this.eventMessage = "Brrrrrr... What was that freezing cold current just now?";
+        setTimeout(() => {
+          this.openEventPopup();
+        }, 10);
+        setTimeout(() => {
+          document.querySelector(".main").classList.add("winter");
+        }, 0);
     },
     openItemPopup() {
       this.$refs.itemPopupBox.$el.focus();
@@ -772,6 +781,10 @@ export default {
     closeEventPopup() {
       this.eventMessage = null;
       this.enablePlayerMovement();
+       if (this.$store.state.userData.level === 3 && this.$store.state.userData.solvedPuzzles[0]) {
+         document.querySelector(".main").classList.remove("winter");
+         document.querySelector(".main").classList.remove("game-start");
+       }
     },
     textboxShow() {
       this.textbox = true;
@@ -1167,28 +1180,42 @@ img {
 
 @keyframes fogFade {
   0% {
-    opacity: 20%;
+    opacity: 10%;
   }
   20% {
-    opacity: 60%;
+    opacity: 50%;
   }
   30% {
-    opacity: 70%;
-  }
-  40% {
-    opacity: 85%;
-  }
-  50% {
-    opacity: 90%;
-  }
-  60% {
-    opacity: 40%;
-  }
-  70% {
     opacity: 60%;
   }
+  40% {
+    opacity: 75%;
+  }
+  50% {
+    opacity: 80%;
+  }
+  60% {
+    opacity: 30%;
+  }
+  70% {
+    opacity: 50%;
+  }
   100% {
-    opacity: 20%;
+    opacity: 10%;
+  }
+}
+.winter {
+  animation: winterChill 5s ease-in-out infinite;
+}
+@keyframes winterChill {
+  0% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(2);
+  }
+  100% {
+    filter: brightness(1);
   }
 }
 

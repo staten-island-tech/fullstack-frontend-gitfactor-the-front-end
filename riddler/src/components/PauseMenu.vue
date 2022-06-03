@@ -61,7 +61,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 @import "../assets/global.css";
 
 .pause-menu {
@@ -90,7 +90,7 @@ export default {
   padding-top: 3rem;
 }
 .x-icon {
-  position: fixed;
+  position: absolute;
   top: 3rem;
   right: 3rem;
   font-size: var(--h4);

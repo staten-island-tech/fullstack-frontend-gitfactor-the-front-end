@@ -76,11 +76,17 @@ h1 {
   letter-spacing: .05rem;
   border: none;
   border-radius: 0.4rem;
+  transition: all .3s;
 }
 .btn svg {
   font-size: var(--h5);
 }
-
+.btn:hover {
+  transform: translateY(-.25rem);
+}
+.btn svg:hover {
+  filter: brightness(1);
+}
 .btn-primary {
   background: #d0326f;
   color: white;
