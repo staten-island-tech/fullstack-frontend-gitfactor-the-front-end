@@ -325,7 +325,7 @@ export default {
         this.$store.state.userData.lifeCount === 0 &&
         this.$store.state.userData.failedLevel === false
       ) {
-        this.$store.state.userData.lifeCount = 5;
+        this.$store.state.userData.lifeCount = 3;
         this.$store.state.userData.failedLevel = true;
         this.playAudio();
         this.eventMessage = "You hear a transmission over the intercom.";
@@ -357,7 +357,7 @@ export default {
         this.$store.state.userData.lifeCount === 0 &&
         this.$store.state.userData.failedLevel === true
       ) {
-        this.$store.state.userData.lifeCount = 5;
+        this.$store.state.userData.lifeCount = 3;
         this.playAudio();
         this.eventMessage = "You hear a transmission over the intercom.";
         setTimeout(() => {
@@ -839,7 +839,7 @@ export default {
       //reset vuex state
       this.$store.state.userData.section = 2;
       this.$store.state.userData.leftValue = 45;
-      this.$store.state.userData.lifeCount = 5;
+      this.$store.state.userData.lifeCount = 3;
       this.$store.state.userData.currentItem = null;
       this.$store.state.userData.inventory = [];
       this.$store.state.userData.battery = 100;
@@ -855,7 +855,7 @@ export default {
 
       this.$store.state.userData.section = 2;
       this.$store.state.userData.leftValue = 45;
-      this.$store.state.userData.lifeCount = 5;
+      this.$store.state.userData.lifeCount = 3;
       this.$store.state.userData.currentItem = null;
       this.$store.state.userData.inventory = [];
       this.$store.state.userData.isIntro = true;
