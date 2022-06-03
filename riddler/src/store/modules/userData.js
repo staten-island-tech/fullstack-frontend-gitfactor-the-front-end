@@ -3,7 +3,7 @@ export const state = {
   level: 1,
   section: 2,
   leftValue: 45,
-  lifeCount: 5,
+  lifeCount: 3,
   currentItem: null,
   inventory: [],
   battery: 100,
