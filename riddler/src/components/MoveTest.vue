@@ -63,6 +63,7 @@
           @next-level="levelAdd()"
           @level-fail="$emit('gameEvent')"
           @foundHat="getUserData()"
+          @puzzleItemChosen="puzzleResponse"
           :puzzleAnswer="emittedPuzzleAnswer"
           :puzzleVisibility="puzzlePopupVisibility"
           :isPromptAnswered="isPuzzleQuestionCompleted"
@@ -137,7 +138,7 @@
       <button @mousedown="leftMove()" @mouseup="reset()" class="mobile-button">
         <font-awesome-icon icon="caret-left" />
       </button>
-      <button @mouseup="onEnter()" class="mobile-button">
+      <button @click="onEnter()" class="mobile-button">
         <font-awesome-icon icon="z" />
       </button>
       <button @mousedown="rightMove()" @mouseup="reset()" class="mobile-button">
@@ -759,6 +760,7 @@ export default {
       this.enteredOnObject = false;
       this.puzzlePopupVisibility = false;
       this.enablePlayerMovement();
+      if(this.$store.state.userData.level === 3 && this.$store.state.userData.solvedPuzzles[0]) {
         this.eventMessage = "Brrrrrr... What was that freezing cold current just now?";
         setTimeout(() => {
           this.openEventPopup();
@@ -766,6 +768,14 @@ export default {
         setTimeout(() => {
           document.querySelector(".main").classList.add("winter");
         }, 0);
+      }
+    },
+    puzzleResponse(message) {
+      console.log(message)
+      this.eventMessage = message;
+      setTimeout(() => {
+        this.openEventPopup();
+      }, 10);
     },
     openItemPopup() {
       this.$refs.itemPopupBox.$el.focus();
@@ -781,9 +791,8 @@ export default {
     closeEventPopup() {
       this.eventMessage = null;
       this.enablePlayerMovement();
-       if (this.$store.state.userData.level === 3 && this.$store.state.userData.solvedPuzzles[0]) {
+       if (this.$store.state.userData.level === 3 && document.querySelector(".main").classList.contains("winter")) {
          document.querySelector(".main").classList.remove("winter");
-         document.querySelector(".main").classList.remove("game-start");
        }
     },
     textboxShow() {

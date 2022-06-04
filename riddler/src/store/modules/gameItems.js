@@ -36,8 +36,7 @@ export const state = {
         itemType: "object",
         prompt:
           "Hmm... It looks like a mysterious scroll, but it's completely blank! Made of a very pale-colored parchment, the scroll is bound together with a string of twine and has a faint scent of citrus.",
-        chosenItemTextCorrect:"this is the correct item cuz i said so (scroll)", 
-        chosenItemTextFalse: " bro how did you come to this conclusion... you must be guessing (scroll)",
+        chosenItemTextCorrect: "Nice catch! The citrus scent from the scroll must've been lemon juice, which oxidized when put up to the flame of the lantern!", 
       },
       {
         name: "Shiny Prism",
@@ -53,8 +52,7 @@ export const state = {
         filter: null,
         itemType: "object",
         prompt: "It's a triangular glass prism. So pretty and shiny!",
-        chosenItemTextCorrect:"this is the correct item cuz i said so (prism)", 
-        chosenItemTextFalse: " bro how did you come to this conclusion... you must be guessing (prism)",
+        chosenItemTextFalse: "When held up to the lantern, the prism split the light from the flame into a beautiful rainbow! But nothing beneficial happened otherwise.",
       },
       {
         name: "Large Feather",
@@ -70,8 +68,7 @@ export const state = {
         filter: null,
         itemType: "object",
         prompt: "A large yet unexpectedly lightweight feather with beautiful blue hues. I wonder what kind of bird it came from.",
-        chosenItemTextCorrect:"this is the correct item cuz i said so (feather)", 
-        chosenItemTextFalse: " bro how did you come to this conclusion... you must be guessing (feather)",
+        chosenItemTextFalse: "Unsurprisingly, nothing happens when you put a feather up to a lantern.",
       },
       {
         name: "Bright Lantern",
@@ -93,7 +90,7 @@ export const state = {
           "It's a lantern with a bright flame. What could it be used for, though? Click on an item in your inventory to select it as your answer.",
         puzzleAnswer: "Blank Scroll",
         puzzleAnsweredText:
-          "Nice catch! When held up to the light of the lantern, the secret message written in lemon juice on the scroll revealed itself! It reads: 'A commonality between every item. That is where the answer lies.'",
+          "When held up to the light of the lantern, the secret message written in lemon juice on the scroll revealed itself! It reads: 'A commonality between every item. That is where the answer lies.'",
       },
       {
         name: "Painting",
@@ -109,12 +106,11 @@ export const state = {
         filter: null,
         itemType: "object",
         prompt: "It's a painting, dated 'February 1847', of some guy who seems important, but it's hard to tell who it is. If only vampires studied human history!",
-        chosenItemTextCorrect:"this is the correct item cuz i said so (painting)", 
-        chosenItemTextFalse: " bro how did you come to this conclusion... you must be guessing (painting)",
+        chosenItemTextFalse: "Oh no! Holding the painting up to the lantern caused the paint to start melting! Not only did it not help, but now a piece of art has been sabotaged.",
       },
     ],
     [
-      //Level 2 — DO NOT CHANGE THE SECTIONS THEY ARE IN
+      //Level 2
       {
         name: "Dark Door of Truth",
         id: 6,
@@ -275,7 +271,7 @@ export const state = {
         filter: null,
         itemType: "puzzle",
         puzzleType: 3,
-        prompt: "When you put your ear close to it, you hear a curious rustling noise from somewhere in the coral reef. What should you use to get to the source of the sound? ",
+        prompt: "When you put your ear close to it, you can hear something moving somewhere in the coral reef. What should you use to get to the source of the sound? ",
         puzzleAnswer: "Fish Food",
         isPuzzleCompleted: false, 
         puzzleAnsweredText: "AWWW a cute fish swam out of the reef to eat the fish food! And it's wearing a funny, little hat. I think it likes me! It's following me around! I can see it in my inventory.",
@@ -294,6 +290,7 @@ export const state = {
         filter: null,
         itemType: "object",
         prompt: "Aw, it's a little can of fish food. Reminds me of the fishies I had as a child. Maybe I can make some new fish friends with this!",
+        chosenItemTextCorrect: "Yes! That sound from the reef must be coming from a fish! Using this fish food will let the fish come to me without disturbing the reef.",
       },
       {
         name: "Fishing Rod and Bobber",
@@ -309,6 +306,7 @@ export const state = {
         filter: null,
         itemType: "object",
         prompt: "Oooo, what a nice, sturdy fishing rod. I wish it had a prettier-looking lure at the end, but I guess a basic bobber will suffice.",
+        chosenItemTextFalse: "It seemed like I could use the fishing rod to hook whatever's in the reef, but the stupid bobber keeps pulling the fishing line towards the surface!",
       },
       {
         name: "Mallet",
@@ -324,6 +322,7 @@ export const state = {
         filter: null,
         itemType: "object",
         prompt: "Now that's a mallet, alright. Like something outta a video game. Nice, wide ends perfect for a controlled smash.",
+        chosenItemTextFalse: "I can't smash an endangered coral reef with this mallet! That would harm an entire ecosystem!",
       },
       {
         name: "Sleek Shovel",
@@ -339,6 +338,7 @@ export const state = {
         filter: null,
         itemType: "object",
         prompt: "I never thought a shovel would capture my admiration, but it just happened. It's as sleek as a racecar. Perfect for digging in the sand and maybe for poking and prodding with that pointy end.",
+        chosenItemTextFalse: "I can't go carelessly prodding with this shovel! That would put an entire ecosystem at risk!",
       },
       {
         name: "Ghost of Spring",
@@ -478,6 +478,8 @@ Object:
   filter: null,
   itemType: "object",
   prompt: "",
+  chosenItemTextCorrect: "if right", 
+  chosenItemTextFalse: "if wrong"
 },
 
 Character: 

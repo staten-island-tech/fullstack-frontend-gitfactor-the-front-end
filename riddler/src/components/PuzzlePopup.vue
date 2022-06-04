@@ -165,7 +165,7 @@ export default {
           this.loseHeart();
           this.puzzle3ChosenItemText = this.inventoryItem.chosenItemTextFalse;
         }
-        alert(this.puzzle3ChosenItemText);
+        this.$emit('puzzleItemChosen', this.puzzle3ChosenItemText);
       } 
       else {
         const puzzleAnswerInput = this.puzzleInput.trim().toLowerCase();
