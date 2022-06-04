@@ -41,7 +41,7 @@
           <div class="text-button-icons" v-if="textbox && !isPauseOpen">
             <font-awesome-icon @click="textBack()" icon="caret-left" class="back-button" v-if="textCount > 0"/>
             <font-awesome-icon @click="onEnter()" class="back-button forward-button" icon="caret-right" />
-            </div>
+          </div>
           <h2 :style="{ color: `var(--${$store.state.userData.currentItem.dialogue[textCount].color})` }" class="textbox-title">{{ $store.state.userData.currentItem.dialogue[textCount].name }}</h2>
           <p class="textbox-text typing-class">{{ $store.state.userData.currentItem.dialogue[textCount].text }}</p>
         </div>
@@ -105,6 +105,13 @@
           </div>
         </div>
         <font-awesome-icon v-if="$store.state.userData.level === 2 && !$store.state.userData.isIntro" @click="flashlight()" class="flashlight-btn" icon="power-off"></font-awesome-icon>
+
+        <div v-if="$store.state.userData.level === 4 && !$store.state.userData.isIntro" class="battery-meter">
+          <h2>{{ $store.state.userData.roofTime }}s left</h2>
+          <div class="charge-container">
+            <div class="charge" :style="{ width: timePercentage }"></div>
+          </div>
+        </div>
 
         <div class="game-overlay">
           <div
@@ -276,6 +283,9 @@ export default {
     batteryPercentage() {
       return this.$store.state.userData.battery + "%";
     },
+    timePercentage() {
+      return ((this.$store.state.userData.roofTime / 300) * 100) + "%";
+    },
   },
   methods: {
     getUserData() {
@@ -310,7 +320,7 @@ export default {
         console.log("found winter")
         this.$store.state.gameItems.gameItems[2].push({ //pushes to level 3 array
           name: "Ghost of Winter",
-          id: 22,
+          id: 23,
           section: 2,
           position: 50,
           margin: "50%",
@@ -861,6 +871,9 @@ export default {
         if (this.$store.state.userData.level === 2) {
           document.querySelector(".game-overlay").classList.add("dark");
         }
+        if (this.$store.state.userData.level === 4) {
+          this.roofTime();
+        }
         this.textbox = false;
         this.enteredOnObject = false;
         this.textCount = -1;
@@ -882,6 +895,7 @@ export default {
       this.$store.state.userData.battery = 100;
       this.$store.state.userData.isIntro = true;
       this.$store.state.userData.solvedPuzzles = [];
+      this.$store.state.userData.roofTime = 300;
 
       this.$emit("gameEvent");
       this.unhideItem();
@@ -898,6 +912,8 @@ export default {
       this.$store.state.userData.isIntro = true;
       this.$store.state.userData.battery = 100;
       this.$store.state.userData.solvedPuzzles = [];
+      this.$store.state.userData.roofTime = 300;
+
       this.$emit("gameEvent");
       this.unhideItem();
     },
@@ -923,6 +939,24 @@ export default {
         document.querySelector(".game-overlay").style.filter = "brightness(.1)";
         this.enablePlayerMovement();
       }
+    },
+    roofTime() {
+      const intervalId = setInterval(() => {
+        if (this.$store.state.userData.roofTime === 0) {
+          clearInterval(intervalId);
+          this.$store.state.userData.lifeCount = 3;
+          this.$store.state.userData.section = 2;
+          this.$store.state.userData.leftValue = 45;
+          this.$store.state.userData.currentItem = null;
+          this.$store.state.userData.inventory = [];
+          this.$store.state.userData.battery = 100;
+          this.$store.state.userData.solvedPuzzles = [];
+          this.$store.state.userData.roofTime = 300;
+        this.$emit('gameEvent');
+        } else {
+          this.$store.state.userData.roofTime--;
+        }
+    }, 2000);
     },
     openPause() {
       if (
@@ -1127,6 +1161,8 @@ img {
   min-height: 30%;
   padding: 2rem;
   padding-top: 1rem;
+  /* accounts for back button height */
+  padding-bottom: 4.5rem; 
   border-radius: 1rem;
 }
 .textbox-text,
@@ -1151,32 +1187,20 @@ img {
 }
 .text-button-icons{
   display: block;
-    position: absolute;
+  position: absolute;
   bottom: 0;
-    right: 0;
-      z-index: 5;
+  right: 0;
+  z-index: 3;
 }
 .back-button{
-  left: 1;
   width: 2rem;
   height: 1.5rem;
-    font-size: 2.5rem;
-    margin: .5rem;
-    padding: 1rem;
-    background-color: var(--highlight-color);
-    color: black;
-    border: black 0.05rem solid;
-    border-radius: 0.7rem;
-}
-.forward{
-  left: 3;
-}
-.back-button:disabled {
-  cursor: default;
-  background-color: #6f627b;
-}
-.back-button:disabled:hover {
-  filter: brightness(1);
+  margin: .5rem;
+  padding: 1rem;
+  background-color: var(--highlight-color);
+  color: #000;
+  border: #000 0.05rem solid;
+  border-radius: 0.7rem;
 }
 .item-popup img {
   position: unset;

@@ -10,6 +10,7 @@ export const state = {
   isIntro: true,
   solvedPuzzles: [],
   failedLevel: false,
+  roofTime: 300,
 };
 
 export const mutations = {

@@ -146,7 +146,7 @@ export default {
           if (this.puzzleAnswer === "Fish Food") {
             this.$store.state.userData.inventory.push({
               name: "Fish in a Hat",
-              id: 21,
+              id: 22,
               section: 3,
               position: 60,
               margin: "60%",
@@ -218,6 +218,7 @@ export default {
         this.$store.state.userData.inventory = [];
         this.$store.state.userData.battery = 100;
         this.$store.state.userData.solvedPuzzles = [];
+        this.$store.state.userData.roofTime = 300;
         this.$emit("level-fail");
       }
     },

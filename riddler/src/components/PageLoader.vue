@@ -30,26 +30,27 @@ export default {
   }
 
   .loading {
-    font-size: 3rem;
+    font-size: 2.5rem; 
+    /* must match width in keyframes */
   }
   .loading:after {
     overflow: hidden;
     display: inline-block;
     vertical-align: bottom;
-    -webkit-animation: ellipsis steps(4, end) 2s infinite;      
-    animation: ellipsis steps(4, end) 2s infinite;
+    -webkit-animation: ellipsis steps(5, end) 2s infinite;      
+    animation: ellipsis steps(5, end) 2s infinite;
     content: "..."; /* ascii code for the ellipsis character */
     width: 0;
   }
 
   @keyframes ellipsis {
     to {
-      width: 3rem;    
+      width: 2.5rem;    
     }
   }
   @-webkit-keyframes ellipsis {
     to {
-      width: 3rem;    
+      width: 2.5rem;    
     }
   }
 

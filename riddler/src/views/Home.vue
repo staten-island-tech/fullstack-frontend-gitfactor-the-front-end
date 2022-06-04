@@ -1,7 +1,7 @@
 <template>
   <div class="background">
-<PageLoader v-show="isLoading"/>
-    <EventPopup @closeEventClick="nextLevel()" :eventText="eventMessage" v-if="eventMessage"/>
+  <PageLoader v-show="isLoading"/>
+  <EventPopup @closeEventClick="nextLevel()" :eventText="eventMessage" v-if="eventMessage"/>
     <div class="home" v-if="isLoggedIn">
       <MoveTest @gameEvent="updateData()" @doneLoading="isLoading = false" class="game" />
       <div class="solid"></div>
@@ -44,7 +44,7 @@ export default {
         });
         const data = await response.json();
         console.log(data);
-        if (Object.prototype.hasOwnProperty.call(data, "failedLevel")) { //checks if user already logged in 
+        if (Object.prototype.hasOwnProperty.call(data, "roofTime")) { //checks if user already logged in 
           this.$store.commit('updateState', data);
           console.log("logging in")
         } else {

@@ -124,7 +124,7 @@ export const levelThreeIntro = [
 export const levelFourIntro = [
   {
     name: "Riddler",
-    text: "Well, color me surprised, I didn't actually think you'd make it!",
+    text: "Well, color me surprised, I didn't think you'd actually make it! Well, I guess I saw some potential in you. After all, I decided you were worthy of entering my amazing Tower!",
     color: "riddler",
   },
   {
@@ -144,7 +144,47 @@ export const levelFourIntro = [
   },
   {
     name: "Riddler",
-    text: "Hey, what's that supposed to imply?",
+    text: "Hey, what's that supposed to imply? Agh, it doesn't matter anyway. You wanna know what does matter?",
+    color: "riddler",
+  },
+  {
+    name: "Me",
+    text: "I guess?",
+    color: "protagonist",
+  },
+  {
+    name: "Riddler",
+    text: "This is the final level of my amazing Tower! I hope you've enjoyed it thus far!",
+    color: "riddler",
+  },
+  {
+    name: "Me",
+    text: "'Enjoyed' is an interesting way to put it...",
+    color: "protagonist",
+  },
+  {
+    name: "Riddler",
+    text: "Well, you're sure gonna love this level! Since you're so good at this, I'm only gonna give you 300 seconds to beat the level. If you don't finish in time, I'll finally get to eat that soul of yours! Muahahahaha!",
+    color: "riddler",
+  },
+  {
+    name: "Me",
+    text: "Oh boy.",
+    color: "protagonist",
+  },
+  {
+    name: "Riddler",
+    text: "Oh, and by the way. Barely anyone gets to the roof, so it may be a bit messy. I'm gonna go watch in my handy dandy observation room, but you have fun!",
+    color: "riddler",
+  },
+  {
+    name: "Me",
+    text: "Sure I will...",
+    color: "protagonist",
+  },
+  {
+    name: "Riddler",
+    text: "Catch you on the flippity flip!",
     color: "riddler",
   },
 ];
