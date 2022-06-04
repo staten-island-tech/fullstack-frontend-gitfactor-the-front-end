@@ -9,20 +9,24 @@
   /* character colors */
   --violet: #d83bff;
   --red: #ff3d87;
-
-  /* --darkest-purple: #24153f;
-  --dark-purple: #371c72;
-  --purple: #4c3188;
-  --light-purple: #deceff; */
-
+  --pink: #ff8bcb;
+  --yellow: #ffd65a;
+  --orange: #ff813d;
+  --blue: #5694ff;
 
   /* intentions */
   --background-color: var(--darkest-purple);
   --highlight-color: var(--light-purple);
   --popup-color: var(--dark-purple);
 
+  /* dialogue colors */
   --protagonist: var(--red);
   --riddler: var(--violet);
+  --spring: var(--pink);
+  --summer: var(--yellow);
+  --autumn: var(--orange);
+  --winter: var(--blue);
+  
 
   /* font size */
   --title-font: "Mystery Quest", cursive;
@@ -39,6 +43,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Mystery+Quest&display=swap');
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@600;700&display=swap");
 
+*, html, body {
+  font-size: 62.5%;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: var(--text-font);
+  font-weight: 600;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+div:focus {
+  outline: none;
+}
 h1 {
   font-size: var(--h1);
   font-family: var(--title-font);
@@ -66,16 +83,7 @@ h2, h3, h4, h5, h6, p {
 strong {
   font-weight: 700;
 }
-*, html, body {
-  font-size: 62.5%;
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-  font-family: var(--text-font);
-  font-weight: 600;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none;  /* Internet Explorer 10+ */
-}
+
 body::-webkit-scrollbar { /* WebKit */
   width: 0;
   height: 0;

@@ -38,7 +38,16 @@ export default {
 
 .pause-menu {
   overflow: scroll;
+  position: absolute;
+  top: 0;
+  text-align: center;
+  width: 100%;
+  height: 100%;
   padding: 2rem;
+  background-color: var(--purple);
+  z-index: 3;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 .x-icon {
   position: absolute;

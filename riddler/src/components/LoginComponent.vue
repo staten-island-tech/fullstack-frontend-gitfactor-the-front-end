@@ -4,12 +4,14 @@
     <div v-if="!$auth.loading.value">
       
       <div v-if="!$auth.isAuthenticated.value"  class="login-page" @click="login">
-       <h1>Enter The Tower</h1>
-       <button @click="login()" class="btn btn-primary">Login</button>
+       <h1>Riddler on the Roof</h1>
+       <button @click="login()" class="btn btn-primary">
+         Enter the Tower <font-awesome-icon icon="caret-right" /><font-awesome-icon icon="caret-right" />
+       </button>
       </div>
       <div v-if="$auth.isAuthenticated.value" @click="logout">
         <p class="welcome">
-          Muahaha! Welcome to the Riddler's Tower, <strong>{{ userdata.nickname }}</strong>!
+          Muahaha! Welcome to the Riddler's Tower, <strong>{{ $store.state.userData.username }}</strong>!
         </p>
       </div>
     </div>
@@ -23,7 +25,7 @@
 
 <script>
 export default {
-  name: 'Login',
+  name: "Login",
   data() {
     return {
       userdata: this.$auth.user,
@@ -33,64 +35,66 @@ export default {
     login() {
       this.$auth.loginWithRedirect();
     },
-  }
-}
+  },
+};
 </script>
-<style>
-*, html, body {
-  font-size: 62.5%;
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
+<style scoped>
+@import "../assets/global.css";
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #deceff;
 }
 h1 {
-  font-size: 5rem;
-  padding-top: 2rem;
-}
-button {
-  cursor: pointer;
+  font-size: 7rem;
+  font-weight: 400;
+  color: var(--highlight-color);
 }
 .login-page {
   height: 100vh;
-  background-color: #1f1227;
+  padding-top: 5%;
+  text-align: center;
+  background-image: url("../assets/tower_CG.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
 }
-.welcome, .welcome strong {
+.welcome,
+.welcome strong {
   display: inline;
   font-size: 2rem;
 }
 .btn {
-  padding: .8rem 1.2rem;
+  padding: 0.8rem 2rem;
   margin-top: 2rem;
-  margin-left: 2rem;
-  font-size: 1.4rem;
-  font-weight: 400;
+  font-size: var(--h4);
+  font-weight: 600;
   line-height: 1.5;
+  letter-spacing: .05rem;
   border: none;
-  cursor: pointer;
-  min-width: 10rem;
-  border-radius: .4rem;
-  font-weight: bold;
+  border-radius: 0.4rem;
+  transition: all .3s;
 }
-
+.btn svg {
+  font-size: var(--h5);
+}
+.btn:hover {
+  transform: translateY(-.25rem);
+}
+.btn svg:hover {
+  filter: brightness(1);
+}
 .btn-primary {
-  background: #b84169;
+  background: #d0326f;
   color: white;
 }
-
-.btn-secondary {
-  background: #aaa;
-  color: white;
-}
-
 @media only screen and (max-width: 768px) {
-  *, html, body {
+  *,
+  html,
+  body {
     font-size: 45%;
   }
 }
