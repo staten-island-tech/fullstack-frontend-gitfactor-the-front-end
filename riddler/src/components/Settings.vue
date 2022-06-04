@@ -48,6 +48,19 @@ export default {
 <style scoped>
 @import "../assets/global.css";
 
+.pause-menu {
+  overflow: scroll;
+  position: absolute;
+  top: 0;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  padding: 2rem;
+  background-color: var(--purple);
+  z-index: 3;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
 .x-icon {
   position: absolute;
   top: 3rem;
@@ -119,5 +132,13 @@ export default {
   background: var(--protagonist); /* Green background */
   cursor: pointer; /* Cursor on hover */
 }
-
+@media only screen and (max-width: 450px){
+  .settings-title{
+    font-size: 2rem;
+  }
+.slider-label{
+  font-size: 1.5rem;
+  margin-top: 0.75rem;
+}
+}
 </style>

@@ -6,7 +6,9 @@
 
     <div class="level-and-hearts">      
       <div>
-        <h2>Lv. {{ $store.state.userData.level }}</h2>
+        <h2 v-if="$store.state.userData.level === 4">Roof</h2>
+        <h2 v-else-if="$store.state.userData.level === 5">Epilogue</h2>
+        <h2 v-else>Lv. {{ $store.state.userData.level }}</h2>
         <HeartBar />
       </div>
       <font-awesome-icon @click="openPause" class="pause-icon" icon="pause" />
@@ -19,6 +21,7 @@
           <audio id="walk-sfx" :src="require(`@/assets/audio/sfx/walkstep.mp3`)"></audio>
         </div>
 
+          
       <div class="main">
         <div :style="{ border: `.3rem solid var(--${$store.state.userData.currentItem.dialogue[textCount].color})` }" v-if="textbox" class="textbox">
           <img
@@ -26,14 +29,20 @@
             :style="playerDialogueSprite"
             class="player-avatar-dialogue"
             id="player-dialogue-sprite"
+            alt="A white-haired, red-eyed protagonist whom you play as."
           />
           <img
             :src="require(`@/assets/sprites/${$store.state.userData.currentItem.dialogueSprite}`)"
             :style="npcDialogueSprite"
             class="npc-avatar-dialogue"
             id="npc-dialogue-sprite"
+            :alt="$store.state.userData.currentItem.spriteAlt"
           />
-          <p :style="{ color: `var(--${$store.state.userData.currentItem.dialogue[textCount].color})` }" class="textbox-title">{{ $store.state.userData.currentItem.dialogue[textCount].name }}</p>
+          <div class="text-button-icons" v-if="textbox && !isPauseOpen">
+            <font-awesome-icon @click="textBack()" icon="caret-left" class="back-button" v-if="textCount > 0"/>
+            <font-awesome-icon @click="onEnter()" class="back-button forward-button" icon="caret-right" />
+          </div>
+          <h2 :style="{ color: `var(--${$store.state.userData.currentItem.dialogue[textCount].color})` }" class="textbox-title">{{ $store.state.userData.currentItem.dialogue[textCount].name }}</h2>
           <p class="textbox-text typing-class">{{ $store.state.userData.currentItem.dialogue[textCount].text }}</p>
         </div>
         
@@ -45,7 +54,7 @@
             {{ $store.state.userData.currentItem.name }}
           </template>
           <template v-slot:item-img>
-            <img class="itempopup-img" style="width: 12.5%" :src="require(`@/assets/${$store.state.userData.currentItem.img}`)" :alt="$store.state.userData.currentItem.name"/>
+            <img class="itempopup-img" style="width: 12.5%" :src="require(`@/assets/${$store.state.userData.currentItem.img}`)" :alt="$store.state.userData.currentItem.prompt"/>
           </template>
           <template v-slot:item-text>
             {{ $store.state.userData.currentItem.prompt }}
@@ -58,6 +67,9 @@
           @refocus-on-puzzle="openPuzzlePopup()"
           @next-level="levelAdd()"
           @level-fail="$emit('gameEvent')"
+          @foundHat="getUserData()"
+          @puzzleInputWrong="alertWrongAnswer()"
+          @puzzleItemChosen="puzzleResponse"
           :puzzleAnswer="emittedPuzzleAnswer"
           :puzzleVisibility="puzzlePopupVisibility"
           :isPromptAnswered="isPuzzleQuestionCompleted"
@@ -74,7 +86,7 @@
                 {{ $store.state.userData.currentItem.prompt }}
           </template>
           <template v-slot:puzzle-img>
-            <img :src="require(`@/assets/${$store.state.userData.currentItem.img}`)" class="puzzlepopup-img" style="width: 15%; position: unset; margin: 1rem;" :alt="$store.state.userData.currentItem.name" />
+            <img :src="require(`@/assets/${$store.state.userData.currentItem.img}`)" class="puzzlepopup-img" style="width: 15%; position: unset; margin: 1rem;" :alt="$store.state.userData.currentItem.prompt" />
           </template>
           <template v-slot:puzzle-correct-text>
               {{ $store.state.userData.currentItem.puzzleAnsweredText }}
@@ -94,6 +106,13 @@
         </div>
         <font-awesome-icon v-if="$store.state.userData.level === 2 && !$store.state.userData.isIntro" @click="flashlight()" class="flashlight-btn" icon="power-off"></font-awesome-icon>
 
+        <div v-if="$store.state.userData.level === 4 && !$store.state.userData.isIntro" class="battery-meter">
+          <h2>{{ $store.state.userData.roofTime }}s left</h2>
+          <div class="charge-container">
+            <div class="charge" :style="{ width: timePercentage }"></div>
+          </div>
+        </div>
+
         <div class="game-overlay">
           <div
             class="game-container"
@@ -111,6 +130,7 @@
             <img
               :src="require(`@/assets/sprites/${playerAvatar}`)"
               class="player-avatar"
+              alt="A white-haired, red-eyed protagonist whom you play as."
             />
           </div>
 
@@ -118,7 +138,7 @@
             v-for="item in gameItems"
             :src="require(`@/assets/${item.img}`)"
             :style="{ left: item.margin, width: item.width, bottom: item.bottom, filter: item.filter }"
-            :alt="item"
+            :alt="item.prompt ? item.prompt : item.spriteAlt"
             :key="item.key"
             :class="'section' + item.section"
             class="item hide"
@@ -163,8 +183,10 @@ import {
   levelOneIntro,
   levelTwoIntro,
   levelThreeIntro,
+  levelFourIntro,
   levelFail,
   levelFailedAgain,
+  winterDialogue
 } from "../dialogue";
 
 export default {
@@ -248,7 +270,7 @@ export default {
       instruction: false,
       setting: false,
       isFlashlightOn: false,
-      fromSettings: "",
+      fromSettings: "25",
       fromSettingsTwo: "",
     };
   },
@@ -260,6 +282,9 @@ export default {
     },
     batteryPercentage() {
       return this.$store.state.userData.battery + "%";
+    },
+    timePercentage() {
+      return ((this.$store.state.userData.roofTime / 300) * 100) + "%";
     },
   },
   methods: {
@@ -279,10 +304,10 @@ export default {
         );
         this.gameItems.splice(duplicate, 1);
       });
-      this.$store.state.userData.solvedPuzzles.forEach(() => {
+      this.$store.state.userData.solvedPuzzles.forEach((solvedPuzzle) => {
         //marks previously solved puzzles as solved
         const solved = this.gameItems.findIndex(
-          (gameItem) => gameItem.id === 4
+          (gameItem) => gameItem.id === solvedPuzzle.id
         );
         this.gameItems[solved].isPuzzleCompleted = true;
       });
@@ -290,8 +315,27 @@ export default {
         this.locations[this.$store.state.userData.level - 1].assets[
           this.$store.state.userData.section - 1
         ].ost;
+
+      if (this.$store.state.userData.level === 3 && this.$store.state.userData.solvedPuzzles[0]) {
+        console.log("found winter")
+        this.$store.state.gameItems.gameItems[2].push({ //pushes to level 3 array
+          name: "Ghost of Winter",
+          id: 23,
+          section: 2,
+          position: 50,
+          margin: "50%",
+          widthInt: 20,
+          width: "20%",
+          bottom: "0%",
+          img: "sprites/lv3_winter.png",
+          isInteractable: false,
+          filter: null,
+          itemType: "character",
+          dialogueSprite: "lv3_winter.png",
+          dialogue: winterDialogue,
+        });
+      }
       this.unhideItem();
-      console.log(this.gameItems);
     },
     checkLevel() {
       const gameOverlay = document.querySelector(".game-overlay");
@@ -300,7 +344,7 @@ export default {
         this.$store.state.userData.lifeCount === 0 &&
         this.$store.state.userData.failedLevel === false
       ) {
-        this.$store.state.userData.lifeCount = 5;
+        this.$store.state.userData.lifeCount = 3;
         this.$store.state.userData.failedLevel = true;
         this.playAudio();
         this.eventMessage = "You hear a transmission over the intercom.";
@@ -323,6 +367,7 @@ export default {
           filter: null,
           itemType: "character",
           dialogueSprite: "sprite_dialogue_spookyriddl.png",
+          spriteAlt: "The dark silhouette of a spooky, mischievous character.",
           dialogue: levelFail,
         });
         this.itemInteract();
@@ -331,7 +376,7 @@ export default {
         this.$store.state.userData.lifeCount === 0 &&
         this.$store.state.userData.failedLevel === true
       ) {
-        this.$store.state.userData.lifeCount = 5;
+        this.$store.state.userData.lifeCount = 3;
         this.playAudio();
         this.eventMessage = "You hear a transmission over the intercom.";
         setTimeout(() => {
@@ -353,6 +398,7 @@ export default {
           filter: null,
           itemType: "character",
           dialogueSprite: "sprite_dialogue_spookyriddl.png",
+          spriteAlt: "The dark silhouette of a spooky, mischievous character.",
           dialogue: levelFailedAgain,
         });
         this.itemInteract();
@@ -387,6 +433,7 @@ export default {
                 filter: null,
                 itemType: "character",
                 dialogueSprite: "sprite_dialogue_spookyriddl.png",
+                spriteAlt: "The dark silhouette of a spooky, mischievous character.",
                 dialogue: levelOneIntro,
               });
               this.itemInteract();
@@ -404,7 +451,7 @@ export default {
           if (this.$store.state.userData.isIntro) {
             this.playAudio();
             this.enteredOnObject = true;
-            this.eventMessage = "You hear a transmission over the intercom.";
+            this.eventMessage = "You hear a transmission over an intercom.";
             setTimeout(() => {
               this.openEventPopup();
             }, 10);
@@ -423,6 +470,7 @@ export default {
               filter: null,
               itemType: "character",
               dialogueSprite: "sprite_dialogue_spookyriddl.png",
+              spriteAlt: "The dark silhouette of a spooky, mischievous character.",
               dialogue: levelTwoIntro,
             });
             this.itemInteract();
@@ -444,7 +492,7 @@ export default {
             this.playAudio();
             this.enteredOnObject = true;
             this.eventMessage =
-              "You hear a broken transmission over an intercom.";
+              "You hear a faint, garbled transmission over an intercom.";
             setTimeout(() => {
               this.openEventPopup();
             }, 10);
@@ -463,6 +511,7 @@ export default {
               filter: null,
               itemType: "character",
               dialogueSprite: "sprite_dialogue_spookyriddl.png",
+              spriteAlt: "The dark silhouette of a spooky, mischievous character.",
               dialogue: levelThreeIntro,
             });
             this.itemInteract();
@@ -472,6 +521,50 @@ export default {
           gameOverlay.classList.add("fog");
           this.playAudio();
         }
+
+        if (this.$store.state.userData.level === 4) {
+          console.log("level 4");
+          if (this.$store.state.userData.isIntro) {
+            setTimeout(() => {
+              document.querySelector(".main").classList.add("game-intro");
+            }, 0);
+            this.playAudio();
+            this.enteredOnObject = true;
+            this.eventMessage =
+              "No transmission this time. You hear a familiar voice very clearly.";
+            setTimeout(() => {
+              this.openEventPopup();
+            }, 10);
+            this.gameItems.unshift({
+              intro: true,
+              name: "Riddler",
+              id: -1,
+              section: 2,
+              position: 45,
+              margin: "45%",
+              widthInt: 20,
+              width: "20%",
+              bottom: "5%",
+              img: "sprites/sprite_dialogue_riddl.png",
+              isInteractable: false,
+              filter: null,
+              itemType: "character",
+              dialogueSprite: "sprite_dialogue_riddl.png",
+              spriteAlt: "The spooky silhouette from earlier is a purple-haired character with a top hat and purple suit.",
+              dialogue: levelFourIntro,
+            });
+            this.itemInteract();
+            this.onEnter();
+          }
+          document.querySelector(".main").classList.add("game-start");
+
+          this.playAudio();
+        }
+
+      setTimeout(() => {
+        this.$emit('doneLoading'); //shuts off loading screen
+      }, 2000);
+      
       }
     },
     enablePlayerMovement() {
@@ -572,7 +665,7 @@ export default {
     },
     playAudio() {
       const audio = document.getElementById("audio-bgm");
-      audio.volume = 0.25;
+      audio.volume = this.fromSettings / 100;
       setTimeout(() => {
         audio.play();
         audio.loop = true;
@@ -648,6 +741,9 @@ export default {
           }, 10);
         }
       }
+    setTimeout(() => {
+      this.unhideItem();
+    }, 0);
     },
     selectInventoryItem(item) {
       this.eventMessage = `You have selected ${item.name}. Its description goes as such: "${item.prompt}"`;
@@ -680,6 +776,28 @@ export default {
       this.enteredOnObject = false;
       this.puzzlePopupVisibility = false;
       this.enablePlayerMovement();
+      if(this.$store.state.userData.level === 3 && this.$store.state.userData.solvedPuzzles[0]) {
+        this.eventMessage = "Brrrrrr... What was that freezing cold current just now?";
+        setTimeout(() => {
+          this.openEventPopup();
+        }, 10);
+        setTimeout(() => {
+          document.querySelector(".main").classList.add("winter");
+        }, 0);
+      }
+    },
+    alertWrongAnswer() {
+      this.eventMessage = "Oh no... That wasn't correct. Now I lost a soul point.";
+      setTimeout(() => {
+        this.openEventPopup();
+      }, 10);
+    },
+    puzzleResponse(message) {
+      console.log(message)
+      this.eventMessage = message;
+      setTimeout(() => {
+        this.openEventPopup();
+      }, 10);
     },
     openItemPopup() {
       this.$refs.itemPopupBox.$el.focus();
@@ -695,6 +813,9 @@ export default {
     closeEventPopup() {
       this.eventMessage = null;
       this.enablePlayerMovement();
+       if (this.$store.state.userData.level === 3 && document.querySelector(".main").classList.contains("winter")) {
+         document.querySelector(".main").classList.remove("winter");
+       }
     },
     textboxShow() {
       this.textbox = true;
@@ -750,11 +871,17 @@ export default {
         if (this.$store.state.userData.level === 2) {
           document.querySelector(".game-overlay").classList.add("dark");
         }
+        if (this.$store.state.userData.level === 4) {
+          this.roofTime();
+        }
         this.textbox = false;
         this.enteredOnObject = false;
         this.textCount = -1;
         this.$store.state.userData.isIntro = false;
       }
+    },
+    textBack(){
+       this.textCount = (this.textCount - 1);
     },
     levelAdd() {
       this.$store.commit("incrementLevel");
@@ -762,12 +889,13 @@ export default {
       //reset vuex state
       this.$store.state.userData.section = 2;
       this.$store.state.userData.leftValue = 45;
-      this.$store.state.userData.lifeCount = 5;
+      this.$store.state.userData.lifeCount = 3;
       this.$store.state.userData.currentItem = null;
       this.$store.state.userData.inventory = [];
       this.$store.state.userData.battery = 100;
       this.$store.state.userData.isIntro = true;
       this.$store.state.userData.solvedPuzzles = [];
+      this.$store.state.userData.roofTime = 300;
 
       this.$emit("gameEvent");
       this.unhideItem();
@@ -778,12 +906,14 @@ export default {
 
       this.$store.state.userData.section = 2;
       this.$store.state.userData.leftValue = 45;
-      this.$store.state.userData.lifeCount = 5;
+      this.$store.state.userData.lifeCount = 3;
       this.$store.state.userData.currentItem = null;
       this.$store.state.userData.inventory = [];
       this.$store.state.userData.isIntro = true;
       this.$store.state.userData.battery = 100;
       this.$store.state.userData.solvedPuzzles = [];
+      this.$store.state.userData.roofTime = 300;
+
       this.$emit("gameEvent");
       this.unhideItem();
     },
@@ -809,6 +939,24 @@ export default {
         document.querySelector(".game-overlay").style.filter = "brightness(.1)";
         this.enablePlayerMovement();
       }
+    },
+    roofTime() {
+      const intervalId = setInterval(() => {
+        if (this.$store.state.userData.roofTime === 0) {
+          clearInterval(intervalId);
+          this.$store.state.userData.lifeCount = 3;
+          this.$store.state.userData.section = 2;
+          this.$store.state.userData.leftValue = 45;
+          this.$store.state.userData.currentItem = null;
+          this.$store.state.userData.inventory = [];
+          this.$store.state.userData.battery = 100;
+          this.$store.state.userData.solvedPuzzles = [];
+          this.$store.state.userData.roofTime = 300;
+        this.$emit('gameEvent');
+        } else {
+          this.$store.state.userData.roofTime--;
+        }
+    }, 2000);
     },
     openPause() {
       if (
@@ -961,7 +1109,7 @@ img {
   z-index: -2;
   display: flex;
   position: absolute;
-  bottom: 10%;
+  bottom: 6%;
   left: var(--leftVar);
 }
 
@@ -1013,6 +1161,8 @@ img {
   min-height: 30%;
   padding: 2rem;
   padding-top: 1rem;
+  /* accounts for back button height */
+  padding-bottom: 4.5rem; 
   border-radius: 1rem;
 }
 .textbox-text,
@@ -1034,6 +1184,23 @@ img {
   position: absolute;
   bottom: 0;
   left: -20%;
+}
+.text-button-icons{
+  display: block;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 3;
+}
+.back-button{
+  width: 2rem;
+  height: 1.5rem;
+  margin: .5rem;
+  padding: 1rem;
+  background-color: var(--highlight-color);
+  color: #000;
+  border: #000 0.05rem solid;
+  border-radius: 0.7rem;
 }
 .item-popup img {
   position: unset;
@@ -1093,25 +1260,39 @@ img {
     opacity: 10%;
   }
   20% {
-    opacity: 70%;
-  }
-  30% {
-    opacity: 90%;
-  }
-  40% {
-    opacity: 95%;
-  }
-  50% {
-    opacity: 100%;
-  }
-  60% {
     opacity: 50%;
   }
+  30% {
+    opacity: 60%;
+  }
+  40% {
+    opacity: 75%;
+  }
+  50% {
+    opacity: 80%;
+  }
+  60% {
+    opacity: 30%;
+  }
   70% {
-    opacity: 70%;
+    opacity: 50%;
   }
   100% {
     opacity: 10%;
+  }
+}
+.winter {
+  animation: winterChill 5s ease-in-out infinite;
+}
+@keyframes winterChill {
+  0% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(2);
+  }
+  100% {
+    filter: brightness(1);
   }
 }
 
