@@ -52,7 +52,7 @@ export const state = {
         filter: null,
         itemType: "object",
         prompt: "It's a triangular glass prism. So pretty and shiny!",
-        chosenItemTextFalse: "When held up to the lantern, the prism split the light from the flame into a beautiful rainbow! But nothing beneficial happened otherwise.",
+        chosenItemTextFalse: "When held up to the lantern, the prism split the light from the flame into a beautiful rainbow! But nothing beneficial happened otherwise. Now I lost a soul point.",
       },
       {
         name: "Large Feather",
@@ -68,7 +68,7 @@ export const state = {
         filter: null,
         itemType: "object",
         prompt: "A large yet unexpectedly lightweight feather with beautiful blue hues. I wonder what kind of bird it came from.",
-        chosenItemTextFalse: "Unsurprisingly, nothing happens when you put a feather up to a lantern.",
+        chosenItemTextFalse: "Unsurprisingly, nothing happens when you put a feather up to a lantern. Now I lost a soul point.",
       },
       {
         name: "Bright Lantern",
@@ -106,7 +106,7 @@ export const state = {
         filter: null,
         itemType: "object",
         prompt: "It's a painting, dated 'February 1847', of some guy who seems important, but it's hard to tell who it is. If only vampires studied human history!",
-        chosenItemTextFalse: "Oh no! Holding the painting up to the lantern caused the paint to start melting! Not only did it not help, but now a piece of art has been sabotaged.",
+        chosenItemTextFalse: "Oh no! Holding the painting up to the lantern caused the paint to start melting! Not only did it not help, but now a piece of art has been sabotaged. Now I lost a soul point.",
       },
     ],
     [
@@ -306,7 +306,7 @@ export const state = {
         filter: null,
         itemType: "object",
         prompt: "Oooo, what a nice, sturdy fishing rod. I wish it had a prettier-looking lure at the end, but I guess a basic bobber will suffice.",
-        chosenItemTextFalse: "It seemed like I could use the fishing rod to hook whatever's in the reef, but the stupid bobber keeps pulling the fishing line towards the surface!",
+        chosenItemTextFalse: "It seemed like I could use the fishing rod to hook whatever's in the reef, but the stupid bobber keeps pulling the fishing line towards the surface! Now I lost a soul point.",
       },
       {
         name: "Mallet",
@@ -322,7 +322,7 @@ export const state = {
         filter: null,
         itemType: "object",
         prompt: "Now that's a mallet, alright. Like something outta a video game. Nice, wide ends perfect for a controlled smash.",
-        chosenItemTextFalse: "I can't smash an endangered coral reef with this mallet! That would harm an entire ecosystem!",
+        chosenItemTextFalse: "I can't smash an endangered coral reef with this mallet! That would harm an entire ecosystem! Now I lost a soul point.",
       },
       {
         name: "Sleek Shovel",
@@ -338,7 +338,7 @@ export const state = {
         filter: null,
         itemType: "object",
         prompt: "I never thought a shovel would capture my admiration, but it just happened. It's as sleek as a racecar. Perfect for digging in the sand and maybe for poking and prodding with that pointy end.",
-        chosenItemTextFalse: "I can't go carelessly prodding with this shovel! That would put an entire ecosystem at risk!",
+        chosenItemTextFalse: "I can't go carelessly prodding with this shovel! That would put an entire ecosystem at risk! Now I lost a soul point.",
       },
       {
         name: "Ghost of Spring",

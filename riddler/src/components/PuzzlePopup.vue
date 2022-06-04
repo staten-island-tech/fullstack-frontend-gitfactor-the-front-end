@@ -182,6 +182,7 @@ export default {
           console.log("taking away 1 heart");
           this.loseHeart();
           this.puzzleInput = "";
+          this.$emit("puzzleInputWrong");
         }
       }
     },

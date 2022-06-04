@@ -68,6 +68,7 @@
           @next-level="levelAdd()"
           @level-fail="$emit('gameEvent')"
           @foundHat="getUserData()"
+          @puzzleInputWrong="alertWrongAnswer()"
           @puzzleItemChosen="puzzleResponse"
           :puzzleAnswer="emittedPuzzleAnswer"
           :puzzleVisibility="puzzlePopupVisibility"
@@ -774,6 +775,12 @@ export default {
           document.querySelector(".main").classList.add("winter");
         }, 0);
       }
+    },
+    alertWrongAnswer() {
+      this.eventMessage = "Oh no... That wasn't correct. Now I lost a soul point.";
+      setTimeout(() => {
+        this.openEventPopup();
+      }, 10);
     },
     puzzleResponse(message) {
       console.log(message)
