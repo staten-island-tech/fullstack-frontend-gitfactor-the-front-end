@@ -114,12 +114,12 @@ export const levelTwoIntro = [
   },
   {
     name: "Riddler",
-    text: "Yes you do, you pickle, there's literally a bright yellow button on the top left of your screen!",
+    text: "Yes you do, you pickle, wait until I finish talking and there will literally be a bright yellow button on the top left of your screen!",
     color: "riddler",
   },
   {
     name: "Me",
-    text: "Oh, fair.",
+    text: "How was I supposed to know you'd give it to me later? You made it sound like I already had it!",
     color: "protagonist",
   },
   {
