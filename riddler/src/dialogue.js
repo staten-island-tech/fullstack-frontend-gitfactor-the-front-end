@@ -358,7 +358,7 @@ export const levelFourIntro = [
   },
   {
     name: "Riddler",
-    text: "That's it, I'm just going start. This tower is my home, and you, delectable little idiot, are my dinner!",
+    text: "That's it, I'm moving on. This tower is my home, and you, delectable little idiot, are my dinner!",
     color: "riddler",
   },
   {
@@ -401,7 +401,7 @@ export const epilogue = [
   },
   {
     name: "???",
-    text: "No, you doofus, stop listening! Graaaaaaaah!",
+    text: "No, you imbecile, stop listening! Graaaaaaaah!",
     color: "riddler",
   },
   {
@@ -410,13 +410,23 @@ export const epilogue = [
     color: "protagonist",
   },
   {
+    name: "???",
+    text: "You think you can shake off centuries of trauma?? I saved you from your screwed up world. From all the pain. I took PITY on you! Don't think for a second you'd be able to live without me controlling you!",
+    color: "riddler",
+  },
+  {
     name: "Riddler",
-    text: "...",
+    text: "Stop yelling in my head! Don't... tell me... what to do...",
+    color: "riddler",
+  },
+  {
+    name: "Riddler",
+    text: ". . .",
     color: "riddler",
   },
   {
     name: "Me",
-    text: "Erm, Riddler? Are you alright? That thing just flew out of your... hat?",
+    text: "Erm, Riddler? Are you alright? I think a dark cloud just flew out of your... hat?",
     color: "protagonist",
   },
   {
@@ -516,8 +526,18 @@ export const epilogue = [
   },
   {
     name: "Me",
-    text: "Hey, wait a minute!",
+    text: "Hey, wait a minute! I was gonna say, it's nice to meet you, Ridley.",
     color: "protagonist",
+  },
+  {
+    name: "Me",
+    text: "Hehehe. Ridley.",
+    color: "protagonist",
+  },
+  {
+    name: "Ridley",
+    text: "I despise you.",
+    color: "riddler",
   },
 ];
 

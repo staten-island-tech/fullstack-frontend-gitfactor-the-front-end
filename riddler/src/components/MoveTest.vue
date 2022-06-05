@@ -788,7 +788,8 @@ export default {
       this.enablePlayerMovement();
       if (
         this.$store.state.userData.level === 3 &&
-        this.$store.state.userData.solvedPuzzles[0]
+        this.$store.state.userData.solvedPuzzles[0] &&
+        this.$store.state.userData.currentItem.id === 14
       ) {
         this.eventMessage =
           "Brrrrrr... What was that freezing cold current just now?";
@@ -889,7 +890,7 @@ export default {
         if (this.$store.state.userData.level === 2) {
           document.querySelector(".game-overlay").classList.add("dark");
         }
-        if (this.$store.state.userData.level === 4) {
+        if (this.$store.state.userData.level === 4 && this.$store.state.userData.isIntro) {
           this.roofTime();
         }
         if (this.$store.state.userData.level === 5) {
@@ -980,7 +981,7 @@ export default {
         } else {
           this.$store.state.userData.roofTime--;
         }
-      }, 2000);
+    }, 1000);
     },
     openPause() {
       if (
