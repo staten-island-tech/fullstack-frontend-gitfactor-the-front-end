@@ -358,7 +358,7 @@ export const levelFourIntro = [
   },
   {
     name: "Riddler",
-    text: "That's it, I'm just going start. This tower is my home, and you, delectable little idiot, are my dinner!",
+    text: "That's it, I'm moving on. This tower is my home, and you, delectable little idiot, are my dinner!",
     color: "riddler",
   },
   {
