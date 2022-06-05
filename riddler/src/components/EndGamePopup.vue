@@ -1,71 +1,36 @@
 <template>
-  <div class="endgame-popup hide" :key="titleText" 
+  <div class="endgame-popup" 
     tabindex="-1">
-      <h2>{{titleText}}</h2>
-      <h3>You may restart from a previous level or enter the pause menu.</h3>
+    <h3>Congratulations, you have bested the Riddler's Tower!</h3>
+    <h4>Enjoy this special photo to commemorate the occasion.</h4>
     <img src="../assets/victory.png" class="victory-cg" alt="victory image of Riddler and Player Character taking a picture outside of the burning tower.">
-      <div class="btn-group" :key="titleText">
+      <h3>Replay from a previous level?</h3>
+      <div class="btn-group">
          <button @click="warpLevel(1)" class="reset-btn">Start from Lv1</button>
          <button @click="warpLevel(2)" class="reset-btn">Start from Lv2</button>
          <button @click="warpLevel(3)" class="reset-btn">Start from Lv3</button>
-         <button @click="warpLevel(4)" class="reset-btn">Start from the Roof</button>
+         <button @click="warpLevel(4)" class="reset-btn">Start from Roof</button>
+         <button @click="warpLevel(5)" class="reset-btn">Start from Epilogue</button>
       </div>
 
   </div>
 </template>
 
 <script>
-/* reset button: wipes user data from the store, essentially the same as the "give up" but without the giving up 
-
-next floor button: adds 1 to floor
-
-when popup is triggered, if floor < 3 then send out the dulled version. if floor = 3 then send out the give up version
-
-button that gets replaced is reset/next floor, save + quit stays the same
-
-*/
-
 export default {
-  props: ["endGamePopup"],
-  data() {
-    return {
-      titleText: "Congratulations, you have bested the Riddler's Tower!",
-    };
-  },
+  name: "EndGamePopup",
   methods: {
-    prepEndGame() {
-      setTimeout(() => {
-        if (this.$store.state.userData.level >= 4) {
-          this.titleText = "You have defeated the Riddler!";
-          this.leftBtnText = this.buttonData.saveQuit.textEnd;
-          this.rightBtnText = this.buttonData.nextLevel.textEnd;
-          document.getElementById("end-btn").classList.add("save-btn");
-          console.log(document.getElementById("end-btn"));
-        } else {
-          this.titleText = "The Door of Dimensions beckons...";
-          this.leftBtnText = this.buttonData.saveQuit.textNormal;
-          this.rightBtnText = this.buttonData.nextLevel.textNormal;
-        }
-      }, 100);
-    },
-    checkEndGame() {
-      if (this.$store.state.userData.level >= 3) {
-        this.$emit(this.buttonData.nextLevel.emitEnd);
-        document.getElementById("end-btn").classList.add("save-btn");
-      } else {
-        this.$emit(this.buttonData.nextLevel.emitNormal);
-      }
-    },
     warpLevel(chosenLevel) {
       this.$store.state.userData.level = chosenLevel;
       this.$store.state.userData.section = 2;
       this.$store.state.userData.leftValue = 45;
-      this.$store.state.userData.lifeCount = 5;
+      this.$store.state.userData.lifeCount = 3;
       this.$store.state.userData.currentItem = null;
       this.$store.state.userData.inventory = [];
       this.$store.state.userData.battery = 100;
       this.$store.state.userData.isIntro = true;
       this.$store.state.userData.solvedPuzzles = [];
+      this.$parent.$emit('gameEvent');
     }
   },
 };
@@ -75,18 +40,18 @@ export default {
 @import "../assets/global.css";
 
 .endgame-popup {
+  overflow: scroll;
+  position: absolute;
+  top: 0;
+  text-align: center;
   width: 100%;
   height: 100%;
-  position: absolute;
-  bottom: 0%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: var(--dark-purple);
-  margin: 0 auto;
-  padding: 2rem;
+  padding: 5rem;
   border-radius: 1.5rem;
-  border: #deceff solid 0.3rem;
+  border: solid var(--highlight-color) 0.3rem;
+  background-color: var(--background-color);
+  -ms-overflow-style: none;
+  scrollbar-width: none;
   z-index: 3;
 }
 
@@ -99,18 +64,10 @@ export default {
   background-color: var(--highlight-color);
   font-size: var(--h4);
   font-weight: 700;
-  margin: 5% 2rem 10% 2rem;
+  margin: 1rem;
   padding: 1.5rem 2rem;
   border: none;
   border-radius: 1rem;
   color: var(--background-color);
-}
-
-h2 {
-  margin-top: 6rem;
-}
-
-h3 {
-  color: var(--purple);
 }
 </style>

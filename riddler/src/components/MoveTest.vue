@@ -1,8 +1,6 @@
 <template>
   <div class="game-page" :key="$store.state.userData.level">
-
-
-
+    
     <button @click="levelAdd" class="mobile-button">l+ratio</button>
     <button @click="levelMinus" class="mobile-button">l-1</button>
 
@@ -48,7 +46,7 @@
           <p class="textbox-text typing-class">{{ $store.state.userData.currentItem.dialogue[textCount].text }}</p>
         </div>
         
-            <EndGamePopup/>
+        <EndGamePopup v-if="$store.state.userData.gameFinished"/>
 
             
         <EventPopup :eventText="eventMessage" @closeEventClick="closeEventPopup()" v-if="eventMessage" ref="eventPopupBox"/>
@@ -187,6 +185,7 @@ import AboutSection from './AboutSection.vue';
 import PuzzlePopup from "./PuzzlePopup.vue";
 import EventPopup from "./EventPopup.vue";
 import EndGamePopup from "./EndGamePopup.vue";
+
 import {
   levelOneIntro,
   levelTwoIntro,
@@ -876,6 +875,10 @@ export default {
         }
         if (this.$store.state.userData.level === 4) {
           this.roofTime();
+        }
+        if (this.$store.state.userData.level === 5) {
+          this.$store.state.userData.gameFinished = true;
+          console.log("victory")
         }
         this.textbox = false;
         this.enteredOnObject = false;

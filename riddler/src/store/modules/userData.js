@@ -11,6 +11,7 @@ export const state = {
   solvedPuzzles: [],
   failedLevel: false,
   roofTime: 300,
+  gameFinished: false,
 };
 
 export const mutations = {

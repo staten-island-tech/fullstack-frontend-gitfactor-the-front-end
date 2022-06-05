@@ -79,7 +79,7 @@ export default {
     return {
       puzzleInput: "",
       isDisabled: false,
-      puzzleInputMaxLength: 10,
+      puzzleInputMaxLength: 12,
       puzzleButtonVisibility: false,
       puzzleInputDisabled: false,
       selectedItemDiv: false,
@@ -119,7 +119,7 @@ export default {
           this.puzzleInputDisabled = false;
           this.selectedItemDiv = false;
           this.puzzleInputVisibility = true;
-          this.puzzleInputMaxLength = 10;
+          this.puzzleInputMaxLength = 12;
         } else if (this.puzzleType === 3) {
           console.log("puzzle 3");
           this.puzzleButtonVisibility = false;
