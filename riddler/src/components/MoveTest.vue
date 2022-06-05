@@ -958,6 +958,7 @@ export default {
           this.$store.state.userData.battery = 100;
           this.$store.state.userData.solvedPuzzles = [];
           this.$store.state.userData.roofTime = 300;
+          this.$store.state.userData.failedLevel = true;
         this.$emit('gameEvent');
         } else {
           this.$store.state.userData.roofTime--;
