@@ -1,12 +1,13 @@
 <template>
   <div class="endgame-popup hide" :key="titleText" 
     tabindex="-1">
-      <h2>{{titleText}}</h2>''
-    <img src="../assets/victory.png" class="victory cg" alt="victory image of Riddler and Player Character taking a picture outside of the burning tower.">
+      <h2>{{titleText}}</h2>
+      <h3>You may restart from a previous level or enter the pause menu.</h3>
+    <img src="../assets/victory.png" class="victory-cg" alt="victory image of Riddler and Player Character taking a picture outside of the burning tower.">
       <div class="btn-group" :key="titleText">
-         <button @click="warpLevelOne()" class="reset-btn">{{leftBtnText}}</button>
-         <button @click="warpLevelTwo()" class="reset-btn">{{rightBtnText}}</button>
-         <button @click="warpLevelThree()" class="reset-btn">{{rightBtnText}}</button>
+         <button @click="warpLevelOne()" class="reset-btn">Start from Lv1</button>
+         <button @click="warpLevelTwo()" class="reset-btn">Start from Lv2</button>
+         <button @click="warpLevelThree()" class="reset-btn">Start from Lv3</button>
       </div>
 
   </div>
@@ -78,14 +79,15 @@ export default {
 }
 
 .victory-cg {
-  width: 30%;
+  height: 50%;
+  margin: 2rem;
 }
 
 .reset-btn {
   background-color: var(--highlight-color);
   font-size: var(--h4);
   font-weight: 700;
-  margin: 10% 2rem 10% 2rem;
+  margin: 5% 2rem 10% 2rem;
   padding: 1.5rem 2rem;
   border: none;
   border-radius: 1rem;
@@ -93,7 +95,7 @@ export default {
 }
 
 h2 {
-  margin-top: 15rem;
+  margin-top: 6rem;
 }
 
 h3 {
