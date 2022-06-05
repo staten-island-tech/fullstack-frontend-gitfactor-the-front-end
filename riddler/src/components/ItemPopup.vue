@@ -30,6 +30,7 @@ export default {
 @import "../assets/global.css";
 
 .item-popup {
+  overflow: scroll;
   position: absolute;
   top: 0;
   text-align: center;

@@ -50,6 +50,7 @@ export default {
     border-radius: 1.5rem;
   }
   .inventory-container button {
+    margin-right: 100%;
     background-color: unset;
     border: none;
     color: #fff;
@@ -74,9 +75,10 @@ export default {
 
 @media only screen and (max-width: 768px) {
   .inventory-container {
+    overflow: scroll;
+    width: 80vw;
     margin: 0;
     min-height: 0;
-    width: fit-content;
   }
   .inventory {
     display: flex;

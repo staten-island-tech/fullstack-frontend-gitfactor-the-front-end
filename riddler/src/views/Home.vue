@@ -1,8 +1,9 @@
 <template>
   <div class="background">
-    <EventPopup @closeEventClick="nextLevel()" :eventText="eventMessage" v-if="eventMessage"/>
+  <PageLoader v-show="isLoading"/>
+  <EventPopup @closeEventClick="nextLevel()" :eventText="eventMessage" v-if="eventMessage"/>
     <div class="home" v-if="isLoggedIn">
-      <MoveTest @gameEvent="updateData()" class="game" />
+      <MoveTest @gameEvent="updateData()" @doneLoading="isLoading = false" class="game" />
       <div class="solid"></div>
     </div>
   </div>
@@ -11,15 +12,17 @@
 
 <script>
 import MoveTest from "@/components/MoveTest.vue";
+import PageLoader from "@/components/PageLoader.vue";
 import EventPopup from '../components/EventPopup.vue';
 
 export default {
   name: "Home",
   components: {
-    MoveTest, EventPopup
+    MoveTest, PageLoader, EventPopup
   },
   data() {
     return {
+      isLoading: true,
       isLoggedIn: false,
       userdata: this.$auth.user,
       eventMessage: null,
@@ -41,7 +44,7 @@ export default {
         });
         const data = await response.json();
         console.log(data);
-        if (Object.prototype.hasOwnProperty.call(data, "failedLevel")) { //checks if user already logged in 
+        if (Object.prototype.hasOwnProperty.call(data, "roofTime")) { //checks if user already logged in 
           this.$store.commit('updateState', data);
           console.log("logging in")
         } else {
@@ -55,12 +58,13 @@ export default {
     },
     async updateData() {
       const userId = this.userdata.sub.replace("auth0|", "");
-      console.log(this.$store.state.userData)
       try {
+        const token = await this.$auth.getTokenSilently();
         const response = await fetch(`http://localhost:3000/api/index/update/${userId}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(this.$store.state.userData),
         });
@@ -81,24 +85,7 @@ export default {
 
 <style scoped>
 @import "../assets/global.css";
-.btn {
-  padding: .8rem 1.2rem;
-  margin-top: 2rem;
-  margin-left: 2rem;
-  font-size: 1.4rem;
-  font-weight: 400;
-  line-height: 1.5;
-  border: none;
-  cursor: pointer;
-  min-width: 10rem;
-  border-radius: .4rem;
-  font-weight: bold;
-}
 
-.btn-secondary {
-  background: #aaa;
-  color: white;
-}
 .player {
   position: relative;
   top: 0%;

@@ -87,6 +87,8 @@ export default {
 
       puzzlePromptAnswered: null, //give each puzzle a string value
 
+      puzzle3ChosenItemText:"",
+
       buttonValues: [],
     };
   },
@@ -131,18 +133,41 @@ export default {
     },
     checkAnswerClick() {
       if (this.puzzleType === 3) {
+        //change the visibility of the div but i cant find it rn....
         if (this.inventoryItem.name === this.puzzleAnswer) {
           console.log("puzzle 3 answered correctly");
           this.$store.state.userData.currentItem.puzzleCompleted = true;
           const solvedPuzzle = this.$store.state.userData.currentItem;
           this.$store.state.userData.solvedPuzzles.push(solvedPuzzle); //tracks solved puzzles so they will stay solved on re-login
           this.puzzlePromptAnswered = true;
-          this.$emit("refocus-on-puzzle");
+          this.$emit("refocus-on-puzzle"); //this might need to be removed cuz i want to refocus on teh alert thing
           this.levelTransition();
+          this.puzzle3ChosenItemText = this.inventoryItem.chosenItemTextCorrect;
+          if (this.puzzleAnswer === "Fish Food") {
+            this.$store.state.userData.inventory.push({
+              name: "Fish in a Hat",
+              id: 22,
+              section: 3,
+              position: 60,
+              margin: "60%",
+              widthInt: 15,
+              width: "15%",
+              bottom: "10%",
+              img: "lv3_fish.png",
+              isInteractable: false,
+              filter: null,
+              itemType: "object",
+              prompt: "A friendly fish wearing a comically small hat.",
+            });
+            this.$emit('foundHat');
+          }
         } else {
           this.loseHeart();
+          this.puzzle3ChosenItemText = this.inventoryItem.chosenItemTextFalse;
         }
-      } else {
+        this.$emit('puzzleItemChosen', this.puzzle3ChosenItemText);
+      } 
+      else {
         const puzzleAnswerInput = this.puzzleInput.trim().toLowerCase();
         console.log(puzzleAnswerInput);
 
@@ -157,6 +182,7 @@ export default {
           console.log("taking away 1 heart");
           this.loseHeart();
           this.puzzleInput = "";
+          this.$emit("puzzleInputWrong");
         }
       }
     },
@@ -192,6 +218,7 @@ export default {
         this.$store.state.userData.inventory = [];
         this.$store.state.userData.battery = 100;
         this.$store.state.userData.solvedPuzzles = [];
+        this.$store.state.userData.roofTime = 300;
         this.$emit("level-fail");
       }
     },
@@ -210,6 +237,7 @@ button:disabled:hover {
   filter: brightness(1);
 }
 .popup-container {
+  overflow: scroll;
   position: absolute;
   top: 0;
   text-align: center;
@@ -221,7 +249,6 @@ button:disabled:hover {
   border: solid var(--highlight-color) 0.3rem;
   background-color: var(--background-color);
   z-index: 1;
-  overflow: scroll;
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
@@ -263,7 +290,7 @@ input {
 }
 input {
   margin: 5rem 1.5rem;
-  width: 30rem;
+  max-width: 30rem;
 }
 .puzzle-submit-btn {
   background-color: var(--highlight-color);
