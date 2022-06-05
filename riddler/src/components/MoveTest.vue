@@ -181,7 +181,7 @@ import ItemPopup from "./ItemPopup.vue";
 import PauseMenu from "./PauseMenu.vue";
 import Instructions from "./Instructions.vue";
 import Settings from "./Settings.vue";
-import AboutSection from './AboutSection.vue';
+import AboutSection from "./AboutSection.vue";
 import PuzzlePopup from "./PuzzlePopup.vue";
 import EventPopup from "./EventPopup.vue";
 import EndGamePopup from "./EndGamePopup.vue";
@@ -218,7 +218,7 @@ export default {
     this.itemInteract();
     this.checkLevel();
     setTimeout(() => {
-      this.$emit('doneLoading'); //shuts off loading screen
+      this.$emit("doneLoading"); //shuts off loading screen
     }, 2000);
   },
   data() {
@@ -261,9 +261,9 @@ export default {
         },
         {
           assets: [
-            { id: 1, img: "bg_4_a.png", ost: "lv04" },
-            { id: 2, img: "bg_4_b.png", ost: "lv04" },
-            { id: 3, img: "bg_4_c.png", ost: "lv04" },
+            { id: 1, img: "bg_4_a.png", ost: "lv05" },
+            { id: 2, img: "bg_4_b.png", ost: "lv05" },
+            { id: 3, img: "bg_4_c.png", ost: "lv05" },
           ],
         },
       ],
@@ -303,7 +303,7 @@ export default {
       return this.$store.state.userData.battery + "%";
     },
     timePercentage() {
-      return ((this.$store.state.userData.roofTime / 300) * 100) + "%";
+      return (this.$store.state.userData.roofTime / 300) * 100 + "%";
     },
   },
   methods: {
@@ -335,9 +335,13 @@ export default {
           this.$store.state.userData.section - 1
         ].ost;
 
-      if (this.$store.state.userData.level === 3 && this.$store.state.userData.solvedPuzzles[0]) {
-        console.log("found winter")
-        this.$store.state.gameItems.gameItems[2].push({ //pushes to level 3 array
+      if (
+        this.$store.state.userData.level === 3 &&
+        this.$store.state.userData.solvedPuzzles[0]
+      ) {
+        console.log("found winter");
+        this.$store.state.gameItems.gameItems[2].push({
+          //pushes to level 3 array
           name: "Ghost of Winter",
           id: 23,
           section: 2,
@@ -422,7 +426,7 @@ export default {
         });
         this.itemInteract();
         this.onEnter();
-      } 
+      }
       if (this.$store.state.userData.level === 1) {
         console.log("level 1");
         if (this.$store.state.userData.isIntro) {
@@ -452,7 +456,8 @@ export default {
               filter: null,
               itemType: "character",
               dialogueSprite: "sprite_dialogue_spookyriddl.png",
-              spriteAlt: "The dark silhouette of a spooky, mischievous character.",
+              spriteAlt:
+                "The dark silhouette of a spooky, mischievous character.",
               dialogue: levelOneIntro,
             });
             this.itemInteract();
@@ -489,7 +494,8 @@ export default {
             filter: null,
             itemType: "character",
             dialogueSprite: "sprite_dialogue_spookyriddl.png",
-            spriteAlt: "The dark silhouette of a spooky, mischievous character.",
+            spriteAlt:
+              "The dark silhouette of a spooky, mischievous character.",
             dialogue: levelTwoIntro,
           });
           this.itemInteract();
@@ -530,7 +536,8 @@ export default {
             filter: null,
             itemType: "character",
             dialogueSprite: "sprite_dialogue_spookyriddl.png",
-            spriteAlt: "The dark silhouette of a spooky, mischievous character.",
+            spriteAlt:
+              "The dark silhouette of a spooky, mischievous character.",
             dialogue: levelThreeIntro,
           });
           this.itemInteract();
@@ -561,7 +568,7 @@ export default {
         }
         this.playAudio();
       }
-      
+
       if (this.$store.state.userData.level === 5) {
         console.log("level 5");
         this.itemInteract();
@@ -743,9 +750,9 @@ export default {
           }, 10);
         }
       }
-    setTimeout(() => {
-      this.unhideItem();
-    }, 0);
+      setTimeout(() => {
+        this.unhideItem();
+      }, 0);
     },
     selectInventoryItem(item) {
       this.eventMessage = `You have selected ${item.name}. Its description goes as such: "${item.prompt}"`;
@@ -778,8 +785,12 @@ export default {
       this.enteredOnObject = false;
       this.puzzlePopupVisibility = false;
       this.enablePlayerMovement();
-      if(this.$store.state.userData.level === 3 && this.$store.state.userData.solvedPuzzles[0]) {
-        this.eventMessage = "Brrrrrr... What was that freezing cold current just now?";
+      if (
+        this.$store.state.userData.level === 3 &&
+        this.$store.state.userData.solvedPuzzles[0]
+      ) {
+        this.eventMessage =
+          "Brrrrrr... What was that freezing cold current just now?";
         setTimeout(() => {
           this.openEventPopup();
         }, 10);
@@ -789,13 +800,14 @@ export default {
       }
     },
     alertWrongAnswer() {
-      this.eventMessage = "Oh no... That wasn't correct. Now I lost a soul point.";
+      this.eventMessage =
+        "Oh no... That wasn't correct. Now I lost a soul point.";
       setTimeout(() => {
         this.openEventPopup();
       }, 10);
     },
     puzzleResponse(message) {
-      console.log(message)
+      console.log(message);
       this.eventMessage = message;
       setTimeout(() => {
         this.openEventPopup();
@@ -815,9 +827,12 @@ export default {
     closeEventPopup() {
       this.eventMessage = null;
       this.enablePlayerMovement();
-       if (this.$store.state.userData.level === 3 && document.querySelector(".main").classList.contains("winter")) {
-         document.querySelector(".main").classList.remove("winter");
-       }
+      if (
+        this.$store.state.userData.level === 3 &&
+        document.querySelector(".main").classList.contains("winter")
+      ) {
+        document.querySelector(".main").classList.remove("winter");
+      }
     },
     textboxShow() {
       this.textbox = true;
@@ -878,7 +893,7 @@ export default {
         }
         if (this.$store.state.userData.level === 5) {
           this.$store.state.userData.gameFinished = true;
-          console.log("victory")
+          console.log("victory");
         }
         this.textbox = false;
         this.enteredOnObject = false;
@@ -886,8 +901,8 @@ export default {
         this.$store.state.userData.isIntro = false;
       }
     },
-    textBack(){
-       this.textCount = (this.textCount - 1);
+    textBack() {
+      this.textCount = this.textCount - 1;
     },
     levelAdd() {
       this.$store.commit("incrementLevel");
@@ -959,11 +974,11 @@ export default {
           this.$store.state.userData.solvedPuzzles = [];
           this.$store.state.userData.roofTime = 300;
           this.$store.state.userData.failedLevel = true;
-        this.$emit('gameEvent');
+          this.$emit("gameEvent");
         } else {
           this.$store.state.userData.roofTime--;
         }
-    }, 2000);
+      }, 2000);
     },
     openPause() {
       if (
@@ -1175,7 +1190,7 @@ img {
   padding: 2rem;
   padding-top: 1rem;
   /* accounts for back button height */
-  padding-bottom: 4.5rem; 
+  padding-bottom: 4.5rem;
   border-radius: 1.5rem;
 }
 .textbox-text,
@@ -1208,7 +1223,7 @@ img {
 .back-button {
   width: 2rem;
   height: 1.5rem;
-  margin: .5rem;
+  margin: 0.5rem;
   padding: 1rem;
   background-color: var(--highlight-color);
   color: #000;

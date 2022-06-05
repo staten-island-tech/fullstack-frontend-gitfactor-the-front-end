@@ -29,8 +29,8 @@
 
 <script>
 export default {
-  name: "Instructions"  
-}
+  name: "Instructions",
+};
 </script>
 
 <style scoped>
@@ -49,6 +49,11 @@ export default {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+.pause-menu::-webkit-scrollbar {
+  display: none;
+}
+
 .x-icon {
   position: absolute;
   top: 3rem;
@@ -60,7 +65,7 @@ export default {
   margin-bottom: 1rem;
   font-size: 3rem;
 }
-.instructions-content p, 
+.instructions-content p,
 .instructions-content strong {
   font-size: var(--h4);
   color: var(--highlight-color);

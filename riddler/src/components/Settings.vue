@@ -23,26 +23,26 @@
 
 <script>
 export default {
-  name: "Settings", 
+  name: "Settings",
   data() {
     return {
-      passingVolVal: '',
-      passingSFXVal: '',
-    }
+      passingVolVal: "",
+      passingSFXVal: "",
+    };
   },
   methods: {
-    volumeLog(){
-      const volumeSlider = document.querySelector(".slider1")
+    volumeLog() {
+      const volumeSlider = document.querySelector(".slider1");
       this.passingVolVal = volumeSlider.value;
-      this.$emit('emitVol', this.passingVolVal)
-    }, 
-    volumeLog2(){
-      const volumeSlider = document.querySelector(".slider2")
+      this.$emit("emitVol", this.passingVolVal);
+    },
+    volumeLog2() {
+      const volumeSlider = document.querySelector(".slider2");
       this.passingSFXVal = volumeSlider.value;
-      this.$emit('emitVol2', this.passingSFXVal)
-    }, 
+      this.$emit("emitVol2", this.passingSFXVal);
+    },
   },
-}
+};
 </script>
 
 <style scoped>
@@ -61,6 +61,11 @@ export default {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+.pause-menu::-webkit-scrollbar {
+  display: none;
+}
+
 .x-icon {
   position: absolute;
   top: 3rem;
@@ -98,7 +103,7 @@ export default {
 }
 /* The slider itself */
 .slider {
-  -webkit-appearance: none;  /* Override default CSS styles */
+  -webkit-appearance: none; /* Override default CSS styles */
   appearance: none;
   width: 100%; /* Full-width */
   height: 1.5rem; /* Specified height */
@@ -106,8 +111,8 @@ export default {
   background: var(--lightest-purple);
   outline: none; /* Remove outline */
   opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
-  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
-  transition: opacity .2s;
+  -webkit-transition: 0.2s; /* 0.2 seconds transition on hover */
+  transition: opacity 0.2s;
 }
 
 /* Mouse-over effects */
@@ -132,13 +137,13 @@ export default {
   background: var(--protagonist); /* Green background */
   cursor: pointer; /* Cursor on hover */
 }
-@media only screen and (max-width: 450px){
-  .settings-title{
+@media only screen and (max-width: 450px) {
+  .settings-title {
     font-size: 2rem;
   }
-.slider-label{
-  font-size: 1.5rem;
-  margin-top: 0.75rem;
-}
+  .slider-label {
+    font-size: 1.5rem;
+    margin-top: 0.75rem;
+  }
 }
 </style>

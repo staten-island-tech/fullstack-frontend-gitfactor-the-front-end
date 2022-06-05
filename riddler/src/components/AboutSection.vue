@@ -6,20 +6,33 @@
     <h2 class="pause-title instruction-title">About</h2>
     <div class="instructions-content">
       <p>
-        Welcome to Riddler on the Roof! We wanted to create a fun puzzle/escape room game with an engaging and endearing storyline. Hopefully you feel we achieved those goals well! 
+        Riddler on the Roof is a puzzle/escape room game created by GitFactor. It is a story-focused game driven by your own desire to learn more about the tower. 
       </p>
+
+      <p class="italic">Somehow, the forest you found refuge in houses a massive tower. You didn't see this tower from outside the forest, but it's definitely way too tall to be hidden. Somethings's strange about this tower, but as you approached the door, everything faded to black... </p>
+
+      <p>Programming by: Charley, Daniel, Lucy, Nika, Jake </p>
+      <p>Visuals by: Lucy</p>
+      <p>Audio by: PeriTune</p>
+      <p>Terrible Puns by: Daniel</p>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "AboutSection"  
-}
+  name: "AboutSection",
+};
 </script>
 
 <style scoped>
 @import "../assets/global.css";
+
+.italic {
+  font-style: italic;
+  text-align: left;
+  padding: 2rem 10rem 2rem 10rem;
+}
 
 .pause-menu {
   overflow: scroll;
@@ -34,6 +47,11 @@ export default {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+.pause-menu::-webkit-scrollbar {
+  display: none;
+}
+
 .x-icon {
   position: absolute;
   top: 3rem;
@@ -45,7 +63,7 @@ export default {
   margin-bottom: 1rem;
   font-size: 3rem;
 }
-.instructions-content p, 
+.instructions-content p,
 .instructions-content strong {
   font-size: var(--h4);
   color: var(--highlight-color);

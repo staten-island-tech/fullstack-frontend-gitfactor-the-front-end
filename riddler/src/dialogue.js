@@ -1,47 +1,57 @@
 export const levelOneIntro = [
   {
     name: "???",
-    text: "Muahaha. . .you must. . .dangerous puzzles. . .death. . .",
+    text: "Muahaha. . . you must. . . dangerous puzzles. . . death. . .",
     color: "riddler",
   },
   {
     name: "Me",
-    text: "Huh? What's happening? Where am I? I can't hear anything you're saying!!",
+    text: "Ugh, my head... Huh, did I just hear something?",
     color: "protagonist",
   },
   {
     name: "???",
-    text: "*Sighs* What a bozo. You're not supposed to understand everything clearly, it's a broken radio transmission!!!",
+    text: "MUAHAHA. . . YOU MUST. . . DANGEROUS PUZZLES. . . DEATH. . . ! ! !",
     color: "riddler",
   },
   {
     name: "Me",
-    text: "Oh, well I can hear you pretty well now.",
+    text: "Hey, are you trying to talk to me? I can't hear anything you're saying!",
     color: "protagonist",
   },
   {
     name: "???",
-    text: "*GASP* How dare you! You ruined it, you ruined everything! Not that it will help you, since you're still trapped here! Muahahaha!",
+    text: "Sigh, what a bozo. You're not supposed to understand everything clearly, it's a broken radio transmission!!!",
     color: "riddler",
   },
   {
     name: "Me",
-    text: "Huh. Where is here, by the way?",
+    text: "Oh, well I can hear you pretty well now, so it's clearly not broken.",
     color: "protagonist",
   },
   {
     name: "???",
-    text: "HA! This is my tower! You can use your keyboard's arrow keys to move around, or the arrow buttons on mobile. You can interact with items and puzzles using the 'Z' key, or the 'Z' button.",
+    text: "*GASP* How dare you! You've ruined it, you've ruined everything! Whatever, it's not like that will help you, since you're still trapped here! Muahahaha!",
     color: "riddler",
   },
   {
     name: "Me",
-    text: "And how do I get out of here?",
+    text: "Huh. So where is " + "\u0022" + "here" + "\u0022" + ", anyways?",
     color: "protagonist",
   },
   {
     name: "???",
-    text: "HA! Bold of you to assume you can! But I pride myself on my fairness, and so I'll tell you. You must solve the riddle at each level's door in order to progress through the tower. Eventually, you may be able to escape.",
+    text: "HA! This is my tower! You can use your keyboard's arrow keys to move around, or the arrow buttons on mobile. You can also interact with the items and puzzles I've meticulously placed using the 'Z' key, or the 'Z' button.",
+    color: "riddler",
+  },
+  {
+    name: "Me",
+    text: "Right, so... how do I get out of here?",
+    color: "protagonist",
+  },
+  {
+    name: "???",
+    text: "HA! Bold of you to assume you can! This tower is inescapable! But I pride myself on my fairness, so I've made a way to escape my inescapable tower. You must solve the riddle at each level's door in order to progress through the tower. Eventually, you may be able to escape.",
     color: "riddler",
   },
   {
@@ -56,12 +66,12 @@ export const levelOneIntro = [
   },
   {
     name: "???",
-    text: "Check out the instruction manual I provided in the pause menu for more help. After all, I don't want you to suck too bad. That would be no fun!",
+    text: "You should check out the instruction manual I provided in the pause menu for more help. After all, I don't want you to suck too bad. That would be no fun!",
     color: "riddler",
   },
   {
     name: "Me",
-    text: "And who are you?",
+    text: "Who are you, and why did you trap me in this tower?",
     color: "protagonist",
   },
   {
@@ -89,7 +99,7 @@ export const levelTwoIntro = [
   },
   {
     name: "Me",
-    text: "What do you mean?",
+    text: "My what?",
     color: "protagonist",
   },
   {
@@ -99,12 +109,22 @@ export const levelTwoIntro = [
   },
   {
     name: "Me",
-    text: "Oh, snap.",
+    text: "No, I meant... I don't have a flashlight.",
     color: "protagonist",
   },
   {
     name: "Riddler",
-    text: "Good luck! Muahaha!",
+    text: "Yes you do, you pickle, there's literally a bright yellow button on the top left of your screen!",
+    color: "riddler",
+  },
+  {
+    name: "Me",
+    text: "Oh, fair.",
+    color: "protagonist",
+  },
+  {
+    name: "Riddler",
+    text: "Oh my riddles I can't believe you made it through the last level. Whatever, you won't make it past this one! Good luck! Muahaha!",
     color: "riddler",
   },
 ];
@@ -125,8 +145,17 @@ export const levelThreeIntro = [
     text: "Blub blub blub.",
     color: "riddler",
   },
+  {
+    name: "Me",
+    text: "A water level, huh...",
+    color: "protagonist",
+  },
+  {
+    name: "Me",
+    text: "Something feels a bit different about this place.",
+    color: "protagonist",
+  },
 ];
-
 
 export const winterDialogue = [
   {
@@ -146,7 +175,7 @@ export const winterDialogue = [
   },
   {
     name: "Me",
-    text: "Winter, the other ghosts told me about a storm that happened in a village and I think I need to ask you about it.",
+    text: "Ghost of Winter, I need to ask you about the storm from all those years ago.",
     color: "protagonist",
   },
   {
@@ -156,17 +185,17 @@ export const winterDialogue = [
   },
   {
     name: "Me",
-    text: "You're that meteorologist they talked about, right? Can you tell me about what happened to that little boy? The one who sat by the lighthouse, the one who made you reconsider using the machine.",
+    text: "You're that meteorologist they talked about, right? Can you tell me about what happened to that little boy? The one who sat by the lighthouse... The one who made you reconsider using the machine.",
     color: "protagonist",
   },
   {
     name: "Ghost of Winter",
-    text: "Well, the storm ravaged the town. The trees, the flowers, our homes. But, remarkably, everyone in the village wasn't harmed. It all took a turn for the worse, though.",
+    text: "Well, the storm ravaged the town. The trees, the flowers, our homes. But remarkably, even after days of tumult, no one in the village was harmed. We were fools to let our guards down.",
     color: "winter",
   },
   {
     name: "Ghost of Winter",
-    text: "As we thought it was all coming to an end, a large, dark cumulonimbus cloud began to travel closer to us. As it approached the lighthouse, it formed into the shape of a giant hand.",
+    text: "As we thought it was all coming to an end, a large, dark cumulonimbus cloud began to travel closer to us. And as it approached the lighthouse, it formed into the shape of a giant hand.",
     color: "winter",
   },
   {
@@ -191,7 +220,7 @@ export const winterDialogue = [
   },
   {
     name: "Ghost of Winter",
-    text: "Why, it was that hat of yours. It was the only thing that could've brought that boy away from the lighthouse. He sat there, day after day, because one day during a tower-climb game, his hat flew away into the ocean. He never participated in those games again.",
+    text: "Well... It was the very hat in your hands. It was the only thing that could've brought that boy away from the lighthouse. He sat there, day after day, because one day during a tower-climb game, his hat flew away into the ocean. He never participated in those games again.",
     color: "winter",
   },
   {
@@ -201,7 +230,12 @@ export const winterDialogue = [
   },
   {
     name: "Ghost of Winter",
-    text: "Yes, to you, it may be nothing but a 'stupid hat.' But it was the hat his mother gave him in her last moments alive. He wished to treasure it for the rest of his life, and yet he lost it the first day he wore it.",
+    text:
+      "It was far more than simply a " +
+      "\u0022" +
+      "stupid hat." +
+      "\u0022" +
+      " It was the hat his mother gave to him in her last moments alive. He wished to treasure it for the rest of his life, and yet he lost it the first day he wore it.",
     color: "winter",
   },
   {
@@ -211,12 +245,22 @@ export const winterDialogue = [
   },
   {
     name: "Me",
-    text: "Oh my. I'm sorry for my rude comment earlier. I can see why the boy was so traumatized. And what happened to him in that storm cloud?",
+    text: "Oh my. I'm sorry for my rude comment earlier. But you seem quite familiar with this boy.",
     color: "protagonist",
   },
   {
     name: "Ghost of Winter",
-    text: "I don't know the details, but I have a guess. I believe that the storm took hold of the boy. Possessed him or something. Otherwise, he would've never trapped and played with the lives of innocent people like this.",
+    text: "Yes, I suppose I was closer to him than most. You could say... I was a friend of his mother. So when I saw who the storm had snatched up, I couldn't bring myself to activate that machine.",
+    color: "winter",
+  },
+  {
+    name: "Me",
+    text: "What happened to the boy after the storm grabbed him?",
+    color: "protagonist",
+  },
+  {
+    name: "Ghost of Winter",
+    text: "I don't know the details, but I have a guess. I believe that the storm took hold of the boy's mind. Possessed him or something. Otherwise, he would've never trapped and played with the lives of innocent people like this.",
     color: "winter",
   },
   {
@@ -236,7 +280,7 @@ export const winterDialogue = [
   },
   {
     name: "Ghost of Winter",
-    text: "Shoot.",
+    text: "Go on.",
     color: "winter",
   },
   {
@@ -246,7 +290,7 @@ export const winterDialogue = [
   },
   {
     name: "Ghost of Winter",
-    text: "*Smiles* Funny enough, I never got to name it. I was too busy with my machine and trying to find that hat. But I think it's fitting to call it the 'Riddler's Tempest.'",
+    text: "*Smiles* Funnily enough, I never got to name it. I was too busy with my machine and trying to find that hat. But I think it's fitting to call it the 'Riddler's Tempest.'",
     color: "winter",
   },
   {
@@ -259,7 +303,7 @@ export const winterDialogue = [
     text: "No, thank you for helping me make peace with myself. Good luck with escaping. If possible, keep that poor, little boy in mind when you face the Riddler. He may be evil now, but he is good deep down.",
     color: "winter",
   },
-]
+];
 
 export const levelFourIntro = [
   {
@@ -294,7 +338,7 @@ export const levelFourIntro = [
   },
   {
     name: "Riddler",
-    text: "Old life? THIS is my life! They're nothing but liars, you'd be a fool to believe them. Of course, that wouldn't be out of character for you.",
+    text: "Old life? Don't tell me you actually listened to what they said. They're nothing but lost souls, you'd be a fool to believe them. Wait, actually, that wouldn't be out of character for you.",
     color: "riddler",
   },
   {
@@ -304,7 +348,7 @@ export const levelFourIntro = [
   },
   {
     name: "Riddler",
-    text: "You are really testing my patience right now.",
+    text: "Seriously, how many times do I have to say this to you? Fake news is fake! In other words, I don't care!",
     color: "riddler",
   },
   {
@@ -314,7 +358,7 @@ export const levelFourIntro = [
   },
   {
     name: "Riddler",
-    text: "That's it. This tower is my home, and you, dear child, are my dinner!",
+    text: "That's it, I'm just going start. This tower is my home, and you, delectable little idiot, are my dinner!",
     color: "riddler",
   },
   {
@@ -324,7 +368,7 @@ export const levelFourIntro = [
   },
   {
     name: "Riddler",
-    text: "Muahaha! Sure, if you beat this level, you may be able to escape once and for all. But I'll give you a warning, not many people make it to the roof, so it may be a bit messy!",
+    text: "Muahaha! Sure, if you beat this level, I'll let you escape once and for all. But I'll give you a warning, not many people make it to the roof, so it may be a bit messy!",
     color: "riddler",
   },
   {
@@ -339,7 +383,7 @@ export const levelFourIntro = [
   },
   {
     name: "Me",
-    text: "WHAT??",
+    text: "Wait, what? This wasn't part of—",
     color: "protagonist",
   },
   {
@@ -352,12 +396,42 @@ export const levelFourIntro = [
 export const epilogue = [
   {
     name: "Riddler",
+    text: "Argh, that noise... stop it, stop! No, keep playing... I can remember, I can...",
+    color: "riddler",
+  },
+  {
+    name: "???",
+    text: "No, you doofus, stop listening! Graaaaaaaah!",
+    color: "riddler",
+  },
+  {
+    name: "Me",
+    text: "What the..?",
+    color: "protagonist",
+  },
+  {
+    name: "Riddler",
+    text: "...",
+    color: "riddler",
+  },
+  {
+    name: "Me",
+    text: "Erm, Riddler? Are you alright? That thing just flew out of your... hat?",
+    color: "protagonist",
+  },
+  {
+    name: "Riddler",
+    text: "That...",
+    color: "riddler",
+  },
+  {
+    name: "Riddler",
     text: "That song playing on the piano...how do you know it?",
     color: "riddler",
   },
   {
     name: "Me",
-    text: "I found the notes scattered across the room. It seems those ghosts may have been looking out for me all along. What's that song from?",
+    text: "I found the notes scattered across the room. It seems those ghosts may have been looking out for me all along. Did you regain your memories?",
     color: "protagonist",
   },
   {
@@ -382,7 +456,7 @@ export const epilogue = [
   },
   {
     name: "Riddler",
-    text: "Oh, all the people in the village, everyone I knew. They're probably all gone by now. And here I am, alone. No life, no parents, no friends. All alone.",
+    text: "Oh, all the people in the village, everyone I knew. They're probably all gone by now. And here I am. No life, no parents, no friends. All alone.",
     color: "riddler",
   },
   {
@@ -397,7 +471,7 @@ export const epilogue = [
   },
   {
     name: "Me",
-    text: "Yeah! As long as you promise not to eat my soul or anything. Making my way through this tower was hard as heck, but it was really fun. I bet you're a fun person as well.",
+    text: "Yeah! Besides, you can't really destroy me. Vampire, immortal, yknow? For how hard it was, at least the tower was more fun than the monotony of day-to-day life. I bet you're a fun person as well.",
     color: "protagonist",
   },
   {
@@ -417,15 +491,35 @@ export const epilogue = [
   },
   {
     name: "Ridley",
-    text: "Hahaha! Sure! The name's Ridley. Ridley Rouf.",
+    text: "Hahaha! Sure! The name's Ridley. Ridley Rouf. Nice to meet you!",
     color: "riddler",
   },
   {
     name: "Me",
-    text: "Nice to meet you, Ridley.",
+    text: "...",
     color: "protagonist",
   },
-]
+  {
+    name: "Ridley",
+    text: "What?",
+    color: "riddler",
+  },
+  {
+    name: "Me",
+    text: "That's a terrible name.",
+    color: "protagonist",
+  },
+  {
+    name: "Ridley",
+    text: "Alright, that's it. I'm burning this place down, you included.",
+    color: "riddler",
+  },
+  {
+    name: "Me",
+    text: "Hey, wait a minute!",
+    color: "protagonist",
+  },
+];
 
 export const levelFail = [
   {
@@ -455,7 +549,7 @@ export const levelFail = [
   },
   {
     name: "Me",
-    text: "Oh, snap. I did get 3 more, you're right. I guess that's because I'm not a human.",
+    text: "Now that you say it... I did get 3 more, you're right. I guess that's because I'm not a human.",
     color: "protagonist",
   },
   {
@@ -465,17 +559,17 @@ export const levelFail = [
   },
   {
     name: "Me",
-    text: "Ha! You're correct. Good thing, since guessing wrong would've meant losing a soul point ;)",
+    text: "Congratulations, you're correct! Good thing, since guessing wrong would've meant losing a soul point ;)",
     color: "protagonist",
   },
   {
     name: "Riddler",
-    text: "HAHA VERY CLEVER! I'm sure you're feeling pretty damn good about yourself right now, but don't get too cocky! It appears that you aren't an unworthwhile enemy for me, and so I'll do everything in my power to destroy you!",
+    text: "Ha ha. Very clever. I'm sure you're feeling pretty damn good about yourself right now, but don't get too cocky! It appears that you aren't an unworthwhile enemy for me, and so I'll do everything in my power to destroy you!",
     color: "riddler",
   },
   {
     name: "Me",
-    text: "I'm glad we understand a bit more about each other now. I'll just say that you chose the wrong person to trap in your tower. I accept your challenge.",
+    text: "I'm glad we understand a bit more about each other now. I'll just say that you chose the wrong person to trap in your tower. Let's say the feeling's mutual.",
     color: "protagonist",
   },
   {

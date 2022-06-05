@@ -30,8 +30,9 @@ export default {
       this.$store.state.userData.battery = 100;
       this.$store.state.userData.isIntro = true;
       this.$store.state.userData.solvedPuzzles = [];
-      this.$parent.$emit('gameEvent');
-    }
+      this.$store.state.userData.gameFinished = false;
+      this.$parent.$emit("gameEvent");
+    },
   },
 };
 </script>
@@ -53,6 +54,10 @@ export default {
   -ms-overflow-style: none;
   scrollbar-width: none;
   z-index: 3;
+}
+
+.endgame-popup::-webkit-scrollbar {
+  display: none;
 }
 
 .victory-cg {
