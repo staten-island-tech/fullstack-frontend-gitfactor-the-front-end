@@ -1,7 +1,7 @@
 {
     "domain": "dev-0o06df15.us.auth0.com",
     "client_id": "8GLHKZmMPunCPpBkN27rrcs1J2rr3X25",
-    "redirect_uri": "http://localhost:8080",
+    "redirect_uri": "https://riddler-game.netlify.app",
     "audience": "http://localhost:3000/api"
    
   }
