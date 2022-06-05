@@ -756,34 +756,6 @@ export const state = {
     ],
     [
       {
-        name: "Spacial Door of Rifts",
-        id: 41,
-        section: 2,
-        position: 7,
-        margin: "7%",
-        widthInt: 45,
-        width: "45%",
-        bottom: "5%",
-        img: "sprites/lv4_door.png",
-        isInteractable: false,
-        filter: null,
-        itemType: "character",
-        dialogueSprite: "lv4_door.png",
-        spriteAlt: "A cosmic-looking door to the outside.",
-        dialogue: [
-          {
-            name: "Spatial Door of Rifts",
-            text: "I am the Spatial Door of Rifts. You may exit to the outside world with a sense of accomplishment using the 'Save and Quit' button in the pause menu. Congratulations on successfully making it through the dungeon.",
-            color: "riddler",
-          },
-          {
-            name: "Me",
-            text: "...Am I talking to a door right now?",
-            color: "protagonist",
-          },
-        ],
-      },
-      {
         intro: true,
         name: "Riddler",
         id: 42,
