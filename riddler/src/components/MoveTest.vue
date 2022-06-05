@@ -787,7 +787,8 @@ export default {
       this.enablePlayerMovement();
       if (
         this.$store.state.userData.level === 3 &&
-        this.$store.state.userData.solvedPuzzles[0]
+        this.$store.state.userData.solvedPuzzles[0] &&
+        this.$store.state.userData.currentItem.id === 14
       ) {
         this.eventMessage =
           "Brrrrrr... What was that freezing cold current just now?";

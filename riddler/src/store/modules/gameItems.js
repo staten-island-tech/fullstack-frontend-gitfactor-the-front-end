@@ -359,7 +359,7 @@ export const state = {
         filter: null,
         itemType: "character",
         dialogueSprite: "lv3_spring.png",
-        spriteAlt: "A majestic ghost with pink flowers as hair.",
+        spriteAlt: "A majestic ghost with pink flower petal hair and dress",
         dialogue: [
           {
             name: "Ghost of Spring",
@@ -382,7 +382,7 @@ export const state = {
         filter: null,
         itemType: "character",
         dialogueSprite: "lv3_summer.png",
-        spriteAlt: "A majestic ghost with yellow flowers as hair.",
+        spriteAlt: "A majestic ghost with yellow flower petal hair and dress",
         dialogue: [
           {
             name: "Ghost of Summer",
@@ -405,7 +405,7 @@ export const state = {
         filter: null,
         itemType: "character",
         dialogueSprite: "lv3_autumn.png",
-        spriteAlt: "A majestic ghost with orange flowers as hair.",
+        spriteAlt: "A majestic ghost with orange flower petal hair and dress",
         dialogue: [
           {
             name: "Ghost of Autumn",
@@ -466,7 +466,7 @@ export const state = {
           "It's a lantern with a bright flame. Do you remember what it can be used for?",
         puzzleAnswer: "Blank Scroll",
         puzzleAnsweredText:
-          "When held up to the light of the lantern, the secret message written in lemon juice on the scroll revealed itself! It reads: 'They say math and music have a lot in common'.",
+          "When held up to the light of the lantern, the secret message written in lemon juice on the scroll revealed itself! It reads: 'They say math and music have a lot in common. Let the notes find order in chronology.'",
       },
       {
         name: "Blank Scroll",
@@ -482,7 +482,7 @@ export const state = {
         filter: null,
         itemType: "object",
         prompt: "This scroll was super helpful way back. Lemme open it... Oh. Nothing written inside. I feel like this happened before, didn't it?",
-        chosenItemTextCorrect: "I still got it!",
+        chosenItemTextCorrect: "Aw yeah! Still got it!",
       },
       {
         name: "Shiny Prism",
@@ -514,7 +514,7 @@ export const state = {
         filter: null,
         itemType: "object",
         prompt: "Still a painting of the same guy, but the date was replaced! Now, it says 'January 34th'. That's not even a real date. Could it mean something?",
-        chosenItemTextFalse: "",
+        chosenItemTextFalse: "Aghh it's not right! How did I solve this last time??",
       },
       {
         name: "Large Feather",
@@ -677,7 +677,6 @@ export const state = {
         chosenItemTextFalse: "Aghh it's not right! How did I solve this last time??",
       },
       {
-        intro: true,
         name: "Ghost of Spring",
         id: 38,
         section: 1,
@@ -691,7 +690,7 @@ export const state = {
         filter: null,
         itemType: "character",
         dialogueSprite: "lv3_spring.png",
-        spriteAlt: "A majestic ghost with pink flowers as hair.",
+        spriteAlt: "A majestic ghost with pink flower petal hair and dress.",
         dialogue: [
           {
             name: "Ghost of Spring",

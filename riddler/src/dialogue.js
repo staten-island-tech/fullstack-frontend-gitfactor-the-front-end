@@ -416,7 +416,7 @@ export const epilogue = [
   },
   {
     name: "Riddler",
-    text: "STOP YELLING AT ME... DON'T TELL ME WHAT TO DO! AHHHHH!!!",
+    text: "Stop yelling in my head! Don't... tell me... what to do...",
     color: "riddler",
   },
   {
