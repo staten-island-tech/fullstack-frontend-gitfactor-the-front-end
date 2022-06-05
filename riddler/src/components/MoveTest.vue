@@ -1,7 +1,7 @@
 <template>
   <div class="game-page" :key="$store.state.userData.level">
 
-    <EndGamePopup/>
+
 
     <button @click="levelAdd" class="mobile-button">l+ratio</button>
     <button @click="levelMinus" class="mobile-button">l-1</button>
@@ -39,6 +39,9 @@
           <p class="textbox-text typing-class">{{ $store.state.userData.currentItem.dialogue[textCount].text }}</p>
         </div>
         
+            <EndGamePopup/>
+
+            
         <EventPopup :eventText="eventMessage" @closeEventClick="closeEventPopup()" v-if="eventMessage" ref="eventPopupBox"/>
         
         <ItemPopup @itemAdded="addToInventory()" v-if="itemPopup" @closePopup="closeItemPopup()" :item="currentItem" 

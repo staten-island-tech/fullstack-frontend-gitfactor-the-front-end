@@ -1,11 +1,12 @@
 <template>
   <div class="endgame-popup hide" :key="titleText" 
     tabindex="-1">
-      <h2>{{titleText}}</h2>
-
+      <h2>{{titleText}}</h2>''
+    <img src="../assets/victory.png" class="victory cg" alt="victory image of Riddler and Player Character taking a picture outside of the burning tower.">
       <div class="btn-group" :key="titleText">
-         <button @click="logout()" class="reset-btn" id="end-btn">{{leftBtnText}}</button>
-         <button @click="checkEndGame" class="reset-btn">{{rightBtnText}}</button>
+         <button @click="warpLevelOne()" class="reset-btn">{{leftBtnText}}</button>
+         <button @click="warpLevelTwo()" class="reset-btn">{{rightBtnText}}</button>
+         <button @click="warpLevelThree()" class="reset-btn">{{rightBtnText}}</button>
       </div>
 
   </div>
@@ -26,22 +27,7 @@ export default {
   props: ["endGamePopup"],
   data() {
     return {
-      titleText: "The Door of Dimensions beckons...",
-      rightBtnText: "To the next floor.",
-      leftBtnText: "Let's take a breather.",
-      buttonData: {
-        saveQuit: {
-          textNormal: "Let's take a breather.",
-          textEnd: "Get me out of here.",
-          emitNormal: "saveQuit",
-        },
-        nextLevel: {
-          textNormal: "To the next floor.",
-          textEnd: "Let's start from the beginning.",
-          emitNormal: "nextLevel",
-          emitEnd: "resetData",
-        },
-      },
+      titleText: "Congratulations, you have bested the Riddler's Tower!",
     };
   },
   methods: {
@@ -87,6 +73,12 @@ export default {
   margin: 0 auto;
   padding: 2rem;
   border-radius: 1.5rem;
+  border: #deceff solid 0.3rem;
+  z-index: 3;
+}
+
+.victory-cg {
+  width: 30%;
 }
 
 .reset-btn {
@@ -98,10 +90,6 @@ export default {
   border: none;
   border-radius: 1rem;
   color: var(--background-color);
-}
-
-.save-btn {
-  display: none;
 }
 
 h2 {
