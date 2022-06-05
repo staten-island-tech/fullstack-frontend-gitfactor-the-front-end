@@ -419,7 +419,7 @@ export const state = {
           },
           {
             name: "Ghost of Autumn",
-            text: "To work, the machine needed to be turned on at the place of highest elevation, which was the lighthouse by the shore. But there was one little boy was always sat next to the lighthouse, and the shockwaves from the machine would've put him in danger.",
+            text: "To work, the machine needed to be turned on at the place of highest elevation, which was the lighthouse by the shore. But there was one little boy who always sat next to the lighthouse, and the shockwaves from the machine would've put him in danger.",
             color: "autumn",
           },
           {
@@ -545,7 +545,7 @@ export const state = {
         isInteractable: false,
         filter: null,
         itemType: "object",
-        prompt: "I would try playing a song on it, but I don't have any time! I bet it still sounds pretty, though.",
+        prompt: "It looks like the ocarina from level 2, but it's a bit different! This ocarina has 8 holes, which means it can play 8 notes! Ahh, I bet it sounds pretty, but I have no time to try playing it! ",
         chosenItemTextFalse: "Aghh it's not right! How did I solve this last time??",
       },
       {
