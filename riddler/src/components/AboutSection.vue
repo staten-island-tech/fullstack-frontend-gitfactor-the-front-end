@@ -3,7 +3,7 @@
     <div class="icon-div">
       <font-awesome-icon @click="$emit('closeAbout')" icon="x" class="x-icon"/>
     </div>
-    <h2 class="pause-title instruction-title">Instructions</h2>
+    <h2 class="pause-title instruction-title">About</h2>
     <div class="instructions-content">
       <p>
         Welcome to Riddler on the Roof! We wanted to create a fun puzzle/escape room game with an engaging and endearing storyline. Hopefully you feel we achieved those goals well! 
