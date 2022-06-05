@@ -290,7 +290,7 @@ input {
 }
 input {
   margin: 5rem 1.5rem;
-  width: 30rem;
+  max-width: 30rem;
 }
 .puzzle-submit-btn {
   background-color: var(--highlight-color);

@@ -93,10 +93,11 @@
           </template>
         </PuzzlePopup>
 
-      <PauseMenu @closePause="closePM()" @instruction="instructionHandle()"
-       @setting="settingHandler()" v-if="isPauseOpen"/> 
-       <Instructions @closeInstruc="closeInstrucHandler()" v-if="instruction"/> 
-       <Settings @closeSetting="closeSettingHandler()" v-if="setting" @emitVol="volumeChangeHandler" @emitVol2="SFXChange"/>
+      <PauseMenu @closePause="closePM()" @instruction="instructionHandler()"
+       @setting="settingHandler()" @about="aboutHandler()" v-if="isPauseOpen" /> 
+       <Instructions @closeInstruc="closeInstrucHandler()" v-if="instruction" /> 
+       <Settings @closeSetting="closeSettingHandler()" v-if="setting" @emitVol="volumeChangeHandler" @emitVol2="SFXChange" />
+       <AboutSection @closeAbout="closeAboutHandler()" v-if="about" />
 
         <div v-if="$store.state.userData.level === 2 && !$store.state.userData.isIntro" class="battery-meter">
           <h2>{{ $store.state.userData.battery }}%</h2>
@@ -177,16 +178,16 @@ import ItemPopup from "./ItemPopup.vue";
 import PauseMenu from "./PauseMenu.vue";
 import Instructions from "./Instructions.vue";
 import Settings from "./Settings.vue";
+import AboutSection from './AboutSection.vue';
 import PuzzlePopup from "./PuzzlePopup.vue";
 import EventPopup from "./EventPopup.vue";
 import {
   levelOneIntro,
   levelTwoIntro,
   levelThreeIntro,
-  levelFourIntro,
+  winterDialogue,
   levelFail,
   levelFailedAgain,
-  winterDialogue
 } from "../dialogue";
 
 export default {
@@ -200,6 +201,7 @@ export default {
     Settings,
     PuzzlePopup,
     EventPopup,
+    AboutSection,
   },
   created() {
     this.getUserData();
@@ -209,6 +211,9 @@ export default {
     this.enablePlayerMovement();
     this.itemInteract();
     this.checkLevel();
+    setTimeout(() => {
+      this.$emit('doneLoading'); //shuts off loading screen
+    }, 2000);
   },
   data() {
     return {
@@ -248,6 +253,13 @@ export default {
             { id: 3, img: "bg_4_c.png", ost: "lv04" },
           ],
         },
+        {
+          assets: [
+            { id: 1, img: "bg_4_a.png", ost: "lv04" },
+            { id: 2, img: "bg_4_b.png", ost: "lv04" },
+            { id: 3, img: "bg_4_c.png", ost: "lv04" },
+          ],
+        },
       ],
       eventMessage: null,
       enteredOnObject: false,
@@ -269,6 +281,7 @@ export default {
       isPauseOpen: false,
       instruction: false,
       setting: false,
+      about: false,
       isFlashlightOn: false,
       fromSettings: "25",
       fromSettingsTwo: "",
@@ -403,55 +416,18 @@ export default {
         });
         this.itemInteract();
         this.onEnter();
-      } else {
-        if (this.$store.state.userData.level === 1) {
-          console.log("level 1");
-          if (this.$store.state.userData.isIntro) {
-            setTimeout(() => {
-              document.querySelector(".main").classList.add("game-intro");
-            }, 0);
-            this.enteredOnObject = true;
-            setTimeout(() => {
-              this.playAudio();
-              this.eventMessage =
-                "You hear a broken transmission over an intercom.";
-              setTimeout(() => {
-                this.openEventPopup();
-              }, 10);
-              this.gameItems.unshift({
-                intro: true,
-                name: "Riddler",
-                id: -1,
-                section: 2,
-                position: 45,
-                margin: "45%",
-                widthInt: 20,
-                width: "20%",
-                bottom: "5%",
-                img: "sprites/sprite_dialogue_spookyriddl.png",
-                isInteractable: false,
-                filter: null,
-                itemType: "character",
-                dialogueSprite: "sprite_dialogue_spookyriddl.png",
-                spriteAlt: "The dark silhouette of a spooky, mischievous character.",
-                dialogue: levelOneIntro,
-              });
-              this.itemInteract();
-              this.onEnter();
-            }, 7000);
-          } else {
-            setTimeout(() => {
-              document.querySelector(".main").classList.add("game-start");
-            }, 0);
+      } 
+      if (this.$store.state.userData.level === 1) {
+        console.log("level 1");
+        if (this.$store.state.userData.isIntro) {
+          setTimeout(() => {
+            document.querySelector(".main").classList.add("game-intro");
+          }, 0);
+          this.enteredOnObject = true;
+          setTimeout(() => {
             this.playAudio();
-          }
-        }
-        if (this.$store.state.userData.level === 2) {
-          console.log("level 2");
-          if (this.$store.state.userData.isIntro) {
-            this.playAudio();
-            this.enteredOnObject = true;
-            this.eventMessage = "You hear a transmission over an intercom.";
+            this.eventMessage =
+              "You hear a broken transmission over an intercom.";
             setTimeout(() => {
               this.openEventPopup();
             }, 10);
@@ -471,100 +447,120 @@ export default {
               itemType: "character",
               dialogueSprite: "sprite_dialogue_spookyriddl.png",
               spriteAlt: "The dark silhouette of a spooky, mischievous character.",
-              dialogue: levelTwoIntro,
+              dialogue: levelOneIntro,
             });
             this.itemInteract();
             this.onEnter();
-          } else {
-            setTimeout(() => {
-              document.querySelector(".main").classList.add("game-start");
-              document.querySelector(".game-overlay").classList.add("dark");
-            }, 0);
-            this.playAudio();
-          }
-        }
-        if (this.$store.state.userData.level === 3) {
-          console.log("level 3");
-          if (this.$store.state.userData.isIntro) {
-            setTimeout(() => {
-              document.querySelector(".main").classList.add("game-intro");
-            }, 0);
-            this.playAudio();
-            this.enteredOnObject = true;
-            this.eventMessage =
-              "You hear a faint, garbled transmission over an intercom.";
-            setTimeout(() => {
-              this.openEventPopup();
-            }, 10);
-            this.gameItems.unshift({
-              intro: true,
-              name: "Riddler",
-              id: -1,
-              section: 2,
-              position: 45,
-              margin: "45%",
-              widthInt: 20,
-              width: "20%",
-              bottom: "5%",
-              img: "sprites/sprite_dialogue_spookyriddl.png",
-              isInteractable: false,
-              filter: null,
-              itemType: "character",
-              dialogueSprite: "sprite_dialogue_spookyriddl.png",
-              spriteAlt: "The dark silhouette of a spooky, mischievous character.",
-              dialogue: levelThreeIntro,
-            });
-            this.itemInteract();
-            this.onEnter();
-          }
-          document.querySelector(".main").classList.add("game-start");
-          gameOverlay.classList.add("fog");
+          }, 7000);
+        } else {
+          setTimeout(() => {
+            document.querySelector(".main").classList.add("game-start");
+          }, 0);
           this.playAudio();
         }
-
-        if (this.$store.state.userData.level === 4) {
-          console.log("level 4");
-          if (this.$store.state.userData.isIntro) {
-            setTimeout(() => {
-              document.querySelector(".main").classList.add("game-intro");
-            }, 0);
-            this.playAudio();
-            this.enteredOnObject = true;
-            this.eventMessage =
-              "No transmission this time. You hear a familiar voice very clearly.";
-            setTimeout(() => {
-              this.openEventPopup();
-            }, 10);
-            this.gameItems.unshift({
-              intro: true,
-              name: "Riddler",
-              id: -1,
-              section: 2,
-              position: 45,
-              margin: "45%",
-              widthInt: 20,
-              width: "20%",
-              bottom: "5%",
-              img: "sprites/sprite_dialogue_riddl.png",
-              isInteractable: false,
-              filter: null,
-              itemType: "character",
-              dialogueSprite: "sprite_dialogue_riddl.png",
-              spriteAlt: "The spooky silhouette from earlier is a purple-haired character with a top hat and purple suit.",
-              dialogue: levelFourIntro,
-            });
-            this.itemInteract();
-            this.onEnter();
-          }
-          document.querySelector(".main").classList.add("game-start");
-
+      }
+      if (this.$store.state.userData.level === 2) {
+        console.log("level 2");
+        if (this.$store.state.userData.isIntro) {
+          this.playAudio();
+          this.enteredOnObject = true;
+          this.eventMessage = "You hear a transmission over an intercom.";
+          setTimeout(() => {
+            this.openEventPopup();
+          }, 10);
+          this.gameItems.unshift({
+            intro: true,
+            name: "Riddler",
+            id: -1,
+            section: 2,
+            position: 45,
+            margin: "45%",
+            widthInt: 20,
+            width: "20%",
+            bottom: "5%",
+            img: "sprites/sprite_dialogue_spookyriddl.png",
+            isInteractable: false,
+            filter: null,
+            itemType: "character",
+            dialogueSprite: "sprite_dialogue_spookyriddl.png",
+            spriteAlt: "The dark silhouette of a spooky, mischievous character.",
+            dialogue: levelTwoIntro,
+          });
+          this.itemInteract();
+          this.onEnter();
+        } else {
+          setTimeout(() => {
+            document.querySelector(".main").classList.add("game-start");
+            document.querySelector(".game-overlay").classList.add("dark");
+          }, 0);
           this.playAudio();
         }
+      }
+      if (this.$store.state.userData.level === 3) {
+        console.log("level 3");
+        if (this.$store.state.userData.isIntro) {
+          setTimeout(() => {
+            document.querySelector(".main").classList.add("game-intro");
+          }, 0);
+          this.playAudio();
+          this.enteredOnObject = true;
+          this.eventMessage =
+            "You hear a faint, garbled transmission over an intercom.";
+          setTimeout(() => {
+            this.openEventPopup();
+          }, 10);
+          this.gameItems.unshift({
+            intro: true,
+            name: "Riddler",
+            id: -1,
+            section: 2,
+            position: 45,
+            margin: "45%",
+            widthInt: 20,
+            width: "20%",
+            bottom: "5%",
+            img: "sprites/sprite_dialogue_spookyriddl.png",
+            isInteractable: false,
+            filter: null,
+            itemType: "character",
+            dialogueSprite: "sprite_dialogue_spookyriddl.png",
+            spriteAlt: "The dark silhouette of a spooky, mischievous character.",
+            dialogue: levelThreeIntro,
+          });
+          this.itemInteract();
+          this.onEnter();
+        }
+        document.querySelector(".main").classList.add("game-start");
+        gameOverlay.classList.add("fog");
+        this.playAudio();
+      }
 
-      setTimeout(() => {
-        this.$emit('doneLoading'); //shuts off loading screen
-      }, 2000);
+      if (this.$store.state.userData.level === 4) {
+        console.log("level 4");
+        if (this.$store.state.userData.isIntro) {
+          setTimeout(() => {
+            document.querySelector(".main").classList.add("game-start");
+          }, 0);
+          this.playAudio();
+          this.enteredOnObject = true;
+          this.eventMessage =
+            "No transmission this time. You hear a familiar voice very clearly.";
+          setTimeout(() => {
+            this.openEventPopup();
+          }, 10);
+          this.itemInteract();
+          this.onEnter();
+        } else {
+          this.roofTime();
+        }
+        this.playAudio();
+      }
       
+      if (this.$store.state.userData.level === 5) {
+        console.log("level 5");
+        this.itemInteract();
+        this.onEnter();
+        this.playAudio();
       }
     },
     enablePlayerMovement() {
@@ -972,7 +968,7 @@ export default {
       this.isPauseOpen = false;
       this.enablePlayerMovement();
     },
-    instructionHandle() {
+    instructionHandler() {
       this.instruction = true;
     },
     closeInstrucHandler() {
@@ -983,6 +979,12 @@ export default {
     },
     closeSettingHandler() {
       this.setting = false;
+    },
+    aboutHandler() {
+      this.about = true;
+    },
+    closeAboutHandler() {
+      this.about = false;
     },
     volumeChangeHandler(value) {
       this.fromSettings = value;
@@ -1139,9 +1141,9 @@ img {
 .mobile-button {
   font-size: 4rem;
   background-color: #766696;
-  color: #deceff;
+  color: var(--highlight-color);
   border-radius: 50%;
-  border: #deceff solid 0.3rem;
+  border: var(--highlight-color) solid 0.3rem;
   height: 7.5rem;
   width: 7.5rem;
   margin: 1rem;
@@ -1163,7 +1165,7 @@ img {
   padding-top: 1rem;
   /* accounts for back button height */
   padding-bottom: 4.5rem; 
-  border-radius: 1rem;
+  border-radius: 1.5rem;
 }
 .textbox-text,
 .textbox-title {
@@ -1185,14 +1187,14 @@ img {
   bottom: 0;
   left: -20%;
 }
-.text-button-icons{
+.text-button-icons {
   display: block;
   position: absolute;
   bottom: 0;
   right: 0;
   z-index: 3;
 }
-.back-button{
+.back-button {
   width: 2rem;
   height: 1.5rem;
   margin: .5rem;

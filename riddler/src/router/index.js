@@ -1,8 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home";
 
-// import { routeGuard } from "";
-
 const routes = [
   {
     path: "/",

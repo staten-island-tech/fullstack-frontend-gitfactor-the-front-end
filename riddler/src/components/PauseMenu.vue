@@ -9,7 +9,8 @@
       <button @click="$emit('instruction')">Instruction Manual</button>
       <button @click="updateData()">Save Progress</button>
       <button @click="logout()">Save and Quit</button>
-      <button @click="$emit('setting')">Settings</button>
+      <button @click="$emit('setting')">Audio Settings</button>
+      <button @click="$emit('about')">About</button>
     </div>
   </div>
 </template>

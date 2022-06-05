@@ -17,7 +17,6 @@
     </div>
 
     <div v-if="$auth.isAuthenticated.value">
-      <router-link to="/"></router-link>
       <router-view />
     </div>
   </div>
@@ -45,7 +44,6 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #deceff;
 }
 h1 {
   font-size: 7rem;
