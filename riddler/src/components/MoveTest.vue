@@ -151,11 +151,11 @@
       </div>
     </div>
 
-    <div class="mobile-button-container">
+    <div class="mobile-button-container" @mouseup="reset()">
       <button @mousedown="leftMove()" @mouseup="reset()" class="mobile-button">
         <font-awesome-icon icon="caret-left" />
       </button>
-      <button @click="onEnter()" class="mobile-button">
+      <button @mouseup="onEnter()" class="mobile-button">
         <font-awesome-icon icon="z" />
       </button>
       <button @mousedown="rightMove()" @mouseup="reset()" class="mobile-button">
