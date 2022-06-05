@@ -44,7 +44,7 @@ export default {
         });
         const data = await response.json();
         console.log(data);
-        if (Object.prototype.hasOwnProperty.call(data, "roofTime")) { //checks if user already logged in 
+        if (Object.prototype.hasOwnProperty.call(data, "gameFinished")) { //checks if user already logged in 
           this.$store.commit('updateState', data);
           console.log("logging in")
         } else {

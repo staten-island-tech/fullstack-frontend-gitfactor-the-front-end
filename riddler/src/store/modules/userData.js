@@ -1,5 +1,5 @@
 export const state = {
-  username: "",
+  username: null,
   level: 1,
   section: 2,
   leftValue: 45,
