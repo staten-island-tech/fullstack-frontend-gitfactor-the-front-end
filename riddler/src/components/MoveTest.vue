@@ -1,6 +1,8 @@
 <template>
   <div class="game-page" :key="$store.state.userData.level">
 
+    <EndGamePopup/>
+
     <button @click="levelAdd" class="mobile-button">l+ratio</button>
     <button @click="levelMinus" class="mobile-button">l-1</button>
 
@@ -159,6 +161,7 @@ import Instructions from "./Instructions.vue";
 import Settings from "./Settings.vue";
 import PuzzlePopup from "./PuzzlePopup.vue";
 import EventPopup from "./EventPopup.vue";
+import EndGamePopup from "./EndGamePopup.vue";
 import {
   levelOneIntro,
   levelTwoIntro,
@@ -179,6 +182,7 @@ export default {
     Settings,
     PuzzlePopup,
     EventPopup,
+    EndGamePopup,
   },
   created() {
     this.getUserData();
