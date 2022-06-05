@@ -152,13 +152,13 @@
     </div>
 
     <div class="mobile-button-container" @mouseup="reset()">
-      <button @mousedown="leftMove()" @mouseup="reset()" class="mobile-button">
+      <button @click="enablePlayerMovement()" @mousedown="leftMove()" @mouseup="reset()" class="mobile-button">
         <font-awesome-icon icon="caret-left" />
       </button>
-      <button @mouseup="onEnter()" class="mobile-button">
+      <button @click="enablePlayerMovement()" @mouseup="onEnter()" class="mobile-button">
         <font-awesome-icon icon="z" />
       </button>
-      <button @mousedown="rightMove()" @mouseup="reset()" class="mobile-button">
+      <button @click="enablePlayerMovement()" @mousedown="rightMove()" @mouseup="reset()" class="mobile-button">
         <font-awesome-icon icon="caret-right" />
       </button>
     </div>
@@ -731,6 +731,7 @@ export default {
           this.$store.state.userData.currentItem.itemType === "character"
         ) {
           this.textboxShow();
+          this.enablePlayerMovement();
         } else if (
           this.$store.state.userData.currentItem.itemType === "puzzle"
         ) {
@@ -903,6 +904,7 @@ export default {
     },
     textBack() {
       this.textCount = this.textCount - 1;
+      this.enablePlayerMovement();
     },
     levelAdd() {
       this.$store.commit("incrementLevel");
