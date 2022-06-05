@@ -5,9 +5,10 @@
       <h3>You may restart from a previous level or enter the pause menu.</h3>
     <img src="../assets/victory.png" class="victory-cg" alt="victory image of Riddler and Player Character taking a picture outside of the burning tower.">
       <div class="btn-group" :key="titleText">
-         <button @click="warpLevelOne()" class="reset-btn">Start from Lv1</button>
-         <button @click="warpLevelTwo()" class="reset-btn">Start from Lv2</button>
-         <button @click="warpLevelThree()" class="reset-btn">Start from Lv3</button>
+         <button @click="warpLevel(1)" class="reset-btn">Start from Lv1</button>
+         <button @click="warpLevel(2)" class="reset-btn">Start from Lv2</button>
+         <button @click="warpLevel(3)" class="reset-btn">Start from Lv3</button>
+         <button @click="warpLevel(4)" class="reset-btn">Start from the Roof</button>
       </div>
 
   </div>
@@ -55,6 +56,17 @@ export default {
         this.$emit(this.buttonData.nextLevel.emitNormal);
       }
     },
+    warpLevel(chosenLevel) {
+      this.$store.state.userData.level = chosenLevel;
+      this.$store.state.userData.section = 2;
+      this.$store.state.userData.leftValue = 45;
+      this.$store.state.userData.lifeCount = 5;
+      this.$store.state.userData.currentItem = null;
+      this.$store.state.userData.inventory = [];
+      this.$store.state.userData.battery = 100;
+      this.$store.state.userData.isIntro = true;
+      this.$store.state.userData.solvedPuzzles = [];
+    }
   },
 };
 </script>
