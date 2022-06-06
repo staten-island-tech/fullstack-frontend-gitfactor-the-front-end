@@ -1242,7 +1242,7 @@ img {
   height: 2.5rem;
 }
 .dark {
-  filter: brightness(0.1);
+  filter: brightness(0.05);
 }
 .fog {
   position: relative;
