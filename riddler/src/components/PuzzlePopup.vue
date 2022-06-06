@@ -108,23 +108,19 @@ export default {
     checkPuzzleType() {
       if (this.puzzleVisibility === true) {
         if (this.puzzleType === 1) {
-          console.log("puzzle 1");
           this.puzzleButtonVisibility = false;
           this.puzzleInputDisabled = false;
           this.selectedItemDiv = false;
           this.puzzleInputVisibility = true;
         } else if (this.puzzleType === 2) {
-          console.log("puzzle 2");
           this.puzzleButtonVisibility = true;
           this.puzzleInputDisabled = false;
           this.selectedItemDiv = false;
           this.puzzleInputVisibility = true;
           this.puzzleInputMaxLength = 12;
         } else if (this.puzzleType === 3) {
-          console.log("puzzle 3");
           this.puzzleButtonVisibility = false;
           this.puzzleInput = this.inventoryItem;
-          console.log(this.inventoryItem);
           this.selectedItemDiv = true;
           this.puzzleInputDisabled = true;
           this.puzzleInputVisibility = false;
@@ -135,7 +131,6 @@ export default {
       if (this.puzzleType === 3) {
         //change the visibility of the div but i cant find it rn....
         if (this.inventoryItem.name === this.puzzleAnswer) {
-          console.log("puzzle 3 answered correctly");
           this.$store.state.userData.currentItem.puzzleCompleted = true;
           const solvedPuzzle = this.$store.state.userData.currentItem;
           this.$store.state.userData.solvedPuzzles.push(solvedPuzzle); //tracks solved puzzles so they will stay solved on re-login
@@ -169,17 +164,14 @@ export default {
       } 
       else {
         const puzzleAnswerInput = this.puzzleInput.trim().toLowerCase();
-        console.log(puzzleAnswerInput);
 
         if (puzzleAnswerInput === this.puzzleAnswer) {
           this.puzzleInput = "";
-          console.log("puzzle answered correctly");
           this.$store.state.userData.currentItem.puzzleCompleted = true;
           this.puzzlePromptAnswered = true;
           this.$emit("refocus-on-puzzle");
           this.levelTransition();
         } else {
-          console.log("taking away 1 heart");
           this.loseHeart();
           this.puzzleInput = "";
           this.$emit("puzzleInputWrong");
@@ -198,12 +190,10 @@ export default {
       this.puzzleInput = "";
     },
     clearInputClick() {
-      console.log("trying to clear");
       this.puzzleInput = "";
     },
     levelTransition() {
       if (this.isLevelTransitionPuzzle === true) {
-        console.log("door opened trying to go to next level"); //delete this later
         this.$emit("turn-off");
         this.$emit("next-level");
       }

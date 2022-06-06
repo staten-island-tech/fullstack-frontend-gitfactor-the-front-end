@@ -336,7 +336,6 @@ export default {
         this.$store.state.userData.level === 3 &&
         this.$store.state.userData.solvedPuzzles[0]
       ) {
-        console.log("found winter");
         this.$store.state.gameItems.gameItems[2].push({
           //pushes to level 3 array
           name: "Ghost of Winter",
@@ -805,7 +804,6 @@ export default {
       }, 10);
     },
     puzzleResponse(message) {
-      console.log(message);
       this.eventMessage = message;
       setTimeout(() => {
         this.openEventPopup();
@@ -880,7 +878,6 @@ export default {
           item.style.visibility = "visible";
         });
         if (this.gameItems[0].intro) {
-          console.log(this.gameItems[0].intro);
           this.gameItems.splice(0, 1);
         }
         if (this.$store.state.userData.level === 2) {
@@ -891,7 +888,6 @@ export default {
         }
         if (this.$store.state.userData.level === 5) {
           this.$store.state.userData.gameFinished = true;
-          console.log("victory");
         }
         this.textbox = false;
         this.enteredOnObject = false;
@@ -904,7 +900,6 @@ export default {
     },
     levelAdd() {
       this.$store.commit("incrementLevel");
-      console.log(this.$store.state.userData.level);
       //reset vuex state
       this.$store.state.userData.section = 2;
       this.$store.state.userData.leftValue = 45;
@@ -913,23 +908,6 @@ export default {
       this.$store.state.userData.inventory = [];
       this.$store.state.userData.battery = 100;
       this.$store.state.userData.isIntro = true;
-      this.$store.state.userData.solvedPuzzles = [];
-      this.$store.state.userData.roofTime = 300;
-
-      this.$emit("gameEvent");
-      this.unhideItem();
-    },
-    levelMinus() {
-      this.$store.commit("decrementLevel");
-      console.log(this.$store.state.userData.level);
-
-      this.$store.state.userData.section = 2;
-      this.$store.state.userData.leftValue = 45;
-      this.$store.state.userData.lifeCount = 3;
-      this.$store.state.userData.currentItem = null;
-      this.$store.state.userData.inventory = [];
-      this.$store.state.userData.isIntro = true;
-      this.$store.state.userData.battery = 100;
       this.$store.state.userData.solvedPuzzles = [];
       this.$store.state.userData.roofTime = 300;
 

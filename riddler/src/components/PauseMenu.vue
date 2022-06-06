@@ -42,7 +42,6 @@ export default {
           body: JSON.stringify(this.$store.state.userData),
         });
         const data = await response.json();
-        console.log(data);
         this.$store.commit('updateState', data);
         this.eventMessage = "Your progress has been saved.";
       } catch (error) {

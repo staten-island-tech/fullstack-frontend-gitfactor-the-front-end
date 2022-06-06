@@ -45,7 +45,6 @@ export default {
           },
         });
         const data = await response.json();
-        console.log(data);
         if (Object.prototype.hasOwnProperty.call(data, "gameFinished")) { //checks if user already logged in 
           this.$store.commit('updateState', data);
           console.log("logging in")
@@ -71,7 +70,6 @@ export default {
           body: JSON.stringify(this.$store.state.userData),
         });
         const data = await response.json();
-        console.log(data);
         this.$store.commit('updateState', data);
         this.eventMessage = "Your progress has been saved.";
       } catch (error) {
