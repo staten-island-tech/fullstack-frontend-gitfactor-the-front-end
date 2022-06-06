@@ -539,8 +539,10 @@ export default {
           this.itemInteract();
           this.onEnter();
         }
-        document.querySelector(".main").classList.add("game-start");
-        gameOverlay.classList.add("fog");
+        setTimeout(() => {
+          document.querySelector(".main").classList.add("game-start");
+          gameOverlay.classList.add("fog");
+        }, 0);
         this.playAudio();
       }
 
