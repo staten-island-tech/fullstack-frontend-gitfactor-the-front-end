@@ -13,7 +13,7 @@
 
       <p>Programming by: Daniel, Lucy, Jake, Charley, Nika</p>
       <p>Story by: Charley, Lucy, Daniel, Nika</p>
-      <p>Level Design: Daniel, Charley, Lucy, Nika</p>
+      <p>Level Design: Daniel, Charley, Nika, Lucy</p>
       <p>Visuals by: Lucy</p>
       <p>Audio by: PeriTune</p>
       <p>Terrible Puns by: Daniel</p>
