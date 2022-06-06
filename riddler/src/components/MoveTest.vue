@@ -336,7 +336,7 @@ export default {
         this.$store.state.userData.level === 3 &&
         this.$store.state.userData.solvedPuzzles[0]
       ) {
-        this.$store.state.gameItems.gameItems[2].push({
+        this.gameItems.push({
           //pushes to level 3 array
           name: "Ghost of Winter",
           id: 23,
