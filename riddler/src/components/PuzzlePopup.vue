@@ -131,7 +131,7 @@ export default {
       if (this.puzzleType === 3) {
         //change the visibility of the div but i cant find it rn....
         if (this.inventoryItem.name === this.puzzleAnswer) {
-          this.$store.state.userData.currentItem.puzzleCompleted = true;
+          this.$store.state.userData.currentItem.isPuzzleCompleted = true;
           const solvedPuzzle = this.$store.state.userData.currentItem;
           this.$store.state.userData.solvedPuzzles.push(solvedPuzzle); //tracks solved puzzles so they will stay solved on re-login
           this.puzzlePromptAnswered = true;
@@ -167,7 +167,7 @@ export default {
 
         if (puzzleAnswerInput === this.puzzleAnswer) {
           this.puzzleInput = "";
-          this.$store.state.userData.currentItem.puzzleCompleted = true;
+          this.$store.state.userData.currentItem.isPuzzleCompleted = true;
           const solvedPuzzle = this.$store.state.userData.currentItem;
           this.$store.state.userData.solvedPuzzles.push(solvedPuzzle);
           this.puzzlePromptAnswered = true;
