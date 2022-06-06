@@ -906,7 +906,7 @@ export default {
         if (this.$store.state.userData.level === 2) {
           document.querySelector(".game-overlay").classList.add("dark");
         }
-        if (this.$store.state.userData.level === 4 && this.$store.state.userData.isIntro) {
+        if (this.$store.state.userData.level === 4 ) {
           this.roofTime();
         }
         if (this.$store.state.userData.level === 5) {
