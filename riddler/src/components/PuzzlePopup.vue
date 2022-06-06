@@ -169,9 +169,7 @@ export default {
           this.puzzleInput = "";
           this.$store.state.userData.currentItem.isPuzzleCompleted = true;
           const solvedPuzzle = this.$store.state.userData.currentItem;
-          if(solvedPuzzle) {
-            this.$store.state.userData.solvedPuzzles.push(solvedPuzzle);
-          }
+          this.$store.state.userData.solvedPuzzles.push(solvedPuzzle);
           this.puzzlePromptAnswered = true;
           this.$emit("refocus-on-puzzle");
           this.levelTransition();
