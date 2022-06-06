@@ -1,6 +1,5 @@
 import {
   epilogue,
-  levelFourIntro,
 } from "../../../src/dialogue";
 
 export const state = {
@@ -734,30 +733,12 @@ export const state = {
         puzzleAnswer: "cdd♯fdab♭g",
         isPuzzleCompleted: false, 
        },
-       {
-       intro: true,
-       name: "Riddler",
-       id: 40,
-       section: 2,
-       position: 40,
-       margin: "40%",
-       widthInt: 22,
-       width: "22%",
-       bottom: "0%",
-       img: "sprites/sprite_dialogue_riddl.png",
-       isInteractable: false,
-       filter: null,
-       itemType: "character",
-       dialogueSprite: "sprite_dialogue_riddl.png",
-       spriteAlt: "The spooky silhouette from earlier is a purple-haired character with a top hat and purple suit.",
-       dialogue: levelFourIntro,
-      },
     ],
     [
       {
         intro: true,
         name: "Riddler",
-        id: 42,
+        id: 40,
         section: 2,
         position: 45,
         margin: "45%",
