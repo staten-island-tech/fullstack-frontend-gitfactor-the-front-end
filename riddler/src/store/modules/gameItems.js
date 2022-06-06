@@ -89,7 +89,7 @@ export const state = {
         itemType: "puzzle",
         puzzleType: 3,
         isLevelTransitionPuzzle: false,
-        puzzleCompleted: false,
+        isPuzzleCompleted: false,
         prompt:
           "It's a lantern with a bright flame. What could it be used for, though? Click on an item in your inventory to select it as your answer.",
         puzzleAnswer: "Blank Scroll",
@@ -156,7 +156,7 @@ export const state = {
           "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
         ],
         puzzleAnswer: "riddler",
-        puzzleCompleted: false,
+        isPuzzleCompleted: false,
         puzzleAnsweredText:
           "Nice! I'm in! The monitor displays a message: 'From where each item begins is where you shall find an end.'",
       },
@@ -460,7 +460,7 @@ export const state = {
         itemType: "puzzle",
         puzzleType: 3,
         isLevelTransitionPuzzle: false,
-        puzzleCompleted: false,
+        isPuzzleCompleted: false,
         prompt:
           "It's a lantern with a bright flame. Do you remember what it can be used for?",
         puzzleAnswer: "Blank Scroll",
