@@ -67,7 +67,7 @@
           @refocus-on-puzzle="openPuzzlePopup()"
           @next-level="levelAdd()"
           @level-fail="$emit('gameEvent')"
-          @foundHat="getUserData()"
+          @foundHat="addWinter()"
           @puzzleInputWrong="alertWrongAnswer()"
           @puzzleItemChosen="puzzleResponse"
           :puzzleAnswer="emittedPuzzleAnswer"
@@ -334,34 +334,8 @@ export default {
         this.locations[this.$store.state.userData.level - 1].assets[
           this.$store.state.userData.section - 1
         ].ost;
-
-      if (
-        this.$store.state.userData.level === 3 &&
-        this.$store.state.userData.solvedPuzzles[0]
-      ) {
-        this.gameItems.push({
-          //pushes to level 3 array
-          name: "Ghost of Winter",
-          id: 23,
-          section: 2,
-          position: 50,
-          margin: "50%",
-          widthInt: 20,
-          width: "20%",
-          bottom: "0%",
-          img: "sprites/lv3_winter.png",
-          isInteractable: false,
-          filter: null,
-          itemType: "character",
-          dialogueSprite: "lv3_winter.png",
-          dialogue: winterDialogue,
-        });
-      }
-      this.unhideItem();
     },
     checkLevel() {
-      const gameOverlay = document.querySelector(".game-overlay");
-
       if (
         this.$store.state.userData.lifeCount === 0 &&
         this.$store.state.userData.failedLevel === false
@@ -510,9 +484,6 @@ export default {
         if (this.$store.state.userData.level === 3) {
           console.log("level 3");
           if (this.$store.state.userData.isIntro) {
-            setTimeout(() => {
-              document.querySelector(".main").classList.add("game-intro");
-            }, 0);
             this.playAudio();
             this.enteredOnObject = true;
             this.eventMessage =
@@ -543,7 +514,7 @@ export default {
             this.onEnter();
           }
           setTimeout(() => {
-            gameOverlay.classList.add("fog");
+            document.querySelector(".main").classList.add("fog");
           }, 0);
           this.playAudio();
         }
@@ -906,7 +877,10 @@ export default {
         if (this.$store.state.userData.level === 2) {
           document.querySelector(".game-overlay").classList.add("dark");
         }
-        if (this.$store.state.userData.level === 4 ) {
+        if (this.$store.state.userData.level === 2) {
+          document.querySelector(".main").classList.add("fog");
+        }
+        if (this.$store.state.userData.level === 4 && this.$store.state.userData.currentItem.id !== 38) {
           this.roofTime();
         }
         if (this.$store.state.userData.level === 5) {
@@ -978,6 +952,30 @@ export default {
           this.$store.state.userData.roofTime--;
         }
     }, 1000);
+    },
+    addWinter() {
+      if (
+        this.$store.state.userData.level === 3 &&
+        this.$store.state.userData.solvedPuzzles[0]
+      ) {
+        this.gameItems.push({
+          name: "Ghost of Winter",
+          id: 23,
+          section: 2,
+          position: 50,
+          margin: "50%",
+          widthInt: 20,
+          width: "20%",
+          bottom: "0%",
+          img: "sprites/lv3_winter.png",
+          isInteractable: false,
+          filter: null,
+          itemType: "character",
+          dialogueSprite: "lv3_winter.png",
+          dialogue: winterDialogue,
+        });
+      }
+      this.unhideItem();
     },
     openPause() {
       if (
