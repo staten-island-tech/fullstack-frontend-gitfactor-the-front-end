@@ -749,6 +749,7 @@ export default {
           this.$store.state.userData.currentItem.itemType === "character"
         ) {
           this.textboxShow();
+          this.enablePlayerMovement();
         } else if (
           this.$store.state.userData.currentItem.itemType === "puzzle"
         ) {
