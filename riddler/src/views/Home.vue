@@ -1,4 +1,5 @@
 <template>
+<div>
   <div class="background">
   <PageLoader v-show="isLoading"/>
   <EventPopup @closeEventClick="nextLevel()" :eventText="eventMessage" v-if="eventMessage"/>
@@ -8,6 +9,7 @@
     </div>
   </div>
   <div class="pagebg"></div>
+  </div>
 </template>
 
 <script>
@@ -36,7 +38,7 @@ export default {
       const userId = this.userdata.sub.replace("auth0|", "");
       try {
         const token = await this.$auth.getTokenSilently();
-        const response = await fetch(`http://localhost:3000/api/index/${userId}`, {
+        const response = await fetch(`https://riddler-on-the-roof.onrender.com/api/index/${userId}`, {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
@@ -60,7 +62,7 @@ export default {
       const userId = this.userdata.sub.replace("auth0|", "");
       try {
         const token = await this.$auth.getTokenSilently();
-        const response = await fetch(`http://localhost:3000/api/index/update/${userId}`, {
+        const response = await fetch(`https://riddler-on-the-roof.onrender.com/api/index/update/${userId}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
