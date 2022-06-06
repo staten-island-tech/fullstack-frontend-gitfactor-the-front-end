@@ -877,7 +877,10 @@ export default {
         if (this.$store.state.userData.level === 2) {
           document.querySelector(".game-overlay").classList.add("dark");
         }
-        if (this.$store.state.userData.level === 4 ) {
+        if (this.$store.state.userData.level === 2) {
+          document.querySelector(".main").classList.add("fog");
+        }
+        if (this.$store.state.userData.level === 4 && this.$store.state.userData.currentItem.id !== 38) {
           this.roofTime();
         }
         if (this.$store.state.userData.level === 5) {
