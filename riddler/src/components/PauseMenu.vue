@@ -6,10 +6,10 @@
     </div>
     <h2 class="pause-title">Menu</h2>
     <div class="pause-button-box">
-      <button @click="$emit('instruction')">Instruction Manual</button>
+      <button @click="$emit('instruction')">Instructions</button>
       <button @click="updateData()">Save Progress</button>
       <button @click="logout()">Save and Quit</button>
-      <button @click="$emit('setting')">Audio Settings</button>
+      <button @click="$emit('setting')">Settings</button>
       <button @click="$emit('about')">About</button>
     </div>
   </div>
@@ -104,7 +104,8 @@ export default {
   margin-top: 1rem;
 }
 .pause-menu button {
-  width: 30%;
+  max-width: fit-content;
+  min-width: 33%;
   font-size: 2.5rem;
   margin: 1rem;
   padding: 1rem;

@@ -715,7 +715,7 @@ export const state = {
         ],
       },
       {
-        name: "Piano",
+        name: "Self-Playing Piano",
         id: 39,
         section: 3,
         position: 70,
@@ -728,7 +728,7 @@ export const state = {
         filter: null,
         itemType: "puzzle",
         puzzleType: 2,
-        prompt: "While it looks like a classic grand piano from the outside, this is a self-playing piano that seems to operate off of a short melody that the pianist inputs. What notes should the piano play?",
+        prompt: "The piano plays itself, but it needs the pianist to enter a base melody! Use the keypad to select the notes.",
         isLevelTransitionPuzzle: true,
         buttonChoices: ["C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "A♭", "A", "B♭", "B"],
         puzzleAnswer: "cdd♯fdab♭g",
