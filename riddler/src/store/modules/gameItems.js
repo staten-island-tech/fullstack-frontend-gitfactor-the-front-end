@@ -1,6 +1,5 @@
 import {
   epilogue,
-  levelFourIntro,
 } from "../../../src/dialogue";
 
 export const state = {
@@ -90,7 +89,7 @@ export const state = {
         itemType: "puzzle",
         puzzleType: 3,
         isLevelTransitionPuzzle: false,
-        puzzleCompleted: false,
+        isPuzzleCompleted: false,
         prompt:
           "It's a lantern with a bright flame. What could it be used for, though? Click on an item in your inventory to select it as your answer.",
         puzzleAnswer: "Blank Scroll",
@@ -157,7 +156,7 @@ export const state = {
           "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
         ],
         puzzleAnswer: "riddler",
-        puzzleCompleted: false,
+        isPuzzleCompleted: false,
         puzzleAnsweredText:
           "Nice! I'm in! The monitor displays a message: 'From where each item begins is where you shall find an end.'",
       },
@@ -207,7 +206,7 @@ export const state = {
         filter: null,
         itemType: "object",
         prompt:
-          "You open the glossy wax seal, but there's nothing inside the envelope. Inscribed on the inside of the envelope, however, are the numbers '18 9 44 12 5 18'.",
+          "You open the glossy wax seal, but there's nothing inside the envelope. Inscribed on the inside of the envelope, however, are the numbers '18 9 4 4 12 5 18'.",
       },
       {
         name: "AA Batteries",
@@ -461,7 +460,7 @@ export const state = {
         itemType: "puzzle",
         puzzleType: 3,
         isLevelTransitionPuzzle: false,
-        puzzleCompleted: false,
+        isPuzzleCompleted: false,
         prompt:
           "It's a lantern with a bright flame. Do you remember what it can be used for?",
         puzzleAnswer: "Blank Scroll",
@@ -632,8 +631,8 @@ export const state = {
         name: "Fishing Rod and Bobber",
         id: 35,
         section: 1,
-        position: 51,
-        margin: "51%",
+        position: 50,
+        margin: "50%",
         widthInt: 25,
         width: "25%",
         bottom: "5%",
@@ -664,8 +663,8 @@ export const state = {
         name: "Sleek Shovel",
         id: 37,
         section: 1,
-        position: 24,
-        margin: "24%",
+        position: 25,
+        margin: "25%",
         widthInt: 25,
         width: "25%",
         bottom: "10%",
@@ -715,7 +714,7 @@ export const state = {
         ],
       },
       {
-        name: "Piano",
+        name: "Self-Playing Piano",
         id: 39,
         section: 3,
         position: 70,
@@ -728,36 +727,18 @@ export const state = {
         filter: null,
         itemType: "puzzle",
         puzzleType: 2,
-        prompt: "While it looks like a classic grand piano from the outside, this is a self-playing piano that seems to operate off of a short melody that the pianist inputs. What notes should the piano play?",
+        prompt: "The piano plays itself, but it needs the pianist to enter a base melody! Use the keypad to select the notes.",
         isLevelTransitionPuzzle: true,
         buttonChoices: ["C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "A♭", "A", "B♭", "B"],
         puzzleAnswer: "cdd♯fdab♭g",
         isPuzzleCompleted: false, 
        },
-       {
-       intro: true,
-       name: "Riddler",
-       id: 40,
-       section: 2,
-       position: 40,
-       margin: "40%",
-       widthInt: 22,
-       width: "22%",
-       bottom: "0%",
-       img: "sprites/sprite_dialogue_riddl.png",
-       isInteractable: false,
-       filter: null,
-       itemType: "character",
-       dialogueSprite: "sprite_dialogue_riddl.png",
-       spriteAlt: "The spooky silhouette from earlier is a purple-haired character with a top hat and purple suit.",
-       dialogue: levelFourIntro,
-      },
     ],
     [
       {
         intro: true,
         name: "Riddler",
-        id: 42,
+        id: 40,
         section: 2,
         position: 45,
         margin: "45%",

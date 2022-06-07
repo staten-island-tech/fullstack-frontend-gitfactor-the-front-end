@@ -17,7 +17,6 @@
         <input @click="volumeLog2()"  type="range" min="0" max="100" value="50" class="slider slider2" id="myRange">
       </div> 
     </div>
-    <h3 class="volume"></h3>
   </div>
 </template>
 

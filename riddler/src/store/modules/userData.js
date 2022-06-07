@@ -24,9 +24,6 @@ export const mutations = {
   incrementLevel(state) {
     state.level++;
   },
-  decrementLevel(state) {
-    state.level--;
-  },
   updateState(state, newState) {
     const updates = Object.keys(state);
     updates.forEach(update => {

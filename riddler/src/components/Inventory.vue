@@ -20,7 +20,6 @@ export default {
     methods: {
         itemDetails(item) {
             this.$emit('clickedItem', item);
-            console.log("selected in inventory:" + item.name)
         },
         toggleInventory() {
           this.isInventoryOpen = !this.isInventoryOpen;
