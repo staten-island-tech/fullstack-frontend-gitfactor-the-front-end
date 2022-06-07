@@ -1267,7 +1267,7 @@ img {
 .fog {
   position: relative;
 }
-.fog:before {
+.fog::before {
   content: "";
   display: block;
   position: absolute;
