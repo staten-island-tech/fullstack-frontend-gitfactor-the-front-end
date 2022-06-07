@@ -1275,10 +1275,9 @@ img {
   top: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.6;
+  opacity: 0.5;
   background-image: url("../assets/bubbles.png");
   background-size: contain;
-  animation: fogFade 20s ease-in-out infinite;
 }
 
 @keyframes fogFade {

@@ -15,6 +15,7 @@
       <p>Story by: Charley, Lucy, Daniel, Nika</p>
       <p>Level Design: Daniel, Charley, Nika, Lucy</p>
       <p>Visuals by: Lucy</p>
+      <p>Name by: Nika</p>
       <p>Audio by: PeriTune</p>
       <p>Terrible Puns by: Daniel</p>
     </div>
