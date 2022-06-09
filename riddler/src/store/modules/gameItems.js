@@ -544,7 +544,7 @@ export const state = {
         isInteractable: false,
         filter: null,
         itemType: "object",
-        prompt: "It looks like the ocarina from level 2, but it's a bit different! This ocarina has 8 holes, which means it can play 8 notes! Ahh, I bet it sounds pretty, but I have no time to try playing it! ",
+        prompt: "It looks like the ocarina from level 2, but it's a bit different! This ocarina still has 7 holes, meaning it can play 7 notes. Next to each hole, you can see what note it plays and a corresponding number, but the numbers each note corresponds with are different on this ocarina than the last one! The pairs read: '1C, 3D, 5E' and so on. I wonder why the numbers skip like that.",
         chosenItemTextFalse: "Aghh it's not right! How did I solve this last time??",
       },
       {
@@ -576,7 +576,7 @@ export const state = {
         isInteractable: false,
         filter: null,
         itemType: "object",
-        prompt: "The envelope has a slip of paper with a new set of numbers this time! It reads: '6310'.",
+        prompt: "The envelope has a slip of paper with a new set of numbers this time! It reads: '6 3'.",
         chosenItemTextFalse: "Aghh it's not right! How did I solve this last time??",
       },
       {
@@ -624,7 +624,7 @@ export const state = {
         isInteractable: false,
         filter: null,
         itemType: "object",
-        prompt: "I'm not in the ocean anymore, but the fish food was really helpful then, right? Lemme check inside... Oh! The fish food is gone, but there is a slip of paper that has the number '118'.",
+        prompt: "I'm not in the ocean anymore, but the fish food was really helpful then, right? Lemme check inside... Oh! The fish food is gone, but there is a slip of paper that has the number '11 8'.",
         chosenItemTextFalse: "Aghh it's not right! How did I solve this last time??",
       },
       {
@@ -730,7 +730,7 @@ export const state = {
         prompt: "The piano plays itself, but it needs the pianist to enter a base melody! Use the keypad to select the notes.",
         isLevelTransitionPuzzle: true,
         buttonChoices: ["C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "A♭", "A", "B♭", "B"],
-        puzzleAnswer: "cdd♯fdab♭g",
+        puzzleAnswer: "cdd♯fdb♭g",
         isPuzzleCompleted: false, 
        },
     ],
